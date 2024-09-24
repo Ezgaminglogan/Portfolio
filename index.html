@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PORTFOLIO - LOGAN</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome 6 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Particle Background -->
+    <div id="tsparticles"></div>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-transparent fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#Home">PORTFOLIO</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" 
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#Home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#About">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#Projects">Projects</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#WorkExperience">Work Experience</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#Education">Education</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#Contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section id="Home" class="hero-section d-flex align-items-center justify-content-center">
+            <div class="container text-center text-white">
+                <img src="Image/profile.jpg" class="img-fluid rounded-circle profile-pic mb-4" alt="Profile Picture">
+                <h1 class="display-4">Hello, I'm Logan M. Panucat</h1>
+                <p class="lead">An IT student committed to growing my skills and knowledge in technology.</p>
+                <div class="mt-4">
+                    <a href="#About" class="btn btn-primary btn-lg me-3">Learn More</a>
+                    <a href="#Contact" class="btn btn-outline-light btn-lg">Contact Me</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="About" class="about-section py-5">
+            <div class="container fade-in">
+                <h2 class="mb-4 text-center">About Me</h2>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p>Hello! I'm Logan M. Panucat, a third-year Information Technology student at CTU Naga Extension Campus. I have a keen interest in software development, web design, and technology innovation. My journey in IT has equipped me with various skills in programming languages and problem-solving. I'm always eager to learn new technologies and take on challenging projects that push my boundaries.</p>
+                        <p>During my studies, I've had the opportunity to work on various projects that have helped me develop skills in both frontend and backend development. I believe that teamwork is essential in creating effective solutions. I am committed to learning and staying updated with the latest trends and best practices in the tech industry.</p>
+                        <p>In my free time, I enjoy contributing to open-source projects, learning new programming languages, and exploring the latest trends in technology.</p>
+                        <!-- Personal Details -->
+                        <div class="mt-4">
+                            <h3 class="mb-3">Personal Details</h3>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item bg-transparent text-white d-flex justify-content-between align-items-center">
+                                    <strong>Address:</strong>
+                                    <span>Carcar City, Cebu</span>
+                                </li>
+                                <li class="list-group-item bg-transparent text-white d-flex justify-content-between align-items-center">
+                                    <strong>Postal Code:</strong>
+                                    <span>6019</span>
+                                </li>
+                                <li class="list-group-item bg-transparent text-white d-flex justify-content-between align-items-center">
+                                    <strong>Birth Date:</strong>
+                                    <span>September 08, 2002</span>
+                                </li>
+                                <li class="list-group-item bg-transparent text-white d-flex justify-content-between align-items-center">
+                                    <strong>Age:</strong>
+                                    <span>22 y/o</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h3 class="mt-4">My Skills</h3>
+                        <div class="row mt-3">
+                            <!-- Frontend Skills -->
+                            <div class="col-lg-6 col-md-12 mb-4">
+                                <div class="card skill-card text-center">
+                                    <div class="card-body">
+                                        <i class="fab fa-html5 fa-2x mb-3"></i>
+                                        <h5 class="card-title">Frontend</h5>
+                                        <p class="card-text">HTML, CSS, JavaScript</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Backend Skills -->
+                            <div class="col-lg-6 col-md-12 mb-4">
+                                <div class="card skill-card text-center">
+                                    <div class="card-body">
+                                        <i class="fas fa-code fa-2x mb-3"></i>
+                                        <h5 class="card-title">Backend</h5>
+                                        <p class="card-text">C#, Java, VB.NET</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Database Skills -->
+                            <div class="col-lg-6 col-md-12 mb-4">
+                                <div class="card skill-card text-center">
+                                    <div class="card-body">
+                                        <i class="fas fa-database fa-2x mb-3"></i>
+                                        <h5 class="card-title">Database</h5>
+                                        <p class="card-text">MySQL</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Tools -->
+                            <div class="col-lg-6 col-md-12 mb-4">
+                                <div class="card skill-card text-center">
+                                    <div class="card-body">
+                                        <i class="fas fa-tools fa-2x mb-3"></i>
+                                        <h5 class="card-title">Tools</h5>
+                                        <p class="card-text">GitHub, Visual Studio, VS Code</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Others -->
+                            <div class="col-lg-6 col-md-12 mb-4">
+                                <div class="card skill-card text-center">
+                                    <div class="card-body">
+                                        <i class="fas fa-lightbulb fa-2x mb-3"></i>
+                                        <h5 class="card-title">Others</h5>
+                                        <p class="card-text">Problem Solving, Team Collaboration</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Work Experience Section -->
+        <section id="WorkExperience" class="work-experience-section py-5 bg-dark">
+            <div class="container fade-in">
+                <h2 class="mb-4 text-center text-white">Work Experience</h2>
+                <div class="timeline">
+                    <!-- Work Experience Item 1 -->
+                    <div class="timeline-item">
+                        <div class="timeline-icon">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        <div class="timeline-content">
+                            <h3 class="text-primary">Service Crew</h3>
+                            <h5 class="text-white"><strong>Jollibee Drive Thru @ Gaisano Grand Carcar</strong></h5>
+                            <span class="badge bg-success text-dark">February 2022 - September 2022</span>
+                            <p class="mt-2"><strong>Duration:</strong> February 2022 - September 2022</p>
+                            <p>Responsible for taking orders, preparing food, ensuring customer satisfaction, and maintaining cleanliness in the drive-thru area. Developed strong communication and teamwork skills while managing high-pressure situations.</p>
+                        </div>
+                    </div>
+                    <!-- Add more work experiences if needed -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Education Section -->
+        <section id="Education" class="education-section py-5">
+            <div class="container fade-in">
+                <h2 class="mb-4 text-center">Education</h2>
+                <div class="timeline">
+                    <!-- Education Item 1 -->
+                    <div class="timeline-item">
+                        <div class="timeline-icon">
+                            <i class="fas fa-school"></i>
+                        </div>
+                        <div class="timeline-content">
+                            <h3>Elementary</h3>
+                            <h5>2008 - 2016</h5>
+                            <p>Completed Elementary Education, laying the foundation for academic and personal growth.</p>
+                        </div>
+                    </div>
+                    <!-- Education Item 2 -->
+                    <div class="timeline-item">
+                        <div class="timeline-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <div class="timeline-content">
+                            <h3>High School</h3>
+                            <h5>2016 - 2020</h5>
+                            <p>Completed High School Education, focusing on core academic subjects and extracurricular activities.</p>
+                        </div>
+                    </div>
+                    <!-- Education Item 3 -->
+                    <div class="timeline-item">
+                        <div class="timeline-icon">
+                            <i class="fas fa-laptop-code"></i>
+                        </div>
+                        <div class="timeline-content">
+                            <h3>Senior High School Strand (ICT)</h3>
+                            <h5>2020 - 2022</h5>
+                            <p>Specialized in Information and Communication Technology, gaining skills in programming, web development, and IT management.</p>
+                        </div>
+                    </div>
+                    <!-- Education Item 4 -->
+                    <div class="timeline-item">
+                        <div class="timeline-icon">
+                            <i class="fas fa-university"></i>
+                        </div>
+                        <div class="timeline-content">
+                            <h3>College</h3>
+                            <h5>Present</h5>
+                            <p>Pursuing a Bachelor's degree in Information Technology at CTU Naga Extension Campus, focusing on advanced topics in software development, database management, and system analysis.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="Projects" class="projects-section py-5 bg-light">
+            <div class="container fade-in">
+                <h2 class="mb-4 text-center">Projects</h2>
+                <div class="row">
+                    <!-- Project One -->
+                    <div class="col-md-6 mb-4">
+                        <div class="card project-card h-100">
+                            <img src="Image/project1.png" class="card-img-top" alt="Project 1">
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title">Project One: Mom's Food Delicacies</h5>
+                                <p class="card-text">A website development project aimed at enhancing the online presence of a food business with features like stock management and order processing.</p>
+                                <button type="button" class="btn btn-primary mt-auto" data-bs-toggle="modal" data-bs-target="#project1Modal">
+                                    View Details
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Project Two -->
+                    <div class="col-md-6 mb-4">
+                        <div class="card project-card h-100">
+                            <img src="Image/project2.png" class="card-img-top" alt="Project 2">
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title">Project Two: Mom's Food Delicacies WUI</h5>
+                                <p class="card-text">A desktop application developed in VB using WFA to manage stock, track orders, and handle customer interactions for a small food business.</p>
+                                <button type="button" class="btn btn-primary mt-auto" data-bs-toggle="modal" data-bs-target="#project2Modal">
+                                    View Details
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Add more projects as needed -->
+                </div>
+            </div>
+
+            <!-- Project One Modal -->
+            <div class="modal fade" id="project1Modal" tabindex="-1" aria-labelledby="project1ModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content bg-dark text-white">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="project1ModalLabel">Project One: Mom's Food Delicacies</h5>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <img src="Image/project1.png" class="img-fluid mb-3" alt="Project 1 Image">
+                            <p><strong>Description:</strong> Mom's Food Delicacies is a comprehensive website designed to enhance the online presence of a food business. It includes features such as an admin panel for managing stock, processing orders, and tracking inventory. Administrators can easily update product listings, monitor stock levels, and handle supplier information through an intuitive interface.</p>
+                            <p><strong>Technologies Used:</strong> HTML, CSS, JavaScript, Bootstrap, PHP, MySQL.</p>
+                            <p><strong>Key Features:</strong></p>
+                            <ul>
+                                <li>Responsive design for mobile and desktop devices.</li>
+                                <li>Secure admin panel with authentication.</li>
+                                <li>Real-time stock and inventory updates.</li>
+                                <li>Customer order tracking system.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project Two Modal -->
+            <div class="modal fade" id="project2Modal" tabindex="-1" aria-labelledby="project2ModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content bg-dark text-white">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="project2ModalLabel">Project Two: Mom's Food Delicacies WUI</h5>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <img src="Image/project2.png" class="img-fluid mb-3" alt="Project 2 Image">
+                            <p><strong>Description:</strong> This desktop application is built using Visual Basic (VB) and Windows Forms Application (WFA) framework. It aims to streamline the operations of a small food business by managing stock levels, tracking orders, and facilitating customer interactions efficiently.</p>
+                            <p><strong>Technologies Used:</strong> Visual Basic, Windows Forms Application, SQL Server.</p>
+                            <p><strong>Key Features:</strong></p>
+                            <ul>
+                                <li>User-friendly interface for easy navigation.</li>
+                                <li>Real-time stock management and inventory tracking.</li>
+                                <li>Order placement and tracking system.</li>
+                                <li>Customer management and interaction logs.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="Contact" class="contact-section py-5">
+            <div class="container fade-in">
+                <h2 class="mb-4 text-center">Contact Me</h2>
+                <form id="contact-form" novalidate>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="name" class="form-label">Name <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="name" placeholder="Your Name" required>
+                            <div class="invalid-feedback">
+                                Please enter your name.
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="email" class="form-label">Email address <span class="text-danger">*</span></label>
+                            <input type="email" class="form-control" id="email" placeholder="name@example.com" required>
+                            <div class="invalid-feedback">
+                                Please enter a valid email address.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="subject" class="form-label">Subject <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="subject" placeholder="Subject" required>
+                        <div class="invalid-feedback">
+                            Please enter a subject.
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="message" class="form-label">Message <span class="text-danger">*</span></label>
+                        <textarea class="form-control" id="message" rows="5" placeholder="Your Message" required></textarea>
+                        <div class="invalid-feedback">
+                            Please enter your message.
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Send Message</button>
+                    <div id="form-message" class="form-message mt-3"></div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer py-4 bg-dark text-white">
+        <div class="container text-center">
+            <p class="mb-2">© 2024 Logan M. Panucat</p>
+            <div class="social-icons">
+                <a href="https://www.facebook.com/Cflogan.Panucat2nd" class="me-3" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://www.linkedin.com/in/logan-panucat-b319562a9/" class="me-3" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                <a href="https://github.com/Ezgaminglogan" class="me-3" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                <a href="mailto:logan.panucat2@gmail.com" class="me-3" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                <a href="https://www.youtube.com/@loganpanucat7771" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button id="scrollTopBtn" title="Go to top" aria-label="Scroll to Top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <!-- tsParticles Library -->
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.7.1/tsparticles.bundle.min.js"></script>
+    <!-- Bootstrap 5 JS and dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- EmailJS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <!-- Custom JS -->
+    <script src="script.js"></script>
+</body>
+</html>
