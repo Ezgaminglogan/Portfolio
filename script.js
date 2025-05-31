@@ -3,14 +3,14 @@
     emailjs.init("zUyjNcHa6wci7pDA5"); // Replace with your actual EmailJS public key
 })();
 
-// Initialize tsParticles
+// Initialize tsParticles with Modern Configuration
 tsParticles.load("tsparticles", {
     background: {
         color: {
-            value: "#2c3e50"
+            value: "transparent"
         }
     },
-    fpsLimit: 60,
+    fpsLimit: 120,
     interactivity: {
         events: {
             onClick: { enable: true, mode: "push" },
@@ -18,19 +18,55 @@ tsParticles.load("tsparticles", {
             resize: true
         },
         modes: {
-            push: { quantity: 4 },
-            repulse: { distance: 100, duration: 0.4 }
+            push: { quantity: 2 },
+            repulse: { distance: 80, duration: 0.4 }
         }
     },
     particles: {
-        color: { value: "#ffffff" },
-        links: { color: "#ffffff", distance: 150, enable: true, opacity: 0.5, width: 1 },
+        color: { 
+            value: ["#6366f1", "#8b5cf6", "#a855f7", "#06d6a0"] 
+        },
+        links: { 
+            color: "#6366f1", 
+            distance: 120, 
+            enable: true, 
+            opacity: 0.3, 
+            width: 1.5 
+        },
         collisions: { enable: false },
-        move: { direction: "none", enable: true, outModes: { default: "bounce" }, random: false, speed: 2, straight: false },
-        number: { density: { enable: true, area: 800 }, value: 50 },
-        opacity: { value: 0.5 },
-        shape: { type: "circle" },
-        size: { value: { min: 1, max: 5 } }
+        move: { 
+            direction: "none", 
+            enable: true, 
+            outModes: { default: "bounce" }, 
+            random: true, 
+            speed: 1.5, 
+            straight: false 
+        },
+        number: { 
+            density: { enable: true, area: 1000 }, 
+            value: 30 
+        },
+        opacity: { 
+            value: { min: 0.3, max: 0.7 },
+            animation: {
+                enable: true,
+                speed: 1,
+                minimumValue: 0.3,
+                sync: false
+            }
+        },
+        shape: { 
+            type: ["circle", "triangle"] 
+        },
+        size: { 
+            value: { min: 2, max: 6 },
+            animation: {
+                enable: true,
+                speed: 2,
+                minimumValue: 2,
+                sync: false
+            }
+        }
     },
     detectRetina: true
 });
@@ -77,6 +113,94 @@ document.addEventListener('DOMContentLoaded', () => {
         appearOnScroll.observe(fader);
     });
 });
+
+// Enhanced Scroll Animations
+document.addEventListener('DOMContentLoaded', () => {
+    // Add smooth scroll behavior
+    document.documentElement.style.scrollBehavior = 'smooth';
+    
+    // Enhanced fade-in animation with stagger effect
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: "0px 0px -50px 0px"
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+                setTimeout(() => {
+                    entry.target.classList.add('visible');
+                }, index * 100); // Stagger animation
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    // Observe all fade-in elements
+    document.querySelectorAll('.fade-in').forEach(el => {
+        observer.observe(el);
+    });
+
+    // Animate progress bars when they come into view
+    const progressBars = document.querySelectorAll('.progress-bar');
+    const progressObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const progressBar = entry.target;
+                const width = progressBar.style.width;
+                progressBar.style.width = '0%';
+                setTimeout(() => {
+                    progressBar.style.width = width;
+                }, 200);
+                progressObserver.unobserve(progressBar);
+            }
+        });
+    }, { threshold: 0.5 });
+
+    progressBars.forEach(bar => {
+        progressObserver.observe(bar);
+    });
+
+    // Add typing effect for hero text
+    const heroTitle = document.querySelector('.hero-section h1');
+    if (heroTitle) {
+        const text = heroTitle.textContent;
+        heroTitle.textContent = '';
+        let i = 0;
+        const typeWriter = () => {
+            if (i < text.length) {
+                heroTitle.textContent += text.charAt(i);
+                i++;
+                setTimeout(typeWriter, 50);
+            }
+        };
+        setTimeout(typeWriter, 500);
+    }
+});
+
+// Enhanced navbar active link highlighting
+function updateActiveNavLink() {
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-link');
+    
+    let current = '';
+    sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.clientHeight;
+        if (window.scrollY >= (sectionTop - 200)) {
+            current = section.getAttribute('id');
+        }
+    });
+
+    navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${current}`) {
+            link.classList.add('active');
+        }
+    });
+}
+
+window.addEventListener('scroll', updateActiveNavLink);
 
 // Contact Form Handling with EmailJS
 document.getElementById('contact-form').addEventListener('submit', function(event) {
