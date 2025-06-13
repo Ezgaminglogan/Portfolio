@@ -1,15 +1,11 @@
-// Initialize EmailJS with your Public Key
+// Initialize EmailJS
 (function(){
-    emailjs.init("zUyjNcHa6wci7pDA5"); // Replace with your actual EmailJS public key
+    emailjs.init("zUyjNcHa6wci7pDA5"); // Replace with your EmailJS public key
 })();
 
-// Initialize tsParticles with Modern Configuration
+// Initialize tsParticles
 tsParticles.load("tsparticles", {
-    background: {
-        color: {
-            value: "transparent"
-        }
-    },
+    background: { color: { value: "transparent" } },
     fpsLimit: 120,
     interactivity: {
         events: {
@@ -23,243 +19,288 @@ tsParticles.load("tsparticles", {
         }
     },
     particles: {
-        color: { 
-            value: ["#6366f1", "#8b5cf6", "#a855f7", "#06d6a0"] 
-        },
-        links: { 
-            color: "#6366f1", 
-            distance: 120, 
-            enable: true, 
-            opacity: 0.3, 
-            width: 1.5 
-        },
+        color: { value: ["#6366f1", "#8b5cf6", "#a855f7", "#06d6a0", "#ffffff"] },
+        links: { color: "#6366f1", distance: 120, enable: true, opacity: 0.3, width: 1.5 },
         collisions: { enable: false },
-        move: { 
-            direction: "none", 
-            enable: true, 
-            outModes: { default: "bounce" }, 
-            random: true, 
-            speed: 1.5, 
-            straight: false 
-        },
-        number: { 
-            density: { enable: true, area: 1000 }, 
-            value: 30 
-        },
-        opacity: { 
-            value: { min: 0.3, max: 0.7 },
-            animation: {
-                enable: true,
-                speed: 1,
-                minimumValue: 0.3,
-                sync: false
-            }
-        },
-        shape: { 
-            type: ["circle", "triangle"] 
-        },
-        size: { 
-            value: { min: 2, max: 6 },
-            animation: {
-                enable: true,
-                speed: 2,
-                minimumValue: 2,
-                sync: false
-            }
-        }
+        move: { direction: "none", enable: true, outModes: { default: "bounce" }, random: true, speed: 1.5, straight: false },
+        number: { density: { enable: true, area: 1000 }, value: 30 },
+        opacity: { value: { min: 0.3, max: 0.7 } },
+        shape: { type: ["circle", "triangle"] },
+        size: { value: { min: 2, max: 6 } }
     },
     detectRetina: true
 });
 
-// Navbar Scroll Effect
+// Mobile menu toggle
+function toggleMobileMenu() {
+    const mobileMenu = document.getElementById('mobile-menu');
+    mobileMenu.classList.toggle('hidden');
+}
+
+// Modal functions - FIXED
+function openModal(modalId) {
+    console.log('Opening modal:', modalId); // Debug log
+    const modal = document.getElementById(modalId);
+    
+    if (modal) {
+        // Add modal class for styling
+        modal.classList.add('modal');
+        
+        // Show modal
+        modal.classList.add('active');
+        modal.style.opacity = '1';
+        modal.style.visibility = 'visible';
+        
+        // Prevent body scroll
+        document.body.style.overflow = 'hidden';
+        
+        // Add entrance animation to modal content
+        const modalContent = modal.querySelector('div[class*="bg-slate-800"]');
+        if (modalContent) {
+            modalContent.style.transform = 'scale(1)';
+        }
+        
+        console.log('Modal opened successfully'); // Debug log
+    } else {
+        console.error('Modal not found:', modalId); // Debug log
+    }
+}
+
+function closeModal(modalId) {
+    console.log('Closing modal:', modalId); // Debug log
+    const modal = document.getElementById(modalId);
+    
+    if (modal) {
+        // Add exit animation
+        const modalContent = modal.querySelector('div[class*="bg-slate-800"]');
+        if (modalContent) {
+            modalContent.style.transform = 'scale(0.9)';
+        }
+        
+        // Hide modal after animation
+        setTimeout(() => {
+            modal.classList.remove('active');
+            modal.style.opacity = '0';
+            modal.style.visibility = 'hidden';
+            
+            // Restore body scroll
+            document.body.style.overflow = 'auto';
+        }, 200);
+        
+        console.log('Modal closed successfully'); // Debug log
+    } else {
+        console.error('Modal not found:', modalId); // Debug log
+    }
+}
+
+// Close modal when clicking outside
+document.addEventListener('click', (e) => {
+    if (e.target.classList.contains('modal') || e.target.closest('.bg-black\\/80')) {
+        const activeModal = document.querySelector('.modal.active');
+        if (activeModal) {
+            closeModal(activeModal.id);
+        }
+    }
+});
+
+// Close modal with escape key
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        const activeModal = document.querySelector('.modal.active');
+        if (activeModal) {
+            closeModal(activeModal.id);
+        }
+    }
+});
+
+// Navbar scroll effect
 window.addEventListener('scroll', () => {
-    const navbar = document.querySelector('.navbar');
-    if (window.scrollY > 100) {
+    const navbar = document.querySelector('nav');
+    const scrollTopBtn = document.getElementById('scrollTopBtn');
+    
+    if (window.scrollY > 50) {
         navbar.classList.add('scrolled');
     } else {
         navbar.classList.remove('scrolled');
     }
-
-    // Scroll-to-Top Button Visibility
-    const scrollTopBtn = document.getElementById('scrollTopBtn');
+    
     if (window.scrollY > 300) {
-        scrollTopBtn.style.display = 'flex';
+        scrollTopBtn.classList.add('visible');
     } else {
-        scrollTopBtn.style.display = 'none';
+        scrollTopBtn.classList.remove('visible');
     }
 });
 
-// Fade-in effect on scroll
-document.addEventListener('DOMContentLoaded', () => {
-    const faders = document.querySelectorAll('.fade-in');
-
-    const appearOptions = {
-        threshold: 0.1,
-        rootMargin: "0px 0px -50px 0px"
-    };
-
-    const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
-        entries.forEach(entry => {
-            if (!entry.isIntersecting) {
-                return;
-            } else {
-                entry.target.classList.add('visible');
-                appearOnScroll.unobserve(entry.target);
-            }
-        });
-    }, appearOptions);
-
-    faders.forEach(fader => {
-        appearOnScroll.observe(fader);
-    });
+// Scroll to top
+document.getElementById('scrollTopBtn').addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
-// Enhanced Scroll Animations
-document.addEventListener('DOMContentLoaded', () => {
-    // Add smooth scroll behavior
-    document.documentElement.style.scrollBehavior = 'smooth';
-    
-    // Enhanced fade-in animation with stagger effect
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: "0px 0px -50px 0px"
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry, index) => {
-            if (entry.isIntersecting) {
-                setTimeout(() => {
-                    entry.target.classList.add('visible');
-                }, index * 100); // Stagger animation
-                observer.unobserve(entry.target);
-            }
-        });
-    }, observerOptions);
-
-    // Observe all fade-in elements
-    document.querySelectorAll('.fade-in').forEach(el => {
-        observer.observe(el);
-    });
-
-    // Animate progress bars when they come into view
-    const progressBars = document.querySelectorAll('.progress-bar');
-    const progressObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const progressBar = entry.target;
-                const width = progressBar.style.width;
-                progressBar.style.width = '0%';
-                setTimeout(() => {
-                    progressBar.style.width = width;
-                }, 200);
-                progressObserver.unobserve(progressBar);
-            }
-        });
-    }, { threshold: 0.5 });
-
-    progressBars.forEach(bar => {
-        progressObserver.observe(bar);
-    });
-
-    // Add typing effect for hero text
-    const heroTitle = document.querySelector('.hero-section h1');
-    if (heroTitle) {
-        const text = heroTitle.textContent;
-        heroTitle.textContent = '';
-        let i = 0;
-        const typeWriter = () => {
-            if (i < text.length) {
-                heroTitle.textContent += text.charAt(i);
-                i++;
-                setTimeout(typeWriter, 50);
-            }
-        };
-        setTimeout(typeWriter, 500);
-    }
-});
-
-// Enhanced navbar active link highlighting
-function updateActiveNavLink() {
-    const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('.nav-link');
-    
-    let current = '';
-    sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.clientHeight;
-        if (window.scrollY >= (sectionTop - 200)) {
-            current = section.getAttribute('id');
-        }
-    });
-
-    navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href') === `#${current}`) {
-            link.classList.add('active');
-        }
-    });
-}
-
-window.addEventListener('scroll', updateActiveNavLink);
-
-// Contact Form Handling with EmailJS
+// Contact form handling
 document.getElementById('contact-form').addEventListener('submit', function(event) {
     event.preventDefault();
-
-    // Validate form
-    const form = event.target;
-    if (!form.checkValidity()) {
-        event.stopPropagation();
-        form.classList.add('was-validated');
-        return;
-    }
-
-    // Collect form data
+    
     const name = document.getElementById('name').value.trim();
     const email = document.getElementById('email').value.trim();
     const subject = document.getElementById('subject').value.trim();
     const message = document.getElementById('message').value.trim();
-
-    // Show loading indicator
-    const submitButton = form.querySelector('button[type="submit"]');
+    
+    // Basic validation
+    if (!name || !email || !subject || !message) {
+        showFormMessage('error', 'Please fill in all fields.');
+        return;
+    }
+    
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        showFormMessage('error', 'Please enter a valid email address.');
+        return;
+    }
+    
+    const submitButton = this.querySelector('button[type="submit"]');
+    const originalText = submitButton.innerHTML;
+    
     submitButton.disabled = true;
-    submitButton.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Sending...';
-
-    // Send email via EmailJS
+    submitButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Sending...';
+    
     emailjs.send("service_vif5738", "template_d1kx5j9", {
         from_name: name,
         from_email: email,
         subject: subject,
         message: message
     })
-    .then(function(response) {
-        console.log('SUCCESS!', response.status, response.text);
-        const formMessage = document.getElementById('form-message');
-        formMessage.classList.remove('error');
-        formMessage.classList.add('success');
-        formMessage.textContent = "Your message has been sent successfully!";
-        formMessage.style.display = 'block';
-        form.reset();
-        form.classList.remove('was-validated');
-    }, function(error) {
-        console.error('FAILED...', error);
-        const formMessage = document.getElementById('form-message');
-        formMessage.classList.remove('success');
-        formMessage.classList.add('error');
-        formMessage.textContent = "An error occurred while sending your message. Please try again later.";
-        formMessage.style.display = 'block';
+    .then(() => {
+        showFormMessage('success', 'Message sent successfully!');
+        this.reset();
+    })
+    .catch((error) => {
+        console.error('EmailJS Error:', error);
+        showFormMessage('error', 'Failed to send message. Please try again.');
     })
     .finally(() => {
-        // Reset submit button
         submitButton.disabled = false;
-        submitButton.innerHTML = 'Send Message';
+        submitButton.innerHTML = originalText;
     });
 });
 
-// Scroll-to-Top Button Functionality
-document.getElementById('scrollTopBtn').addEventListener('click', () => {
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
+function showFormMessage(type, message) {
+    const formMessage = document.getElementById('form-message');
+    formMessage.className = `text-center font-medium mt-4 p-4 rounded-xl transition-all duration-300 ${type === 'success' ? 'bg-green-500/20 text-green-300 border border-green-500/30' : 'bg-red-500/20 text-red-300 border border-red-500/30'}`;
+    formMessage.textContent = message;
+    formMessage.style.opacity = '1';
+    
+    setTimeout(() => {
+        formMessage.style.opacity = '0';
+        setTimeout(() => {
+            formMessage.textContent = '';
+            formMessage.className = 'text-center font-medium mt-4';
+        }, 300);
+    }, 5000);
+}
+
+// Close mobile menu when clicking links
+document.addEventListener('DOMContentLoaded', () => {
+    const mobileLinks = document.querySelectorAll('#mobile-menu a');
+    mobileLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            document.getElementById('mobile-menu').classList.add('hidden');
+        });
+    });
+    
+    // Add click event listeners to modal buttons - IMPORTANT FIX
+    const modalButtons = document.querySelectorAll('[onclick*="openModal"]');
+    modalButtons.forEach(button => {
+        button.addEventListener('click', (e) => {
+            e.preventDefault();
+            const onclickAttr = button.getAttribute('onclick');
+            const modalId = onclickAttr.match(/openModal\('(.+)'\)/)[1];
+            openModal(modalId);
+        });
+    });
+    
+    // Add click event listeners to modal close buttons
+    const closeButtons = document.querySelectorAll('[onclick*="closeModal"]');
+    closeButtons.forEach(button => {
+        button.addEventListener('click', (e) => {
+            e.preventDefault();
+            const onclickAttr = button.getAttribute('onclick');
+            const modalId = onclickAttr.match(/closeModal\('(.+)'\)/)[1];
+            closeModal(modalId);
+        });
+    });
+    
+    console.log('Modal event listeners attached'); // Debug log
+});
+
+// Smooth scrolling for navigation links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
     });
 });
+
+// Add loading animations
+window.addEventListener('load', () => {
+    document.body.classList.add('loaded');
+    
+    // Fade in elements on scroll
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+    
+    // Observe elements with fade-in classes
+    document.querySelectorAll('.animate-fade-in-up, .fade-in').forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(30px)';
+        el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+        observer.observe(el);
+    });
+});
+
+// Performance optimization: Throttle scroll events
+function throttle(func, delay) {
+    let timeoutId;
+    let lastExecTime = 0;
+    return function (...args) {
+        const currentTime = Date.now();
+        
+        if (currentTime - lastExecTime > delay) {
+            func.apply(this, args);
+            lastExecTime = currentTime;
+        } else {
+            clearTimeout(timeoutId);
+            timeoutId = setTimeout(() => {
+                func.apply(this, args);
+                lastExecTime = Date.now();
+            }, delay - (currentTime - lastExecTime));
+        }
+    };
+}
+
+// Apply throttling to scroll events
+const throttledScrollHandler = throttle(() => {
+    // Add any additional scroll handling here if needed
+}, 16); // ~60fps
+
+window.addEventListener('scroll', throttledScrollHandler);
+
+console.log('Script loaded successfully'); // Debug log

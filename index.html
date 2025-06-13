@@ -4,69 +4,132 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PORTFOLIO - LOGAN</title>
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome 6 -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="style.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+                        'fade-in-left': 'fadeInLeft 0.8s ease-out forwards',
+                        'fade-in-right': 'fadeInRight 0.8s ease-out forwards',
+                    }
+                }
+            }
+        }
+    </script>
 </head>
-<body>
+<body class="font-inter text-slate-900 bg-white min-h-screen overflow-x-hidden">
     <!-- Particle Background -->
-    <div id="tsparticles"></div>
+    <div id="tsparticles" class="fixed inset-0 -z-10"></div>
 
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-transparent fixed-top">
-        <div class="container">
-            <a class="navbar-brand" href="#Home">PORTFOLIO</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" 
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#Home">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#About">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#Projects">Projects</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#WorkExperience">Work Experience</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#Education">Education</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#Contact">Contact</a>
-                    </li>
-                </ul>
+    <nav class="fixed top-0 w-full z-50 transition-all duration-300 bg-transparent backdrop-blur-lg">
+        <div class="container mx-auto px-6">
+            <div class="flex justify-between items-center py-4">
+                <!-- Logo/Brand -->
+                <a class="text-2xl font-black bg-gradient-to-r from-indigo-500 via-purple-500 to-purple-600 bg-clip-text text-transparent hover:scale-105 transition-transform duration-300" href="#Home">
+                    PORTFOLIO
+                </a>
+                
+                <!-- Mobile menu button -->
+                <button class="lg:hidden text-white p-2 rounded-lg hover:bg-white/10 transition-colors duration-300" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden lg:flex items-center space-x-1">
+                    <a class="px-5 py-3 text-white/90 font-medium rounded-full transition-all duration-300 hover:text-indigo-400 hover:bg-white/10 hover:-translate-y-0.5 relative group" href="#Home">
+                        Home
+                        <span class="absolute bottom-2 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-indigo-400 rounded-full transition-all duration-300 group-hover:w-8"></span>
+                    </a>
+                    <a class="px-5 py-3 text-white/90 font-medium rounded-full transition-all duration-300 hover:text-indigo-400 hover:bg-white/10 hover:-translate-y-0.5 relative group" href="#About">
+                        About
+                        <span class="absolute bottom-2 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-indigo-400 rounded-full transition-all duration-300 group-hover:w-8"></span>
+                    </a>
+                    <a class="px-5 py-3 text-white/90 font-medium rounded-full transition-all duration-300 hover:text-indigo-400 hover:bg-white/10 hover:-translate-y-0.5 relative group" href="#Projects">
+                        Projects
+                        <span class="absolute bottom-2 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-indigo-400 rounded-full transition-all duration-300 group-hover:w-8"></span>
+                    </a>
+                    <a class="px-5 py-3 text-white/90 font-medium rounded-full transition-all duration-300 hover:text-indigo-400 hover:bg-white/10 hover:-translate-y-0.5 relative group" href="#WorkExperience">
+                        Experience
+                        <span class="absolute bottom-2 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-indigo-400 rounded-full transition-all duration-300 group-hover:w-8"></span>
+                    </a>
+                    <a class="px-5 py-3 text-white/90 font-medium rounded-full transition-all duration-300 hover:text-indigo-400 hover:bg-white/10 hover:-translate-y-0.5 relative group" href="#Education">
+                        Education
+                        <span class="absolute bottom-2 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-indigo-400 rounded-full transition-all duration-300 group-hover:w-8"></span>
+                    </a>
+                    <a class="px-5 py-3 text-white/90 font-medium rounded-full transition-all duration-300 hover:text-indigo-400 hover:bg-white/10 hover:-translate-y-0.5 relative group" href="#Contact">
+                        Contact
+                        <span class="absolute bottom-2 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-indigo-400 rounded-full transition-all duration-300 group-hover:w-8"></span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Mobile menu -->
+            <div id="mobile-menu" class="lg:hidden hidden bg-white/95 backdrop-blur-lg rounded-2xl mt-4 p-6 shadow-2xl border border-indigo-100">
+                <div class="space-y-2">
+                    <a class="block px-6 py-3 text-slate-800 font-medium rounded-xl transition-all duration-300 hover:bg-gradient-to-r hover:from-indigo-500 hover:to-purple-600 hover:text-white hover:translate-x-1" href="#Home">Home</a>
+                    <a class="block px-6 py-3 text-slate-800 font-medium rounded-xl transition-all duration-300 hover:bg-gradient-to-r hover:from-indigo-500 hover:to-purple-600 hover:text-white hover:translate-x-1" href="#About">About</a>
+                    <a class="block px-6 py-3 text-slate-800 font-medium rounded-xl transition-all duration-300 hover:bg-gradient-to-r hover:from-indigo-500 hover:to-purple-600 hover:text-white hover:translate-x-1" href="#Projects">Projects</a>
+                    <a class="block px-6 py-3 text-slate-800 font-medium rounded-xl transition-all duration-300 hover:bg-gradient-to-r hover:from-indigo-500 hover:to-purple-600 hover:text-white hover:translate-x-1" href="#WorkExperience">Experience</a>
+                    <a class="block px-6 py-3 text-slate-800 font-medium rounded-xl transition-all duration-300 hover:bg-gradient-to-r hover:from-indigo-500 hover:to-purple-600 hover:text-white hover:translate-x-1" href="#Education">Education</a>
+                    <a class="block px-6 py-3 text-slate-800 font-medium rounded-xl transition-all duration-300 hover:bg-gradient-to-r hover:from-indigo-500 hover:to-purple-600 hover:text-white hover:translate-x-1" href="#Contact">Contact</a>
+                </div>
             </div>
         </div>
     </nav>
 
     <!-- Main Content -->
-    <main>        <!-- Hero Section -->
-        <section id="Home" class="hero-section d-flex align-items-center justify-content-center">
-            <div class="container text-center text-white">
-                <div class="hero-content">
-                    <img src="Image/profile.jpg" class="img-fluid rounded-circle profile-pic mb-4" alt="Logan M. Panucat - Software Developer">
-                    <h1 class="display-4 mb-3">Hello, I'm Logan M. Panucat</h1>
-                    <p class="lead mb-4">Full-Stack Developer & IT Student passionate about creating innovative digital solutions</p>
-                    <div class="hero-badges mb-4">
-                        <span class="badge bg-light text-primary me-2 px-3 py-2">Web Development</span>
-                        <span class="badge bg-light text-primary me-2 px-3 py-2">Software Engineering</span>
-                        <span class="badge bg-light text-primary px-3 py-2">Problem Solver</span>
+    <main>
+        <!-- Hero Section -->
+        <section id="Home" class="min-h-screen bg-gradient-to-br from-indigo-600 via-purple-600 to-purple-700 flex items-center justify-center relative overflow-hidden">
+            <!-- Animated background elements -->
+            <div class="absolute inset-0 opacity-20">
+                <div class="absolute top-1/4 left-1/4 w-64 h-64 bg-white rounded-full mix-blend-multiply filter blur-xl animate-pulse"></div>
+                <div class="absolute top-3/4 right-1/4 w-64 h-64 bg-white rounded-full mix-blend-multiply filter blur-xl animate-pulse" style="animation-delay: 1s;"></div>
+                <div class="absolute bottom-1/4 left-1/3 w-64 h-64 bg-white rounded-full mix-blend-multiply filter blur-xl animate-pulse" style="animation-delay: 2s;"></div>
+            </div>
+
+            <div class="container mx-auto px-6 text-center text-white relative z-10">
+                <div class="space-y-8 opacity-0 animate-fade-in-up" style="animation-delay: 0.5s;">
+                    <!-- Profile Image -->
+                    <div class="flex justify-center mb-8">
+                        <img src="Image/profile.jpg" class="w-44 h-44 lg:w-52 lg:h-52 object-cover border-4 border-white/20 rounded-full transition-all duration-500 hover:scale-105 hover:rotate-3 hover:border-white/40 shadow-2xl" alt="Logan M. Panucat - Software Developer">
                     </div>
-                    <div class="hero-buttons">
-                        <a href="#About" class="btn btn-primary btn-lg me-3">
-                            <i class="fas fa-user me-2"></i>Learn More
+                    
+                    <!-- Main Title -->
+                    <h1 class="text-4xl lg:text-7xl font-black mb-6 bg-gradient-to-r from-white to-slate-200 bg-clip-text text-transparent">
+                        Hello, I'm Logan M. Panucat
+                    </h1>
+                    
+                    <!-- Subtitle -->
+                    <p class="text-lg lg:text-xl font-medium text-white/90 mb-12 max-w-2xl mx-auto leading-relaxed">
+                        Full-Stack Developer & IT Student passionate about creating innovative digital solutions
+                    </p>
+                    
+                    <!-- Skill Badges -->
+                    <div class="flex flex-wrap justify-center gap-3 mb-12">
+                        <span class="px-4 py-2 bg-white/20 text-white text-sm font-medium rounded-full backdrop-blur-sm border border-white/20 transition-all duration-300 hover:bg-white/30 hover:scale-105">Web Development</span>
+                        <span class="px-4 py-2 bg-white/20 text-white text-sm font-medium rounded-full backdrop-blur-sm border border-white/20 transition-all duration-300 hover:bg-white/30 hover:scale-105">Software Engineering</span>
+                        <span class="px-4 py-2 bg-white/20 text-white text-sm font-medium rounded-full backdrop-blur-sm border border-white/20 transition-all duration-300 hover:bg-white/30 hover:scale-105">Problem Solver</span>
+                    </div>
+                    
+                    <!-- CTA Buttons -->
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <a href="#About" class="inline-flex items-center px-8 py-4 bg-white text-indigo-600 font-semibold rounded-full transition-all duration-300 hover:bg-slate-50 hover:-translate-y-1 hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-white/30">
+                            <i class="fas fa-user mr-2"></i>Learn More
                         </a>
-                        <a href="#Contact" class="btn btn-outline-light btn-lg">
-                            <i class="fas fa-envelope me-2"></i>Contact Me
+                        <a href="#Contact" class="inline-flex items-center px-8 py-4 bg-transparent text-white font-semibold rounded-full border-2 border-white/60 transition-all duration-300 hover:bg-white hover:text-indigo-600 hover:-translate-y-1 hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-white/30">
+                            <i class="fas fa-envelope mr-2"></i>Contact Me
                         </a>
                     </div>
                 </div>
@@ -74,101 +137,114 @@
         </section>
 
         <!-- About Section -->
-        <section id="About" class="about-section py-5">
-            <div class="container fade-in">
-                <h2 class="mb-4 text-center">About Me</h2>
-                <div class="row">
-                    <div class="col-md-6">
-                        <p>Hello! I'm Logan M. Panucat, a third-year Information Technology student at CTU Naga Extension Campus. I have a keen interest in software development, web design, and technology innovation. My journey in IT has equipped me with various skills in programming languages and problem-solving. I'm always eager to learn new technologies and take on challenging projects that push my boundaries.</p>
-                        <p>During my studies, I've had the opportunity to work on various projects that have helped me develop skills in both frontend and backend development. I believe that teamwork is essential in creating effective solutions. I am committed to learning and staying updated with the latest trends and best practices in the tech industry.</p>
-                        <p>In my free time, I enjoy contributing to open-source projects, learning new programming languages, and exploring the latest trends in technology.</p>
-                        <!-- Personal Details -->
-                        <div class="mt-4">
-                            <h3 class="mb-3">Personal Details</h3>
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item bg-transparent text-white d-flex justify-content-between align-items-center">
-                                    <strong>Address:</strong>
-                                    <span>Carcar City, Cebu</span>
-                                </li>
-                                <li class="list-group-item bg-transparent text-white d-flex justify-content-between align-items-center">
-                                    <strong>Postal Code:</strong>
-                                    <span>6019</span>
-                                </li>
-                                <li class="list-group-item bg-transparent text-white d-flex justify-content-between align-items-center">
-                                    <strong>Birth Date:</strong>
-                                    <span>September 08, 2002</span>
-                                </li>
-                                <li class="list-group-item bg-transparent text-white d-flex justify-content-between align-items-center">
-                                    <strong>Age:</strong>
-                                    <span>22 y/o</span>
-                                </li>
-                            </ul>
+        <section id="About" class="py-20 lg:py-32 bg-slate-50 relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-r from-indigo-50/50 to-purple-50/50"></div>
+            
+            <div class="container mx-auto px-6 relative z-10">
+                <!-- Section Title -->
+                <div class="text-center mb-16 lg:mb-20">
+                    <h2 class="text-4xl lg:text-6xl font-bold text-slate-900 relative inline-block">
+                        About Me
+                        <div class="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-20 h-1 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full"></div>
+                    </h2>
+                </div>
+                
+                <div class="grid lg:grid-cols-2 gap-12 lg:gap-16">
+                    <!-- Left Column - About Text & Details -->
+                    <div class="space-y-6">
+                        <div class="space-y-6">
+                            <p class="text-lg text-slate-600 leading-relaxed">
+                                Hello! I'm Logan M. Panucat, a third-year Information Technology student at CTU Naga Extension Campus. I have a keen interest in software development, web design, and technology innovation.
+                            </p>
+                            <p class="text-lg text-slate-600 leading-relaxed">
+                                During my studies, I've had the opportunity to work on various projects that have helped me develop skills in both frontend and backend development. I believe that teamwork is essential in creating effective solutions.
+                            </p>
+                            <p class="text-lg text-slate-600 leading-relaxed">
+                                In my free time, I enjoy contributing to open-source projects, learning new programming languages, and exploring the latest trends in technology.
+                            </p>
                         </div>
-                    </div>                    <div class="col-md-6">
-                        <h3 class="mb-4">Technical Skills</h3>
-                        <div class="row">
+                        
+                        <!-- Personal Details -->
+                        <div class="mt-8">
+                            <h3 class="text-2xl font-bold text-slate-800 mb-6">Personal Details</h3>
+                            <div class="space-y-3">
+                                <div class="flex justify-between items-center py-3 px-4 bg-white/80 backdrop-blur-sm rounded-xl border border-slate-200/80 transition-all duration-300 hover:bg-white hover:shadow-md">
+                                    <strong class="text-slate-800 font-semibold">Address:</strong>
+                                    <span class="text-slate-600">Carcar City, Cebu</span>
+                                </div>
+                                <div class="flex justify-between items-center py-3 px-4 bg-white/80 backdrop-blur-sm rounded-xl border border-slate-200/80 transition-all duration-300 hover:bg-white hover:shadow-md">
+                                    <strong class="text-slate-800 font-semibold">Postal Code:</strong>
+                                    <span class="text-slate-600">6019</span>
+                                </div>
+                                <div class="flex justify-between items-center py-3 px-4 bg-white/80 backdrop-blur-sm rounded-xl border border-slate-200/80 transition-all duration-300 hover:bg-white hover:shadow-md">
+                                    <strong class="text-slate-800 font-semibold">Birth Date:</strong>
+                                    <span class="text-slate-600">September 08, 2002</span>
+                                </div>
+                                <div class="flex justify-between items-center py-3 px-4 bg-white/80 backdrop-blur-sm rounded-xl border border-slate-200/80 transition-all duration-300 hover:bg-white hover:shadow-md">
+                                    <strong class="text-slate-800 font-semibold">Age:</strong>
+                                    <span class="text-slate-600">22 y/o</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Right Column - Skills -->
+                    <div>
+                        <h3 class="text-2xl font-bold text-slate-800 mb-8">Technical Skills</h3>
+                        <div class="grid sm:grid-cols-2 gap-6">
                             <!-- Frontend Skills -->
-                            <div class="col-lg-6 col-md-12 mb-4">
-                                <div class="card skill-card text-center h-100">
-                                    <div class="card-body">
-                                        <i class="fab fa-html5 fa-3x mb-3"></i>
-                                        <h5 class="card-title">Frontend</h5>
-                                        <p class="card-text">HTML5, CSS3, JavaScript, Bootstrap</p>
-                                        <div class="skill-level">
-                                            <div class="progress mb-2">
-                                                <div class="progress-bar bg-primary" style="width: 85%"></div>
-                                            </div>
-                                            <small class="text-muted">Advanced</small>
-                                        </div>
+                            <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-slate-200/80 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:bg-white group relative overflow-hidden">
+                                <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-indigo-600 to-purple-600 scale-x-0 transition-transform duration-300 origin-left group-hover:scale-x-100"></div>
+                                <div class="text-center">
+                                    <i class="fab fa-html5 text-5xl text-indigo-600 mb-4 transition-all duration-300 group-hover:scale-110 group-hover:text-indigo-700"></i>
+                                    <h5 class="text-xl font-semibold text-slate-800 mb-3">Frontend</h5>
+                                    <p class="text-slate-600 mb-4">HTML5, CSS3, JavaScript, Bootstrap</p>
+                                    <div class="w-full bg-slate-200 rounded-full h-2 mb-3 overflow-hidden">
+                                        <div class="h-full rounded-full bg-indigo-600 transition-all duration-1000 ease-out" style="width: 85%"></div>
                                     </div>
+                                    <small class="text-slate-500 font-medium">Advanced</small>
                                 </div>
                             </div>
+                            
                             <!-- Backend Skills -->
-                            <div class="col-lg-6 col-md-12 mb-4">
-                                <div class="card skill-card text-center h-100">
-                                    <div class="card-body">
-                                        <i class="fas fa-code fa-3x mb-3"></i>
-                                        <h5 class="card-title">Backend</h5>
-                                        <p class="card-text">C#, Java, VB.NET, PHP</p>
-                                        <div class="skill-level">
-                                            <div class="progress mb-2">
-                                                <div class="progress-bar bg-success" style="width: 80%"></div>
-                                            </div>
-                                            <small class="text-muted">Advanced</small>
-                                        </div>
+                            <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-slate-200/80 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:bg-white group relative overflow-hidden">
+                                <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-indigo-600 to-purple-600 scale-x-0 transition-transform duration-300 origin-left group-hover:scale-x-100"></div>
+                                <div class="text-center">
+                                    <i class="fas fa-code text-5xl text-emerald-600 mb-4 transition-all duration-300 group-hover:scale-110 group-hover:text-emerald-700"></i>
+                                    <h5 class="text-xl font-semibold text-slate-800 mb-3">Backend</h5>
+                                    <p class="text-slate-600 mb-4">C#, Java, VB.NET, PHP</p>
+                                    <div class="w-full bg-slate-200 rounded-full h-2 mb-3 overflow-hidden">
+                                        <div class="h-full rounded-full bg-emerald-600 transition-all duration-1000 ease-out" style="width: 80%"></div>
                                     </div>
+                                    <small class="text-slate-500 font-medium">Advanced</small>
                                 </div>
                             </div>
+                            
                             <!-- Database Skills -->
-                            <div class="col-lg-6 col-md-12 mb-4">
-                                <div class="card skill-card text-center h-100">
-                                    <div class="card-body">
-                                        <i class="fas fa-database fa-3x mb-3"></i>
-                                        <h5 class="card-title">Database</h5>
-                                        <p class="card-text">MySQL, SQL Server</p>
-                                        <div class="skill-level">
-                                            <div class="progress mb-2">
-                                                <div class="progress-bar bg-info" style="width: 75%"></div>
-                                            </div>
-                                            <small class="text-muted">Intermediate</small>
-                                        </div>
+                            <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-slate-200/80 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:bg-white group relative overflow-hidden">
+                                <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-indigo-600 to-purple-600 scale-x-0 transition-transform duration-300 origin-left group-hover:scale-x-100"></div>
+                                <div class="text-center">
+                                    <i class="fas fa-database text-5xl text-cyan-600 mb-4 transition-all duration-300 group-hover:scale-110 group-hover:text-cyan-700"></i>
+                                    <h5 class="text-xl font-semibold text-slate-800 mb-3">Database</h5>
+                                    <p class="text-slate-600 mb-4">MySQL, SQL Server</p>
+                                    <div class="w-full bg-slate-200 rounded-full h-2 mb-3 overflow-hidden">
+                                        <div class="h-full rounded-full bg-cyan-600 transition-all duration-1000 ease-out" style="width: 75%"></div>
                                     </div>
+                                    <small class="text-slate-500 font-medium">Intermediate</small>
                                 </div>
                             </div>
+                            
                             <!-- Tools -->
-                            <div class="col-lg-6 col-md-12 mb-4">
-                                <div class="card skill-card text-center h-100">
-                                    <div class="card-body">
-                                        <i class="fas fa-tools fa-3x mb-3"></i>
-                                        <h5 class="card-title">Tools & Platforms</h5>
-                                        <p class="card-text">Git, GitHub, VS Code, Visual Studio</p>
-                                        <div class="skill-level">
-                                            <div class="progress mb-2">
-                                                <div class="progress-bar bg-warning" style="width: 90%"></div>
-                                            </div>
-                                            <small class="text-muted">Expert</small>
-                                        </div>
+                            <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-slate-200/80 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:bg-white group relative overflow-hidden">
+                                <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-indigo-600 to-purple-600 scale-x-0 transition-transform duration-300 origin-left group-hover:scale-x-100"></div>
+                                <div class="text-center">
+                                    <i class="fas fa-tools text-5xl text-amber-600 mb-4 transition-all duration-300 group-hover:scale-110 group-hover:text-amber-700"></i>
+                                    <h5 class="text-xl font-semibold text-slate-800 mb-3">Tools & Platforms</h5>
+                                    <p class="text-slate-600 mb-4">Git, GitHub, VS Code, Visual Studio</p>
+                                    <div class="w-full bg-slate-200 rounded-full h-2 mb-3 overflow-hidden">
+                                        <div class="h-full rounded-full bg-amber-600 transition-all duration-1000 ease-out" style="width: 90%"></div>
                                     </div>
+                                    <small class="text-slate-500 font-medium">Expert</small>
                                 </div>
                             </div>
                         </div>
@@ -178,75 +254,117 @@
         </section>
 
         <!-- Work Experience Section -->
-        <section id="WorkExperience" class="work-experience-section py-5 bg-dark">
-            <div class="container fade-in">
-                <h2 class="mb-4 text-center text-white">Work Experience</h2>
-                <div class="timeline">
-                    <!-- Work Experience Item 1 -->
-                    <div class="timeline-item">
-                        <div class="timeline-icon">
-                            <i class="fas fa-briefcase"></i>
-                        </div>
-                        <div class="timeline-content">
-                            <h3 class="text-primary">Service Crew</h3>
-                            <h5 class="text-white"><strong>Jollibee Drive Thru @ Gaisano Grand Carcar</strong></h5>
-                            <span class="badge bg-success text-dark">February 2022 - September 2022</span>
-                            <p class="mt-2"><strong>Duration:</strong> February 2022 - September 2022</p>
-                            <p>Responsible for taking orders, preparing food, ensuring customer satisfaction, and maintaining cleanliness in the drive-thru area. Developed strong communication and teamwork skills while managing high-pressure situations.</p>
+        <section id="WorkExperience" class="py-20 lg:py-32 bg-slate-900 text-white relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-r from-indigo-900/20 to-purple-900/20"></div>
+            
+            <div class="container mx-auto px-6 relative z-10">
+                <!-- Section Title -->
+                <div class="text-center mb-16 lg:mb-20">
+                    <h2 class="text-4xl lg:text-6xl font-bold text-white relative inline-block">
+                        Work Experience
+                        <div class="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-20 h-1 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full"></div>
+                    </h2>
+                </div>
+                
+                <div class="max-w-4xl mx-auto">
+                    <div class="relative">
+                        <!-- Timeline line -->
+                        <div class="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-indigo-600 to-purple-600"></div>
+                        
+                        <!-- Timeline item -->
+                        <div class="relative mb-12 ml-16">
+                            <!-- Timeline icon -->
+                            <div class="absolute -left-20 top-0 w-12 h-12 bg-indigo-600 rounded-full flex items-center justify-center text-white shadow-lg border-4 border-white transition-all duration-300 hover:scale-110 hover:bg-indigo-700">
+                                <i class="fas fa-briefcase"></i>
+                            </div>
+                            <!-- Timeline content -->
+                            <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 transition-all duration-300 hover:bg-white/20 hover:transform hover:scale-105">
+                                <h3 class="text-2xl font-bold text-indigo-400 mb-2">Service Crew</h3>
+                                <h5 class="text-xl font-semibold text-white mb-3">Jollibee Drive Thru @ Gaisano Grand Carcar</h5>
+                                <span class="inline-block px-4 py-2 bg-emerald-600 text-white text-sm font-medium rounded-full mb-4">February 2022 - September 2022</span>
+                                <p class="text-slate-300 leading-relaxed">
+                                    Responsible for taking orders, preparing food, ensuring customer satisfaction, and maintaining cleanliness in the drive-thru area. Developed strong communication and teamwork skills while managing high-pressure situations.
+                                </p>
+                            </div>
                         </div>
                     </div>
-                    <!-- Add more work experiences if needed -->
                 </div>
             </div>
         </section>
 
         <!-- Education Section -->
-        <section id="Education" class="education-section py-5">
-            <div class="container fade-in">
-                <h2 class="mb-4 text-center">Education</h2>
-                <div class="timeline">
-                    <!-- Education Item 1 -->
-                    <div class="timeline-item">
-                        <div class="timeline-icon">
-                            <i class="fas fa-school"></i>
-                        </div>
-                        <div class="timeline-content">
-                            <h3>Elementary</h3>
-                            <h5>2008 - 2016</h5>
-                            <p>Completed Elementary Education, laying the foundation for academic and personal growth.</p>
-                        </div>
-                    </div>
-                    <!-- Education Item 2 -->
-                    <div class="timeline-item">
-                        <div class="timeline-icon">
-                            <i class="fas fa-graduation-cap"></i>
-                        </div>
-                        <div class="timeline-content">
-                            <h3>High School</h3>
-                            <h5>2016 - 2020</h5>
-                            <p>Completed High School Education, focusing on core academic subjects and extracurricular activities.</p>
-                        </div>
-                    </div>
-                    <!-- Education Item 3 -->
-                    <div class="timeline-item">
-                        <div class="timeline-icon">
-                            <i class="fas fa-laptop-code"></i>
-                        </div>
-                        <div class="timeline-content">
-                            <h3>Senior High School Strand (ICT)</h3>
-                            <h5>2020 - 2022</h5>
-                            <p>Specialized in Information and Communication Technology, gaining skills in programming, web development, and IT management.</p>
-                        </div>
-                    </div>
-                    <!-- Education Item 4 -->
-                    <div class="timeline-item">
-                        <div class="timeline-icon">
-                            <i class="fas fa-university"></i>
-                        </div>
-                        <div class="timeline-content">
-                            <h3>College</h3>
-                            <h5>Present</h5>
-                            <p>Pursuing a Bachelor's degree in Information Technology at CTU Naga Extension Campus, focusing on advanced topics in software development, database management, and system analysis.</p>
+        <section id="Education" class="py-20 lg:py-32 bg-white relative overflow-hidden">
+            <div class="container mx-auto px-6 relative z-10">
+                <!-- Section Title -->
+                <div class="text-center mb-16 lg:mb-20">
+                    <h2 class="text-4xl lg:text-6xl font-bold text-slate-900 relative inline-block">
+                        Education
+                        <div class="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-20 h-1 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full"></div>
+                    </h2>
+                </div>
+                
+                <div class="max-w-4xl mx-auto">
+                    <div class="relative">
+                        <!-- Timeline line -->
+                        <div class="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-indigo-600 to-purple-600"></div>
+                        
+                        <!-- Education Items -->
+                        <div class="space-y-12">
+                            <!-- Elementary -->
+                            <div class="relative ml-16">
+                                <div class="absolute -left-20 top-0 w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center text-white shadow-lg border-4 border-white transition-all duration-300 hover:scale-110 hover:bg-blue-700">
+                                    <i class="fas fa-school"></i>
+                                </div>
+                                <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-slate-200/80 transition-all duration-300 hover:bg-white hover:shadow-lg hover:transform hover:scale-105">
+                                    <h3 class="text-2xl font-bold text-slate-800 mb-2">Elementary</h3>
+                                    <h5 class="text-lg font-semibold text-slate-600 mb-3">2008 - 2016</h5>
+                                    <p class="text-slate-600 leading-relaxed">
+                                        Completed Elementary Education, laying the foundation for academic and personal growth.
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <!-- High School -->
+                            <div class="relative ml-16">
+                                <div class="absolute -left-20 top-0 w-12 h-12 bg-green-600 rounded-full flex items-center justify-center text-white shadow-lg border-4 border-white transition-all duration-300 hover:scale-110 hover:bg-green-700">
+                                    <i class="fas fa-graduation-cap"></i>
+                                </div>
+                                <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-slate-200/80 transition-all duration-300 hover:bg-white hover:shadow-lg hover:transform hover:scale-105">
+                                    <h3 class="text-2xl font-bold text-slate-800 mb-2">High School</h3>
+                                    <h5 class="text-lg font-semibold text-slate-600 mb-3">2016 - 2020</h5>
+                                    <p class="text-slate-600 leading-relaxed">
+                                        Completed High School Education, focusing on core academic subjects and extracurricular activities.
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <!-- Senior High School -->
+                            <div class="relative ml-16">
+                                <div class="absolute -left-20 top-0 w-12 h-12 bg-purple-600 rounded-full flex items-center justify-center text-white shadow-lg border-4 border-white transition-all duration-300 hover:scale-110 hover:bg-purple-700">
+                                    <i class="fas fa-laptop-code"></i>
+                                </div>
+                                <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-slate-200/80 transition-all duration-300 hover:bg-white hover:shadow-lg hover:transform hover:scale-105">
+                                    <h3 class="text-2xl font-bold text-slate-800 mb-2">Senior High School Strand (ICT)</h3>
+                                    <h5 class="text-lg font-semibold text-slate-600 mb-3">2020 - 2022</h5>
+                                    <p class="text-slate-600 leading-relaxed">
+                                        Specialized in Information and Communication Technology, gaining skills in programming, web development, and IT management.
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <!-- College -->
+                            <div class="relative ml-16">
+                                <div class="absolute -left-20 top-0 w-12 h-12 bg-indigo-600 rounded-full flex items-center justify-center text-white shadow-lg border-4 border-white transition-all duration-300 hover:scale-110 hover:bg-indigo-700">
+                                    <i class="fas fa-university"></i>
+                                </div>
+                                <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-slate-200/80 transition-all duration-300 hover:bg-white hover:shadow-lg hover:transform hover:scale-105">
+                                    <h3 class="text-2xl font-bold text-slate-800 mb-2">College</h3>
+                                    <h5 class="text-lg font-semibold text-slate-600 mb-3">Present</h5>
+                                    <p class="text-slate-600 leading-relaxed">
+                                        Pursuing a Bachelor's degree in Information Technology at CTU Naga Extension Campus, focusing on advanced topics in software development, database management, and system analysis.
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -254,165 +372,199 @@
         </section>
 
         <!-- Projects Section -->
-        <section id="Projects" class="projects-section py-5 bg-light">
-            <div class="container fade-in">
-                <h2 class="mb-4 text-center">Projects</h2>
-                <div class="row">                    <!-- Project One -->
-                    <div class="col-md-6 mb-4">
-                        <div class="card project-card h-100">
-                            <img src="Image/project1.png" class="card-img-top" alt="Mom's Food Delicacies Website">
-                            <div class="card-body d-flex flex-column">
-                                <h5 class="card-title">Mom's Food Delicacies</h5>
-                                <div class="tech-stack mb-3">
-                                    <span class="tech-tag">HTML5</span>
-                                    <span class="tech-tag">CSS3</span>
-                                    <span class="tech-tag">JavaScript</span>
-                                    <span class="tech-tag">PHP</span>
-                                    <span class="tech-tag">MySQL</span>
-                                </div>
-                                <p class="card-text">A comprehensive website for food business management with admin panel, inventory tracking, and order processing capabilities.</p>
-                                <button type="button" class="btn btn-primary mt-auto" data-bs-toggle="modal" data-bs-target="#project1Modal">
-                                    <i class="fas fa-eye me-2"></i>View Details
-                                </button>
+        <section id="Projects" class="py-20 lg:py-32 bg-slate-50 relative overflow-hidden">
+            <div class="container mx-auto px-6 relative z-10">
+                <!-- Section Title -->
+                <div class="text-center mb-16 lg:mb-20">
+                    <h2 class="text-4xl lg:text-6xl font-bold text-slate-900 relative inline-block">
+                        Projects
+                        <div class="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-20 h-1 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full"></div>
+                    </h2>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-8 lg:gap-12">
+                    <!-- Project One -->
+                    <div class="bg-white rounded-3xl shadow-lg overflow-hidden transition-all duration-500 hover:-translate-y-3 hover:shadow-2xl group">
+                        <div class="relative overflow-hidden">
+                            <img src="Image/project1.png" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-105" alt="Mom's Food Delicacies Website">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
+                        </div>
+                        <div class="p-8">
+                            <h5 class="text-2xl font-bold text-slate-800 mb-4">Mom's Food Delicacies</h5>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="px-3 py-1 bg-indigo-100 text-indigo-700 text-xs font-medium rounded-full transition-all duration-300 hover:bg-indigo-600 hover:text-white hover:-translate-y-0.5">HTML5</span>
+                                <span class="px-3 py-1 bg-indigo-100 text-indigo-700 text-xs font-medium rounded-full transition-all duration-300 hover:bg-indigo-600 hover:text-white hover:-translate-y-0.5">CSS3</span>
+                                <span class="px-3 py-1 bg-indigo-100 text-indigo-700 text-xs font-medium rounded-full transition-all duration-300 hover:bg-indigo-600 hover:text-white hover:-translate-y-0.5">JavaScript</span>
+                                <span class="px-3 py-1 bg-indigo-100 text-indigo-700 text-xs font-medium rounded-full transition-all duration-300 hover:bg-indigo-600 hover:text-white hover:-translate-y-0.5">PHP</span>
+                                <span class="px-3 py-1 bg-indigo-100 text-indigo-700 text-xs font-medium rounded-full transition-all duration-300 hover:bg-indigo-600 hover:text-white hover:-translate-y-0.5">MySQL</span>
                             </div>
+                            <p class="text-slate-600 leading-relaxed mb-6">
+                                A comprehensive website for food business management with admin panel, inventory tracking, and order processing capabilities.
+                            </p>
+                            <button type="button" class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold rounded-full transition-all duration-300 hover:from-indigo-700 hover:to-purple-700 hover:-translate-y-1 hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-indigo-300" onclick="openModal('project1Modal')">
+                                <i class="fas fa-eye mr-2"></i>View Details
+                            </button>
                         </div>
                     </div>
+                    
                     <!-- Project Two -->
-                    <div class="col-md-6 mb-4">
-                        <div class="card project-card h-100">
-                            <img src="Image/project2.png" class="card-img-top" alt="Mom's Food Delicacies Desktop App">
-                            <div class="card-body d-flex flex-column">
-                                <h5 class="card-title">Mom's Food Delicacies WUI</h5>
-                                <div class="tech-stack mb-3">
-                                    <span class="tech-tag">VB.NET</span>
-                                    <span class="tech-tag">Windows Forms</span>
-                                    <span class="tech-tag">SQL Server</span>
-                                </div>
-                                <p class="card-text">A desktop application for comprehensive business management including stock control, order tracking, and customer relationship management.</p>
-                                <button type="button" class="btn btn-primary mt-auto" data-bs-toggle="modal" data-bs-target="#project2Modal">
-                                    <i class="fas fa-eye me-2"></i>View Details
-                                </button>
+                    <div class="bg-white rounded-3xl shadow-lg overflow-hidden transition-all duration-500 hover:-translate-y-3 hover:shadow-2xl group">
+                        <div class="relative overflow-hidden">
+                            <img src="Image/project2.png" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-105" alt="Mom's Food Delicacies Desktop App">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
+                        </div>
+                        <div class="p-8">
+                            <h5 class="text-2xl font-bold text-slate-800 mb-4">Mom's Food Delicacies WUI</h5>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="px-3 py-1 bg-indigo-100 text-indigo-700 text-xs font-medium rounded-full transition-all duration-300 hover:bg-indigo-600 hover:text-white hover:-translate-y-0.5">VB.NET</span>
+                                <span class="px-3 py-1 bg-indigo-100 text-indigo-700 text-xs font-medium rounded-full transition-all duration-300 hover:bg-indigo-600 hover:text-white hover:-translate-y-0.5">Windows Forms</span>
+                                <span class="px-3 py-1 bg-indigo-100 text-indigo-700 text-xs font-medium rounded-full transition-all duration-300 hover:bg-indigo-600 hover:text-white hover:-translate-y-0.5">SQL Server</span>
                             </div>
-                        </div>
-                    </div>
-                    <!-- Add more projects as needed -->
-                </div>
-            </div>
-
-            <!-- Project One Modal -->
-            <div class="modal fade" id="project1Modal" tabindex="-1" aria-labelledby="project1ModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg modal-dialog-centered">
-                    <div class="modal-content bg-dark text-white">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="project1ModalLabel">Project One: Mom's Food Delicacies</h5>
-                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <img src="Image/project1.png" class="img-fluid mb-3" alt="Project 1 Image">
-                            <p><strong>Description:</strong> Mom's Food Delicacies is a comprehensive website designed to enhance the online presence of a food business. It includes features such as an admin panel for managing stock, processing orders, and tracking inventory. Administrators can easily update product listings, monitor stock levels, and handle supplier information through an intuitive interface.</p>
-                            <p><strong>Technologies Used:</strong> HTML, CSS, JavaScript, Bootstrap, PHP, MySQL.</p>
-                            <p><strong>Key Features:</strong></p>
-                            <ul>
-                                <li>Responsive design for mobile and desktop devices.</li>
-                                <li>Secure admin panel with authentication.</li>
-                                <li>Real-time stock and inventory updates.</li>
-                                <li>Customer order tracking system.</li>
-                            </ul>
+                            <p class="text-slate-600 leading-relaxed mb-6">
+                                A desktop application for comprehensive business management including stock control, order tracking, and customer relationship management.
+                            </p>
+                            <button type="button" class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold rounded-full transition-all duration-300 hover:from-indigo-700 hover:to-purple-700 hover:-translate-y-1 hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-indigo-300" onclick="openModal('project2Modal')">
+                                <i class="fas fa-eye mr-2"></i>View Details
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Project Two Modal -->
-            <div class="modal fade" id="project2Modal" tabindex="-1" aria-labelledby="project2ModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg modal-dialog-centered">
-                    <div class="modal-content bg-dark text-white">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="project2ModalLabel">Project Two: Mom's Food Delicacies WUI</h5>
-                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <img src="Image/project2.png" class="img-fluid mb-3" alt="Project 2 Image">
-                            <p><strong>Description:</strong> This desktop application is built using Visual Basic (VB) and Windows Forms Application (WFA) framework. It aims to streamline the operations of a small food business by managing stock levels, tracking orders, and facilitating customer interactions efficiently.</p>
-                            <p><strong>Technologies Used:</strong> Visual Basic, Windows Forms Application, SQL Server.</p>
-                            <p><strong>Key Features:</strong></p>
-                            <ul>
-                                <li>User-friendly interface for easy navigation.</li>
-                                <li>Real-time stock management and inventory tracking.</li>
-                                <li>Order placement and tracking system.</li>
-                                <li>Customer management and interaction logs.</li>
-                            </ul>
-                        </div>
+            <!-- Project Modals -->
+            <div id="project1Modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 opacity-0 invisible transition-all duration-300">
+                <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="closeModal('project1Modal')"></div>
+                <div class="relative bg-slate-800 rounded-3xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto border border-slate-700 transform scale-95 transition-transform duration-300">
+                    <div class="flex justify-between items-center p-8 border-b border-slate-700">
+                        <h5 class="text-2xl font-bold text-white">Project One: Mom's Food Delicacies</h5>
+                        <button type="button" class="w-10 h-10 flex items-center justify-center text-slate-400 hover:text-white rounded-full hover:bg-slate-700 transition-all duration-300" onclick="closeModal('project1Modal')">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="p-8">
+                        <img src="Image/project1.png" class="w-full rounded-2xl mb-6 shadow-lg" alt="Project 1 Image">
+                        <p class="text-slate-300 leading-relaxed mb-4">
+                            <strong>Description:</strong> Mom's Food Delicacies is a comprehensive website designed to enhance the online presence of a food business. It includes features such as an admin panel for managing stock, processing orders, and tracking inventory.
+                        </p>
+                        <p class="text-slate-300 leading-relaxed mb-4">
+                            <strong>Technologies Used:</strong> HTML, CSS, JavaScript, Bootstrap, PHP, MySQL.
+                        </p>
+                        <p class="text-slate-300 leading-relaxed mb-4"><strong>Key Features:</strong></p>
+                        <ul class="text-slate-300 space-y-2 ml-6">
+                            <li class="list-disc">Responsive design for mobile and desktop devices.</li>
+                            <li class="list-disc">Secure admin panel with authentication.</li>
+                            <li class="list-disc">Real-time stock and inventory updates.</li>
+                            <li class="list-disc">Customer order tracking system.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div id="project2Modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 opacity-0 invisible transition-all duration-300">
+                <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="closeModal('project2Modal')"></div>
+                <div class="relative bg-slate-800 rounded-3xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto border border-slate-700 transform scale-95 transition-transform duration-300">
+                    <div class="flex justify-between items-center p-8 border-b border-slate-700">
+                        <h5 class="text-2xl font-bold text-white">Project Two: Mom's Food Delicacies WUI</h5>
+                        <button type="button" class="w-10 h-10 flex items-center justify-center text-slate-400 hover:text-white rounded-full hover:bg-slate-700 transition-all duration-300" onclick="closeModal('project2Modal')">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="p-8">
+                        <img src="Image/project2.png" class="w-full rounded-2xl mb-6 shadow-lg" alt="Project 2 Image">
+                        <p class="text-slate-300 leading-relaxed mb-4">
+                            <strong>Description:</strong> This desktop application is built using Visual Basic (VB) and Windows Forms Application (WFA) framework. It aims to streamline the operations of a small food business.
+                        </p>
+                        <p class="text-slate-300 leading-relaxed mb-4">
+                            <strong>Technologies Used:</strong> Visual Basic, Windows Forms Application, SQL Server.
+                        </p>
+                        <p class="text-slate-300 leading-relaxed mb-4"><strong>Key Features:</strong></p>
+                        <ul class="text-slate-300 space-y-2 ml-6">
+                            <li class="list-disc">User-friendly interface for easy navigation.</li>
+                            <li class="list-disc">Real-time stock management and inventory tracking.</li>
+                            <li class="list-disc">Order placement and tracking system.</li>
+                            <li class="list-disc">Customer management and interaction logs.</li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- Contact Section -->
-        <section id="Contact" class="contact-section py-5">
-            <div class="container fade-in">
-                <h2 class="mb-4 text-center">Contact Me</h2>
-                <form id="contact-form" novalidate>
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label for="name" class="form-label">Name <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="name" placeholder="Your Name" required>
-                            <div class="invalid-feedback">
-                                Please enter your name.
+        <section id="Contact" class="py-20 lg:py-32 bg-gradient-to-br from-slate-900 to-slate-800 text-white relative overflow-hidden">
+            <div class="container mx-auto px-6 relative z-10">
+                <!-- Section Title -->
+                <div class="text-center mb-16 lg:mb-20">
+                    <h2 class="text-4xl lg:text-6xl font-bold text-white relative inline-block">
+                        Contact Me
+                        <div class="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-20 h-1 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full"></div>
+                    </h2>
+                </div>
+                
+                <div class="max-w-2xl mx-auto">
+                    <form id="contact-form" class="bg-white/10 backdrop-blur-lg rounded-3xl p-8 border border-white/20 shadow-2xl" novalidate>
+                        <div class="grid md:grid-cols-2 gap-6 mb-6">
+                            <div class="relative">
+                                <label for="name" class="block text-sm font-semibold text-white mb-2">Name <span class="text-red-400">*</span></label>
+                                <input type="text" class="w-full px-4 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl text-white placeholder-white/60 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent hover:bg-white/20" id="name" placeholder="Your Name" required>
+                                <div class="text-red-400 text-sm mt-1 opacity-0 transition-opacity duration-300">Please enter your name.</div>
+                            </div>
+                            <div class="relative">
+                                <label for="email" class="block text-sm font-semibold text-white mb-2">Email <span class="text-red-400">*</span></label>
+                                <input type="email" class="w-full px-4 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl text-white placeholder-white/60 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent hover:bg-white/20" id="email" placeholder="name@example.com" required>
+                                <div class="text-red-400 text-sm mt-1 opacity-0 transition-opacity duration-300">Please enter a valid email address.</div>
                             </div>
                         </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="email" class="form-label">Email address <span class="text-danger">*</span></label>
-                            <input type="email" class="form-control" id="email" placeholder="name@example.com" required>
-                            <div class="invalid-feedback">
-                                Please enter a valid email address.
-                            </div>
+                        <div class="relative mb-6">
+                            <label for="subject" class="block text-sm font-semibold text-white mb-2">Subject <span class="text-red-400">*</span></label>
+                            <input type="text" class="w-full px-4 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl text-white placeholder-white/60 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent hover:bg-white/20" id="subject" placeholder="Subject" required>
+                            <div class="text-red-400 text-sm mt-1 opacity-0 transition-opacity duration-300">Please enter a subject.</div>
                         </div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="subject" class="form-label">Subject <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="subject" placeholder="Subject" required>
-                        <div class="invalid-feedback">
-                            Please enter a subject.
+                        <div class="relative mb-8">
+                            <label for="message" class="block text-sm font-semibold text-white mb-2">Message <span class="text-red-400">*</span></label>
+                            <textarea class="w-full px-4 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl text-white placeholder-white/60 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent hover:bg-white/20" id="message" rows="5" placeholder="Your Message" required></textarea>
+                            <div class="text-red-400 text-sm mt-1 opacity-0 transition-opacity duration-300">Please enter your message.</div>
                         </div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="message" class="form-label">Message <span class="text-danger">*</span></label>
-                        <textarea class="form-control" id="message" rows="5" placeholder="Your Message" required></textarea>
-                        <div class="invalid-feedback">
-                            Please enter your message.
-                        </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Send Message</button>
-                    <div id="form-message" class="form-message mt-3"></div>
-                </form>
+                        <button type="submit" class="w-full inline-flex items-center justify-center px-8 py-4 bg-white text-indigo-600 font-semibold rounded-full transition-all duration-300 hover:bg-slate-50 hover:-translate-y-1 hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-white/30">
+                            <i class="fas fa-paper-plane mr-2"></i>Send Message
+                        </button>
+                        <div id="form-message" class="text-center font-medium mt-4"></div>
+                    </form>
+                </div>
             </div>
         </section>
     </main>
 
     <!-- Footer -->
-    <footer class="footer py-4 bg-dark text-white">
-        <div class="container text-center">
-            <p class="mb-2">© 2024 Logan M. Panucat</p>
-            <div class="social-icons">
-                <a href="https://www.facebook.com/Cflogan.Panucat2nd" class="me-3" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                <a href="https://www.linkedin.com/in/logan-panucat-b319562a9/" class="me-3" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                <a href="https://github.com/Ezgaminglogan" class="me-3" aria-label="GitHub"><i class="fab fa-github"></i></a>
-                <a href="mailto:logan.panucat2@gmail.com" class="me-3" aria-label="Email"><i class="fas fa-envelope"></i></a>
-                <a href="https://www.youtube.com/@loganpanucat7771" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+    <footer class="py-12 bg-slate-900 text-white border-t border-slate-800">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-slate-400 mb-6">© 2024 Logan M. Panucat</p>
+            <div class="flex justify-center space-x-6">
+                <a href="https://www.facebook.com/Cflogan.Panucat2nd" class="w-12 h-12 flex items-center justify-center text-slate-400 hover:text-white bg-slate-800 hover:bg-gradient-to-r hover:from-indigo-600 hover:to-purple-600 rounded-full transition-all duration-300 hover:scale-110 hover:shadow-lg" aria-label="Facebook">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/logan-panucat-b319562a9/" class="w-12 h-12 flex items-center justify-center text-slate-400 hover:text-white bg-slate-800 hover:bg-gradient-to-r hover:from-indigo-600 hover:to-purple-600 rounded-full transition-all duration-300 hover:scale-110 hover:shadow-lg" aria-label="LinkedIn">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+                <a href="https://github.com/Ezgaminglogan" class="w-12 h-12 flex items-center justify-center text-slate-400 hover:text-white bg-slate-800 hover:bg-gradient-to-r hover:from-indigo-600 hover:to-purple-600 rounded-full transition-all duration-300 hover:scale-110 hover:shadow-lg" aria-label="GitHub">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="mailto:logan.panucat2@gmail.com" class="w-12 h-12 flex items-center justify-center text-slate-400 hover:text-white bg-slate-800 hover:bg-gradient-to-r hover:from-indigo-600 hover:to-purple-600 rounded-full transition-all duration-300 hover:scale-110 hover:shadow-lg" aria-label="Email">
+                    <i class="fas fa-envelope"></i>
+                </a>
+                <a href="https://www.youtube.com/@loganpanucat7771" class="w-12 h-12 flex items-center justify-center text-slate-400 hover:text-white bg-slate-800 hover:bg-gradient-to-r hover:from-indigo-600 hover:to-purple-600 rounded-full transition-all duration-300 hover:scale-110 hover:shadow-lg" aria-label="YouTube">
+                    <i class="fab fa-youtube"></i>
+                </a>
             </div>
         </div>
     </footer>
 
     <!-- Scroll to Top Button -->
-    <button id="scrollTopBtn" title="Go to top" aria-label="Scroll to Top">
+    <button id="scrollTopBtn" class="fixed bottom-8 right-8 w-14 h-14 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-full shadow-lg opacity-0 invisible transition-all duration-300 hover:scale-110 hover:shadow-xl flex items-center justify-center z-40">
         <i class="fas fa-chevron-up"></i>
     </button>
 
     <!-- tsParticles Library -->
     <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.7.1/tsparticles.bundle.min.js"></script>
-    <!-- Bootstrap 5 JS and dependencies -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- EmailJS SDK -->
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <!-- Custom JS -->
