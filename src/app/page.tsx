@@ -269,12 +269,12 @@ export default function Home() {
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
               <p className="text-lg text-gray-300 leading-relaxed">
-                I'm a 4th year IT student at Cebu Technological University - Naga Extension Campus, passionate about 
+                I&apos;m a 4th year IT student at Cebu Technological University - Naga Extension Campus, passionate about 
                 web development and creating solutions that solve real-world problems.
               </p>
               <p className="text-lg text-gray-300 leading-relaxed">
                 My expertise lies in PHP, MySQL, C#, ASP.NET MVC, and modern web frameworks like TailwindCSS and Bootstrap. 
-                I've developed multiple capstone and academic projects that address practical challenges in various industries.
+                I&apos;ve developed multiple capstone and academic projects that address practical challenges in various industries.
               </p>
               <p className="text-lg text-gray-300 leading-relaxed">
                 From industrial supply management systems to e-commerce platforms, I love building full-stack applications 
@@ -423,12 +423,12 @@ export default function Home() {
         <div className="max-w-4xl mx-auto">
           <h2 className="text-4xl sm:text-5xl font-bold text-center mb-6">
             <span className="bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
-              Let's Work Together
+              Let&apos;s Work Together
             </span>
           </h2>
           
           <p className="text-xl text-gray-300 mb-12 max-w-2xl mx-auto text-center">
-            Have a project in mind or want to discuss opportunities? I'd love to hear from you!
+            Have a project in mind or want to discuss opportunities? I&apos;d love to hear from you!
           </p>
           
           {/* Contact Form */}
