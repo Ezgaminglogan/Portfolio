@@ -124,7 +124,8 @@ export default function Home() {
     {
       name: "Web Development",
       icon: CodeBracketIcon,
-      description: "PHP, HTML, CSS, JavaScript, TailwindCSS, Bootstrap",
+      description:
+        "PHP, HTML, CSS, JavaScript, TailwindCSS, Bootstrap, Next.js",
     },
     {
       name: "Backend & Database",
@@ -200,9 +201,26 @@ export default function Home() {
         "Entity Framework",
         "C#",
         "Google reCAPTCHA v3",
+        "TailwindCSS",
       ],
       gradient: "from-red-500 to-orange-600",
       image: "/image/Ticket-Support.png",
+      type: "School Project",
+    },
+    {
+      title: "Luto",
+      description:
+        "Modern Blazor web application with Entity Framework Core for data management and Google Sign-In authentication. Demonstrates advanced component-based development and seamless user experience.",
+      tech: [
+        "Blazor Framework",
+        "EF Core",
+        "Google Sign-In",
+        "C#",
+        ".NET",
+        "TailwindCSS",
+      ],
+      gradient: "from-yellow-500 to-amber-600",
+      image: "/image/Luto-System.png",
       type: "School Project",
     },
   ];
@@ -528,7 +546,7 @@ export default function Home() {
                 <div className="text-gray-400">Major Projects</div>
               </div>
               <div className="p-6 bg-gradient-to-br from-green-900/30 to-black border border-green-500/20 rounded-2xl">
-                <div className="text-3xl font-bold text-green-400 mb-2">2</div>
+                <div className="text-3xl font-bold text-green-400 mb-2">3</div>
                 <div className="text-gray-400">Capstone Projects</div>
               </div>
               <div className="p-6 bg-gradient-to-br from-emerald-900/30 to-black border border-emerald-500/20 rounded-2xl">
