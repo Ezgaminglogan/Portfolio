@@ -14,6 +14,7 @@ import {
   Bars3Icon,
   XMarkIcon,
   ServerIcon,
+  GlobeAltIcon,
 } from "@heroicons/react/24/outline";
 import { useState, useEffect } from "react";
 import { ChevronUpIcon } from "@heroicons/react/24/outline";
