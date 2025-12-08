@@ -29,9 +29,14 @@ export default function Home() {
     subject: "",
     message: "",
   });
+  const [expandedProject, setExpandedProject] = useState<number | null>(null);
   const [formStatus, setFormStatus] = useState<
     "idle" | "sending" | "success" | "error"
   >("idle");
+
+  const toggleProjectDescription = (index: number) => {
+    setExpandedProject(expandedProject === index ? null : index);
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -598,39 +603,62 @@ export default function Home() {
             </span>
           </h2>
 
-          <div className="grid lg:grid-cols-2 xl:grid-cols-4 gap-8">
+          <div className="grid lg:grid-cols-2 xl:grid-cols-3 gap-8">
             {projects.map((project, index) => (
               <div
                 key={index}
-                className="group relative bg-gradient-to-br from-emerald-900/20 to-black border border-emerald-500/20 rounded-2xl overflow-hidden hover:border-emerald-500/40 transition-all duration-300 hover:scale-105"
+                className="group relative grid grid-rows-[auto_1fr_auto] bg-gradient-to-br from-emerald-900/20 to-black border border-emerald-500/20 rounded-2xl overflow-hidden hover:border-emerald-500/40 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-emerald-500/20"
               >
                 <div
-                  className={`absolute inset-0 bg-gradient-to-br ${project.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-300`}
+                  className={`pointer-events-none absolute inset-0 bg-gradient-to-br ${project.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`}
                 ></div>
 
                 {/* Project Image */}
-                <div className="relative h-48 w-full overflow-hidden bg-black">
+                <div className="relative h-56 w-full overflow-hidden bg-black">
                   <Image
                     src={project.image}
                     alt={project.title}
                     fill
-                    className="object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-300"
+                    className="object-cover opacity-70 group-hover:opacity-90 transition-all duration-500 group-hover:scale-110"
                   />
-                  <div className="absolute top-3 right-3 px-3 py-1 bg-emerald-500/90 text-black text-xs font-semibold rounded-full">
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                  <div className="absolute top-4 right-4 px-3 py-1 bg-emerald-500/90 text-black text-xs font-bold rounded-full backdrop-blur-sm">
                     {project.type}
+                  </div>
+                  <div className="absolute bottom-4 left-4 right-4">
+                    <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-emerald-400 transition-colors duration-300">
+                      {project.title}
+                    </h3>
                   </div>
                 </div>
 
-                <div className="relative p-6 space-y-4">
-                  <h3 className="text-2xl font-bold text-white group-hover:text-emerald-400 transition-colors">
-                    {project.title}
-                  </h3>
-                  <p className="text-gray-400 text-sm">{project.description}</p>
-                  <div className="flex flex-wrap gap-2">
+                <div className="p-6 grid grid-rows-[auto_1fr] gap-4">
+                  <div
+                    className="cursor-pointer select-none"
+                    onClick={() => toggleProjectDescription(index)}
+                  >
+                    <p
+                      className={`text-gray-300 text-sm leading-relaxed hover:text-gray-200 transition-colors duration-300 ${
+                        expandedProject === index
+                          ? "line-clamp-none"
+                          : "line-clamp-3"
+                      }`}
+                    >
+                      {project.description}
+                    </p>
+                    {expandedProject !== index && (
+                      <span className="text-emerald-400 text-xs font-medium mt-2 inline-flex items-center gap-1 hover:text-emerald-300 cursor-pointer">
+                        <ArrowDownIcon className="w-3 h-3" />
+                        Click to read more
+                      </span>
+                    )}
+                  </div>
+
+                  <div className="flex flex-wrap gap-2 items-end">
                     {project.tech.map((tech, techIndex) => (
                       <span
                         key={techIndex}
-                        className="px-3 py-1 text-xs bg-emerald-500/10 border border-emerald-500/20 rounded-full text-emerald-400"
+                        className="px-3 py-1 text-xs bg-emerald-500/10 border border-emerald-500/30 rounded-full text-emerald-300 hover:bg-emerald-500/20 hover:border-emerald-500/50 transition-all duration-300"
                       >
                         {tech}
                       </span>
