@@ -304,7 +304,7 @@ export default function Home() {
             <div className="px-4 py-4 flex flex-wrap justify-center space-x-3">
               <a
                 href="#home"
-                className={`hover:text-emerald-400 transition-colors ${
+                className={`hover:text-emerald-400 transition-colors text-sm${
                   activeSection === "home"
                     ? "text-emerald-400 font-semibold"
                     : ""
@@ -315,7 +315,7 @@ export default function Home() {
               </a>
               <a
                 href="#about"
-                className={`hover:text-emerald-400 transition-colors ${
+                className={`hover:text-emerald-400 transition-colors text-sm ${
                   activeSection === "about"
                     ? "text-emerald-400 font-semibold"
                     : ""
@@ -326,7 +326,7 @@ export default function Home() {
               </a>
               <a
                 href="#skills"
-                className={`hover:text-emerald-400 transition-colors ${
+                className={`hover:text-emerald-400 transition-colors text-sm ${
                   activeSection === "skills"
                     ? "text-emerald-400 font-semibold"
                     : ""
@@ -337,7 +337,7 @@ export default function Home() {
               </a>
               <a
                 href="#projects"
-                className={`hover:text-emerald-400 transition-colors ${
+                className={`hover:text-emerald-400 transition-colors text-sm ${
                   activeSection === "projects"
                     ? "text-emerald-400 font-semibold"
                     : ""
@@ -348,7 +348,7 @@ export default function Home() {
               </a>
               <a
                 href="#experience"
-                className={`hover:text-emerald-400 transition-colors ${
+                className={`hover:text-emerald-400 transition-colors text-sm ${
                   activeSection === "experience"
                     ? "text-emerald-400 font-semibold"
                     : ""
@@ -359,7 +359,7 @@ export default function Home() {
               </a>
               <a
                 href="#contact"
-                className={`hover:text-emerald-400 transition-colors ${
+                className={`hover:text-emerald-400 transition-colors text-sm ${
                   activeSection === "contact"
                     ? "text-emerald-400 font-semibold"
                     : ""
