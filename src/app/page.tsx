@@ -41,6 +41,7 @@ export default function Home() {
         "skills",
         "projects",
         "experience",
+        "certificates",
         "contact",
       ];
       const scrollPosition = window.scrollY + 100;
@@ -274,6 +275,16 @@ export default function Home() {
                 Experience
               </a>
               <a
+                href="#certificates"
+                className={`hover:text-emerald-400 transition-colors ${
+                  activeSection === "certificates"
+                    ? "text-emerald-400 font-semibold"
+                    : ""
+                }`}
+              >
+                Certificates
+              </a>
+              <a
                 href="#contact"
                 className={`hover:text-emerald-400 transition-colors ${
                   activeSection === "contact"
@@ -357,6 +368,17 @@ export default function Home() {
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Experience
+              </a>
+              <a
+                href="#certificates"
+                className={`hover:text-emerald-400 transition-colors text-sm ${
+                  activeSection === "certificates"
+                    ? "text-emerald-400 font-semibold"
+                    : ""
+                }`}
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Certificates
               </a>
               <a
                 href="#contact"
@@ -615,6 +637,67 @@ export default function Home() {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Certificates Section */}
+      <section
+        id="certificates"
+        className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-black to-emerald-950/20"
+      >
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-4xl sm:text-5xl font-bold text-center mb-12">
+            <span className="bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
+              Certificates
+            </span>
+          </h2>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            <div className="group relative bg-gradient-to-br from-emerald-900/20 to-black border border-emerald-500/20 rounded-2xl overflow-hidden hover:border-emerald-500/40 transition-all duration-300 hover:scale-105">
+              <div className="relative h-64 w-full overflow-hidden bg-black">
+                <Image
+                  src="/certificates/certificates-nextjs.jpg"
+                  alt="Next.js Certificate"
+                  fill
+                  className="object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-300"
+                />
+                <div className="absolute top-3 right-3 px-3 py-1 bg-emerald-500/90 text-black text-xs font-semibold rounded-full">
+                  Next.js
+                </div>
+              </div>
+              <div className="relative p-6">
+                <h3 className="text-xl font-bold text-white group-hover:text-emerald-400 transition-colors mb-2">
+                  Next.js Certification
+                </h3>
+                <p className="text-gray-400 text-sm">
+                  Professional certification in Next.js development and React
+                  framework
+                </p>
+              </div>
+            </div>
+
+            <div className="group relative bg-gradient-to-br from-emerald-900/20 to-black border border-emerald-500/20 rounded-2xl overflow-hidden hover:border-emerald-500/40 transition-all duration-300 hover:scale-105">
+              <div className="relative h-64 w-full overflow-hidden bg-black">
+                <Image
+                  src="/certificates/certificates-udemy.jpg"
+                  alt="Udemy Certificate"
+                  fill
+                  className="object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-300"
+                />
+                <div className="absolute top-3 right-3 px-3 py-1 bg-emerald-500/90 text-black text-xs font-semibold rounded-full">
+                  Udemy
+                </div>
+              </div>
+              <div className="relative p-6">
+                <h3 className="text-xl font-bold text-white group-hover:text-emerald-400 transition-colors mb-2">
+                  Udemy Course Completion
+                </h3>
+                <p className="text-gray-400 text-sm">
+                  Certificate of completion for advanced web development courses
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
