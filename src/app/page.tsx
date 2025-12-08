@@ -363,10 +363,10 @@ export default function Home() {
             <div className="px-4 py-4 flex flex-wrap justify-center space-x-3">
               <a
                 href="#home"
-                className={`hover:text-emerald-400 transition-colors text-sm${
+                className={`hover:text-emerald-400 transition-colors text-sm ${
                   activeSection === "home"
                     ? "text-emerald-400 font-semibold"
-                    : ""
+                    : "text-white"
                 }`}
                 onClick={() => setMobileMenuOpen(false)}
               >
@@ -723,7 +723,7 @@ export default function Home() {
             </span>
           </h2>
 
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             <div className="group relative bg-gradient-to-br from-emerald-900/20 to-black border border-emerald-500/20 rounded-2xl overflow-hidden hover:border-emerald-500/40 transition-all duration-300 hover:scale-105">
               <div className="relative h-64 w-full overflow-hidden bg-black">
                 <Image
@@ -743,6 +743,30 @@ export default function Home() {
                 <p className="text-gray-400 text-sm">
                   Professional certification in Next.js development and React
                   framework
+                </p>
+              </div>
+            </div>
+
+            <div className="group relative bg-gradient-to-br from-emerald-900/20 to-black border border-emerald-500/20 rounded-2xl overflow-hidden hover:border-emerald-500/40 transition-all duration-300 hover:scale-105">
+              <div className="relative h-64 w-full overflow-hidden bg-black">
+                <Image
+                  src="/certificates/certificates-1-nextjs.jpg"
+                  alt="Next.js Advanced Certificate"
+                  fill
+                  className="object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-300"
+                />
+                <div className="absolute top-3 right-3 px-3 py-1 bg-emerald-500/90 text-black text-xs font-semibold rounded-full">
+                  Next.js
+                </div>
+              </div>
+              <div className="relative p-6">
+                <h3 className="text-xl font-bold text-white group-hover:text-emerald-400 transition-colors mb-2">
+                  Next.js App Router Fundamentals
+                </h3>
+                <p className="text-gray-400 text-sm">
+                  Official Next.js certification covering App Router
+                  fundamentals, modern routing patterns, and advanced Next.js
+                  features
                 </p>
               </div>
             </div>
