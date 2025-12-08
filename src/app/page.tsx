@@ -181,6 +181,30 @@ export default function Home() {
       image: "/image/Project 3.png",
       type: "School Project",
     },
+    {
+      title: "School Management System",
+      description:
+        "Desktop application for school management with student records, grade tracking, and administrative functions. Built with Windows Forms Architecture for efficient data management.",
+      tech: ["Visual Basic WFA", "MySQL"],
+      gradient: "from-purple-500 to-indigo-600",
+      image: "/image/School-Project.png",
+      type: "School Project",
+    },
+    {
+      title: "Ticket Support System",
+      description:
+        "Advanced ticket support system with Google reCAPTCHA v3, Google Sign-In integration, and real-time messaging using SignalR. Features Entity Framework for efficient data management and modern authentication.",
+      tech: [
+        "ASP.NET Web MVC",
+        "SignalR",
+        "Entity Framework",
+        "C#",
+        "Google reCAPTCHA v3",
+      ],
+      gradient: "from-red-500 to-orange-600",
+      image: "/image/Ticket-Support.png",
+      type: "School Project",
+    },
   ];
 
   const experiences = [
