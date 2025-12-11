@@ -724,118 +724,183 @@ export default function Home() {
           </h2>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="group relative bg-gradient-to-br from-emerald-900/20 to-black border border-emerald-500/20 rounded-2xl overflow-hidden hover:border-emerald-500/40 transition-all duration-300 hover:scale-105">
+            <div className="group relative grid grid-rows-[auto_1fr_auto] bg-gradient-to-br from-emerald-900/20 to-black border border-emerald-500/20 rounded-2xl overflow-hidden hover:border-emerald-500/40 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-emerald-500/20">
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-emerald-500 to-teal-600 opacity-0 group-hover:opacity-5 transition-opacity duration-500"></div>
+
+              {/* Certificate Image */}
               <div className="relative h-64 w-full overflow-hidden bg-black">
                 <Image
                   src="/certificates/certificates-deployment.jpg"
                   alt="Certificate of Deployment - Logan M. Panucat"
                   fill
-                  className="object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-300"
+                  className="object-cover opacity-70 group-hover:opacity-90 transition-all duration-500 group-hover:scale-110"
                 />
-                <div className="absolute top-3 right-3 px-3 py-1 bg-emerald-500/90 text-black text-xs font-semibold rounded-full">
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                <div className="absolute top-4 right-4 px-3 py-1 bg-emerald-500/90 text-black text-xs font-bold rounded-full backdrop-blur-sm">
                   Deployment
                 </div>
+                <div className="absolute bottom-4 left-4 right-4">
+                  <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-emerald-400 transition-colors duration-300">
+                    Certificate of Deployment
+                  </h3>
+                </div>
               </div>
-              <div className="relative p-6">
-                <h3 className="text-xl font-bold text-white group-hover:text-emerald-400 transition-colors mb-2">
-                  Certificate of Deployment
-                </h3>
-                <p className="text-gray-400 text-sm">
+
+              <div className="p-6 grid grid-rows-[1fr_auto] gap-4">
+                <p className="text-gray-300 text-sm leading-relaxed hover:text-gray-200 transition-colors duration-300">
                   Certificate awarded to Logan M. Panucat for successful system
                   deployment and project completion
                 </p>
+
+                <div className="flex flex-wrap gap-2 items-end">
+                  <span className="px-3 py-1 text-xs bg-emerald-500/10 border border-emerald-500/30 rounded-full text-emerald-300 hover:bg-emerald-500/20 hover:border-emerald-500/50 transition-all duration-300">
+                    Professional
+                  </span>
+                </div>
               </div>
             </div>
 
-            <div className="group relative bg-gradient-to-br from-emerald-900/20 to-black border border-emerald-500/20 rounded-2xl overflow-hidden hover:border-emerald-500/40 transition-all duration-300 hover:scale-105">
+            <div className="group relative grid grid-rows-[auto_1fr_auto] bg-gradient-to-br from-emerald-900/20 to-black border border-emerald-500/20 rounded-2xl overflow-hidden hover:border-emerald-500/40 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-emerald-500/20">
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-blue-500 to-purple-600 opacity-0 group-hover:opacity-5 transition-opacity duration-500"></div>
+
+              {/* Certificate Image */}
               <div className="relative h-64 w-full overflow-hidden bg-black">
                 <Image
                   src="/certificates/certificates-deployment1.jpg"
                   alt="Certificate of Deployment - Dudz Hardware Store"
                   fill
-                  className="object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-300"
+                  className="object-cover opacity-70 group-hover:opacity-90 transition-all duration-500 group-hover:scale-110"
                 />
-                <div className="absolute top-3 right-3 px-3 py-1 bg-emerald-500/90 text-black text-xs font-semibold rounded-full">
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                <div className="absolute top-4 right-4 px-3 py-1 bg-blue-500/90 text-black text-xs font-bold rounded-full backdrop-blur-sm">
                   Deployment
                 </div>
+                <div className="absolute bottom-4 left-4 right-4">
+                  <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-blue-400 transition-colors duration-300">
+                    Dudz Hardware Store Deployment
+                  </h3>
+                </div>
               </div>
-              <div className="relative p-6">
-                <h3 className="text-xl font-bold text-white group-hover:text-emerald-400 transition-colors mb-2">
-                  Dudz Hardware Store Deployment
-                </h3>
-                <p className="text-gray-400 text-sm">
+
+              <div className="p-6 grid grid-rows-[1fr_auto] gap-4">
+                <p className="text-gray-300 text-sm leading-relaxed hover:text-gray-200 transition-colors duration-300">
                   Certificate of deployment for Dudz Hardware Store system
                   successfully completed by the development team
                 </p>
+
+                <div className="flex flex-wrap gap-2 items-end">
+                  <span className="px-3 py-1 text-xs bg-blue-500/10 border border-blue-500/30 rounded-full text-blue-300 hover:bg-blue-500/20 hover:border-blue-500/50 transition-all duration-300">
+                    Professional
+                  </span>
+                </div>
               </div>
             </div>
 
-            <div className="group relative bg-gradient-to-br from-emerald-900/20 to-black border border-emerald-500/20 rounded-2xl overflow-hidden hover:border-emerald-500/40 transition-all duration-300 hover:scale-105">
+            <div className="group relative grid grid-rows-[auto_1fr_auto] bg-gradient-to-br from-emerald-900/20 to-black border border-emerald-500/20 rounded-2xl overflow-hidden hover:border-emerald-500/40 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-emerald-500/20">
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-green-500 to-emerald-600 opacity-0 group-hover:opacity-5 transition-opacity duration-500"></div>
+
+              {/* Certificate Image */}
               <div className="relative h-64 w-full overflow-hidden bg-black">
                 <Image
                   src="/certificates/certificates-nextjs.jpg"
                   alt="Next.js Certificate"
                   fill
-                  className="object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-300"
+                  className="object-cover opacity-70 group-hover:opacity-90 transition-all duration-500 group-hover:scale-110"
                 />
-                <div className="absolute top-3 right-3 px-3 py-1 bg-emerald-500/90 text-black text-xs font-semibold rounded-full">
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                <div className="absolute top-4 right-4 px-3 py-1 bg-green-500/90 text-black text-xs font-bold rounded-full backdrop-blur-sm">
                   Next.js
                 </div>
+                <div className="absolute bottom-4 left-4 right-4">
+                  <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-green-400 transition-colors duration-300">
+                    Next.js Certification
+                  </h3>
+                </div>
               </div>
-              <div className="relative p-6">
-                <h3 className="text-xl font-bold text-white group-hover:text-emerald-400 transition-colors mb-2">
-                  Next.js Certification
-                </h3>
-                <p className="text-gray-400 text-sm">
+
+              <div className="p-6 grid grid-rows-[1fr_auto] gap-4">
+                <p className="text-gray-300 text-sm leading-relaxed hover:text-gray-200 transition-colors duration-300">
                   Professional certification in Next.js development and React
                   framework
                 </p>
+
+                <div className="flex flex-wrap gap-2 items-end">
+                  <span className="px-3 py-1 text-xs bg-green-500/10 border border-green-500/30 rounded-full text-green-300 hover:bg-green-500/20 hover:border-green-500/50 transition-all duration-300">
+                    Technical
+                  </span>
+                </div>
               </div>
             </div>
 
-            <div className="group relative bg-gradient-to-br from-emerald-900/20 to-black border border-emerald-500/20 rounded-2xl overflow-hidden hover:border-emerald-500/40 transition-all duration-300 hover:scale-105">
+            <div className="group relative grid grid-rows-[auto_1fr_auto] bg-gradient-to-br from-emerald-900/20 to-black border border-emerald-500/20 rounded-2xl overflow-hidden hover:border-emerald-500/40 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-emerald-500/20">
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-purple-500 to-indigo-600 opacity-0 group-hover:opacity-5 transition-opacity duration-500"></div>
+
+              {/* Certificate Image */}
               <div className="relative h-64 w-full overflow-hidden bg-black">
                 <Image
                   src="/certificates/certificates-1-nextjs.jpg"
                   alt="Next.js Advanced Certificate"
                   fill
-                  className="object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-300"
+                  className="object-cover opacity-70 group-hover:opacity-90 transition-all duration-500 group-hover:scale-110"
                 />
-                <div className="absolute top-3 right-3 px-3 py-1 bg-emerald-500/90 text-black text-xs font-semibold rounded-full">
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                <div className="absolute top-4 right-4 px-3 py-1 bg-purple-500/90 text-black text-xs font-bold rounded-full backdrop-blur-sm">
                   Next.js
                 </div>
+                <div className="absolute bottom-4 left-4 right-4">
+                  <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-purple-400 transition-colors duration-300">
+                    Next.js App Router Fundamentals
+                  </h3>
+                </div>
               </div>
-              <div className="relative p-6">
-                <h3 className="text-xl font-bold text-white group-hover:text-emerald-400 transition-colors mb-2">
-                  Next.js App Router Fundamentals
-                </h3>
-                <p className="text-gray-400 text-sm">
+
+              <div className="p-6 grid grid-rows-[1fr_auto] gap-4">
+                <p className="text-gray-300 text-sm leading-relaxed hover:text-gray-200 transition-colors duration-300">
                   Official Next.js certification covering App Router
                   fundamentals, modern routing patterns, and advanced Next.js
                   features
                 </p>
+
+                <div className="flex flex-wrap gap-2 items-end">
+                  <span className="px-3 py-1 text-xs bg-purple-500/10 border border-purple-500/30 rounded-full text-purple-300 hover:bg-purple-500/20 hover:border-purple-500/50 transition-all duration-300">
+                    Technical
+                  </span>
+                </div>
               </div>
             </div>
 
-            <div className="group relative bg-gradient-to-br from-emerald-900/20 to-black border border-emerald-500/20 rounded-2xl overflow-hidden hover:border-emerald-500/40 transition-all duration-300 hover:scale-105">
+            <div className="group relative grid grid-rows-[auto_1fr_auto] bg-gradient-to-br from-emerald-900/20 to-black border border-emerald-500/20 rounded-2xl overflow-hidden hover:border-emerald-500/40 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-emerald-500/20">
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-yellow-500 to-amber-600 opacity-0 group-hover:opacity-5 transition-opacity duration-500"></div>
+
+              {/* Certificate Image */}
               <div className="relative h-64 w-full overflow-hidden bg-black">
                 <Image
                   src="/certificates/certificates-udemy.jpg"
                   alt="Udemy Certificate"
                   fill
-                  className="object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-300"
+                  className="object-cover opacity-70 group-hover:opacity-90 transition-all duration-500 group-hover:scale-110"
                 />
-                <div className="absolute top-3 right-3 px-3 py-1 bg-emerald-500/90 text-black text-xs font-semibold rounded-full">
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                <div className="absolute top-4 right-4 px-3 py-1 bg-yellow-500/90 text-black text-xs font-bold rounded-full backdrop-blur-sm">
                   Udemy
                 </div>
+                <div className="absolute bottom-4 left-4 right-4">
+                  <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-yellow-400 transition-colors duration-300">
+                    Udemy Course Completion
+                  </h3>
+                </div>
               </div>
-              <div className="relative p-6">
-                <h3 className="text-xl font-bold text-white group-hover:text-emerald-400 transition-colors mb-2">
-                  Udemy Course Completion
-                </h3>
-                <p className="text-gray-400 text-sm">
+
+              <div className="p-6 grid grid-rows-[1fr_auto] gap-4">
+                <p className="text-gray-300 text-sm leading-relaxed hover:text-gray-200 transition-colors duration-300">
                   Certificate of completion for advanced web development courses
                 </p>
+
+                <div className="flex flex-wrap gap-2 items-end">
+                  <span className="px-3 py-1 text-xs bg-yellow-500/10 border border-yellow-500/30 rounded-full text-yellow-300 hover:bg-yellow-500/20 hover:border-yellow-500/50 transition-all duration-300">
+                    Learning
+                  </span>
+                </div>
               </div>
             </div>
           </div>
