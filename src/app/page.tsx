@@ -727,6 +727,52 @@ export default function Home() {
             <div className="group relative bg-gradient-to-br from-emerald-900/20 to-black border border-emerald-500/20 rounded-2xl overflow-hidden hover:border-emerald-500/40 transition-all duration-300 hover:scale-105">
               <div className="relative h-64 w-full overflow-hidden bg-black">
                 <Image
+                  src="/certificates/certificates-deployment.jpg"
+                  alt="Certificate of Deployment - Logan M. Panucat"
+                  fill
+                  className="object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-300"
+                />
+                <div className="absolute top-3 right-3 px-3 py-1 bg-emerald-500/90 text-black text-xs font-semibold rounded-full">
+                  Deployment
+                </div>
+              </div>
+              <div className="relative p-6">
+                <h3 className="text-xl font-bold text-white group-hover:text-emerald-400 transition-colors mb-2">
+                  Certificate of Deployment
+                </h3>
+                <p className="text-gray-400 text-sm">
+                  Certificate awarded to Logan M. Panucat for successful system
+                  deployment and project completion
+                </p>
+              </div>
+            </div>
+
+            <div className="group relative bg-gradient-to-br from-emerald-900/20 to-black border border-emerald-500/20 rounded-2xl overflow-hidden hover:border-emerald-500/40 transition-all duration-300 hover:scale-105">
+              <div className="relative h-64 w-full overflow-hidden bg-black">
+                <Image
+                  src="/certificates/certificates-deployment1.jpg"
+                  alt="Certificate of Deployment - Dudz Hardware Store"
+                  fill
+                  className="object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-300"
+                />
+                <div className="absolute top-3 right-3 px-3 py-1 bg-emerald-500/90 text-black text-xs font-semibold rounded-full">
+                  Deployment
+                </div>
+              </div>
+              <div className="relative p-6">
+                <h3 className="text-xl font-bold text-white group-hover:text-emerald-400 transition-colors mb-2">
+                  Dudz Hardware Store Deployment
+                </h3>
+                <p className="text-gray-400 text-sm">
+                  Certificate of deployment for Dudz Hardware Store system
+                  successfully completed by the development team
+                </p>
+              </div>
+            </div>
+
+            <div className="group relative bg-gradient-to-br from-emerald-900/20 to-black border border-emerald-500/20 rounded-2xl overflow-hidden hover:border-emerald-500/40 transition-all duration-300 hover:scale-105">
+              <div className="relative h-64 w-full overflow-hidden bg-black">
+                <Image
                   src="/certificates/certificates-nextjs.jpg"
                   alt="Next.js Certificate"
                   fill
