@@ -247,7 +247,7 @@ export default function Home() {
       company: "CTU Naga - Academic Project",
       period: "2024",
       description:
-        "Developed E-Industria and ByteBuilder as capstone projects, creating solutions for industrial supply management and PC building recommendations.",
+        "Led development of multiple capstone projects including E-Industria (industrial supply management platform), Supplify (cross-platform supply chain solution), and ByteBuilder (PC building recommendation system). Demonstrated full-stack development capabilities and real-world problem-solving skills.",
     },
     {
       title: "Web Development Student",
