@@ -18,6 +18,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { useState, useEffect } from "react";
 import { ChevronUpIcon } from "@heroicons/react/24/outline";
+import Modal from "@/components/Modal";
 
 export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -33,6 +34,7 @@ export default function Home() {
   const [formStatus, setFormStatus] = useState<
     "idle" | "sending" | "success" | "error"
   >("idle");
+  const [modalOpen, setModalOpen] = useState(false);
 
   const toggleProjectDescription = (index: number) => {
     setExpandedProject(expandedProject === index ? null : index);
@@ -93,6 +95,7 @@ export default function Home() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setFormStatus("sending");
+    setModalOpen(true);
 
     try {
       const response = await fetch("/api/send-email", {
@@ -109,6 +112,7 @@ export default function Home() {
 
         setTimeout(() => {
           setFormStatus("idle");
+          setModalOpen(false);
         }, 3000);
       } else {
         setFormStatus("error");
@@ -1002,18 +1006,6 @@ export default function Home() {
                 ></textarea>
               </div>
 
-              {formStatus === "success" && (
-                <div className="p-4 bg-emerald-500/20 border border-emerald-500/50 rounded-lg text-emerald-400 text-center">
-                  Message sent successfully! ✓
-                </div>
-              )}
-
-              {formStatus === "error" && (
-                <div className="p-4 bg-red-500/20 border border-red-500/50 rounded-lg text-red-400 text-center">
-                  Something went wrong. Please try again.
-                </div>
-              )}
-
               <button
                 type="submit"
                 disabled={formStatus === "sending"}
@@ -1092,6 +1084,31 @@ export default function Home() {
           <ChevronUpIcon className="w-6 h-6 text-white" />
         </button>
       )}
+
+      {/* Modal Component */}
+      <Modal
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+        title={
+          formStatus === "sending"
+            ? "Sending Message"
+            : formStatus === "success"
+            ? "Message Sent Successfully!"
+            : "Error Sending Message"
+        }
+        message={
+          formStatus === "sending"
+            ? "Please wait while we send your message..."
+            : formStatus === "success"
+            ? "Thank you for reaching out! I'll get back to you as soon as possible."
+            : "There was an error sending your message. Please try again later."
+        }
+        type={
+          formStatus === "sending"
+            ? "loading"
+            : (formStatus as "success" | "error")
+        }
+      />
     </div>
   );
 }
