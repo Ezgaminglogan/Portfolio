@@ -95,6 +95,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <meta
+          name="google-site-verification"
+          content="googlebae7fa9d71fe05c7"
+        />
         <StructuredData />
       </head>
       <body
