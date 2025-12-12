@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://porfolio-665c.vercel.app/sitemap.xml

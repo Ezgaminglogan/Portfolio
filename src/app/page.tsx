@@ -464,7 +464,7 @@ export default function Home() {
             <div className="relative w-40 h-40 sm:w-48 sm:h-48 rounded-full overflow-hidden border-4 border-emerald-500/50 shadow-2xl shadow-emerald-500/30">
               <Image
                 src="/image/profile.jpg"
-                alt="Profile"
+                alt="Logan - Full Stack Developer Profile Picture"
                 fill
                 className="object-cover"
                 priority
@@ -480,13 +480,14 @@ export default function Home() {
 
           <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-6">
             <span className="bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 bg-clip-text text-transparent">
-              Web Developer
+              Logan - Full Stack Developer
             </span>
           </h1>
 
           <p className="text-xl sm:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto">
-            Building innovative web solutions with PHP, MySQL, .NET, and modern
-            frameworks | A vibe coder crafting digital experiences
+            Full Stack Developer specializing in React, Next.js, TypeScript, and
+            modern web technologies. Building innovative digital experiences
+            with clean code and best practices.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
@@ -621,7 +622,7 @@ export default function Home() {
                 <div className="relative h-56 w-full overflow-hidden bg-black">
                   <Image
                     src={project.image}
-                    alt={project.title}
+                    alt={`${project.title} - ${project.description}`}
                     fill
                     className="object-cover opacity-70 group-hover:opacity-90 transition-all duration-500 group-hover:scale-110"
                   />
