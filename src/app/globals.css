@@ -39,3 +39,11 @@ html {
 ::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(180deg, #059669, #047857);
 }
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.animate-blink {
+  animation: blink 0.8s step-end infinite;
+}

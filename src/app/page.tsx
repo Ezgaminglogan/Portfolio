@@ -20,6 +20,46 @@ import { useState, useEffect } from "react";
 import { ChevronUpIcon } from "@heroicons/react/24/outline";
 import Modal from "@/components/Modal";
 
+function Typewriter({ words }: { words: string[] }) {
+  const [currentWordIndex, setCurrentWordIndex] = useState(0);
+  const [currentText, setCurrentText] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [typingSpeed, setTypingSpeed] = useState(60);
+
+  useEffect(() => {
+    const handleTyping = () => {
+      const fullText = words[currentWordIndex];
+
+      if (isDeleting) {
+        setCurrentText(fullText.substring(0, currentText.length - 1));
+        setTypingSpeed(30);
+      } else {
+        setCurrentText(fullText.substring(0, currentText.length + 1));
+        setTypingSpeed(60);
+      }
+
+      if (!isDeleting && currentText === fullText) {
+        setTimeout(() => setIsDeleting(true), 2000);
+      } else if (isDeleting && currentText === "") {
+        setIsDeleting(false);
+        setCurrentWordIndex((prev) => (prev + 1) % words.length);
+      }
+    };
+
+    const timer = setTimeout(handleTyping, typingSpeed);
+    return () => clearTimeout(timer);
+  }, [currentText, isDeleting, currentWordIndex, words, typingSpeed]);
+
+  return (
+    <span className="inline-flex items-center whitespace-nowrap">
+      <span className="bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 bg-clip-text text-transparent">
+        {currentText}
+      </span>
+      <span className="ml-1 inline-block w-[3px] h-[0.8em] bg-emerald-400 animate-blink shadow-[0_0_12px_rgba(52,211,153,0.8)] align-middle"></span>
+    </span>
+  );
+}
+
 export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
@@ -277,71 +317,64 @@ export default function Home() {
             <div className="hidden md:flex gap-8">
               <a
                 href="#home"
-                className={`hover:text-emerald-400 transition-colors ${
-                  activeSection === "home"
-                    ? "text-emerald-400 font-semibold"
-                    : ""
-                }`}
+                className={`hover:text-emerald-400 transition-colors ${activeSection === "home"
+                  ? "text-emerald-400 font-semibold"
+                  : ""
+                  }`}
               >
                 Home
               </a>
               <a
                 href="#about"
-                className={`hover:text-emerald-400 transition-colors ${
-                  activeSection === "about"
-                    ? "text-emerald-400 font-semibold"
-                    : ""
-                }`}
+                className={`hover:text-emerald-400 transition-colors ${activeSection === "about"
+                  ? "text-emerald-400 font-semibold"
+                  : ""
+                  }`}
               >
                 About
               </a>
               <a
                 href="#skills"
-                className={`hover:text-emerald-400 transition-colors ${
-                  activeSection === "skills"
-                    ? "text-emerald-400 font-semibold"
-                    : ""
-                }`}
+                className={`hover:text-emerald-400 transition-colors ${activeSection === "skills"
+                  ? "text-emerald-400 font-semibold"
+                  : ""
+                  }`}
               >
                 Skills
               </a>
               <a
                 href="#projects"
-                className={`hover:text-emerald-400 transition-colors ${
-                  activeSection === "projects"
-                    ? "text-emerald-400 font-semibold"
-                    : ""
-                }`}
+                className={`hover:text-emerald-400 transition-colors ${activeSection === "projects"
+                  ? "text-emerald-400 font-semibold"
+                  : ""
+                  }`}
               >
                 Projects
               </a>
               <a
                 href="#experience"
-                className={`hover:text-emerald-400 transition-colors ${
-                  activeSection === "experience"
-                    ? "text-emerald-400 font-semibold"
-                    : ""
-                }`}
+                className={`hover:text-emerald-400 transition-colors ${activeSection === "experience"
+                  ? "text-emerald-400 font-semibold"
+                  : ""
+                  }`}
               >
                 Experience
               </a>
               <a
                 href="#certificates"
-                className={`hover:text-emerald-400 transition-colors ${
-                  activeSection === "certificates"
-                    ? "text-emerald-400 font-semibold"
-                    : ""
-                }`}
+                className={`hover:text-emerald-400 transition-colors ${activeSection === "certificates"
+                  ? "text-emerald-400 font-semibold"
+                  : ""
+                  }`}
               >
                 Certificates
               </a>
               <a
                 href="#contact"
-                className={`hover:text-emerald-400 transition-colors ${
-                  activeSection === "contact"
-                    ? "text-emerald-400 font-semibold"
-                    : ""
-                }`}
+                className={`hover:text-emerald-400 transition-colors ${activeSection === "contact"
+                  ? "text-emerald-400 font-semibold"
+                  : ""
+                  }`}
               >
                 Contact
               </a>
@@ -367,77 +400,70 @@ export default function Home() {
             <div className="px-4 py-4 flex flex-wrap justify-center space-x-3">
               <a
                 href="#home"
-                className={`hover:text-emerald-400 transition-colors text-sm ${
-                  activeSection === "home"
-                    ? "text-emerald-400 font-semibold"
-                    : "text-white"
-                }`}
+                className={`hover:text-emerald-400 transition-colors text-sm ${activeSection === "home"
+                  ? "text-emerald-400 font-semibold"
+                  : "text-white"
+                  }`}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Home
               </a>
               <a
                 href="#about"
-                className={`hover:text-emerald-400 transition-colors text-sm ${
-                  activeSection === "about"
-                    ? "text-emerald-400 font-semibold"
-                    : ""
-                }`}
+                className={`hover:text-emerald-400 transition-colors text-sm ${activeSection === "about"
+                  ? "text-emerald-400 font-semibold"
+                  : ""
+                  }`}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 About
               </a>
               <a
                 href="#skills"
-                className={`hover:text-emerald-400 transition-colors text-sm ${
-                  activeSection === "skills"
-                    ? "text-emerald-400 font-semibold"
-                    : ""
-                }`}
+                className={`hover:text-emerald-400 transition-colors text-sm ${activeSection === "skills"
+                  ? "text-emerald-400 font-semibold"
+                  : ""
+                  }`}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Skills
               </a>
               <a
                 href="#projects"
-                className={`hover:text-emerald-400 transition-colors text-sm ${
-                  activeSection === "projects"
-                    ? "text-emerald-400 font-semibold"
-                    : ""
-                }`}
+                className={`hover:text-emerald-400 transition-colors text-sm ${activeSection === "projects"
+                  ? "text-emerald-400 font-semibold"
+                  : ""
+                  }`}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Projects
               </a>
               <a
                 href="#experience"
-                className={`hover:text-emerald-400 transition-colors text-sm ${
-                  activeSection === "experience"
-                    ? "text-emerald-400 font-semibold"
-                    : ""
-                }`}
+                className={`hover:text-emerald-400 transition-colors text-sm ${activeSection === "experience"
+                  ? "text-emerald-400 font-semibold"
+                  : ""
+                  }`}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Experience
               </a>
               <a
                 href="#certificates"
-                className={`hover:text-emerald-400 transition-colors text-sm ${
-                  activeSection === "certificates"
-                    ? "text-emerald-400 font-semibold"
-                    : ""
-                }`}
+                className={`hover:text-emerald-400 transition-colors text-sm ${activeSection === "certificates"
+                  ? "text-emerald-400 font-semibold"
+                  : ""
+                  }`}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Certificates
               </a>
               <a
                 href="#contact"
-                className={`hover:text-emerald-400 transition-colors text-sm ${
-                  activeSection === "contact"
-                    ? "text-emerald-400 font-semibold"
-                    : ""
-                }`}
+                className={`hover:text-emerald-400 transition-colors text-sm ${activeSection === "contact"
+                  ? "text-emerald-400 font-semibold"
+                  : ""
+                  }`}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Contact
@@ -478,10 +504,11 @@ export default function Home() {
             </span>
           </div>
 
-          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-6">
-            <span className="bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 bg-clip-text text-transparent">
-              Logan - Full Stack Developer
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold mb-6 flex flex-wrap items-center justify-center gap-x-2 sm:gap-x-3 text-center leading-tight">
+            <span className="bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 bg-clip-text text-transparent whitespace-nowrap">
+              Logan -
             </span>
+            <Typewriter words={["A Full Stack Developer", "A Vibe Coder", "An UI/UX Enthusiast", "A Problem Solver"]} />
           </h1>
 
           <p className="text-xl sm:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto">
@@ -643,11 +670,10 @@ export default function Home() {
                     onClick={() => toggleProjectDescription(index)}
                   >
                     <p
-                      className={`text-gray-300 text-sm leading-relaxed hover:text-gray-200 transition-colors duration-300 ${
-                        expandedProject === index
-                          ? "line-clamp-none"
-                          : "line-clamp-3"
-                      }`}
+                      className={`text-gray-300 text-sm leading-relaxed hover:text-gray-200 transition-colors duration-300 ${expandedProject === index
+                        ? "line-clamp-none"
+                        : "line-clamp-3"
+                        }`}
                     >
                       {project.description}
                     </p>
@@ -1010,7 +1036,7 @@ export default function Home() {
               <button
                 type="submit"
                 disabled={formStatus === "sending"}
-                className="w-full flex items-center justify-center gap-3 px-8 py-4 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-full font-semibold hover:shadow-lg hover:shadow-emerald-500/50 transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full flex items-center justify-center gap-3 px-8 py-4 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-full font-semibold hover:shadow-lg hover:shadow-emerald-500/50 transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
               >
                 <EnvelopeIcon className="w-5 h-5" />
                 {formStatus === "sending" ? "Sending..." : "Send Message"}
@@ -1028,7 +1054,7 @@ export default function Home() {
               Gmail
             </a>
             <a
-              href="https://github.com/ezgaminglogan"
+              href="https://github.com/Ezgaminglogan"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2 text-emerald-400 hover:text-emerald-300 transition-colors"
@@ -1042,6 +1068,17 @@ export default function Home() {
               </svg>
               GitHub
             </a>
+            <a
+              href="https://www.linkedin.com/in/logan-panucat-b319562a9/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 text-emerald-400 hover:text-emerald-300 transition-colors"
+            >
+              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+              </svg>
+              LinkedIn
+            </a>
           </div>
         </div>
       </section>
@@ -1054,19 +1091,17 @@ export default function Home() {
           </p>
           <div className="mt-4 flex justify-center gap-6">
             <a
-              href="#"
-              className="text-gray-400 hover:text-emerald-400 transition-colors"
-            >
-              Twitter
-            </a>
-            <a
               href="https://www.linkedin.com/in/logan-panucat-b319562a9/"
+              target="_blank"
+              rel="noopener noreferrer"
               className="text-gray-400 hover:text-emerald-400 transition-colors"
             >
               LinkedIn
             </a>
             <a
-              href="https://github.com/ezgaminglogan"
+              href="https://github.com/Ezgaminglogan"
+              target="_blank"
+              rel="noopener noreferrer"
               className="text-gray-400 hover:text-emerald-400 transition-colors"
             >
               GitHub
@@ -1094,15 +1129,15 @@ export default function Home() {
           formStatus === "sending"
             ? "Sending Message"
             : formStatus === "success"
-            ? "Message Sent Successfully!"
-            : "Error Sending Message"
+              ? "Message Sent Successfully!"
+              : "Error Sending Message"
         }
         message={
           formStatus === "sending"
             ? "Please wait while we send your message..."
             : formStatus === "success"
-            ? "Thank you for reaching out! I'll get back to you as soon as possible."
-            : "There was an error sending your message. Please try again later."
+              ? "Thank you for reaching out! I'll get back to you as soon as possible."
+              : "There was an error sending your message. Please try again later."
         }
         type={
           formStatus === "sending"
