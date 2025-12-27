@@ -512,9 +512,9 @@ export default function Home() {
           </h1>
 
           <p className="text-xl sm:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto">
-            Full Stack Developer specializing in React, Next.js, TypeScript, and
-            modern web technologies. Building innovative digital experiences
-            with clean code and best practices.
+            Full Stack Developer specializing in PHP, MySQL, C#, ASP.NET MVC, and .NET Framework.
+            Currently expanding into the Node.js ecosystem including React, Next.js, and TypeScript.
+            Building innovative digital experiences with clean code and best practices.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
@@ -566,8 +566,8 @@ export default function Home() {
               <p className="text-lg text-gray-300 leading-relaxed">
                 From industrial supply management systems to e-commerce
                 platforms, I love building full-stack applications that make a
-                difference. Currently expanding my skills in Node.js and modern
-                JavaScript frameworks.
+                difference. Currently expanding my skills in the Node.js ecosystem,
+                including React, Next.js, TypeScript, and modern JavaScript frameworks.
               </p>
             </div>
 

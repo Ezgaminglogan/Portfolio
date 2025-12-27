@@ -19,15 +19,21 @@ export const metadata: Metadata = {
     template: "%s | Logan's Portfolio",
   },
   description:
-    "Logan - Full Stack Developer specializing in React, Next.js, TypeScript. Explore my projects, skills, and experience in modern web development.",
+    "Logan - Full Stack Developer specializing in PHP, MySQL, C#, ASP.NET MVC, and .NET Framework. Currently expanding into Node.js ecosystem including React, Next.js, and TypeScript.",
   keywords: [
     "Logan",
     "Full Stack Developer",
     "Web Developer",
+    "PHP Developer",
+    "MySQL Developer",
+    "C# Developer",
+    "ASP.NET MVC",
+    ".NET Framework",
     "React Developer",
     "Next.js Developer",
     "TypeScript",
     "JavaScript",
+    "Node.js",
     "Portfolio",
     "Frontend Developer",
     "Backend Developer",
@@ -50,7 +56,7 @@ export const metadata: Metadata = {
     url: "https://porfolio-665c.vercel.app",
     title: "Logan's Portfolio | Full Stack Developer",
     description:
-      "Logan - Full Stack Developer specializing in React, Next.js, TypeScript. Explore my projects, skills, and experience in modern web development.",
+      "Logan - Full Stack Developer specializing in PHP, MySQL, C#, ASP.NET MVC, and .NET Framework. Currently expanding into Node.js ecosystem including React, Next.js, and TypeScript.",
     siteName: "Logan's Portfolio",
     images: [
       {
@@ -65,7 +71,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Logan's Portfolio | Full Stack Developer",
     description:
-      "Logan - Full Stack Developer specializing in React, Next.js, TypeScript. Explore my projects, skills, and experience in modern web development.",
+      "Logan - Full Stack Developer specializing in PHP, MySQL, C#, ASP.NET MVC, and .NET Framework. Currently expanding into Node.js ecosystem including React, Next.js, and TypeScript.",
     images: ["/portfolio.png"],
     creator: "@logan",
   },
