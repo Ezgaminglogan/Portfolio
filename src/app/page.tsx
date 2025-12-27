@@ -174,7 +174,7 @@ export default function Home() {
       name: "Web Development",
       icon: CodeBracketIcon,
       description:
-        "PHP, HTML, CSS, JavaScript, TailwindCSS, Bootstrap, Next.js",
+        "PHP, ASP.NET MVC, Blazor, HTML, CSS, JavaScript, TailwindCSS, Bootstrap, Next.js",
     },
     {
       name: "Backend & Database",
