@@ -174,13 +174,13 @@ export default function Home() {
       name: "Web Development",
       icon: CodeBracketIcon,
       description:
-        "PHP, ASP.NET MVC, Blazor, HTML, CSS, JavaScript, TailwindCSS, Bootstrap, Next.js",
+        "PHP, ASP.NET MVC, Blazor, HTML, CSS, JavaScript, TailwindCSS, Bootstrap, Next.js, TanStack Query",
     },
     {
       name: "Backend & Database",
       icon: ServerIcon,
       description:
-        "PHP, MySQL, PHPMailer, OTP Authentication , Email Verification , SQL Server Management Studio",
+        "Prisma ORM, JWT Authentication, PHP, MySQL, PHPMailer, OTP Authentication , Email Verification , SQL Server",
     },
     {
       name: ".NET Development",
@@ -195,6 +195,15 @@ export default function Home() {
   ];
 
   const projects = [
+    {
+      title: "Inventory Management System (IMS-CTU)",
+      description:
+        "A specialized administrative platform for Cebu Technological University - Naga Extension Campus. This high-performance system streamlines institutional resource tracking using Prisma ORM, secure JWT authentication, and TanStack Query for real-time data synchronization.",
+      tech: ["Next.js", "Prisma", "TanStack Query", "JWT", "TailwindCSS"],
+      gradient: "from-blue-600 to-cyan-500",
+      image: "/image/IMS-CTU.png",
+      type: "CTU Naga Extension Campus Project",
+    },
     {
       title: "E-Industria",
       description:
@@ -317,64 +326,71 @@ export default function Home() {
             <div className="hidden md:flex gap-8">
               <a
                 href="#home"
-                className={`hover:text-emerald-400 transition-colors ${activeSection === "home"
-                  ? "text-emerald-400 font-semibold"
-                  : ""
-                  }`}
+                className={`hover:text-emerald-400 transition-colors ${
+                  activeSection === "home"
+                    ? "text-emerald-400 font-semibold"
+                    : ""
+                }`}
               >
                 Home
               </a>
               <a
                 href="#about"
-                className={`hover:text-emerald-400 transition-colors ${activeSection === "about"
-                  ? "text-emerald-400 font-semibold"
-                  : ""
-                  }`}
+                className={`hover:text-emerald-400 transition-colors ${
+                  activeSection === "about"
+                    ? "text-emerald-400 font-semibold"
+                    : ""
+                }`}
               >
                 About
               </a>
               <a
                 href="#skills"
-                className={`hover:text-emerald-400 transition-colors ${activeSection === "skills"
-                  ? "text-emerald-400 font-semibold"
-                  : ""
-                  }`}
+                className={`hover:text-emerald-400 transition-colors ${
+                  activeSection === "skills"
+                    ? "text-emerald-400 font-semibold"
+                    : ""
+                }`}
               >
                 Skills
               </a>
               <a
                 href="#projects"
-                className={`hover:text-emerald-400 transition-colors ${activeSection === "projects"
-                  ? "text-emerald-400 font-semibold"
-                  : ""
-                  }`}
+                className={`hover:text-emerald-400 transition-colors ${
+                  activeSection === "projects"
+                    ? "text-emerald-400 font-semibold"
+                    : ""
+                }`}
               >
                 Projects
               </a>
               <a
                 href="#experience"
-                className={`hover:text-emerald-400 transition-colors ${activeSection === "experience"
-                  ? "text-emerald-400 font-semibold"
-                  : ""
-                  }`}
+                className={`hover:text-emerald-400 transition-colors ${
+                  activeSection === "experience"
+                    ? "text-emerald-400 font-semibold"
+                    : ""
+                }`}
               >
                 Experience
               </a>
               <a
                 href="#certificates"
-                className={`hover:text-emerald-400 transition-colors ${activeSection === "certificates"
-                  ? "text-emerald-400 font-semibold"
-                  : ""
-                  }`}
+                className={`hover:text-emerald-400 transition-colors ${
+                  activeSection === "certificates"
+                    ? "text-emerald-400 font-semibold"
+                    : ""
+                }`}
               >
                 Certificates
               </a>
               <a
                 href="#contact"
-                className={`hover:text-emerald-400 transition-colors ${activeSection === "contact"
-                  ? "text-emerald-400 font-semibold"
-                  : ""
-                  }`}
+                className={`hover:text-emerald-400 transition-colors ${
+                  activeSection === "contact"
+                    ? "text-emerald-400 font-semibold"
+                    : ""
+                }`}
               >
                 Contact
               </a>
@@ -400,70 +416,77 @@ export default function Home() {
             <div className="px-4 py-4 flex flex-wrap justify-center space-x-3">
               <a
                 href="#home"
-                className={`hover:text-emerald-400 transition-colors text-sm ${activeSection === "home"
-                  ? "text-emerald-400 font-semibold"
-                  : "text-white"
-                  }`}
+                className={`hover:text-emerald-400 transition-colors text-sm ${
+                  activeSection === "home"
+                    ? "text-emerald-400 font-semibold"
+                    : "text-white"
+                }`}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Home
               </a>
               <a
                 href="#about"
-                className={`hover:text-emerald-400 transition-colors text-sm ${activeSection === "about"
-                  ? "text-emerald-400 font-semibold"
-                  : ""
-                  }`}
+                className={`hover:text-emerald-400 transition-colors text-sm ${
+                  activeSection === "about"
+                    ? "text-emerald-400 font-semibold"
+                    : ""
+                }`}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 About
               </a>
               <a
                 href="#skills"
-                className={`hover:text-emerald-400 transition-colors text-sm ${activeSection === "skills"
-                  ? "text-emerald-400 font-semibold"
-                  : ""
-                  }`}
+                className={`hover:text-emerald-400 transition-colors text-sm ${
+                  activeSection === "skills"
+                    ? "text-emerald-400 font-semibold"
+                    : ""
+                }`}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Skills
               </a>
               <a
                 href="#projects"
-                className={`hover:text-emerald-400 transition-colors text-sm ${activeSection === "projects"
-                  ? "text-emerald-400 font-semibold"
-                  : ""
-                  }`}
+                className={`hover:text-emerald-400 transition-colors text-sm ${
+                  activeSection === "projects"
+                    ? "text-emerald-400 font-semibold"
+                    : ""
+                }`}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Projects
               </a>
               <a
                 href="#experience"
-                className={`hover:text-emerald-400 transition-colors text-sm ${activeSection === "experience"
-                  ? "text-emerald-400 font-semibold"
-                  : ""
-                  }`}
+                className={`hover:text-emerald-400 transition-colors text-sm ${
+                  activeSection === "experience"
+                    ? "text-emerald-400 font-semibold"
+                    : ""
+                }`}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Experience
               </a>
               <a
                 href="#certificates"
-                className={`hover:text-emerald-400 transition-colors text-sm ${activeSection === "certificates"
-                  ? "text-emerald-400 font-semibold"
-                  : ""
-                  }`}
+                className={`hover:text-emerald-400 transition-colors text-sm ${
+                  activeSection === "certificates"
+                    ? "text-emerald-400 font-semibold"
+                    : ""
+                }`}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Certificates
               </a>
               <a
                 href="#contact"
-                className={`hover:text-emerald-400 transition-colors text-sm ${activeSection === "contact"
-                  ? "text-emerald-400 font-semibold"
-                  : ""
-                  }`}
+                className={`hover:text-emerald-400 transition-colors text-sm ${
+                  activeSection === "contact"
+                    ? "text-emerald-400 font-semibold"
+                    : ""
+                }`}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Contact
@@ -508,13 +531,21 @@ export default function Home() {
             <span className="bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 bg-clip-text text-transparent whitespace-nowrap">
               Logan -
             </span>
-            <Typewriter words={["A Full Stack Developer", "A Vibe Coder", "An UI/UX Enthusiast", "A Problem Solver"]} />
+            <Typewriter
+              words={[
+                "A Full Stack Developer",
+                "A Vibe Coder",
+                "An UI/UX Enthusiast",
+                "A Problem Solver",
+              ]}
+            />
           </h1>
 
           <p className="text-xl sm:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto">
-            Full Stack Developer specializing in PHP, MySQL, C#, ASP.NET MVC, and .NET Framework.
-            Currently expanding into the Node.js ecosystem including React, Next.js, and TypeScript.
-            Building innovative digital experiences with clean code and best practices.
+            Full Stack Developer specializing in PHP, MySQL, C#, ASP.NET MVC,
+            and .NET Framework. Currently expanding into the Node.js ecosystem
+            including React, Next.js, and TypeScript. Building innovative
+            digital experiences with clean code and best practices.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
@@ -566,8 +597,9 @@ export default function Home() {
               <p className="text-lg text-gray-300 leading-relaxed">
                 From industrial supply management systems to e-commerce
                 platforms, I love building full-stack applications that make a
-                difference. Currently expanding my skills in the Node.js ecosystem,
-                including React, Next.js, TypeScript, and modern JavaScript frameworks.
+                difference. Currently expanding my skills in the Node.js
+                ecosystem, including React, Next.js, TypeScript, and modern
+                JavaScript frameworks.
               </p>
             </div>
 
@@ -670,10 +702,11 @@ export default function Home() {
                     onClick={() => toggleProjectDescription(index)}
                   >
                     <p
-                      className={`text-gray-300 text-sm leading-relaxed hover:text-gray-200 transition-colors duration-300 ${expandedProject === index
-                        ? "line-clamp-none"
-                        : "line-clamp-3"
-                        }`}
+                      className={`text-gray-300 text-sm leading-relaxed hover:text-gray-200 transition-colors duration-300 ${
+                        expandedProject === index
+                          ? "line-clamp-none"
+                          : "line-clamp-3"
+                      }`}
                     >
                       {project.description}
                     </p>
@@ -1129,15 +1162,15 @@ export default function Home() {
           formStatus === "sending"
             ? "Sending Message"
             : formStatus === "success"
-              ? "Message Sent Successfully!"
-              : "Error Sending Message"
+            ? "Message Sent Successfully!"
+            : "Error Sending Message"
         }
         message={
           formStatus === "sending"
             ? "Please wait while we send your message..."
             : formStatus === "success"
-              ? "Thank you for reaching out! I'll get back to you as soon as possible."
-              : "There was an error sending your message. Please try again later."
+            ? "Thank you for reaching out! I'll get back to you as soon as possible."
+            : "There was an error sending your message. Please try again later."
         }
         type={
           formStatus === "sending"
