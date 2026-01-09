@@ -196,6 +196,22 @@ export default function Home() {
 
   const projects = [
     {
+      title: "LibraSys - Library Management System",
+      description:
+        "A comprehensive library management system developed for Cebu Technological University - Naga Extension Campus. It streamlines student borrowing records, book inventory tracking with ISBN support, and provides real-time analytics using TanStack Query and Prisma ORM.",
+      tech: [
+        "React",
+        "TypeScript",
+        "TanStack",
+        "Prisma",
+        "MySQL",
+        "TailwindCSS",
+      ],
+      gradient: "from-indigo-600 to-purple-600",
+      image: "/image/LibraSys.png",
+      type: "CTU Naga Extension Campus Project",
+    },
+    {
       title: "Inventory Management System (IMS-CTU)",
       description:
         "A specialized administrative platform for Cebu Technological University - Naga Extension Campus. This high-performance system streamlines institutional resource tracking using Prisma ORM, secure JWT authentication, and TanStack Query for real-time data synchronization.",
