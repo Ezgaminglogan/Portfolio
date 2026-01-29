@@ -3,18 +3,15 @@
 import Image from "next/image";
 import {
   CodeBracketIcon,
-  CommandLineIcon,
   CpuChipIcon,
   EnvelopeIcon,
   BriefcaseIcon,
-  AcademicCapIcon,
   RocketLaunchIcon,
   SparklesIcon,
   ArrowDownIcon,
   Bars3Icon,
   XMarkIcon,
   ServerIcon,
-  GlobeAltIcon,
 } from "@heroicons/react/24/outline";
 import { useState, useEffect } from "react";
 import { ChevronUpIcon } from "@heroicons/react/24/outline";
@@ -117,7 +114,7 @@ export default function Home() {
   }, []);
 
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     setFormData({
       ...formData,
@@ -1178,15 +1175,15 @@ export default function Home() {
           formStatus === "sending"
             ? "Sending Message"
             : formStatus === "success"
-            ? "Message Sent Successfully!"
-            : "Error Sending Message"
+              ? "Message Sent Successfully!"
+              : "Error Sending Message"
         }
         message={
           formStatus === "sending"
             ? "Please wait while we send your message..."
             : formStatus === "success"
-            ? "Thank you for reaching out! I'll get back to you as soon as possible."
-            : "There was an error sending your message. Please try again later."
+              ? "Thank you for reaching out! I'll get back to you as soon as possible."
+              : "There was an error sending your message. Please try again later."
         }
         type={
           formStatus === "sending"
