@@ -12,10 +12,13 @@ import {
   Bars3Icon,
   XMarkIcon,
   ServerIcon,
+  ArrowDownTrayIcon,
 } from "@heroicons/react/24/outline";
 import { useState, useEffect } from "react";
 import { ChevronUpIcon } from "@heroicons/react/24/outline";
 import Modal from "@/components/Modal";
+import ImageCarousel from "@/components/ImageCarousel";
+import type { CarouselImage } from "@/components/ImageCarousel";
 
 function Typewriter({ words }: { words: string[] }) {
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
@@ -77,6 +80,31 @@ export default function Home() {
     setExpandedProject(expandedProject === index ? null : index);
   };
 
+  const sqliteImages: CarouselImage[] = [
+    { src: "/image/sqlite-portables/Picture 1 - Landing Page Dark Mode.png", alt: "SQLite Portable - Landing Page Dark Mode" },
+    { src: "/image/sqlite-portables/Picture 1 - Landing Page Light Mode.png", alt: "SQLite Portable - Landing Page Light Mode" },
+    { src: "/image/sqlite-portables/Picture 2 - SQL Explorer.png", alt: "SQLite Portable - SQL Explorer" },
+    { src: "/image/sqlite-portables/Picture 3 - Create Database.png", alt: "SQLite Portable - Create Database" },
+    { src: "/image/sqlite-portables/Picture 4 - Connection Online.png", alt: "SQLite Portable - Connection Online" },
+    { src: "/image/sqlite-portables/Picture 5 - Connection Offline.png", alt: "SQLite Portable - Connection Offline" },
+    { src: "/image/sqlite-portables/Picture 6 - Integration PHP.png", alt: "SQLite Portable - Integration PHP" },
+    { src: "/image/sqlite-portables/Picture 7 - Integration Python.png", alt: "SQLite Portable - Integration Python" },
+    { src: "/image/sqlite-portables/Picture 8 - Integration C%23.png", alt: "SQLite Portable - Integration C#" },
+    { src: "/image/sqlite-portables/Picture 9 - Integration Javascript.png", alt: "SQLite Portable - Integration JavaScript" },
+    { src: "/image/sqlite-portables/Picture 10 - Integration Typescript.png", alt: "SQLite Portable - Integration TypeScript" },
+    { src: "/image/sqlite-portables/Picture 11 - Integration SQL.png", alt: "SQLite Portable - Integration SQL" },
+    { src: "/image/sqlite-portables/Picture 12 - System Status.png", alt: "SQLite Portable - System Status" },
+    { src: "/image/sqlite-portables/Picture 13 - Database Selected Landing Page.png", alt: "SQLite Portable - Database Selected Landing Page" },
+    { src: "/image/sqlite-portables/Picture 14 - Create New Table.png", alt: "SQLite Portable - Create New Table" },
+    { src: "/image/sqlite-portables/Picture 15 - Create Table - Relationships.png", alt: "SQLite Portable - Create Table Relationships" },
+    { src: "/image/sqlite-portables/Picture 16 - Schema Designer.png", alt: "SQLite Portable - Schema Designer" },
+    { src: "/image/sqlite-portables/Picture 17 - SQL Explorer Console.png", alt: "SQLite Portable - SQL Explorer Console" },
+    { src: "/image/sqlite-portables/Picture 18 - Selected Table.png", alt: "SQLite Portable - Selected Table" },
+    { src: "/image/sqlite-portables/Picture 19 - Selected Table Insights.png", alt: "SQLite Portable - Selected Table Insights" },
+    { src: "/image/sqlite-portables/Picture 20 - Selected Table Insert New Record.png", alt: "SQLite Portable - Insert New Record" },
+    { src: "/image/sqlite-portables/Picture 21 - Selected Table Edit New Record.png", alt: "SQLite Portable - Edit Record" },
+  ];
+
   useEffect(() => {
     const handleScroll = () => {
       const sections = [
@@ -84,6 +112,7 @@ export default function Home() {
         "about",
         "skills",
         "projects",
+        "sqlite-portable",
         "experience",
         "certificates",
         "contact",
@@ -339,71 +368,73 @@ export default function Home() {
             <div className="hidden md:flex gap-8">
               <a
                 href="#home"
-                className={`hover:text-emerald-400 transition-colors ${
-                  activeSection === "home"
-                    ? "text-emerald-400 font-semibold"
-                    : ""
-                }`}
+                className={`hover:text-emerald-400 transition-colors ${activeSection === "home"
+                  ? "text-emerald-400 font-semibold"
+                  : ""
+                  }`}
               >
                 Home
               </a>
               <a
                 href="#about"
-                className={`hover:text-emerald-400 transition-colors ${
-                  activeSection === "about"
-                    ? "text-emerald-400 font-semibold"
-                    : ""
-                }`}
+                className={`hover:text-emerald-400 transition-colors ${activeSection === "about"
+                  ? "text-emerald-400 font-semibold"
+                  : ""
+                  }`}
               >
                 About
               </a>
               <a
                 href="#skills"
-                className={`hover:text-emerald-400 transition-colors ${
-                  activeSection === "skills"
-                    ? "text-emerald-400 font-semibold"
-                    : ""
-                }`}
+                className={`hover:text-emerald-400 transition-colors ${activeSection === "skills"
+                  ? "text-emerald-400 font-semibold"
+                  : ""
+                  }`}
               >
                 Skills
               </a>
               <a
                 href="#projects"
-                className={`hover:text-emerald-400 transition-colors ${
-                  activeSection === "projects"
-                    ? "text-emerald-400 font-semibold"
-                    : ""
-                }`}
+                className={`hover:text-emerald-400 transition-colors ${activeSection === "projects"
+                  ? "text-emerald-400 font-semibold"
+                  : ""
+                  }`}
               >
                 Projects
               </a>
               <a
+                href="#sqlite-portable"
+                className={`hover:text-emerald-400 transition-colors ${activeSection === "sqlite-portable"
+                  ? "text-emerald-400 font-semibold"
+                  : ""
+                  }`}
+              >
+                SQLite Portable
+              </a>
+              <a
                 href="#experience"
-                className={`hover:text-emerald-400 transition-colors ${
-                  activeSection === "experience"
-                    ? "text-emerald-400 font-semibold"
-                    : ""
-                }`}
+                className={`hover:text-emerald-400 transition-colors ${activeSection === "experience"
+                  ? "text-emerald-400 font-semibold"
+                  : ""
+                  }`}
               >
                 Experience
               </a>
               <a
                 href="#certificates"
-                className={`hover:text-emerald-400 transition-colors ${
-                  activeSection === "certificates"
-                    ? "text-emerald-400 font-semibold"
-                    : ""
-                }`}
+                className={`hover:text-emerald-400 transition-colors ${activeSection === "certificates"
+                  ? "text-emerald-400 font-semibold"
+                  : ""
+                  }`}
               >
                 Certificates
               </a>
               <a
                 href="#contact"
-                className={`hover:text-emerald-400 transition-colors ${
-                  activeSection === "contact"
-                    ? "text-emerald-400 font-semibold"
-                    : ""
-                }`}
+                className={`hover:text-emerald-400 transition-colors ${activeSection === "contact"
+                  ? "text-emerald-400 font-semibold"
+                  : ""
+                  }`}
               >
                 Contact
               </a>
@@ -429,77 +460,80 @@ export default function Home() {
             <div className="px-4 py-4 flex flex-wrap justify-center space-x-3">
               <a
                 href="#home"
-                className={`hover:text-emerald-400 transition-colors text-sm ${
-                  activeSection === "home"
-                    ? "text-emerald-400 font-semibold"
-                    : "text-white"
-                }`}
+                className={`hover:text-emerald-400 transition-colors text-sm ${activeSection === "home"
+                  ? "text-emerald-400 font-semibold"
+                  : "text-white"
+                  }`}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Home
               </a>
               <a
                 href="#about"
-                className={`hover:text-emerald-400 transition-colors text-sm ${
-                  activeSection === "about"
-                    ? "text-emerald-400 font-semibold"
-                    : ""
-                }`}
+                className={`hover:text-emerald-400 transition-colors text-sm ${activeSection === "about"
+                  ? "text-emerald-400 font-semibold"
+                  : ""
+                  }`}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 About
               </a>
               <a
                 href="#skills"
-                className={`hover:text-emerald-400 transition-colors text-sm ${
-                  activeSection === "skills"
-                    ? "text-emerald-400 font-semibold"
-                    : ""
-                }`}
+                className={`hover:text-emerald-400 transition-colors text-sm ${activeSection === "skills"
+                  ? "text-emerald-400 font-semibold"
+                  : ""
+                  }`}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Skills
               </a>
               <a
                 href="#projects"
-                className={`hover:text-emerald-400 transition-colors text-sm ${
-                  activeSection === "projects"
-                    ? "text-emerald-400 font-semibold"
-                    : ""
-                }`}
+                className={`hover:text-emerald-400 transition-colors text-sm ${activeSection === "projects"
+                  ? "text-emerald-400 font-semibold"
+                  : ""
+                  }`}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Projects
               </a>
               <a
+                href="#sqlite-portable"
+                className={`hover:text-emerald-400 transition-colors text-sm ${activeSection === "sqlite-portable"
+                  ? "text-emerald-400 font-semibold"
+                  : ""
+                  }`}
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                SQLite Portable
+              </a>
+              <a
                 href="#experience"
-                className={`hover:text-emerald-400 transition-colors text-sm ${
-                  activeSection === "experience"
-                    ? "text-emerald-400 font-semibold"
-                    : ""
-                }`}
+                className={`hover:text-emerald-400 transition-colors text-sm ${activeSection === "experience"
+                  ? "text-emerald-400 font-semibold"
+                  : ""
+                  }`}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Experience
               </a>
               <a
                 href="#certificates"
-                className={`hover:text-emerald-400 transition-colors text-sm ${
-                  activeSection === "certificates"
-                    ? "text-emerald-400 font-semibold"
-                    : ""
-                }`}
+                className={`hover:text-emerald-400 transition-colors text-sm ${activeSection === "certificates"
+                  ? "text-emerald-400 font-semibold"
+                  : ""
+                  }`}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Certificates
               </a>
               <a
                 href="#contact"
-                className={`hover:text-emerald-400 transition-colors text-sm ${
-                  activeSection === "contact"
-                    ? "text-emerald-400 font-semibold"
-                    : ""
-                }`}
+                className={`hover:text-emerald-400 transition-colors text-sm ${activeSection === "contact"
+                  ? "text-emerald-400 font-semibold"
+                  : ""
+                  }`}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Contact
@@ -715,11 +749,10 @@ export default function Home() {
                     onClick={() => toggleProjectDescription(index)}
                   >
                     <p
-                      className={`text-gray-300 text-sm leading-relaxed hover:text-gray-200 transition-colors duration-300 ${
-                        expandedProject === index
-                          ? "line-clamp-none"
-                          : "line-clamp-3"
-                      }`}
+                      className={`text-gray-300 text-sm leading-relaxed hover:text-gray-200 transition-colors duration-300 ${expandedProject === index
+                        ? "line-clamp-none"
+                        : "line-clamp-3"
+                        }`}
                     >
                       {project.description}
                     </p>
@@ -748,8 +781,64 @@ export default function Home() {
         </div>
       </section>
 
+      {/* SQLite Portable Showcase Section */}
+      <section
+        id="sqlite-portable"
+        className="py-20 px-4 sm:px-6 lg:px-8 bg-black"
+      >
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-4xl sm:text-5xl font-bold text-center mb-4">
+            <span className="bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
+              SQLite Portable
+            </span>
+          </h2>
+          <p className="text-center text-gray-400 mb-6 max-w-2xl mx-auto">
+            A portable SQLite database management tool with dark/light mode, SQL explorer, schema designer, multi-language integration support, and more.
+          </p>
+
+          {/* Download Button */}
+          <div className="flex justify-center mb-12">
+            <a
+              href="https://www.mediafire.com/file/2pu0bqxgr979uam/SQLitePortableSetup.zip/file"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-full font-semibold text-white hover:shadow-lg hover:shadow-emerald-500/50 transition-all duration-300 hover:scale-105 group"
+            >
+              <ArrowDownTrayIcon className="w-6 h-6 group-hover:animate-bounce" />
+              <span>Download SQLite Portable</span>
+              <span className="text-xs opacity-75">(via MediaFire)</span>
+            </a>
+          </div>
+
+          {/* App Icon & Tech Tags */}
+          <div className="flex flex-col items-center mb-10">
+            <div className="relative w-20 h-20 mb-4">
+              <Image
+                src="/image/sqlite-portables/SQLite-Portable.png"
+                alt="SQLite Portable Application Icon"
+                fill
+                className="object-contain"
+              />
+            </div>
+            <div className="flex flex-wrap justify-center gap-2">
+              {["SQLite", "Desktop App", "SQL Explorer", "Schema Designer", "Dark Mode", "Light Mode", "PHP", "Python", "C#", "JavaScript", "TypeScript"].map((tag) => (
+                <span
+                  key={tag}
+                  className="px-3 py-1 text-xs bg-emerald-500/10 border border-emerald-500/30 rounded-full text-emerald-300"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          {/* Screenshot Carousel */}
+          <ImageCarousel images={sqliteImages} autoplayInterval={4000} />
+        </div>
+      </section>
+
       {/* Experience Section */}
-      <section id="experience" className="py-20 px-4 sm:px-6 lg:px-8 bg-black">
+      <section id="experience" className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-black to-emerald-950/20">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-4xl sm:text-5xl font-bold text-center mb-12">
             <span className="bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
