@@ -13,47 +13,103 @@ import {
   XMarkIcon,
   ServerIcon,
   ArrowDownTrayIcon,
+  AcademicCapIcon,
+  MapPinIcon,
+  CalendarIcon,
+  PhoneIcon,
+  UserIcon,
 } from "@heroicons/react/24/outline";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { ChevronUpIcon } from "@heroicons/react/24/outline";
 import Modal from "@/components/Modal";
 import ImageCarousel from "@/components/ImageCarousel";
 import type { CarouselImage } from "@/components/ImageCarousel";
 
+const TYPEWRITER_WORDS = [
+  "A Full Stack Developer",
+  "A Vibe Coder",
+  "An UI/UX Enthusiast",
+  "A Problem Solver",
+];
+
+const TECH_ICONS: Record<string, string> = {
+  PHP: "php",
+  MySQL: "mysql",
+  "C#": "csharp",
+  JavaScript: "javascript",
+  TypeScript: "typescript",
+  React: "react",
+  "Next.js": "nextdotjs",
+  TailwindCSS: "tailwindcss",
+  Bootstrap: "bootstrap",
+  HTML: "html5",
+  CSS: "css3",
+  "Prisma ORM": "prisma",
+  ".NET Framework": "dotnet",
+  "ASP.NET MVC": "dotnet",
+  Blazor: "blazor",
+  Git: "git",
+  Vercel: "vercel",
+  "Entity Framework": "dotnet",
+  "SQL Server": "microsoftsqlserver",
+  "JWT Auth": "jsonwebtokens",
+  SignalR: "dotnet",
+};
+
 function Typewriter({ words }: { words: string[] }) {
-  const [currentWordIndex, setCurrentWordIndex] = useState(0);
-  const [currentText, setCurrentText] = useState("");
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [typingSpeed, setTypingSpeed] = useState(60);
+  const [displayText, setDisplayText] = useState("");
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const stateRef = useRef({
+    wordIndex: 0,
+    charIndex: 0,
+    isDeleting: false,
+  });
 
   useEffect(() => {
-    const handleTyping = () => {
-      const fullText = words[currentWordIndex];
+    const tick = () => {
+      const s = stateRef.current;
+      const fullText = words[s.wordIndex];
 
-      if (isDeleting) {
-        setCurrentText(fullText.substring(0, currentText.length - 1));
-        setTypingSpeed(30);
+      if (s.isDeleting) {
+        s.charIndex--;
+        setDisplayText(fullText.substring(0, s.charIndex));
+
+        if (s.charIndex === 0) {
+          s.isDeleting = false;
+          s.wordIndex = (s.wordIndex + 1) % words.length;
+          timerRef.current = setTimeout(tick, 60);
+        } else {
+          timerRef.current = setTimeout(tick, 30);
+        }
       } else {
-        setCurrentText(fullText.substring(0, currentText.length + 1));
-        setTypingSpeed(60);
-      }
+        s.charIndex++;
+        setDisplayText(fullText.substring(0, s.charIndex));
 
-      if (!isDeleting && currentText === fullText) {
-        setTimeout(() => setIsDeleting(true), 2000);
-      } else if (isDeleting && currentText === "") {
-        setIsDeleting(false);
-        setCurrentWordIndex((prev) => (prev + 1) % words.length);
+        if (s.charIndex === fullText.length) {
+          timerRef.current = setTimeout(() => {
+            s.isDeleting = true;
+            timerRef.current = setTimeout(tick, 30);
+          }, 2000);
+        } else {
+          timerRef.current = setTimeout(tick, 60);
+        }
       }
     };
 
-    const timer = setTimeout(handleTyping, typingSpeed);
-    return () => clearTimeout(timer);
-  }, [currentText, isDeleting, currentWordIndex, words, typingSpeed]);
+    timerRef.current = setTimeout(tick, 60);
+
+    return () => {
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+        timerRef.current = null;
+      }
+    };
+  }, [words]);
 
   return (
     <span className="inline-flex items-center whitespace-nowrap">
       <span className="bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 bg-clip-text text-transparent">
-        {currentText}
+        {displayText}
       </span>
       <span className="ml-1 inline-block w-[3px] h-[0.8em] bg-emerald-400 animate-blink shadow-[0_0_12px_rgba(52,211,153,0.8)] align-middle"></span>
     </span>
@@ -70,39 +126,119 @@ export default function Home() {
     subject: "",
     message: "",
   });
-  const [expandedProject, setExpandedProject] = useState<number | null>(null);
+  const [selectedProject, setSelectedProject] = useState<number | null>(null);
   const [formStatus, setFormStatus] = useState<
     "idle" | "sending" | "success" | "error"
   >("idle");
   const [modalOpen, setModalOpen] = useState(false);
 
-  const toggleProjectDescription = (index: number) => {
-    setExpandedProject(expandedProject === index ? null : index);
+  // Project modal handlers
+  const openProjectModal = (index: number) => {
+    setSelectedProject(index);
+    document.body.style.overflow = "hidden";
+  };
+  const closeProjectModal = () => {
+    setSelectedProject(null);
+    document.body.style.overflow = "";
   };
 
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeProjectModal();
+    };
+    window.addEventListener("keydown", handleEscape);
+    return () => window.removeEventListener("keydown", handleEscape);
+  }, []);
+
   const sqliteImages: CarouselImage[] = [
-    { src: "/image/sqlite-portables/Picture 1 - Landing Page Dark Mode.png", alt: "SQLite Portable - Landing Page Dark Mode" },
-    { src: "/image/sqlite-portables/Picture 1 - Landing Page Light Mode.png", alt: "SQLite Portable - Landing Page Light Mode" },
-    { src: "/image/sqlite-portables/Picture 2 - SQL Explorer.png", alt: "SQLite Portable - SQL Explorer" },
-    { src: "/image/sqlite-portables/Picture 3 - Create Database.png", alt: "SQLite Portable - Create Database" },
-    { src: "/image/sqlite-portables/Picture 4 - Connection Online.png", alt: "SQLite Portable - Connection Online" },
-    { src: "/image/sqlite-portables/Picture 5 - Connection Offline.png", alt: "SQLite Portable - Connection Offline" },
-    { src: "/image/sqlite-portables/Picture 6 - Integration PHP.png", alt: "SQLite Portable - Integration PHP" },
-    { src: "/image/sqlite-portables/Picture 7 - Integration Python.png", alt: "SQLite Portable - Integration Python" },
-    { src: "/image/sqlite-portables/Picture 8 - Integration C%23.png", alt: "SQLite Portable - Integration C#" },
-    { src: "/image/sqlite-portables/Picture 9 - Integration Javascript.png", alt: "SQLite Portable - Integration JavaScript" },
-    { src: "/image/sqlite-portables/Picture 10 - Integration Typescript.png", alt: "SQLite Portable - Integration TypeScript" },
-    { src: "/image/sqlite-portables/Picture 11 - Integration SQL.png", alt: "SQLite Portable - Integration SQL" },
-    { src: "/image/sqlite-portables/Picture 12 - System Status.png", alt: "SQLite Portable - System Status" },
-    { src: "/image/sqlite-portables/Picture 13 - Database Selected Landing Page.png", alt: "SQLite Portable - Database Selected Landing Page" },
-    { src: "/image/sqlite-portables/Picture 14 - Create New Table.png", alt: "SQLite Portable - Create New Table" },
-    { src: "/image/sqlite-portables/Picture 15 - Create Table - Relationships.png", alt: "SQLite Portable - Create Table Relationships" },
-    { src: "/image/sqlite-portables/Picture 16 - Schema Designer.png", alt: "SQLite Portable - Schema Designer" },
-    { src: "/image/sqlite-portables/Picture 17 - SQL Explorer Console.png", alt: "SQLite Portable - SQL Explorer Console" },
-    { src: "/image/sqlite-portables/Picture 18 - Selected Table.png", alt: "SQLite Portable - Selected Table" },
-    { src: "/image/sqlite-portables/Picture 19 - Selected Table Insights.png", alt: "SQLite Portable - Selected Table Insights" },
-    { src: "/image/sqlite-portables/Picture 20 - Selected Table Insert New Record.png", alt: "SQLite Portable - Insert New Record" },
-    { src: "/image/sqlite-portables/Picture 21 - Selected Table Edit New Record.png", alt: "SQLite Portable - Edit Record" },
+    {
+      src: "/image/sqlite-portables/Picture 1 - Landing Page Dark Mode.png",
+      alt: "SQLite Portable - Landing Page Dark Mode",
+    },
+    {
+      src: "/image/sqlite-portables/Picture 1 - Landing Page Light Mode.png",
+      alt: "SQLite Portable - Landing Page Light Mode",
+    },
+    {
+      src: "/image/sqlite-portables/Picture 2 - SQL Explorer.png",
+      alt: "SQLite Portable - SQL Explorer",
+    },
+    {
+      src: "/image/sqlite-portables/Picture 3 - Create Database.png",
+      alt: "SQLite Portable - Create Database",
+    },
+    {
+      src: "/image/sqlite-portables/Picture 4 - Connection Online.png",
+      alt: "SQLite Portable - Connection Online",
+    },
+    {
+      src: "/image/sqlite-portables/Picture 5 - Connection Offline.png",
+      alt: "SQLite Portable - Connection Offline",
+    },
+    {
+      src: "/image/sqlite-portables/Picture 6 - Integration PHP.png",
+      alt: "SQLite Portable - Integration PHP",
+    },
+    {
+      src: "/image/sqlite-portables/Picture 7 - Integration Python.png",
+      alt: "SQLite Portable - Integration Python",
+    },
+    {
+      src: "/image/sqlite-portables/Picture 8 - Integration C%23.png",
+      alt: "SQLite Portable - Integration C#",
+    },
+    {
+      src: "/image/sqlite-portables/Picture 9 - Integration Javascript.png",
+      alt: "SQLite Portable - Integration JavaScript",
+    },
+    {
+      src: "/image/sqlite-portables/Picture 10 - Integration Typescript.png",
+      alt: "SQLite Portable - Integration TypeScript",
+    },
+    {
+      src: "/image/sqlite-portables/Picture 11 - Integration SQL.png",
+      alt: "SQLite Portable - Integration SQL",
+    },
+    {
+      src: "/image/sqlite-portables/Picture 12 - System Status.png",
+      alt: "SQLite Portable - System Status",
+    },
+    {
+      src: "/image/sqlite-portables/Picture 13 - Database Selected Landing Page.png",
+      alt: "SQLite Portable - Database Selected Landing Page",
+    },
+    {
+      src: "/image/sqlite-portables/Picture 14 - Create New Table.png",
+      alt: "SQLite Portable - Create New Table",
+    },
+    {
+      src: "/image/sqlite-portables/Picture 15 - Create Table - Relationships.png",
+      alt: "SQLite Portable - Create Table Relationships",
+    },
+    {
+      src: "/image/sqlite-portables/Picture 16 - Schema Designer.png",
+      alt: "SQLite Portable - Schema Designer",
+    },
+    {
+      src: "/image/sqlite-portables/Picture 17 - SQL Explorer Console.png",
+      alt: "SQLite Portable - SQL Explorer Console",
+    },
+    {
+      src: "/image/sqlite-portables/Picture 18 - Selected Table.png",
+      alt: "SQLite Portable - Selected Table",
+    },
+    {
+      src: "/image/sqlite-portables/Picture 19 - Selected Table Insights.png",
+      alt: "SQLite Portable - Selected Table Insights",
+    },
+    {
+      src: "/image/sqlite-portables/Picture 20 - Selected Table Insert New Record.png",
+      alt: "SQLite Portable - Insert New Record",
+    },
+    {
+      src: "/image/sqlite-portables/Picture 21 - Selected Table Edit New Record.png",
+      alt: "SQLite Portable - Edit Record",
+    },
   ];
 
   useEffect(() => {
@@ -199,24 +335,64 @@ export default function Home() {
     {
       name: "Web Development",
       icon: CodeBracketIcon,
-      description:
-        "PHP, ASP.NET MVC, Blazor, HTML, CSS, JavaScript, TailwindCSS, Bootstrap, Next.js, TanStack Query",
+      subtitle: "Frontend & Frameworks",
+      technologies: [
+        "PHP",
+        "ASP.NET MVC",
+        "Blazor",
+        "HTML",
+        "CSS",
+        "JavaScript",
+        "TailwindCSS",
+        "Bootstrap",
+        "Next.js",
+        "TanStack Query",
+      ],
     },
     {
       name: "Backend & Database",
       icon: ServerIcon,
-      description:
-        "Prisma ORM, JWT Authentication, PHP, MySQL, PHPMailer, OTP Authentication , Email Verification , SQL Server",
+      subtitle: "Server-side & Data",
+      technologies: [
+        "Prisma ORM",
+        "JWT Auth",
+        "PHP",
+        "MySQL",
+        "PHPMailer",
+        "OTP Auth",
+        "Email Verification",
+        "SQL Server",
+      ],
     },
     {
       name: ".NET Development",
       icon: CpuChipIcon,
-      description: "C#, ASP.NET MVC, .NET Framework",
+      subtitle: "Desktop & Enterprise",
+      technologies: [
+        "C#",
+        "ASP.NET MVC",
+        ".NET Framework",
+        "Entity Framework",
+        "Blazor",
+        "SignalR",
+      ],
     },
     {
       name: "Full Stack Projects",
       icon: RocketLaunchIcon,
-      description: "End-to-end web applications with modern frameworks",
+      subtitle: "End-to-End Solutions",
+      technologies: [
+        "C#",
+        ".NET Framework",
+        "ASP.NET MVC",
+        "PHP",
+        "React",
+        "TypeScript",
+        "REST APIs",
+        "Responsive Design",
+        "Git",
+        "Vercel",
+      ],
     },
   ];
 
@@ -365,76 +541,84 @@ export default function Home() {
             </div>
 
             {/* Desktop Navigation */}
-            <div className="hidden md:flex gap-8">
+            <div className="hidden lg:flex gap-4 xl:gap-8 items-center">
               <a
                 href="#home"
-                className={`hover:text-emerald-400 transition-colors ${activeSection === "home"
-                  ? "text-emerald-400 font-semibold"
-                  : ""
-                  }`}
+                className={`whitespace-nowrap text-sm lg:text-base hover:text-emerald-400 transition-colors ${
+                  activeSection === "home"
+                    ? "text-emerald-400 font-semibold"
+                    : ""
+                }`}
               >
                 Home
               </a>
               <a
                 href="#about"
-                className={`hover:text-emerald-400 transition-colors ${activeSection === "about"
-                  ? "text-emerald-400 font-semibold"
-                  : ""
-                  }`}
+                className={`whitespace-nowrap text-sm lg:text-base hover:text-emerald-400 transition-colors ${
+                  activeSection === "about"
+                    ? "text-emerald-400 font-semibold"
+                    : ""
+                }`}
               >
                 About
               </a>
               <a
                 href="#skills"
-                className={`hover:text-emerald-400 transition-colors ${activeSection === "skills"
-                  ? "text-emerald-400 font-semibold"
-                  : ""
-                  }`}
+                className={`whitespace-nowrap text-sm lg:text-base hover:text-emerald-400 transition-colors ${
+                  activeSection === "skills"
+                    ? "text-emerald-400 font-semibold"
+                    : ""
+                }`}
               >
                 Skills
               </a>
               <a
                 href="#projects"
-                className={`hover:text-emerald-400 transition-colors ${activeSection === "projects"
-                  ? "text-emerald-400 font-semibold"
-                  : ""
-                  }`}
+                className={`whitespace-nowrap text-sm lg:text-base hover:text-emerald-400 transition-colors ${
+                  activeSection === "projects"
+                    ? "text-emerald-400 font-semibold"
+                    : ""
+                }`}
               >
                 Projects
               </a>
               <a
                 href="#sqlite-portable"
-                className={`hover:text-emerald-400 transition-colors ${activeSection === "sqlite-portable"
-                  ? "text-emerald-400 font-semibold"
-                  : ""
-                  }`}
+                className={`whitespace-nowrap text-sm lg:text-base hover:text-emerald-400 transition-colors ${
+                  activeSection === "sqlite-portable"
+                    ? "text-emerald-400 font-semibold"
+                    : ""
+                }`}
               >
                 SQLite Portable
               </a>
               <a
                 href="#experience"
-                className={`hover:text-emerald-400 transition-colors ${activeSection === "experience"
-                  ? "text-emerald-400 font-semibold"
-                  : ""
-                  }`}
+                className={`whitespace-nowrap text-sm lg:text-base hover:text-emerald-400 transition-colors ${
+                  activeSection === "experience"
+                    ? "text-emerald-400 font-semibold"
+                    : ""
+                }`}
               >
                 Experience
               </a>
               <a
                 href="#certificates"
-                className={`hover:text-emerald-400 transition-colors ${activeSection === "certificates"
-                  ? "text-emerald-400 font-semibold"
-                  : ""
-                  }`}
+                className={`whitespace-nowrap text-sm lg:text-base hover:text-emerald-400 transition-colors ${
+                  activeSection === "certificates"
+                    ? "text-emerald-400 font-semibold"
+                    : ""
+                }`}
               >
                 Certificates
               </a>
               <a
                 href="#contact"
-                className={`hover:text-emerald-400 transition-colors ${activeSection === "contact"
-                  ? "text-emerald-400 font-semibold"
-                  : ""
-                  }`}
+                className={`whitespace-nowrap text-sm lg:text-base hover:text-emerald-400 transition-colors ${
+                  activeSection === "contact"
+                    ? "text-emerald-400 font-semibold"
+                    : ""
+                }`}
               >
                 Contact
               </a>
@@ -442,8 +626,9 @@ export default function Home() {
 
             {/* Mobile menu button */}
             <button
-              className="md:hidden"
+              className="lg:hidden p-2 rounded-lg hover:bg-emerald-500/10 transition-colors"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
             >
               {mobileMenuOpen ? (
                 <XMarkIcon className="w-6 h-6" />
@@ -455,92 +640,104 @@ export default function Home() {
         </div>
 
         {/* Mobile Navigation */}
-        {mobileMenuOpen && (
-          <div className="md:hidden bg-black border-t border-emerald-900/20">
-            <div className="px-4 py-4 flex flex-wrap justify-center space-x-3">
+        <div
+          className={`lg:hidden overflow-hidden transition-all duration-300 ease-in-out ${
+            mobileMenuOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
+          }`}
+        >
+          <div className="bg-black/95 border-t border-emerald-900/20">
+            <div className="flex flex-col px-4 py-3">
               <a
                 href="#home"
-                className={`hover:text-emerald-400 transition-colors text-sm ${activeSection === "home"
-                  ? "text-emerald-400 font-semibold"
-                  : "text-white"
-                  }`}
+                className={`py-2.5 px-4 rounded-lg transition-all duration-200 text-sm ${
+                  activeSection === "home"
+                    ? "text-emerald-400 font-semibold bg-emerald-500/10"
+                    : "text-white hover:text-emerald-400 hover:bg-emerald-500/5"
+                }`}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Home
               </a>
               <a
                 href="#about"
-                className={`hover:text-emerald-400 transition-colors text-sm ${activeSection === "about"
-                  ? "text-emerald-400 font-semibold"
-                  : ""
-                  }`}
+                className={`py-2.5 px-4 rounded-lg transition-all duration-200 text-sm ${
+                  activeSection === "about"
+                    ? "text-emerald-400 font-semibold bg-emerald-500/10"
+                    : "text-white hover:text-emerald-400 hover:bg-emerald-500/5"
+                }`}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 About
               </a>
               <a
                 href="#skills"
-                className={`hover:text-emerald-400 transition-colors text-sm ${activeSection === "skills"
-                  ? "text-emerald-400 font-semibold"
-                  : ""
-                  }`}
+                className={`py-2.5 px-4 rounded-lg transition-all duration-200 text-sm ${
+                  activeSection === "skills"
+                    ? "text-emerald-400 font-semibold bg-emerald-500/10"
+                    : "text-white hover:text-emerald-400 hover:bg-emerald-500/5"
+                }`}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Skills
               </a>
               <a
                 href="#projects"
-                className={`hover:text-emerald-400 transition-colors text-sm ${activeSection === "projects"
-                  ? "text-emerald-400 font-semibold"
-                  : ""
-                  }`}
+                className={`py-2.5 px-4 rounded-lg transition-all duration-200 text-sm ${
+                  activeSection === "projects"
+                    ? "text-emerald-400 font-semibold bg-emerald-500/10"
+                    : "text-white hover:text-emerald-400 hover:bg-emerald-500/5"
+                }`}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Projects
               </a>
               <a
                 href="#sqlite-portable"
-                className={`hover:text-emerald-400 transition-colors text-sm ${activeSection === "sqlite-portable"
-                  ? "text-emerald-400 font-semibold"
-                  : ""
-                  }`}
+                className={`py-2.5 px-4 rounded-lg transition-all duration-200 text-sm ${
+                  activeSection === "sqlite-portable"
+                    ? "text-emerald-400 font-semibold bg-emerald-500/10"
+                    : "text-white hover:text-emerald-400 hover:bg-emerald-500/5"
+                }`}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 SQLite Portable
               </a>
               <a
                 href="#experience"
-                className={`hover:text-emerald-400 transition-colors text-sm ${activeSection === "experience"
-                  ? "text-emerald-400 font-semibold"
-                  : ""
-                  }`}
+                className={`py-2.5 px-4 rounded-lg transition-all duration-200 text-sm ${
+                  activeSection === "experience"
+                    ? "text-emerald-400 font-semibold bg-emerald-500/10"
+                    : "text-white hover:text-emerald-400 hover:bg-emerald-500/5"
+                }`}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Experience
               </a>
               <a
                 href="#certificates"
-                className={`hover:text-emerald-400 transition-colors text-sm ${activeSection === "certificates"
-                  ? "text-emerald-400 font-semibold"
-                  : ""
-                  }`}
+                className={`py-2.5 px-4 rounded-lg transition-all duration-200 text-sm ${
+                  activeSection === "certificates"
+                    ? "text-emerald-400 font-semibold bg-emerald-500/10"
+                    : "text-white hover:text-emerald-400 hover:bg-emerald-500/5"
+                }`}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Certificates
               </a>
               <a
                 href="#contact"
-                className={`hover:text-emerald-400 transition-colors text-sm ${activeSection === "contact"
-                  ? "text-emerald-400 font-semibold"
-                  : ""
-                  }`}
+                className={`py-2.5 px-4 rounded-lg transition-all duration-200 text-sm ${
+                  activeSection === "contact"
+                    ? "text-emerald-400 font-semibold bg-emerald-500/10"
+                    : "text-white hover:text-emerald-400 hover:bg-emerald-500/5"
+                }`}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Contact
               </a>
             </div>
           </div>
-        )}
+        </div>
       </nav>
 
       {/* Hero Section */}
@@ -551,51 +748,100 @@ export default function Home() {
         {/* Gradient Background */}
         <div className="absolute inset-0 bg-gradient-to-br from-emerald-950 via-black to-black opacity-50"></div>
         <div className="absolute inset-0">
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-teal-500/10 rounded-full blur-3xl"></div>
+          <div className="absolute top-1/4 left-1/6 w-[500px] h-[500px] bg-emerald-500/10 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-1/4 right-1/6 w-[500px] h-[500px] bg-teal-500/10 rounded-full blur-3xl"></div>
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-cyan-500/5 rounded-full blur-3xl"></div>
         </div>
 
-        <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-5xl">
-          <div className="mb-8 flex justify-center">
-            <div className="relative w-40 h-40 sm:w-48 sm:h-48 rounded-full overflow-hidden border-4 border-emerald-500/50 shadow-2xl shadow-emerald-500/30">
-              <Image
-                src="/image/profile.jpg"
-                alt="Logan - Full Stack Developer Profile Picture"
-                fill
-                className="object-cover"
-                priority
-              />
+        <div className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-0">
+          {/* 2-Column Grid: stacks on mobile, side-by-side on lg+ */}
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-16 items-center">
+            {/* Left Column — Profile Image + Badge */}
+            <div className="lg:col-span-2 flex flex-col items-center">
+              {/* Profile Image with decorative ring */}
+              <div className="relative mb-6">
+                {/* Outer dotted decorative ring */}
+                <div className="absolute -inset-4 rounded-full border-2 border-dashed border-emerald-500/20 animate-[spin_25s_linear_infinite]"></div>
+                {/* Glow ring */}
+                <div className="absolute -inset-1 rounded-full bg-gradient-to-br from-emerald-400 via-teal-500 to-cyan-400 opacity-20 blur-md"></div>
+                <div className="relative w-48 h-48 sm:w-56 sm:h-56 lg:w-64 lg:h-64 rounded-full overflow-hidden border-4 border-emerald-500/50 shadow-2xl shadow-emerald-500/30">
+                  <Image
+                    src="/image/profile.jpg"
+                    alt="Logan - Full Stack Developer Profile Picture"
+                    fill
+                    className="object-cover"
+                    priority
+                  />
+                </div>
+                {/* Status indicator */}
+                <div className="absolute bottom-2 right-2 lg:bottom-4 lg:right-4 w-5 h-5 bg-emerald-400 rounded-full border-[3px] border-black shadow-lg shadow-emerald-400/50"></div>
+              </div>
+
+              {/* Welcome badge */}
+              <div className="inline-block px-5 py-2.5 bg-emerald-500/10 border border-emerald-500/20 rounded-full">
+                <span className="text-emerald-400 text-sm font-medium">
+                  👋 Welcome to my portfolio
+                </span>
+              </div>
+
+              {/* Quick stats under profile — visible on lg+ */}
+              <div className="hidden lg:flex items-center gap-3 mt-6">
+                <div className="flex items-center gap-1.5 px-3 py-1.5 bg-emerald-500/5 border border-emerald-500/15 rounded-full">
+                  <div className="w-1.5 h-1.5 rounded-full bg-emerald-400"></div>
+                  <span className="text-emerald-400/80 text-xs font-medium">
+                    Available for work
+                  </span>
+                </div>
+                <div className="px-3 py-1.5 bg-emerald-500/5 border border-emerald-500/15 rounded-full">
+                  <span className="text-emerald-400/80 text-xs font-medium">
+                    BSIT 4th Year
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Column — Text Content */}
+            <div className="lg:col-span-3 text-center lg:text-left">
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold mb-6 flex flex-wrap items-center justify-center lg:justify-start gap-x-2 sm:gap-x-3 leading-tight">
+                <span className="bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 bg-clip-text text-transparent whitespace-nowrap">
+                  Logan -
+                </span>
+                <Typewriter words={TYPEWRITER_WORDS} />
+              </h1>
+
+              <p className="text-lg sm:text-xl text-gray-300 mb-8 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+                Full Stack Developer specializing in PHP, MySQL, C#, ASP.NET
+                MVC, and .NET Framework. Currently expanding into the Node.js
+                ecosystem including React, Next.js, and TypeScript. Building
+                innovative digital experiences with clean code and best
+                practices.
+              </p>
+
+              {/* Tech stack chips */}
+              <div className="flex flex-wrap gap-2 justify-center lg:justify-start mb-8">
+                {[
+                  "PHP",
+                  "MySQL",
+                  "C#",
+                  ".NET",
+                  "React",
+                  "Next.js",
+                  "TypeScript",
+                  "TailwindCSS",
+                ].map((tech) => (
+                  <span
+                    key={tech}
+                    className="px-3 py-1 text-xs bg-emerald-500/8 border border-emerald-500/20 rounded-full text-emerald-300/70 hover:text-emerald-300 hover:border-emerald-500/40 transition-all duration-300"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
             </div>
           </div>
 
-          <div className="inline-block mb-4 px-4 py-2 bg-emerald-500/10 border border-emerald-500/20 rounded-full">
-            <span className="text-emerald-400 text-sm font-medium">
-              👋 Welcome to my portfolio
-            </span>
-          </div>
-
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold mb-6 flex flex-wrap items-center justify-center gap-x-2 sm:gap-x-3 text-center leading-tight">
-            <span className="bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 bg-clip-text text-transparent whitespace-nowrap">
-              Logan -
-            </span>
-            <Typewriter
-              words={[
-                "A Full Stack Developer",
-                "A Vibe Coder",
-                "An UI/UX Enthusiast",
-                "A Problem Solver",
-              ]}
-            />
-          </h1>
-
-          <p className="text-xl sm:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto">
-            Full Stack Developer specializing in PHP, MySQL, C#, ASP.NET MVC,
-            and .NET Framework. Currently expanding into the Node.js ecosystem
-            including React, Next.js, and TypeScript. Building innovative
-            digital experiences with clean code and best practices.
-          </p>
-
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+          {/* CTA Buttons — centered below the grid */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mt-10 lg:mt-14">
             <a
               href="#projects"
               className="px-8 py-4 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-full font-semibold hover:shadow-lg hover:shadow-emerald-500/50 transition-all duration-300 hover:scale-105"
@@ -610,7 +856,8 @@ export default function Home() {
             </a>
           </div>
 
-          <div className="mt-16 animate-bounce">
+          {/* Scroll indicator */}
+          <div className="mt-12 lg:mt-16 animate-bounce">
             <ArrowDownIcon className="w-6 h-6 mx-auto text-emerald-400" />
           </div>
         </div>
@@ -619,57 +866,188 @@ export default function Home() {
       {/* About Section */}
       <section
         id="about"
-        className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-black to-emerald-950/20"
+        className="py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-black to-emerald-950/20"
       >
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl sm:text-5xl font-bold text-center mb-12">
-            <span className="bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
-              About Me
-            </span>
-          </h2>
+          <div className="text-center mb-16">
+            <h2 className="text-4xl sm:text-5xl font-bold mb-4">
+              <span className="bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
+                About Me
+              </span>
+            </h2>
+            <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+              A quick look at who I am and what drives me
+            </p>
+          </div>
 
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="space-y-6">
-              <p className="text-lg text-gray-300 leading-relaxed">
-                I&apos;m a 4th year IT student at Cebu Technological University
-                - Naga Extension Campus, passionate about web development and
-                creating solutions that solve real-world problems.
-              </p>
-              <p className="text-lg text-gray-300 leading-relaxed">
-                My expertise lies in PHP, MySQL, C#, ASP.NET MVC, and modern web
-                frameworks like TailwindCSS and Bootstrap. I&apos;ve developed
-                multiple capstone and academic projects that address practical
-                challenges in various industries.
-              </p>
-              <p className="text-lg text-gray-300 leading-relaxed">
-                From industrial supply management systems to e-commerce
-                platforms, I love building full-stack applications that make a
-                difference. Currently expanding my skills in the Node.js
-                ecosystem, including React, Next.js, TypeScript, and modern
-                JavaScript frameworks.
-              </p>
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-10">
+            {/* Left Column — Personal Info Card */}
+            <div className="lg:col-span-2">
+              <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-6 sm:p-7 h-full">
+                <h3 className="text-lg font-semibold text-white mb-6 flex items-center gap-2">
+                  <UserIcon className="w-5 h-5 text-emerald-400" />
+                  Personal Information
+                </h3>
+
+                <div className="space-y-5">
+                  {/* Name */}
+                  <div className="flex items-start gap-3">
+                    <div className="w-9 h-9 shrink-0 rounded-lg bg-emerald-500/10 border border-emerald-500/15 flex items-center justify-center">
+                      <SparklesIcon className="w-4 h-4 text-emerald-400" />
+                    </div>
+                    <div>
+                      <p className="text-[11px] font-medium uppercase tracking-wider text-gray-500 mb-0.5">
+                        Full Name
+                      </p>
+                      <p className="text-sm text-gray-200 font-medium">
+                        Logan M. Panucat
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Age & DOB */}
+                  <div className="flex items-start gap-3">
+                    <div className="w-9 h-9 shrink-0 rounded-lg bg-emerald-500/10 border border-emerald-500/15 flex items-center justify-center">
+                      <CalendarIcon className="w-4 h-4 text-emerald-400" />
+                    </div>
+                    <div>
+                      <p className="text-[11px] font-medium uppercase tracking-wider text-gray-500 mb-0.5">
+                        Date of Birth
+                      </p>
+                      <p className="text-sm text-gray-200 font-medium">
+                        September 08, 2002{" "}
+                        <span className="text-gray-500 font-normal">
+                          (23 years old)
+                        </span>
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Location */}
+                  <div className="flex items-start gap-3">
+                    <div className="w-9 h-9 shrink-0 rounded-lg bg-emerald-500/10 border border-emerald-500/15 flex items-center justify-center">
+                      <MapPinIcon className="w-4 h-4 text-emerald-400" />
+                    </div>
+                    <div>
+                      <p className="text-[11px] font-medium uppercase tracking-wider text-gray-500 mb-0.5">
+                        Location
+                      </p>
+                      <p className="text-sm text-gray-200 font-medium">
+                        Carcar City, Cebu, Philippines
+                      </p>
+                      <p className="text-xs text-gray-500">
+                        P. Vasquez St., Poblacion I
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Education */}
+                  <div className="flex items-start gap-3">
+                    <div className="w-9 h-9 shrink-0 rounded-lg bg-emerald-500/10 border border-emerald-500/15 flex items-center justify-center">
+                      <AcademicCapIcon className="w-4 h-4 text-emerald-400" />
+                    </div>
+                    <div>
+                      <p className="text-[11px] font-medium uppercase tracking-wider text-gray-500 mb-0.5">
+                        Education
+                      </p>
+                      <p className="text-sm text-gray-200 font-medium">
+                        BS Information Technology
+                      </p>
+                      <p className="text-xs text-gray-500">
+                        CTU — Naga Extension Campus
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Contact */}
+                  <div className="flex items-start gap-3">
+                    <div className="w-9 h-9 shrink-0 rounded-lg bg-emerald-500/10 border border-emerald-500/15 flex items-center justify-center">
+                      <PhoneIcon className="w-4 h-4 text-emerald-400" />
+                    </div>
+                    <div>
+                      <p className="text-[11px] font-medium uppercase tracking-wider text-gray-500 mb-0.5">
+                        Contact
+                      </p>
+                      <p className="text-sm text-gray-200 font-medium">
+                        +63 991 551 9424
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Download CV button */}
+                <a
+                  href="/CV_Portfolio/Resume.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-7 w-full inline-flex items-center justify-center gap-2 px-5 py-3 bg-emerald-500/10 border border-emerald-500/20 rounded-xl text-emerald-400 text-sm font-medium hover:bg-emerald-500/15 hover:border-emerald-500/30 transition-all duration-300"
+                >
+                  <ArrowDownTrayIcon className="w-4 h-4" />
+                  Download Resume
+                </a>
+              </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-6">
-              <div className="p-6 bg-gradient-to-br from-emerald-900/30 to-black border border-emerald-500/20 rounded-2xl">
-                <div className="text-3xl font-bold text-emerald-400 mb-2">
-                  4th
+            {/* Right Column — Bio + Stats */}
+            <div className="lg:col-span-3 flex flex-col">
+              {/* Bio text */}
+              <div className="space-y-5 mb-8">
+                <p className="text-base sm:text-lg text-gray-300 leading-relaxed">
+                  I&apos;m a 4th year IT student at Cebu Technological
+                  University — Naga Extension Campus, passionate about web
+                  development and creating solutions that solve real-world
+                  problems. I thrive on turning ideas into functional, polished
+                  applications.
+                </p>
+                <p className="text-base sm:text-lg text-gray-300 leading-relaxed">
+                  My expertise spans PHP, MySQL, C#, ASP.NET MVC, and modern web
+                  frameworks like TailwindCSS and Bootstrap. I&apos;ve developed
+                  multiple capstone and academic projects that address practical
+                  challenges in education, supply chain, and e-commerce.
+                </p>
+                <p className="text-base sm:text-lg text-gray-300 leading-relaxed">
+                  From institutional management systems to cross-platform supply
+                  chain tools, I love building full-stack applications that make
+                  a difference. Currently expanding my skills in the Node.js
+                  ecosystem — React, Next.js, TypeScript, and modern JavaScript
+                  frameworks.
+                </p>
+              </div>
+
+              {/* Stats grid */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-auto">
+                <div className="p-5 rounded-2xl border border-white/[0.06] bg-white/[0.02] text-center">
+                  <div className="text-2xl font-bold text-emerald-400 mb-1">
+                    4th
+                  </div>
+                  <div className="text-xs text-gray-500 font-medium uppercase tracking-wider">
+                    Year Student
+                  </div>
                 </div>
-                <div className="text-gray-400">Year IT Student</div>
-              </div>
-              <div className="p-6 bg-gradient-to-br from-teal-900/30 to-black border border-teal-500/20 rounded-2xl">
-                <div className="text-3xl font-bold text-teal-400 mb-2">3+</div>
-                <div className="text-gray-400">Major Projects</div>
-              </div>
-              <div className="p-6 bg-gradient-to-br from-green-900/30 to-black border border-green-500/20 rounded-2xl">
-                <div className="text-3xl font-bold text-green-400 mb-2">3</div>
-                <div className="text-gray-400">Capstone Projects</div>
-              </div>
-              <div className="p-6 bg-gradient-to-br from-emerald-900/30 to-black border border-emerald-500/20 rounded-2xl">
-                <div className="text-3xl font-bold text-emerald-400 mb-2">
-                  100%
+                <div className="p-5 rounded-2xl border border-white/[0.06] bg-white/[0.02] text-center">
+                  <div className="text-2xl font-bold text-emerald-400 mb-1">
+                    3+
+                  </div>
+                  <div className="text-xs text-gray-500 font-medium uppercase tracking-wider">
+                    Major Projects
+                  </div>
                 </div>
-                <div className="text-gray-400">Dedication</div>
+                <div className="p-5 rounded-2xl border border-white/[0.06] bg-white/[0.02] text-center">
+                  <div className="text-2xl font-bold text-emerald-400 mb-1">
+                    3
+                  </div>
+                  <div className="text-xs text-gray-500 font-medium uppercase tracking-wider">
+                    Capstone Projects
+                  </div>
+                </div>
+                <div className="p-5 rounded-2xl border border-white/[0.06] bg-white/[0.02] text-center">
+                  <div className="text-2xl font-bold text-emerald-400 mb-1">
+                    100%
+                  </div>
+                  <div className="text-xs text-gray-500 font-medium uppercase tracking-wider">
+                    Dedication
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -677,25 +1055,65 @@ export default function Home() {
       </section>
 
       {/* Skills Section */}
-      <section id="skills" className="py-20 px-4 sm:px-6 lg:px-8 bg-black">
+      <section id="skills" className="py-24 px-4 sm:px-6 lg:px-8 bg-black">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl sm:text-5xl font-bold text-center mb-12">
-            <span className="bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
-              Skills & Expertise
-            </span>
-          </h2>
+          <div className="text-center mb-16">
+            <h2 className="text-4xl sm:text-5xl font-bold mb-4">
+              <span className="bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
+                Skills & Expertise
+              </span>
+            </h2>
+            <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+              Technologies and tools I use to bring ideas to life
+            </p>
+          </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {skills.map((skill, index) => (
               <div
                 key={index}
-                className="p-6 bg-gradient-to-br from-emerald-900/20 to-black border border-emerald-500/20 rounded-2xl hover:border-emerald-500/40 transition-all duration-300 hover:scale-105 group"
+                className="group relative grid grid-rows-[auto_1fr] p-6 rounded-2xl border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.04] hover:border-emerald-500/25 transition-all duration-300"
               >
-                <skill.icon className="w-12 h-12 text-emerald-400 mb-4 group-hover:scale-110 transition-transform duration-300" />
-                <h3 className="text-xl font-semibold mb-2 text-white">
-                  {skill.name}
-                </h3>
-                <p className="text-gray-400 text-sm">{skill.description}</p>
+                {/* Icon + Title row */}
+                <div className="flex items-start gap-3.5 mb-5">
+                  <div className="w-11 h-11 shrink-0 rounded-xl bg-emerald-500/10 border border-emerald-500/15 flex items-center justify-center group-hover:bg-emerald-500/15 group-hover:border-emerald-500/30 transition-all duration-300">
+                    <skill.icon className="w-5.5 h-5.5 text-emerald-400" />
+                  </div>
+                  <div>
+                    <h3 className="text-base font-semibold text-white mb-0.5">
+                      {skill.name}
+                    </h3>
+                    <p className="text-xs text-gray-500 font-medium uppercase tracking-wider">
+                      {skill.subtitle}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Technology pills */}
+                <div className="flex flex-wrap gap-1.5 content-start">
+                  {skill.technologies.map((tech) => {
+                    const iconSlug = TECH_ICONS[tech];
+                    return (
+                      <span
+                        key={tech}
+                        className="inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] font-medium rounded-md bg-white/[0.04] border border-white/[0.06] text-gray-400 group-hover:text-emerald-300/80 group-hover:border-emerald-500/15 group-hover:bg-emerald-500/[0.06] transition-all duration-300"
+                      >
+                        {iconSlug && (
+                          <img
+                            src={`https://cdn.simpleicons.org/${iconSlug}/6ee7b7`}
+                            alt=""
+                            className="w-3.5 h-3.5 opacity-40 group-hover:opacity-75 transition-opacity duration-300"
+                            loading="lazy"
+                            onError={(e) => {
+                              e.currentTarget.style.display = "none";
+                            }}
+                          />
+                        )}
+                        {tech}
+                      </span>
+                    );
+                  })}
+                </div>
               </div>
             ))}
           </div>
@@ -705,7 +1123,7 @@ export default function Home() {
       {/* Projects Section */}
       <section
         id="projects"
-        className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-black to-emerald-950/20"
+        className="py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-black to-emerald-950/20"
       >
         <div className="max-w-6xl mx-auto">
           <h2 className="text-4xl sm:text-5xl font-bold text-center mb-12">
@@ -714,61 +1132,73 @@ export default function Home() {
             </span>
           </h2>
 
-          <div className="grid lg:grid-cols-2 xl:grid-cols-3 gap-8">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {projects.map((project, index) => (
               <div
                 key={index}
-                className="group relative grid grid-rows-[auto_1fr_auto] bg-gradient-to-br from-emerald-900/20 to-black border border-emerald-500/20 rounded-2xl overflow-hidden hover:border-emerald-500/40 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-emerald-500/20"
+                onClick={() => openProjectModal(index)}
+                className="group relative grid grid-rows-[auto_1fr_auto] rounded-2xl border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.04] hover:border-emerald-500/25 transition-all duration-300 overflow-hidden cursor-pointer"
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") openProjectModal(index);
+                }}
+                aria-label={`View details for ${project.title}`}
               >
-                <div
-                  className={`pointer-events-none absolute inset-0 bg-gradient-to-br ${project.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`}
-                ></div>
-
                 {/* Project Image */}
-                <div className="relative h-56 w-full overflow-hidden bg-black">
+                <div className="relative h-48 w-full overflow-hidden">
                   <Image
                     src={project.image}
-                    alt={`${project.title} - ${project.description}`}
+                    alt={project.title}
                     fill
-                    className="object-cover opacity-70 group-hover:opacity-90 transition-all duration-500 group-hover:scale-110"
+                    className="object-cover object-top opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
                   />
-                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
-                  <div className="absolute top-4 right-4 px-3 py-1 bg-emerald-500/90 text-black text-xs font-bold rounded-full backdrop-blur-sm">
-                    {project.type}
-                  </div>
-                  <div className="absolute bottom-4 left-4 right-4">
-                    <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-emerald-400 transition-colors duration-300">
-                      {project.title}
-                    </h3>
-                  </div>
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
                 </div>
 
-                <div className="p-6 grid grid-rows-[auto_1fr] gap-4">
-                  <div
-                    className="cursor-pointer select-none"
-                    onClick={() => toggleProjectDescription(index)}
-                  >
-                    <p
-                      className={`text-gray-300 text-sm leading-relaxed hover:text-gray-200 transition-colors duration-300 ${expandedProject === index
-                        ? "line-clamp-none"
-                        : "line-clamp-3"
-                        }`}
-                    >
-                      {project.description}
-                    </p>
-                    {expandedProject !== index && (
-                      <span className="text-emerald-400 text-xs font-medium mt-2 inline-flex items-center gap-1 hover:text-emerald-300 cursor-pointer">
-                        <ArrowDownIcon className="w-3 h-3" />
-                        Click to read more
-                      </span>
-                    )}
-                  </div>
+                {/* Card Body */}
+                <div className="p-5 flex flex-col gap-3">
+                  {/* Category Badge */}
+                  <span className="self-start px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider rounded-md bg-emerald-500/10 border border-emerald-500/20 text-emerald-400">
+                    {project.type}
+                  </span>
 
-                  <div className="flex flex-wrap gap-2 items-end">
+                  {/* Title */}
+                  <h3 className="text-lg font-semibold text-white leading-snug group-hover:text-emerald-300 transition-colors duration-300">
+                    {project.title}
+                  </h3>
+
+                  {/* Description — short preview */}
+                  <p className="text-gray-400 text-sm leading-relaxed line-clamp-2">
+                    {project.description}
+                  </p>
+
+                  {/* View details CTA */}
+                  <span className="inline-flex items-center gap-1 text-xs font-medium text-emerald-400/70 group-hover:text-emerald-400 transition-colors duration-300 mt-auto">
+                    View Details
+                    <svg
+                      className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform duration-300"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={2}
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
+                      />
+                    </svg>
+                  </span>
+                </div>
+
+                {/* Tech Tags — pinned to bottom */}
+                <div className="px-5 pb-5 pt-1">
+                  <div className="flex flex-wrap gap-1.5">
                     {project.tech.map((tech, techIndex) => (
                       <span
                         key={techIndex}
-                        className="px-3 py-1 text-xs bg-emerald-500/10 border border-emerald-500/30 rounded-full text-emerald-300 hover:bg-emerald-500/20 hover:border-emerald-500/50 transition-all duration-300"
+                        className="px-2 py-0.5 text-[10px] font-medium rounded-md bg-white/[0.04] border border-white/[0.06] text-gray-500 group-hover:text-emerald-300/70 group-hover:border-emerald-500/15 group-hover:bg-emerald-500/[0.06] transition-all duration-300"
                       >
                         {tech}
                       </span>
@@ -780,6 +1210,109 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Project Detail Modal */}
+      {selectedProject !== null && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="project-modal-title"
+        >
+          {/* Backdrop */}
+          <div
+            className="absolute inset-0 bg-black/80 backdrop-blur-sm animate-[fadeIn_200ms_ease-out]"
+            onClick={closeProjectModal}
+          ></div>
+
+          {/* Modal Content */}
+          <div className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-2xl border border-white/[0.08] bg-[#0a0f0d] shadow-2xl shadow-black/50 animate-[fadeIn_200ms_ease-out,slideUp_300ms_ease-out]">
+            {/* Close Button */}
+            <button
+              onClick={closeProjectModal}
+              className="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-black/50 backdrop-blur-sm border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-white/20 transition-all duration-200"
+              aria-label="Close modal"
+            >
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={2}
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M6 18 18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+
+            {/* Modal Image */}
+            <div className="relative w-full h-56 sm:h-72 overflow-hidden rounded-t-2xl">
+              <Image
+                src={projects[selectedProject].image}
+                alt={projects[selectedProject].title}
+                fill
+                className="object-cover object-top"
+              />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0a0f0d] via-transparent to-transparent"></div>
+            </div>
+
+            {/* Modal Body */}
+            <div className="px-6 sm:px-8 pb-8 -mt-8 relative">
+              {/* Category Badge */}
+              <span className="inline-block px-3 py-1 text-[10px] font-semibold uppercase tracking-wider rounded-md bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 mb-4">
+                {projects[selectedProject].type}
+              </span>
+
+              {/* Title */}
+              <h3
+                id="project-modal-title"
+                className="text-2xl sm:text-3xl font-bold text-white mb-4 leading-snug"
+              >
+                {projects[selectedProject].title}
+              </h3>
+
+              {/* Full Description */}
+              <p className="text-gray-300 text-base leading-relaxed mb-6">
+                {projects[selectedProject].description}
+              </p>
+
+              {/* Tech Stack */}
+              <div className="mb-2">
+                <h4 className="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-3">
+                  Tech Stack
+                </h4>
+                <div className="flex flex-wrap gap-2">
+                  {projects[selectedProject].tech.map((tech, techIndex) => {
+                    const iconSlug = TECH_ICONS[tech];
+                    return (
+                      <span
+                        key={techIndex}
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg bg-white/[0.04] border border-white/[0.08] text-gray-300"
+                      >
+                        {iconSlug && (
+                          <img
+                            src={`https://cdn.simpleicons.org/${iconSlug}/6ee7b7`}
+                            alt=""
+                            className="w-3.5 h-3.5 opacity-60"
+                            loading="lazy"
+                            onError={(e) => {
+                              e.currentTarget.style.display = "none";
+                            }}
+                          />
+                        )}
+                        {tech}
+                      </span>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* SQLite Portable Showcase Section */}
       <section
@@ -793,7 +1326,9 @@ export default function Home() {
             </span>
           </h2>
           <p className="text-center text-gray-400 mb-6 max-w-2xl mx-auto">
-            A portable SQLite database management tool with dark/light mode, SQL explorer, schema designer, multi-language integration support, and more.
+            A portable SQLite database management tool with dark/light mode, SQL
+            explorer, schema designer, multi-language integration support, and
+            more.
           </p>
 
           {/* Download Button */}
@@ -821,7 +1356,19 @@ export default function Home() {
               />
             </div>
             <div className="flex flex-wrap justify-center gap-2">
-              {["SQLite", "Desktop App", "SQL Explorer", "Schema Designer", "Dark Mode", "Light Mode", "PHP", "Python", "C#", "JavaScript", "TypeScript"].map((tag) => (
+              {[
+                "SQLite",
+                "Desktop App",
+                "SQL Explorer",
+                "Schema Designer",
+                "Dark Mode",
+                "Light Mode",
+                "PHP",
+                "Python",
+                "C#",
+                "JavaScript",
+                "TypeScript",
+              ].map((tag) => (
                 <span
                   key={tag}
                   className="px-3 py-1 text-xs bg-emerald-500/10 border border-emerald-500/30 rounded-full text-emerald-300"
@@ -838,7 +1385,10 @@ export default function Home() {
       </section>
 
       {/* Experience Section */}
-      <section id="experience" className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-black to-emerald-950/20">
+      <section
+        id="experience"
+        className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-black to-emerald-950/20"
+      >
         <div className="max-w-4xl mx-auto">
           <h2 className="text-4xl sm:text-5xl font-bold text-center mb-12">
             <span className="bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
@@ -880,7 +1430,7 @@ export default function Home() {
       {/* Certificates Section */}
       <section
         id="certificates"
-        className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-black to-emerald-950/20"
+        className="py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-black to-emerald-950/20"
       >
         <div className="max-w-6xl mx-auto">
           <h2 className="text-4xl sm:text-5xl font-bold text-center mb-12">
@@ -889,186 +1439,103 @@ export default function Home() {
             </span>
           </h2>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="group relative grid grid-rows-[auto_1fr_auto] bg-gradient-to-br from-emerald-900/20 to-black border border-emerald-500/20 rounded-2xl overflow-hidden hover:border-emerald-500/40 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-emerald-500/20">
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-emerald-500 to-teal-600 opacity-0 group-hover:opacity-5 transition-opacity duration-500"></div>
-
-              {/* Certificate Image */}
-              <div className="relative h-64 w-full overflow-hidden bg-black">
-                <Image
-                  src="/certificates/certificates-deployment.jpg"
-                  alt="Certificate of Deployment - Logan M. Panucat"
-                  fill
-                  className="object-cover opacity-70 group-hover:opacity-90 transition-all duration-500 group-hover:scale-110"
-                />
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
-                <div className="absolute top-4 right-4 px-3 py-1 bg-emerald-500/90 text-black text-xs font-bold rounded-full backdrop-blur-sm">
-                  Deployment
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {/* Certificate 1 */}
+            {[
+              {
+                image: "/certificates/certificates-deployment.jpg",
+                alt: "Certificate of Deployment - Logan M. Panucat",
+                title: "Certificate of Deployment",
+                description:
+                  "Certificate awarded to Logan M. Panucat for successful system deployment and project completion.",
+                category: "Deployment",
+                tags: ["Professional", "System Deployment"],
+              },
+              {
+                image: "/certificates/certificates-deployment1.jpg",
+                alt: "Certificate of Deployment - Dudz Hardware Store",
+                title: "Dudz Hardware Store Deployment",
+                description:
+                  "Certificate of deployment for Dudz Hardware Store system successfully completed by the development team.",
+                category: "Deployment",
+                tags: ["Professional", "Team Project"],
+              },
+              {
+                image: "/certificates/certificates-nextjs.jpg",
+                alt: "Next.js Certificate",
+                title: "Next.js Certification",
+                description:
+                  "Professional certification in Next.js development and React framework.",
+                category: "Next.js",
+                tags: ["Technical", "React"],
+              },
+              {
+                image: "/certificates/certificates-1-nextjs.jpg",
+                alt: "Next.js Advanced Certificate",
+                title: "Next.js App Router Fundamentals",
+                description:
+                  "Official Next.js certification covering App Router fundamentals, modern routing patterns, and advanced Next.js features.",
+                category: "Next.js",
+                tags: ["Technical", "App Router"],
+              },
+              {
+                image: "/certificates/certificates-udemy.jpg",
+                alt: "Udemy Certificate",
+                title: "Udemy Course Completion",
+                description:
+                  "Certificate of completion for advanced web development courses.",
+                category: "Udemy",
+                tags: ["Learning", "Web Development"],
+              },
+            ].map((cert, index) => (
+              <div
+                key={index}
+                className="group relative grid grid-rows-[auto_1fr_auto] rounded-2xl border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.04] hover:border-emerald-500/25 transition-all duration-300 overflow-hidden"
+              >
+                {/* Certificate Image */}
+                <div className="relative h-48 w-full overflow-hidden">
+                  <Image
+                    src={cert.image}
+                    alt={cert.alt}
+                    fill
+                    className="object-cover object-top opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
+                  />
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
                 </div>
-                <div className="absolute bottom-4 left-4 right-4">
-                  <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-emerald-400 transition-colors duration-300">
-                    Certificate of Deployment
-                  </h3>
-                </div>
-              </div>
 
-              <div className="p-6 grid grid-rows-[1fr_auto] gap-4">
-                <p className="text-gray-300 text-sm leading-relaxed hover:text-gray-200 transition-colors duration-300">
-                  Certificate awarded to Logan M. Panucat for successful system
-                  deployment and project completion
-                </p>
-
-                <div className="flex flex-wrap gap-2 items-end">
-                  <span className="px-3 py-1 text-xs bg-emerald-500/10 border border-emerald-500/30 rounded-full text-emerald-300 hover:bg-emerald-500/20 hover:border-emerald-500/50 transition-all duration-300">
-                    Professional
+                {/* Card Body */}
+                <div className="p-5 flex flex-col gap-3">
+                  {/* Category Badge */}
+                  <span className="self-start px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider rounded-md bg-emerald-500/10 border border-emerald-500/20 text-emerald-400">
+                    {cert.category}
                   </span>
-                </div>
-              </div>
-            </div>
 
-            <div className="group relative grid grid-rows-[auto_1fr_auto] bg-gradient-to-br from-emerald-900/20 to-black border border-emerald-500/20 rounded-2xl overflow-hidden hover:border-emerald-500/40 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-emerald-500/20">
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-blue-500 to-purple-600 opacity-0 group-hover:opacity-5 transition-opacity duration-500"></div>
-
-              {/* Certificate Image */}
-              <div className="relative h-64 w-full overflow-hidden bg-black">
-                <Image
-                  src="/certificates/certificates-deployment1.jpg"
-                  alt="Certificate of Deployment - Dudz Hardware Store"
-                  fill
-                  className="object-cover opacity-70 group-hover:opacity-90 transition-all duration-500 group-hover:scale-110"
-                />
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
-                <div className="absolute top-4 right-4 px-3 py-1 bg-blue-500/90 text-black text-xs font-bold rounded-full backdrop-blur-sm">
-                  Deployment
-                </div>
-                <div className="absolute bottom-4 left-4 right-4">
-                  <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-blue-400 transition-colors duration-300">
-                    Dudz Hardware Store Deployment
+                  {/* Title */}
+                  <h3 className="text-lg font-semibold text-white leading-snug group-hover:text-emerald-300 transition-colors duration-300">
+                    {cert.title}
                   </h3>
+
+                  {/* Description */}
+                  <p className="text-gray-400 text-sm leading-relaxed">
+                    {cert.description}
+                  </p>
+                </div>
+
+                {/* Tags — pinned to bottom */}
+                <div className="px-5 pb-5 pt-1">
+                  <div className="flex flex-wrap gap-1.5">
+                    {cert.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="px-2 py-0.5 text-[10px] font-medium rounded-md bg-white/[0.04] border border-white/[0.06] text-gray-500 group-hover:text-emerald-300/70 group-hover:border-emerald-500/15 group-hover:bg-emerald-500/[0.06] transition-all duration-300"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
-
-              <div className="p-6 grid grid-rows-[1fr_auto] gap-4">
-                <p className="text-gray-300 text-sm leading-relaxed hover:text-gray-200 transition-colors duration-300">
-                  Certificate of deployment for Dudz Hardware Store system
-                  successfully completed by the development team
-                </p>
-
-                <div className="flex flex-wrap gap-2 items-end">
-                  <span className="px-3 py-1 text-xs bg-blue-500/10 border border-blue-500/30 rounded-full text-blue-300 hover:bg-blue-500/20 hover:border-blue-500/50 transition-all duration-300">
-                    Professional
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            <div className="group relative grid grid-rows-[auto_1fr_auto] bg-gradient-to-br from-emerald-900/20 to-black border border-emerald-500/20 rounded-2xl overflow-hidden hover:border-emerald-500/40 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-emerald-500/20">
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-green-500 to-emerald-600 opacity-0 group-hover:opacity-5 transition-opacity duration-500"></div>
-
-              {/* Certificate Image */}
-              <div className="relative h-64 w-full overflow-hidden bg-black">
-                <Image
-                  src="/certificates/certificates-nextjs.jpg"
-                  alt="Next.js Certificate"
-                  fill
-                  className="object-cover opacity-70 group-hover:opacity-90 transition-all duration-500 group-hover:scale-110"
-                />
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
-                <div className="absolute top-4 right-4 px-3 py-1 bg-green-500/90 text-black text-xs font-bold rounded-full backdrop-blur-sm">
-                  Next.js
-                </div>
-                <div className="absolute bottom-4 left-4 right-4">
-                  <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-green-400 transition-colors duration-300">
-                    Next.js Certification
-                  </h3>
-                </div>
-              </div>
-
-              <div className="p-6 grid grid-rows-[1fr_auto] gap-4">
-                <p className="text-gray-300 text-sm leading-relaxed hover:text-gray-200 transition-colors duration-300">
-                  Professional certification in Next.js development and React
-                  framework
-                </p>
-
-                <div className="flex flex-wrap gap-2 items-end">
-                  <span className="px-3 py-1 text-xs bg-green-500/10 border border-green-500/30 rounded-full text-green-300 hover:bg-green-500/20 hover:border-green-500/50 transition-all duration-300">
-                    Technical
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            <div className="group relative grid grid-rows-[auto_1fr_auto] bg-gradient-to-br from-emerald-900/20 to-black border border-emerald-500/20 rounded-2xl overflow-hidden hover:border-emerald-500/40 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-emerald-500/20">
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-purple-500 to-indigo-600 opacity-0 group-hover:opacity-5 transition-opacity duration-500"></div>
-
-              {/* Certificate Image */}
-              <div className="relative h-64 w-full overflow-hidden bg-black">
-                <Image
-                  src="/certificates/certificates-1-nextjs.jpg"
-                  alt="Next.js Advanced Certificate"
-                  fill
-                  className="object-cover opacity-70 group-hover:opacity-90 transition-all duration-500 group-hover:scale-110"
-                />
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
-                <div className="absolute top-4 right-4 px-3 py-1 bg-purple-500/90 text-black text-xs font-bold rounded-full backdrop-blur-sm">
-                  Next.js
-                </div>
-                <div className="absolute bottom-4 left-4 right-4">
-                  <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-purple-400 transition-colors duration-300">
-                    Next.js App Router Fundamentals
-                  </h3>
-                </div>
-              </div>
-
-              <div className="p-6 grid grid-rows-[1fr_auto] gap-4">
-                <p className="text-gray-300 text-sm leading-relaxed hover:text-gray-200 transition-colors duration-300">
-                  Official Next.js certification covering App Router
-                  fundamentals, modern routing patterns, and advanced Next.js
-                  features
-                </p>
-
-                <div className="flex flex-wrap gap-2 items-end">
-                  <span className="px-3 py-1 text-xs bg-purple-500/10 border border-purple-500/30 rounded-full text-purple-300 hover:bg-purple-500/20 hover:border-purple-500/50 transition-all duration-300">
-                    Technical
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            <div className="group relative grid grid-rows-[auto_1fr_auto] bg-gradient-to-br from-emerald-900/20 to-black border border-emerald-500/20 rounded-2xl overflow-hidden hover:border-emerald-500/40 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-emerald-500/20">
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-yellow-500 to-amber-600 opacity-0 group-hover:opacity-5 transition-opacity duration-500"></div>
-
-              {/* Certificate Image */}
-              <div className="relative h-64 w-full overflow-hidden bg-black">
-                <Image
-                  src="/certificates/certificates-udemy.jpg"
-                  alt="Udemy Certificate"
-                  fill
-                  className="object-cover opacity-70 group-hover:opacity-90 transition-all duration-500 group-hover:scale-110"
-                />
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
-                <div className="absolute top-4 right-4 px-3 py-1 bg-yellow-500/90 text-black text-xs font-bold rounded-full backdrop-blur-sm">
-                  Udemy
-                </div>
-                <div className="absolute bottom-4 left-4 right-4">
-                  <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-yellow-400 transition-colors duration-300">
-                    Udemy Course Completion
-                  </h3>
-                </div>
-              </div>
-
-              <div className="p-6 grid grid-rows-[1fr_auto] gap-4">
-                <p className="text-gray-300 text-sm leading-relaxed hover:text-gray-200 transition-colors duration-300">
-                  Certificate of completion for advanced web development courses
-                </p>
-
-                <div className="flex flex-wrap gap-2 items-end">
-                  <span className="px-3 py-1 text-xs bg-yellow-500/10 border border-yellow-500/30 rounded-full text-yellow-300 hover:bg-yellow-500/20 hover:border-yellow-500/50 transition-all duration-300">
-                    Learning
-                  </span>
-                </div>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
@@ -1214,6 +1681,88 @@ export default function Home() {
               </svg>
               LinkedIn
             </a>
+          </div>
+
+          {/* Location Map */}
+          <div className="mt-16 pt-12 border-t border-white/[0.06]">
+            <h3 className="text-2xl font-bold text-white text-center mb-2">
+              My Location
+            </h3>
+            <p className="text-gray-400 text-sm text-center mb-8">
+              Based in Carcar City, Cebu, Philippines
+            </p>
+
+            <div className="grid grid-cols-1 lg:grid-cols-5 gap-5">
+              {/* Location Info Card */}
+              <div className="lg:col-span-2 rounded-2xl border border-white/[0.06] bg-white/[0.02] p-6 flex flex-col justify-center gap-5">
+                <div className="flex items-start gap-3">
+                  <div className="w-9 h-9 shrink-0 rounded-lg bg-emerald-500/10 border border-emerald-500/15 flex items-center justify-center">
+                    <MapPinIcon className="w-4 h-4 text-emerald-400" />
+                  </div>
+                  <div>
+                    <p className="text-[11px] font-medium uppercase tracking-wider text-gray-500 mb-0.5">
+                      Street Address
+                    </p>
+                    <p className="text-sm text-gray-200 font-medium">
+                      P. Vasquez St., Poblacion I
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3">
+                  <div className="w-9 h-9 shrink-0 rounded-lg bg-emerald-500/10 border border-emerald-500/15 flex items-center justify-center">
+                    <MapPinIcon className="w-4 h-4 text-emerald-400" />
+                  </div>
+                  <div>
+                    <p className="text-[11px] font-medium uppercase tracking-wider text-gray-500 mb-0.5">
+                      City
+                    </p>
+                    <p className="text-sm text-gray-200 font-medium">
+                      Carcar City, Cebu
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3">
+                  <div className="w-9 h-9 shrink-0 rounded-lg bg-emerald-500/10 border border-emerald-500/15 flex items-center justify-center">
+                    <svg
+                      className="w-4 h-4 text-emerald-400"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582m15.686 0A11.953 11.953 0 0 1 12 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0 1 21 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0 1 12 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 0 1 3 12c0-1.605.42-3.113 1.157-4.418"
+                      />
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="text-[11px] font-medium uppercase tracking-wider text-gray-500 mb-0.5">
+                      Country
+                    </p>
+                    <p className="text-sm text-gray-200 font-medium">
+                      Philippines 🇵🇭
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Interactive Map */}
+              <div className="lg:col-span-3 rounded-2xl border border-white/[0.06] overflow-hidden h-64 sm:h-72 lg:h-auto lg:min-h-[280px] relative">
+                <iframe
+                  title="Logan's Location - Carcar City, Cebu"
+                  src="https://maps.google.com/maps?q=P.+Vasquez+St.,+Poblacion+I,+Carcar+City,+Cebu,+Philippines&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                  className="w-full h-full border-0 invert brightness-[0.85] contrast-[1.15] hue-rotate-[180deg] saturate-[0.3]"
+                  loading="lazy"
+                  referrerPolicy="no-referrer"
+                  allowFullScreen
+                ></iframe>
+                <div className="pointer-events-none absolute inset-0 bg-emerald-900/10 mix-blend-overlay"></div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
