@@ -1,120 +1,22 @@
 "use client";
 
 import Image from "next/image";
+import { useState, useEffect } from "react";
 import {
-  CodeBracketIcon,
-  CpuChipIcon,
   EnvelopeIcon,
-  BriefcaseIcon,
-  RocketLaunchIcon,
-  SparklesIcon,
-  ArrowDownIcon,
   Bars3Icon,
   XMarkIcon,
-  ServerIcon,
   ArrowDownTrayIcon,
-  AcademicCapIcon,
-  MapPinIcon,
-  CalendarIcon,
-  PhoneIcon,
-  UserIcon,
+  ChevronUpIcon,
 } from "@heroicons/react/24/outline";
-import { useState, useEffect, useRef } from "react";
-import { ChevronUpIcon } from "@heroicons/react/24/outline";
 import Modal from "@/components/Modal";
 import ImageCarousel from "@/components/ImageCarousel";
-import type { CarouselImage } from "@/components/ImageCarousel";
-
-const TYPEWRITER_WORDS = [
-  "A Full Stack Developer",
-  "A Vibe Coder",
-  "An UI/UX Enthusiast",
-  "A Problem Solver",
-];
-
-const TECH_ICONS: Record<string, string> = {
-  PHP: "php",
-  MySQL: "mysql",
-  "C#": "csharp",
-  JavaScript: "javascript",
-  TypeScript: "typescript",
-  React: "react",
-  "Next.js": "nextdotjs",
-  TailwindCSS: "tailwindcss",
-  Bootstrap: "bootstrap",
-  HTML: "html5",
-  CSS: "css3",
-  "Prisma ORM": "prisma",
-  ".NET Framework": "dotnet",
-  "ASP.NET MVC": "dotnet",
-  Blazor: "blazor",
-  Git: "git",
-  Vercel: "vercel",
-  "Entity Framework": "dotnet",
-  "SQL Server": "microsoftsqlserver",
-  "JWT Auth": "jsonwebtokens",
-  SignalR: "dotnet",
-};
-
-function Typewriter({ words }: { words: string[] }) {
-  const [displayText, setDisplayText] = useState("");
-  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const stateRef = useRef({
-    wordIndex: 0,
-    charIndex: 0,
-    isDeleting: false,
-  });
-
-  useEffect(() => {
-    const tick = () => {
-      const s = stateRef.current;
-      const fullText = words[s.wordIndex];
-
-      if (s.isDeleting) {
-        s.charIndex--;
-        setDisplayText(fullText.substring(0, s.charIndex));
-
-        if (s.charIndex === 0) {
-          s.isDeleting = false;
-          s.wordIndex = (s.wordIndex + 1) % words.length;
-          timerRef.current = setTimeout(tick, 60);
-        } else {
-          timerRef.current = setTimeout(tick, 30);
-        }
-      } else {
-        s.charIndex++;
-        setDisplayText(fullText.substring(0, s.charIndex));
-
-        if (s.charIndex === fullText.length) {
-          timerRef.current = setTimeout(() => {
-            s.isDeleting = true;
-            timerRef.current = setTimeout(tick, 30);
-          }, 2000);
-        } else {
-          timerRef.current = setTimeout(tick, 60);
-        }
-      }
-    };
-
-    timerRef.current = setTimeout(tick, 60);
-
-    return () => {
-      if (timerRef.current) {
-        clearTimeout(timerRef.current);
-        timerRef.current = null;
-      }
-    };
-  }, [words]);
-
-  return (
-    <span className="inline-flex items-center whitespace-nowrap">
-      <span className="bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 bg-clip-text text-transparent">
-        {displayText}
-      </span>
-      <span className="ml-1 inline-block w-[3px] h-[0.8em] bg-emerald-400 animate-blink shadow-[0_0_12px_rgba(52,211,153,0.8)] align-middle"></span>
-    </span>
-  );
-}
+import {
+  skills,
+  projects,
+  experiences,
+  sqliteImages,
+} from "./data";
 
 export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -150,148 +52,46 @@ export default function Home() {
     return () => window.removeEventListener("keydown", handleEscape);
   }, []);
 
-  const sqliteImages: CarouselImage[] = [
-    {
-      src: "/image/sqlite-portables/Picture 1 - Landing Page Dark Mode.png",
-      alt: "SQLite Portable - Landing Page Dark Mode",
-    },
-    {
-      src: "/image/sqlite-portables/Picture 1 - Landing Page Light Mode.png",
-      alt: "SQLite Portable - Landing Page Light Mode",
-    },
-    {
-      src: "/image/sqlite-portables/Picture 2 - SQL Explorer.png",
-      alt: "SQLite Portable - SQL Explorer",
-    },
-    {
-      src: "/image/sqlite-portables/Picture 3 - Create Database.png",
-      alt: "SQLite Portable - Create Database",
-    },
-    {
-      src: "/image/sqlite-portables/Picture 4 - Connection Online.png",
-      alt: "SQLite Portable - Connection Online",
-    },
-    {
-      src: "/image/sqlite-portables/Picture 5 - Connection Offline.png",
-      alt: "SQLite Portable - Connection Offline",
-    },
-    {
-      src: "/image/sqlite-portables/Picture 6 - Integration PHP.png",
-      alt: "SQLite Portable - Integration PHP",
-    },
-    {
-      src: "/image/sqlite-portables/Picture 7 - Integration Python.png",
-      alt: "SQLite Portable - Integration Python",
-    },
-    {
-      src: "/image/sqlite-portables/Picture 8 - Integration C%23.png",
-      alt: "SQLite Portable - Integration C#",
-    },
-    {
-      src: "/image/sqlite-portables/Picture 9 - Integration Javascript.png",
-      alt: "SQLite Portable - Integration JavaScript",
-    },
-    {
-      src: "/image/sqlite-portables/Picture 10 - Integration Typescript.png",
-      alt: "SQLite Portable - Integration TypeScript",
-    },
-    {
-      src: "/image/sqlite-portables/Picture 11 - Integration SQL.png",
-      alt: "SQLite Portable - Integration SQL",
-    },
-    {
-      src: "/image/sqlite-portables/Picture 12 - System Status.png",
-      alt: "SQLite Portable - System Status",
-    },
-    {
-      src: "/image/sqlite-portables/Picture 13 - Database Selected Landing Page.png",
-      alt: "SQLite Portable - Database Selected Landing Page",
-    },
-    {
-      src: "/image/sqlite-portables/Picture 14 - Create New Table.png",
-      alt: "SQLite Portable - Create New Table",
-    },
-    {
-      src: "/image/sqlite-portables/Picture 15 - Create Table - Relationships.png",
-      alt: "SQLite Portable - Create Table Relationships",
-    },
-    {
-      src: "/image/sqlite-portables/Picture 16 - Schema Designer.png",
-      alt: "SQLite Portable - Schema Designer",
-    },
-    {
-      src: "/image/sqlite-portables/Picture 17 - SQL Explorer Console.png",
-      alt: "SQLite Portable - SQL Explorer Console",
-    },
-    {
-      src: "/image/sqlite-portables/Picture 18 - Selected Table.png",
-      alt: "SQLite Portable - Selected Table",
-    },
-    {
-      src: "/image/sqlite-portables/Picture 19 - Selected Table Insights.png",
-      alt: "SQLite Portable - Selected Table Insights",
-    },
-    {
-      src: "/image/sqlite-portables/Picture 20 - Selected Table Insert New Record.png",
-      alt: "SQLite Portable - Insert New Record",
-    },
-    {
-      src: "/image/sqlite-portables/Picture 21 - Selected Table Edit New Record.png",
-      alt: "SQLite Portable - Edit Record",
-    },
-  ];
-
   useEffect(() => {
+    const sections = [
+      "home",
+      "about",
+      "skills",
+      "projects",
+      "sqlite-portable",
+      "experience",
+      "certificates",
+      "contact",
+    ];
     const handleScroll = () => {
-      const sections = [
-        "home",
-        "about",
-        "skills",
-        "projects",
-        "sqlite-portable",
-        "experience",
-        "certificates",
-        "contact",
-      ];
       const scrollPosition = window.scrollY + 100;
-
       for (const section of sections) {
         const element = document.getElementById(section);
         if (element) {
           const offsetTop = element.offsetTop;
           const offsetBottom = offsetTop + element.offsetHeight;
-
           if (scrollPosition >= offsetTop && scrollPosition < offsetBottom) {
             setActiveSection(section);
             break;
           }
         }
       }
-
-      // Show/hide scroll-to-top button
       setShowScrollTop(window.scrollY > 300);
     };
 
     window.addEventListener("scroll", handleScroll);
     handleScroll();
-
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -302,1532 +102,343 @@ export default function Home() {
     try {
       const response = await fetch("/api/send-email", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
 
       if (response.ok) {
         setFormStatus("success");
         setFormData({ name: "", email: "", subject: "", message: "" });
-
         setTimeout(() => {
           setFormStatus("idle");
           setModalOpen(false);
         }, 3000);
       } else {
         setFormStatus("error");
-        setTimeout(() => {
-          setFormStatus("idle");
-        }, 3000);
+        setTimeout(() => setFormStatus("idle"), 3000);
       }
     } catch (error) {
       console.error("Error sending email:", error);
       setFormStatus("error");
-      setTimeout(() => {
-        setFormStatus("idle");
-      }, 3000);
+      setTimeout(() => setFormStatus("idle"), 3000);
     }
   };
 
-  const skills = [
-    {
-      name: "Web Development",
-      icon: CodeBracketIcon,
-      subtitle: "Frontend & Frameworks",
-      technologies: [
-        "PHP",
-        "ASP.NET MVC",
-        "Blazor",
-        "HTML",
-        "CSS",
-        "JavaScript",
-        "TailwindCSS",
-        "Bootstrap",
-        "Next.js",
-        "TanStack Query",
-      ],
-    },
-    {
-      name: "Backend & Database",
-      icon: ServerIcon,
-      subtitle: "Server-side & Data",
-      technologies: [
-        "Prisma ORM",
-        "JWT Auth",
-        "PHP",
-        "MySQL",
-        "PHPMailer",
-        "OTP Auth",
-        "Email Verification",
-        "SQL Server",
-      ],
-    },
-    {
-      name: ".NET Development",
-      icon: CpuChipIcon,
-      subtitle: "Desktop & Enterprise",
-      technologies: [
-        "C#",
-        "ASP.NET MVC",
-        ".NET Framework",
-        "Entity Framework",
-        "Blazor",
-        "SignalR",
-      ],
-    },
-    {
-      name: "Full Stack Projects",
-      icon: RocketLaunchIcon,
-      subtitle: "End-to-End Solutions",
-      technologies: [
-        "C#",
-        ".NET Framework",
-        "ASP.NET MVC",
-        "PHP",
-        "React",
-        "TypeScript",
-        "REST APIs",
-        "Responsive Design",
-        "Git",
-        "Vercel",
-      ],
-    },
-  ];
-
-  const projects = [
-    {
-      title: "LibraSys - Library Management System",
-      description:
-        "A comprehensive library management system developed for Cebu Technological University - Naga Extension Campus. It streamlines student borrowing records, book inventory tracking with ISBN support, and provides real-time analytics using TanStack Query and Prisma ORM.",
-      tech: [
-        "React",
-        "TypeScript",
-        "TanStack",
-        "Prisma",
-        "MySQL",
-        "TailwindCSS",
-      ],
-      gradient: "from-indigo-600 to-purple-600",
-      image: "/image/LibraSys.png",
-      type: "CTU Naga Extension Campus Project",
-    },
-    {
-      title: "Inventory Management System (IMS-CTU)",
-      description:
-        "A specialized administrative platform for Cebu Technological University - Naga Extension Campus. This high-performance system streamlines institutional resource tracking using Prisma ORM, secure JWT authentication, and TanStack Query for real-time data synchronization.",
-      tech: ["Next.js", "Prisma", "TanStack Query", "JWT", "TailwindCSS"],
-      gradient: "from-blue-600 to-cyan-500",
-      image: "/image/IMS-CTU.png",
-      type: "CTU Naga Extension Campus Project",
-    },
-    {
-      title: "E-Industria",
-      description:
-        "A comprehensive web-based platform for industrial supplies, manpower services, and business management. Designed to solve real-world problems in industrial operations.",
-      tech: ["PHP", "TailwindCSS", "MySQL"],
-      gradient: "from-emerald-500 to-teal-600",
-      image: "/image/Capstone Project.png",
-      type: "Capstone Project",
-    },
-    {
-      title: "Supplify",
-      description:
-        "Cross-platform supply chain management solution for mobile and web applications. Streamlined inventory tracking, order management, and real-time analytics.",
-      tech: ["Blazor Framework", "TailwindCSS", "C#", ".NET"],
-      gradient: "from-blue-500 to-purple-600",
-      image: "/image/Landing.png",
-      type: "Cross-Platform Capstone Project",
-    },
-    {
-      title: "ByteBuilder",
-      description:
-        "Web-based personal computer modeling and simulation platform with rule-based custom recommendations. Helps users build their dream PC with intelligent suggestions.",
-      tech: ["PHP", "Bootstrap", "MySQL"],
-      gradient: "from-green-500 to-emerald-600",
-      image: "/image/Capstone Project 2.png",
-      type: "Capstone Project",
-    },
-    {
-      title: "Mom's Food Delicacies",
-      description:
-        "E-commerce platform for home-cooked food delicacies featuring email verification with PHPMailer, OTP authentication, and secure user management.",
-      tech: ["PHP", "TailwindCSS", "PHPMailer", "MySQL"],
-      gradient: "from-teal-500 to-cyan-600",
-      image: "/image/Project 3.png",
-      type: "School Project",
-    },
-    {
-      title: "School Management System",
-      description:
-        "Desktop application for school management with student records, grade tracking, and administrative functions. Built with Windows Forms Architecture for efficient data management.",
-      tech: ["Visual Basic WFA", "MySQL"],
-      gradient: "from-purple-500 to-indigo-600",
-      image: "/image/School-Project.png",
-      type: "School Project",
-    },
-    {
-      title: "Ticket Support System",
-      description:
-        "Advanced ticket support system with Google reCAPTCHA v3, Google Sign-In integration, and real-time messaging using SignalR. Features Entity Framework for efficient data management and modern authentication.",
-      tech: [
-        "ASP.NET Web MVC",
-        "SignalR",
-        "Entity Framework",
-        "C#",
-        "Google reCAPTCHA v3",
-        "TailwindCSS",
-      ],
-      gradient: "from-red-500 to-orange-600",
-      image: "/image/Ticket-Support.png",
-      type: "School Project",
-    },
-    {
-      title: "Luto",
-      description:
-        "Modern Blazor web application with Entity Framework Core for data management and Google Sign-In authentication. Demonstrates advanced component-based development and seamless user experience.",
-      tech: [
-        "Blazor Framework",
-        "EF Core",
-        "Google Sign-In",
-        "C#",
-        ".NET",
-        "TailwindCSS",
-      ],
-      gradient: "from-yellow-500 to-amber-600",
-      image: "/image/Luto-System.png",
-      type: "School Project",
-    },
-  ];
-
-  const experiences = [
-    {
-      title: "Bachelor of Science in Information Technology",
-      company: "Cebu Technological University - Naga Extension Campus",
-      period: "2022 - Present",
-      description:
-        "Currently in 4th year, focusing on web development, database management, and software engineering. Completed multiple capstone projects addressing real-world problems.",
-    },
-    {
-      title: "Capstone Project Developer",
-      company: "CTU Naga - Academic Project",
-      period: "2025",
-      description:
-        "Led development of multiple capstone projects including E-Industria (industrial supply management platform), Supplify (cross-platform supply chain solution), and ByteBuilder (PC building recommendation system). Demonstrated full-stack development capabilities and real-world problem-solving skills.",
-    },
-    {
-      title: "Web Development Student",
-      company: "Self-Learning & Academic Projects",
-      period: "2023 - Present",
-      description:
-        "Building expertise in PHP, MySQL, .NET, and modern web frameworks through hands-on projects and continuous learning.",
-    },
-  ];
-
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-zinc-950 text-zinc-200 font-sans selection:bg-zinc-800 selection:text-white">
       {/* Navigation */}
-      <nav className="fixed top-0 w-full bg-black/80 backdrop-blur-lg z-50 border-b border-emerald-900/20">
-        <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-gradient-to-br from-emerald-400 to-teal-600 rounded-lg flex items-center justify-center">
-                <SparklesIcon className="w-5 h-5 text-black" />
-              </div>
-              <span className="text-xl font-bold bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
-                Portfolio
-              </span>
-            </div>
+      <nav className="fixed top-0 w-full bg-zinc-950/80 backdrop-blur-md z-50 border-b border-zinc-900/50">
+        <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+          <span className="text-lg font-semibold tracking-tight text-white hover:text-zinc-300 transition-colors">
+            Logan
+          </span>
 
-            {/* Desktop Navigation */}
-            <div className="hidden lg:flex gap-4 xl:gap-8 items-center">
+          {/* Desktop Nav */}
+          <div className="hidden lg:flex gap-8 text-sm font-medium">
+            {[
+              "Home",
+              "About",
+              "Skills",
+              "Projects",
+              "Experience",
+              "Contact",
+            ].map((item) => (
               <a
-                href="#home"
-                className={`whitespace-nowrap text-sm lg:text-base hover:text-emerald-400 transition-colors ${
-                  activeSection === "home"
-                    ? "text-emerald-400 font-semibold"
-                    : ""
+                key={item}
+                href={`#${item.toLowerCase()}`}
+                className={`transition-colors py-2 ${
+                  activeSection === item.toLowerCase()
+                    ? "text-white"
+                    : "text-zinc-500 hover:text-zinc-300"
                 }`}
               >
-                Home
+                {item}
               </a>
-              <a
-                href="#about"
-                className={`whitespace-nowrap text-sm lg:text-base hover:text-emerald-400 transition-colors ${
-                  activeSection === "about"
-                    ? "text-emerald-400 font-semibold"
-                    : ""
-                }`}
-              >
-                About
-              </a>
-              <a
-                href="#skills"
-                className={`whitespace-nowrap text-sm lg:text-base hover:text-emerald-400 transition-colors ${
-                  activeSection === "skills"
-                    ? "text-emerald-400 font-semibold"
-                    : ""
-                }`}
-              >
-                Skills
-              </a>
-              <a
-                href="#projects"
-                className={`whitespace-nowrap text-sm lg:text-base hover:text-emerald-400 transition-colors ${
-                  activeSection === "projects"
-                    ? "text-emerald-400 font-semibold"
-                    : ""
-                }`}
-              >
-                Projects
-              </a>
-              <a
-                href="#sqlite-portable"
-                className={`whitespace-nowrap text-sm lg:text-base hover:text-emerald-400 transition-colors ${
-                  activeSection === "sqlite-portable"
-                    ? "text-emerald-400 font-semibold"
-                    : ""
-                }`}
-              >
-                SQLite Portable
-              </a>
-              <a
-                href="#experience"
-                className={`whitespace-nowrap text-sm lg:text-base hover:text-emerald-400 transition-colors ${
-                  activeSection === "experience"
-                    ? "text-emerald-400 font-semibold"
-                    : ""
-                }`}
-              >
-                Experience
-              </a>
-              <a
-                href="#certificates"
-                className={`whitespace-nowrap text-sm lg:text-base hover:text-emerald-400 transition-colors ${
-                  activeSection === "certificates"
-                    ? "text-emerald-400 font-semibold"
-                    : ""
-                }`}
-              >
-                Certificates
-              </a>
-              <a
-                href="#contact"
-                className={`whitespace-nowrap text-sm lg:text-base hover:text-emerald-400 transition-colors ${
-                  activeSection === "contact"
-                    ? "text-emerald-400 font-semibold"
-                    : ""
-                }`}
-              >
-                Contact
-              </a>
-            </div>
-
-            {/* Mobile menu button */}
-            <button
-              className="lg:hidden p-2 rounded-lg hover:bg-emerald-500/10 transition-colors"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
-            >
-              {mobileMenuOpen ? (
-                <XMarkIcon className="w-6 h-6" />
-              ) : (
-                <Bars3Icon className="w-6 h-6" />
-              )}
-            </button>
+            ))}
           </div>
+
+          <button
+            className="lg:hidden p-2 -mr-2 text-zinc-400 hover:text-white"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          >
+            {mobileMenuOpen ? <XMarkIcon className="w-5 h-5" /> : <Bars3Icon className="w-5 h-5" />}
+          </button>
         </div>
 
-        {/* Mobile Navigation */}
-        <div
-          className={`lg:hidden overflow-hidden transition-all duration-300 ease-in-out ${
-            mobileMenuOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
-          }`}
-        >
-          <div className="bg-black/95 border-t border-emerald-900/20">
-            <div className="flex flex-col px-4 py-3">
+        {/* Mobile Nav */}
+        {mobileMenuOpen && (
+          <div className="lg:hidden px-6 py-4 bg-zinc-950 border-t border-zinc-900/50 flex flex-col gap-4 text-sm">
+             {[
+              "Home",
+              "About",
+              "Skills",
+              "Projects",
+              "Experience",
+              "Contact",
+            ].map((item) => (
               <a
-                href="#home"
-                className={`py-2.5 px-4 rounded-lg transition-all duration-200 text-sm ${
-                  activeSection === "home"
-                    ? "text-emerald-400 font-semibold bg-emerald-500/10"
-                    : "text-white hover:text-emerald-400 hover:bg-emerald-500/5"
-                }`}
+                key={item}
+                href={`#${item.toLowerCase()}`}
+                className="text-zinc-400 hover:text-white"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                Home
+                {item}
               </a>
-              <a
-                href="#about"
-                className={`py-2.5 px-4 rounded-lg transition-all duration-200 text-sm ${
-                  activeSection === "about"
-                    ? "text-emerald-400 font-semibold bg-emerald-500/10"
-                    : "text-white hover:text-emerald-400 hover:bg-emerald-500/5"
-                }`}
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                About
-              </a>
-              <a
-                href="#skills"
-                className={`py-2.5 px-4 rounded-lg transition-all duration-200 text-sm ${
-                  activeSection === "skills"
-                    ? "text-emerald-400 font-semibold bg-emerald-500/10"
-                    : "text-white hover:text-emerald-400 hover:bg-emerald-500/5"
-                }`}
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Skills
-              </a>
-              <a
-                href="#projects"
-                className={`py-2.5 px-4 rounded-lg transition-all duration-200 text-sm ${
-                  activeSection === "projects"
-                    ? "text-emerald-400 font-semibold bg-emerald-500/10"
-                    : "text-white hover:text-emerald-400 hover:bg-emerald-500/5"
-                }`}
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Projects
-              </a>
-              <a
-                href="#sqlite-portable"
-                className={`py-2.5 px-4 rounded-lg transition-all duration-200 text-sm ${
-                  activeSection === "sqlite-portable"
-                    ? "text-emerald-400 font-semibold bg-emerald-500/10"
-                    : "text-white hover:text-emerald-400 hover:bg-emerald-500/5"
-                }`}
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                SQLite Portable
-              </a>
-              <a
-                href="#experience"
-                className={`py-2.5 px-4 rounded-lg transition-all duration-200 text-sm ${
-                  activeSection === "experience"
-                    ? "text-emerald-400 font-semibold bg-emerald-500/10"
-                    : "text-white hover:text-emerald-400 hover:bg-emerald-500/5"
-                }`}
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Experience
-              </a>
-              <a
-                href="#certificates"
-                className={`py-2.5 px-4 rounded-lg transition-all duration-200 text-sm ${
-                  activeSection === "certificates"
-                    ? "text-emerald-400 font-semibold bg-emerald-500/10"
-                    : "text-white hover:text-emerald-400 hover:bg-emerald-500/5"
-                }`}
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Certificates
-              </a>
-              <a
-                href="#contact"
-                className={`py-2.5 px-4 rounded-lg transition-all duration-200 text-sm ${
-                  activeSection === "contact"
-                    ? "text-emerald-400 font-semibold bg-emerald-500/10"
-                    : "text-white hover:text-emerald-400 hover:bg-emerald-500/5"
-                }`}
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Contact
-              </a>
-            </div>
+            ))}
           </div>
-        </div>
+        )}
       </nav>
 
-      {/* Hero Section */}
-      <section
-        id="home"
-        className="min-h-screen flex items-center justify-center relative overflow-hidden pt-16"
-      >
-        {/* Gradient Background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-emerald-950 via-black to-black opacity-50"></div>
-        <div className="absolute inset-0">
-          <div className="absolute top-1/4 left-1/6 w-[500px] h-[500px] bg-emerald-500/10 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-1/4 right-1/6 w-[500px] h-[500px] bg-teal-500/10 rounded-full blur-3xl"></div>
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-cyan-500/5 rounded-full blur-3xl"></div>
-        </div>
-
-        <div className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-0">
-          {/* 2-Column Grid: stacks on mobile, side-by-side on lg+ */}
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-16 items-center">
-            {/* Left Column — Profile Image + Badge */}
-            <div className="lg:col-span-2 flex flex-col items-center">
-              {/* Profile Image with decorative ring */}
-              <div className="relative mb-6">
-                {/* Outer dotted decorative ring */}
-                <div className="absolute -inset-4 rounded-full border-2 border-dashed border-emerald-500/20 animate-[spin_25s_linear_infinite]"></div>
-                {/* Glow ring */}
-                <div className="absolute -inset-1 rounded-full bg-gradient-to-br from-emerald-400 via-teal-500 to-cyan-400 opacity-20 blur-md"></div>
-                <div className="relative w-48 h-48 sm:w-56 sm:h-56 lg:w-64 lg:h-64 rounded-full overflow-hidden border-4 border-emerald-500/50 shadow-2xl shadow-emerald-500/30">
-                  <Image
-                    src="/image/profile.jpg"
-                    alt="Logan - Full Stack Developer Profile Picture"
-                    fill
-                    className="object-cover"
-                    priority
-                  />
-                </div>
-                {/* Status indicator */}
-                <div className="absolute bottom-2 right-2 lg:bottom-4 lg:right-4 w-5 h-5 bg-emerald-400 rounded-full border-[3px] border-black shadow-lg shadow-emerald-400/50"></div>
-              </div>
-
-              {/* Welcome badge */}
-              <div className="inline-block px-5 py-2.5 bg-emerald-500/10 border border-emerald-500/20 rounded-full">
-                <span className="text-emerald-400 text-sm font-medium">
-                  👋 Welcome to my portfolio
-                </span>
-              </div>
-
-              {/* Quick stats under profile — visible on lg+ */}
-              <div className="hidden lg:flex items-center gap-3 mt-6">
-                <div className="flex items-center gap-1.5 px-3 py-1.5 bg-emerald-500/5 border border-emerald-500/15 rounded-full">
-                  <div className="w-1.5 h-1.5 rounded-full bg-emerald-400"></div>
-                  <span className="text-emerald-400/80 text-xs font-medium">
-                    Available for work
-                  </span>
-                </div>
-                <div className="px-3 py-1.5 bg-emerald-500/5 border border-emerald-500/15 rounded-full">
-                  <span className="text-emerald-400/80 text-xs font-medium">
-                    BSIT 4th Year
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            {/* Right Column — Text Content */}
-            <div className="lg:col-span-3 text-center lg:text-left">
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold mb-6 flex flex-wrap items-center justify-center lg:justify-start gap-x-2 sm:gap-x-3 leading-tight">
-                <span className="bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 bg-clip-text text-transparent whitespace-nowrap">
-                  Logan -
-                </span>
-                <Typewriter words={TYPEWRITER_WORDS} />
+      <main className="max-w-6xl mx-auto px-6">
+        
+        {/* Hero Section */}
+        <section id="home" className="min-h-screen flex flex-col justify-center pt-20 pb-32">
+          <div className="flex flex-col-reverse lg:flex-row items-start lg:items-center justify-between gap-16">
+            <div className="max-w-2xl">
+              <span className="text-zinc-500 font-medium tracking-wide text-sm mb-4 block">AVAILABLE FOR WORK</span>
+              <h1 className="text-5xl sm:text-7xl font-bold text-white tracking-tight mb-6 leading-tight">
+                Logan<br />
+                <span className="text-zinc-500">Panucat.</span>
               </h1>
-
-              <p className="text-lg sm:text-xl text-gray-300 mb-8 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
-                Full Stack Developer specializing in PHP, MySQL, C#, ASP.NET
-                MVC, and .NET Framework. Currently expanding into the Node.js
-                ecosystem including React, Next.js, and TypeScript. Building
-                innovative digital experiences with clean code and best
-                practices.
+              <p className="text-lg sm:text-xl text-zinc-400 leading-relaxed mb-10 max-w-xl">
+                A Full Stack Developer specializing in PHP, MySQL, C#, ASP.NET MVC, and .NET. Building clean, intuitive digital experiences.
               </p>
-
-              {/* Tech stack chips */}
-              <div className="flex flex-wrap gap-2 justify-center lg:justify-start mb-8">
-                {[
-                  "PHP",
-                  "MySQL",
-                  "C#",
-                  ".NET",
-                  "React",
-                  "Next.js",
-                  "TypeScript",
-                  "TailwindCSS",
-                ].map((tech) => (
-                  <span
-                    key={tech}
-                    className="px-3 py-1 text-xs bg-emerald-500/8 border border-emerald-500/20 rounded-full text-emerald-300/70 hover:text-emerald-300 hover:border-emerald-500/40 transition-all duration-300"
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* CTA Buttons — centered below the grid */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mt-10 lg:mt-14">
-            <a
-              href="#projects"
-              className="px-8 py-4 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-full font-semibold hover:shadow-lg hover:shadow-emerald-500/50 transition-all duration-300 hover:scale-105"
-            >
-              View My Work
-            </a>
-            <a
-              href="#contact"
-              className="px-8 py-4 border-2 border-emerald-500 rounded-full font-semibold hover:bg-emerald-500/10 transition-all duration-300"
-            >
-              Get In Touch
-            </a>
-          </div>
-
-          {/* Scroll indicator */}
-          <div className="mt-12 lg:mt-16 animate-bounce">
-            <ArrowDownIcon className="w-6 h-6 mx-auto text-emerald-400" />
-          </div>
-        </div>
-      </section>
-
-      {/* About Section */}
-      <section
-        id="about"
-        className="py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-black to-emerald-950/20"
-      >
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl sm:text-5xl font-bold mb-4">
-              <span className="bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
-                About Me
-              </span>
-            </h2>
-            <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-              A quick look at who I am and what drives me
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-10">
-            {/* Left Column — Personal Info Card */}
-            <div className="lg:col-span-2">
-              <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-6 sm:p-7 h-full">
-                <h3 className="text-lg font-semibold text-white mb-6 flex items-center gap-2">
-                  <UserIcon className="w-5 h-5 text-emerald-400" />
-                  Personal Information
-                </h3>
-
-                <div className="space-y-5">
-                  {/* Name */}
-                  <div className="flex items-start gap-3">
-                    <div className="w-9 h-9 shrink-0 rounded-lg bg-emerald-500/10 border border-emerald-500/15 flex items-center justify-center">
-                      <SparklesIcon className="w-4 h-4 text-emerald-400" />
-                    </div>
-                    <div>
-                      <p className="text-[11px] font-medium uppercase tracking-wider text-gray-500 mb-0.5">
-                        Full Name
-                      </p>
-                      <p className="text-sm text-gray-200 font-medium">
-                        Logan M. Panucat
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Age & DOB */}
-                  <div className="flex items-start gap-3">
-                    <div className="w-9 h-9 shrink-0 rounded-lg bg-emerald-500/10 border border-emerald-500/15 flex items-center justify-center">
-                      <CalendarIcon className="w-4 h-4 text-emerald-400" />
-                    </div>
-                    <div>
-                      <p className="text-[11px] font-medium uppercase tracking-wider text-gray-500 mb-0.5">
-                        Date of Birth
-                      </p>
-                      <p className="text-sm text-gray-200 font-medium">
-                        September 08, 2002{" "}
-                        <span className="text-gray-500 font-normal">
-                          (23 years old)
-                        </span>
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Location */}
-                  <div className="flex items-start gap-3">
-                    <div className="w-9 h-9 shrink-0 rounded-lg bg-emerald-500/10 border border-emerald-500/15 flex items-center justify-center">
-                      <MapPinIcon className="w-4 h-4 text-emerald-400" />
-                    </div>
-                    <div>
-                      <p className="text-[11px] font-medium uppercase tracking-wider text-gray-500 mb-0.5">
-                        Location
-                      </p>
-                      <p className="text-sm text-gray-200 font-medium">
-                        Carcar City, Cebu, Philippines
-                      </p>
-                      <p className="text-xs text-gray-500">
-                        P. Vasquez St., Poblacion I
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Education */}
-                  <div className="flex items-start gap-3">
-                    <div className="w-9 h-9 shrink-0 rounded-lg bg-emerald-500/10 border border-emerald-500/15 flex items-center justify-center">
-                      <AcademicCapIcon className="w-4 h-4 text-emerald-400" />
-                    </div>
-                    <div>
-                      <p className="text-[11px] font-medium uppercase tracking-wider text-gray-500 mb-0.5">
-                        Education
-                      </p>
-                      <p className="text-sm text-gray-200 font-medium">
-                        BS Information Technology
-                      </p>
-                      <p className="text-xs text-gray-500">
-                        CTU — Naga Extension Campus
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Contact */}
-                  <div className="flex items-start gap-3">
-                    <div className="w-9 h-9 shrink-0 rounded-lg bg-emerald-500/10 border border-emerald-500/15 flex items-center justify-center">
-                      <PhoneIcon className="w-4 h-4 text-emerald-400" />
-                    </div>
-                    <div>
-                      <p className="text-[11px] font-medium uppercase tracking-wider text-gray-500 mb-0.5">
-                        Contact
-                      </p>
-                      <p className="text-sm text-gray-200 font-medium">
-                        +63 991 551 9424
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Download CV button */}
-                <a
-                  href="/CV_Portfolio/Resume.pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-7 w-full inline-flex items-center justify-center gap-2 px-5 py-3 bg-emerald-500/10 border border-emerald-500/20 rounded-xl text-emerald-400 text-sm font-medium hover:bg-emerald-500/15 hover:border-emerald-500/30 transition-all duration-300"
-                >
-                  <ArrowDownTrayIcon className="w-4 h-4" />
-                  Download Resume
+              <div className="flex items-center gap-4">
+                <a href="#projects" className="bg-white text-black px-6 py-3 rounded-full text-sm font-medium hover:bg-zinc-200 transition-colors">
+                  View Work
+                </a>
+                <a href="#contact" className="px-6 py-3 rounded-full text-sm font-medium text-white border border-zinc-800 hover:bg-zinc-900 transition-colors">
+                  Get in Touch
                 </a>
               </div>
             </div>
-
-            {/* Right Column — Bio + Stats */}
-            <div className="lg:col-span-3 flex flex-col">
-              {/* Bio text */}
-              <div className="space-y-5 mb-8">
-                <p className="text-base sm:text-lg text-gray-300 leading-relaxed">
-                  I&apos;m a 4th year IT student at Cebu Technological
-                  University — Naga Extension Campus, passionate about web
-                  development and creating solutions that solve real-world
-                  problems. I thrive on turning ideas into functional, polished
-                  applications.
-                </p>
-                <p className="text-base sm:text-lg text-gray-300 leading-relaxed">
-                  My expertise spans PHP, MySQL, C#, ASP.NET MVC, and modern web
-                  frameworks like TailwindCSS and Bootstrap. I&apos;ve developed
-                  multiple capstone and academic projects that address practical
-                  challenges in education, supply chain, and e-commerce.
-                </p>
-                <p className="text-base sm:text-lg text-gray-300 leading-relaxed">
-                  From institutional management systems to cross-platform supply
-                  chain tools, I love building full-stack applications that make
-                  a difference. Currently expanding my skills in the Node.js
-                  ecosystem — React, Next.js, TypeScript, and modern JavaScript
-                  frameworks.
-                </p>
-              </div>
-
-              {/* Stats grid */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-auto">
-                <div className="p-5 rounded-2xl border border-white/[0.06] bg-white/[0.02] text-center">
-                  <div className="text-2xl font-bold text-emerald-400 mb-1">
-                    4th
-                  </div>
-                  <div className="text-xs text-gray-500 font-medium uppercase tracking-wider">
-                    Year Student
-                  </div>
-                </div>
-                <div className="p-5 rounded-2xl border border-white/[0.06] bg-white/[0.02] text-center">
-                  <div className="text-2xl font-bold text-emerald-400 mb-1">
-                    3+
-                  </div>
-                  <div className="text-xs text-gray-500 font-medium uppercase tracking-wider">
-                    Major Projects
-                  </div>
-                </div>
-                <div className="p-5 rounded-2xl border border-white/[0.06] bg-white/[0.02] text-center">
-                  <div className="text-2xl font-bold text-emerald-400 mb-1">
-                    3
-                  </div>
-                  <div className="text-xs text-gray-500 font-medium uppercase tracking-wider">
-                    Capstone Projects
-                  </div>
-                </div>
-                <div className="p-5 rounded-2xl border border-white/[0.06] bg-white/[0.02] text-center">
-                  <div className="text-2xl font-bold text-emerald-400 mb-1">
-                    100%
-                  </div>
-                  <div className="text-xs text-gray-500 font-medium uppercase tracking-wider">
-                    Dedication
-                  </div>
-                </div>
-              </div>
+            <div className="relative w-40 h-40 sm:w-56 sm:h-56 lg:w-72 lg:h-72 flex-shrink-0">
+               <Image
+                  src="/image/profile.jpg"
+                  alt="Logan Panucat"
+                  fill
+                  className="object-cover rounded-2xl transition-all duration-700"
+                  priority
+                />
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Skills Section */}
-      <section id="skills" className="py-24 px-4 sm:px-6 lg:px-8 bg-black">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl sm:text-5xl font-bold mb-4">
-              <span className="bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
-                Skills & Expertise
-              </span>
-            </h2>
-            <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-              Technologies and tools I use to bring ideas to life
-            </p>
-          </div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {skills.map((skill, index) => (
-              <div
-                key={index}
-                className="group relative grid grid-rows-[auto_1fr] p-6 rounded-2xl border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.04] hover:border-emerald-500/25 transition-all duration-300"
-              >
-                {/* Icon + Title row */}
-                <div className="flex items-start gap-3.5 mb-5">
-                  <div className="w-11 h-11 shrink-0 rounded-xl bg-emerald-500/10 border border-emerald-500/15 flex items-center justify-center group-hover:bg-emerald-500/15 group-hover:border-emerald-500/30 transition-all duration-300">
-                    <skill.icon className="w-5.5 h-5.5 text-emerald-400" />
-                  </div>
-                  <div>
-                    <h3 className="text-base font-semibold text-white mb-0.5">
-                      {skill.name}
-                    </h3>
-                    <p className="text-xs text-gray-500 font-medium uppercase tracking-wider">
-                      {skill.subtitle}
-                    </p>
-                  </div>
+        {/* About Section */}
+        <section id="about" className="py-32 border-t border-zinc-900/50">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
+            <div className="md:col-span-4">
+              <h2 className="text-3xl font-bold text-white tracking-tight">About Me.</h2>
+            </div>
+            <div className="md:col-span-8 flex flex-col gap-10 text-zinc-400 text-lg leading-relaxed">
+              <p>
+                I&apos;m a 4th-year IT student at Cebu Technological University — Naga Extension Campus, passionate about building practical software solutions.
+              </p>
+              <p>
+                My expertise spans PHP, MySQL, C#, and ASP.NET MVC. I enjoy transforming complex requirements into functional, clean implementations, whether it&apos;s an educational system or an industrial supply platform.
+              </p>
+              
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 pt-6 border-t border-zinc-900">
+                <div>
+                  <div className="text-3xl font-bold text-white mb-1">4th</div>
+                  <div className="text-xs text-zinc-500 uppercase tracking-wider">Year Student</div>
                 </div>
-
-                {/* Technology pills */}
-                <div className="flex flex-wrap gap-1.5 content-start">
-                  {skill.technologies.map((tech) => {
-                    const iconSlug = TECH_ICONS[tech];
-                    return (
-                      <span
-                        key={tech}
-                        className="inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] font-medium rounded-md bg-white/[0.04] border border-white/[0.06] text-gray-400 group-hover:text-emerald-300/80 group-hover:border-emerald-500/15 group-hover:bg-emerald-500/[0.06] transition-all duration-300"
-                      >
-                        {iconSlug && (
-                          <img
-                            src={`https://cdn.simpleicons.org/${iconSlug}/6ee7b7`}
-                            alt=""
-                            className="w-3.5 h-3.5 opacity-40 group-hover:opacity-75 transition-opacity duration-300"
-                            loading="lazy"
-                            onError={(e) => {
-                              e.currentTarget.style.display = "none";
-                            }}
-                          />
-                        )}
-                        {tech}
-                      </span>
-                    );
-                  })}
+                <div>
+                  <div className="text-3xl font-bold text-white mb-1">3+</div>
+                  <div className="text-xs text-zinc-500 uppercase tracking-wider">Major Projects</div>
+                </div>
+                <div>
+                  <div className="text-3xl font-bold text-white mb-1">Cebu</div>
+                  <div className="text-xs text-zinc-500 uppercase tracking-wider">Based In</div>
                 </div>
               </div>
-            ))}
+
+               <a href="/CV_Portfolio/Resume.pdf" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-sm text-white hover:text-zinc-300 w-fit border-b border-zinc-800 pb-1 mt-4 transition-colors">
+                  <ArrowDownTrayIcon className="w-4 h-4" /> Download Resume
+              </a>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Projects Section */}
-      <section
-        id="projects"
-        className="py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-black to-emerald-950/20"
-      >
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl sm:text-5xl font-bold text-center mb-12">
-            <span className="bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
-              Featured Projects
-            </span>
-          </h2>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {projects.map((project, index) => (
-              <div
-                key={index}
-                onClick={() => openProjectModal(index)}
-                className="group relative grid grid-rows-[auto_1fr_auto] rounded-2xl border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.04] hover:border-emerald-500/25 transition-all duration-300 overflow-hidden cursor-pointer"
-                role="button"
-                tabIndex={0}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") openProjectModal(index);
-                }}
-                aria-label={`View details for ${project.title}`}
-              >
-                {/* Project Image */}
-                <div className="relative h-48 w-full overflow-hidden">
-                  <Image
-                    src={project.image}
-                    alt={project.title}
-                    fill
-                    className="object-cover object-top opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
-                  />
-                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
-                </div>
-
-                {/* Card Body */}
-                <div className="p-5 flex flex-col gap-3">
-                  {/* Category Badge */}
-                  <span className="self-start px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider rounded-md bg-emerald-500/10 border border-emerald-500/20 text-emerald-400">
-                    {project.type}
-                  </span>
-
-                  {/* Title */}
-                  <h3 className="text-lg font-semibold text-white leading-snug group-hover:text-emerald-300 transition-colors duration-300">
-                    {project.title}
-                  </h3>
-
-                  {/* Description — short preview */}
-                  <p className="text-gray-400 text-sm leading-relaxed line-clamp-2">
-                    {project.description}
-                  </p>
-
-                  {/* View details CTA */}
-                  <span className="inline-flex items-center gap-1 text-xs font-medium text-emerald-400/70 group-hover:text-emerald-400 transition-colors duration-300 mt-auto">
-                    View Details
-                    <svg
-                      className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform duration-300"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={2}
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
-                      />
-                    </svg>
-                  </span>
-                </div>
-
-                {/* Tech Tags — pinned to bottom */}
-                <div className="px-5 pb-5 pt-1">
-                  <div className="flex flex-wrap gap-1.5">
-                    {project.tech.map((tech, techIndex) => (
-                      <span
-                        key={techIndex}
-                        className="px-2 py-0.5 text-[10px] font-medium rounded-md bg-white/[0.04] border border-white/[0.06] text-gray-500 group-hover:text-emerald-300/70 group-hover:border-emerald-500/15 group-hover:bg-emerald-500/[0.06] transition-all duration-300"
-                      >
+        {/* Skills Section */}
+        <section id="skills" className="py-32 border-t border-zinc-900/50">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
+            <div className="md:col-span-4">
+              <h2 className="text-3xl font-bold text-white tracking-tight mb-4">Skills.</h2>
+              <p className="text-zinc-500">Core technologies and tools I work with.</p>
+            </div>
+            <div className="md:col-span-8 grid sm:grid-cols-2 gap-6">
+              {skills.map((skill, index) => (
+                <div key={index} className="p-6 rounded-2xl border border-zinc-900 bg-zinc-950/50 hover:border-zinc-800 transition-colors">
+                  <skill.icon className="w-6 h-6 text-zinc-400 mb-4" />
+                  <h3 className="text-white font-medium mb-1">{skill.name}</h3>
+                  <p className="text-sm text-zinc-500 mb-6">{skill.subtitle}</p>
+                  <div className="flex flex-wrap gap-2">
+                    {skill.technologies.map(tech => (
+                      <span key={tech} className="px-2.5 py-1 text-xs rounded-full bg-zinc-900 font-medium text-zinc-400">
                         {tech}
                       </span>
                     ))}
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Project Detail Modal */}
-      {selectedProject !== null && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6"
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="project-modal-title"
-        >
-          {/* Backdrop */}
-          <div
-            className="absolute inset-0 bg-black/80 backdrop-blur-sm animate-[fadeIn_200ms_ease-out]"
-            onClick={closeProjectModal}
-          ></div>
-
-          {/* Modal Content */}
-          <div className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-2xl border border-white/[0.08] bg-[#0a0f0d] shadow-2xl shadow-black/50 animate-[fadeIn_200ms_ease-out,slideUp_300ms_ease-out]">
-            {/* Close Button */}
-            <button
-              onClick={closeProjectModal}
-              className="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-black/50 backdrop-blur-sm border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-white/20 transition-all duration-200"
-              aria-label="Close modal"
-            >
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={2}
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M6 18 18 6M6 6l12 12"
-                />
-              </svg>
-            </button>
-
-            {/* Modal Image */}
-            <div className="relative w-full h-56 sm:h-72 overflow-hidden rounded-t-2xl">
-              <Image
-                src={projects[selectedProject].image}
-                alt={projects[selectedProject].title}
-                fill
-                className="object-cover object-top"
-              />
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0a0f0d] via-transparent to-transparent"></div>
-            </div>
-
-            {/* Modal Body */}
-            <div className="px-6 sm:px-8 pb-8 -mt-8 relative">
-              {/* Category Badge */}
-              <span className="inline-block px-3 py-1 text-[10px] font-semibold uppercase tracking-wider rounded-md bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 mb-4">
-                {projects[selectedProject].type}
-              </span>
-
-              {/* Title */}
-              <h3
-                id="project-modal-title"
-                className="text-2xl sm:text-3xl font-bold text-white mb-4 leading-snug"
-              >
-                {projects[selectedProject].title}
-              </h3>
-
-              {/* Full Description */}
-              <p className="text-gray-300 text-base leading-relaxed mb-6">
-                {projects[selectedProject].description}
-              </p>
-
-              {/* Tech Stack */}
-              <div className="mb-2">
-                <h4 className="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-3">
-                  Tech Stack
-                </h4>
-                <div className="flex flex-wrap gap-2">
-                  {projects[selectedProject].tech.map((tech, techIndex) => {
-                    const iconSlug = TECH_ICONS[tech];
-                    return (
-                      <span
-                        key={techIndex}
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg bg-white/[0.04] border border-white/[0.08] text-gray-300"
-                      >
-                        {iconSlug && (
-                          <img
-                            src={`https://cdn.simpleicons.org/${iconSlug}/6ee7b7`}
-                            alt=""
-                            className="w-3.5 h-3.5 opacity-60"
-                            loading="lazy"
-                            onError={(e) => {
-                              e.currentTarget.style.display = "none";
-                            }}
-                          />
-                        )}
-                        {tech}
-                      </span>
-                    );
-                  })}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* SQLite Portable Showcase Section */}
-      <section
-        id="sqlite-portable"
-        className="py-20 px-4 sm:px-6 lg:px-8 bg-black"
-      >
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl sm:text-5xl font-bold text-center mb-4">
-            <span className="bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
-              SQLite Portable
-            </span>
-          </h2>
-          <p className="text-center text-gray-400 mb-6 max-w-2xl mx-auto">
-            A portable SQLite database management tool with dark/light mode, SQL
-            explorer, schema designer, multi-language integration support, and
-            more.
-          </p>
-
-          {/* Download Button */}
-          <div className="flex justify-center mb-12">
-            <a
-              href="https://www.mediafire.com/file/2pu0bqxgr979uam/SQLitePortableSetup.zip/file"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-full font-semibold text-white hover:shadow-lg hover:shadow-emerald-500/50 transition-all duration-300 hover:scale-105 group"
-            >
-              <ArrowDownTrayIcon className="w-6 h-6 group-hover:animate-bounce" />
-              <span>Download SQLite Portable</span>
-              <span className="text-xs opacity-75">(via MediaFire)</span>
-            </a>
-          </div>
-
-          {/* App Icon & Tech Tags */}
-          <div className="flex flex-col items-center mb-10">
-            <div className="relative w-20 h-20 mb-4">
-              <Image
-                src="/image/sqlite-portables/SQLite-Portable.png"
-                alt="SQLite Portable Application Icon"
-                fill
-                className="object-contain"
-              />
-            </div>
-            <div className="flex flex-wrap justify-center gap-2">
-              {[
-                "SQLite",
-                "Desktop App",
-                "SQL Explorer",
-                "Schema Designer",
-                "Dark Mode",
-                "Light Mode",
-                "PHP",
-                "Python",
-                "C#",
-                "JavaScript",
-                "TypeScript",
-              ].map((tag) => (
-                <span
-                  key={tag}
-                  className="px-3 py-1 text-xs bg-emerald-500/10 border border-emerald-500/30 rounded-full text-emerald-300"
-                >
-                  {tag}
-                </span>
               ))}
             </div>
           </div>
+        </section>
 
-          {/* Screenshot Carousel */}
-          <ImageCarousel images={sqliteImages} autoplayInterval={4000} />
-        </div>
-      </section>
-
-      {/* Experience Section */}
-      <section
-        id="experience"
-        className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-black to-emerald-950/20"
-      >
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-4xl sm:text-5xl font-bold text-center mb-12">
-            <span className="bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
-              Experience
-            </span>
-          </h2>
-
-          <div className="space-y-8">
-            {experiences.map((exp, index) => (
-              <div
-                key={index}
-                className="relative pl-8 pb-8 border-l-2 border-emerald-500/30 last:pb-0"
-              >
-                <div className="absolute -left-2 top-0 w-4 h-4 bg-emerald-500 rounded-full"></div>
-
-                <div className="bg-gradient-to-br from-emerald-900/20 to-black border border-emerald-500/20 rounded-2xl p-6 hover:border-emerald-500/40 transition-all duration-300">
-                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-3">
-                    <div>
-                      <h3 className="text-xl font-bold text-white mb-1">
-                        {exp.title}
-                      </h3>
-                      <div className="flex items-center gap-2 text-emerald-400">
-                        <BriefcaseIcon className="w-4 h-4" />
-                        <span>{exp.company}</span>
-                      </div>
+        {/* Projects Section */}
+        <section id="projects" className="py-32 border-t border-zinc-900/50">
+          <div className="mb-20">
+            <h2 className="text-3xl font-bold text-white tracking-tight mb-4">Selected Work.</h2>
+            <p className="text-zinc-500">A curation of my recent development projects.</p>
+          </div>
+          <div className="grid md:grid-cols-2 gap-12">
+             {projects.map((project, index) => (
+                <div key={index} onClick={() => openProjectModal(index)} className="group cursor-pointer flex flex-col gap-6">
+                  <div className="relative w-full aspect-[4/3] overflow-hidden rounded-2xl bg-zinc-900">
+                     <Image
+                      src={project.image}
+                      alt={project.title}
+                      fill
+                      className="object-cover object-top transition-all duration-700 ease-in-out group-hover:scale-105"
+                    />
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-3 mb-3">
+                      <span className="text-xs uppercase tracking-wider text-zinc-500">{project.type}</span>
                     </div>
-                    <span className="text-gray-400 text-sm mt-2 sm:mt-0">
-                      {exp.period}
-                    </span>
+                    <h3 className="text-xl font-medium text-white mb-3 group-hover:text-zinc-300 transition-colors">{project.title}</h3>
+                    <div className="flex flex-wrap gap-2">
+                      {project.tech.map(t => (
+                        <span key={t} className="text-xs text-zinc-500">{t}</span>
+                      ))}
+                    </div>
                   </div>
-                  <p className="text-gray-400">{exp.description}</p>
                 </div>
-              </div>
-            ))}
+             ))}
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Certificates Section */}
-      <section
-        id="certificates"
-        className="py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-black to-emerald-950/20"
-      >
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl sm:text-5xl font-bold text-center mb-12">
-            <span className="bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
-              Certificates
-            </span>
-          </h2>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {/* Certificate 1 */}
-            {[
-              {
-                image: "/certificates/certificates-deployment.jpg",
-                alt: "Certificate of Deployment - Logan M. Panucat",
-                title: "Certificate of Deployment",
-                description:
-                  "Certificate awarded to Logan M. Panucat for successful system deployment and project completion.",
-                category: "Deployment",
-                tags: ["Professional", "System Deployment"],
-              },
-              {
-                image: "/certificates/certificates-deployment1.jpg",
-                alt: "Certificate of Deployment - Dudz Hardware Store",
-                title: "Dudz Hardware Store Deployment",
-                description:
-                  "Certificate of deployment for Dudz Hardware Store system successfully completed by the development team.",
-                category: "Deployment",
-                tags: ["Professional", "Team Project"],
-              },
-              {
-                image: "/certificates/certificates-nextjs.jpg",
-                alt: "Next.js Certificate",
-                title: "Next.js Certification",
-                description:
-                  "Professional certification in Next.js development and React framework.",
-                category: "Next.js",
-                tags: ["Technical", "React"],
-              },
-              {
-                image: "/certificates/certificates-1-nextjs.jpg",
-                alt: "Next.js Advanced Certificate",
-                title: "Next.js App Router Fundamentals",
-                description:
-                  "Official Next.js certification covering App Router fundamentals, modern routing patterns, and advanced Next.js features.",
-                category: "Next.js",
-                tags: ["Technical", "App Router"],
-              },
-              {
-                image: "/certificates/certificates-udemy.jpg",
-                alt: "Udemy Certificate",
-                title: "Udemy Course Completion",
-                description:
-                  "Certificate of completion for advanced web development courses.",
-                category: "Udemy",
-                tags: ["Learning", "Web Development"],
-              },
-            ].map((cert, index) => (
-              <div
-                key={index}
-                className="group relative grid grid-rows-[auto_1fr_auto] rounded-2xl border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.04] hover:border-emerald-500/25 transition-all duration-300 overflow-hidden"
-              >
-                {/* Certificate Image */}
-                <div className="relative h-48 w-full overflow-hidden">
-                  <Image
-                    src={cert.image}
-                    alt={cert.alt}
-                    fill
-                    className="object-cover object-top opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
-                  />
-                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
-                </div>
-
-                {/* Card Body */}
-                <div className="p-5 flex flex-col gap-3">
-                  {/* Category Badge */}
-                  <span className="self-start px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider rounded-md bg-emerald-500/10 border border-emerald-500/20 text-emerald-400">
-                    {cert.category}
-                  </span>
-
-                  {/* Title */}
-                  <h3 className="text-lg font-semibold text-white leading-snug group-hover:text-emerald-300 transition-colors duration-300">
-                    {cert.title}
-                  </h3>
-
-                  {/* Description */}
-                  <p className="text-gray-400 text-sm leading-relaxed">
-                    {cert.description}
-                  </p>
-                </div>
-
-                {/* Tags — pinned to bottom */}
-                <div className="px-5 pb-5 pt-1">
-                  <div className="flex flex-wrap gap-1.5">
-                    {cert.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="px-2 py-0.5 text-[10px] font-medium rounded-md bg-white/[0.04] border border-white/[0.06] text-gray-500 group-hover:text-emerald-300/70 group-hover:border-emerald-500/15 group-hover:bg-emerald-500/[0.06] transition-all duration-300"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </div>
+        {/* SQLite Portable Section */}
+        <section id="sqlite-portable" className="py-32 border-t border-zinc-900/50">
+            <div className="max-w-3xl mx-auto text-center mb-16">
+              <div className="w-16 h-16 mx-auto mb-6 relative">
+                 <Image src="/image/sqlite-portables/SQLite-Portable.png" alt="SQLite Portable" fill className="object-contain" />
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
+              <h2 className="text-3xl font-bold text-white tracking-tight mb-4">SQLite Portable.</h2>
+              <p className="text-zinc-400 text-lg mb-8">A lightweight SQLite database management desktop application featuring multiple language integrations and schema design tools.</p>
+              <a href="https://www.mediafire.com/file/2pu0bqxgr979uam/SQLitePortableSetup.zip/file" target="_blank" rel="noreferrer" className="inline-block bg-white text-black px-6 py-3 rounded-full text-sm font-medium hover:bg-zinc-200 transition-colors">
+                Download Now
+              </a>
+            </div>
+            <div className="rounded-2xl overflow-hidden border border-zinc-900">
+              <ImageCarousel images={sqliteImages} autoplayInterval={4000} />
+            </div>
+        </section>
 
-      {/* Contact Section */}
-      <section
-        id="contact"
-        className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-black to-emerald-950/20"
-      >
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-4xl sm:text-5xl font-bold text-center mb-6">
-            <span className="bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
-              Let&apos;s Work Together
-            </span>
-          </h2>
-
-          <p className="text-xl text-gray-300 mb-12 max-w-2xl mx-auto text-center">
-            Have a project in mind or want to discuss opportunities? I&apos;d
-            love to hear from you!
-          </p>
-
-          {/* Contact Form */}
-          <div className="max-w-2xl mx-auto mb-12">
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid md:grid-cols-2 gap-6">
-                <div>
-                  <label
-                    htmlFor="name"
-                    className="block text-sm font-medium text-gray-300 mb-2"
-                  >
-                    Your Name
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full px-4 py-3 bg-emerald-900/10 border border-emerald-500/20 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-emerald-500 transition-colors"
-                    placeholder="John Doe"
-                  />
+        {/* Experience Section */}
+        <section id="experience" className="py-32 border-t border-zinc-900/50">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
+            <div className="md:col-span-4">
+              <h2 className="text-3xl font-bold text-white tracking-tight">Timeline.</h2>
+            </div>
+            <div className="md:col-span-8 flex flex-col gap-12">
+              {experiences.map((exp, i) => (
+                <div key={i} className="flex flex-col sm:flex-row gap-4 sm:gap-12 group">
+                   <div className="sm:w-32 flex-shrink-0 text-zinc-500 text-sm pt-1">{exp.period}</div>
+                   <div>
+                     <h3 className="text-lg font-medium text-white mb-1 group-hover:text-zinc-300 transition-colors">{exp.title}</h3>
+                     <p className="text-sm text-zinc-400 mb-4">{exp.company}</p>
+                     <p className="text-zinc-500 leading-relaxed">{exp.description}</p>
+                   </div>
                 </div>
-                <div>
-                  <label
-                    htmlFor="email"
-                    className="block text-sm font-medium text-gray-300 mb-2"
-                  >
-                    Your Email
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full px-4 py-3 bg-emerald-900/10 border border-emerald-500/20 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-emerald-500 transition-colors"
-                    placeholder="john@example.com"
-                  />
-                </div>
-              </div>
-              <div>
-                <label
-                  htmlFor="subject"
-                  className="block text-sm font-medium text-gray-300 mb-2"
-                >
-                  Subject
-                </label>
-                <input
-                  type="text"
-                  id="subject"
-                  name="subject"
-                  value={formData.subject}
-                  onChange={handleInputChange}
-                  required
-                  className="w-full px-4 py-3 bg-emerald-900/10 border border-emerald-500/20 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-emerald-500 transition-colors"
-                  placeholder="Project Inquiry"
-                />
-              </div>
-              <div>
-                <label
-                  htmlFor="message"
-                  className="block text-sm font-medium text-gray-300 mb-2"
-                >
-                  Message
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleInputChange}
-                  rows={6}
-                  required
-                  className="w-full px-4 py-3 bg-emerald-900/10 border border-emerald-500/20 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-emerald-500 transition-colors resize-none"
-                  placeholder="Tell me about your project..."
-                ></textarea>
-              </div>
-
-              <button
-                type="submit"
-                disabled={formStatus === "sending"}
-                className="w-full flex items-center justify-center gap-3 px-8 py-4 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-full font-semibold hover:shadow-lg hover:shadow-emerald-500/50 transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
-              >
-                <EnvelopeIcon className="w-5 h-5" />
-                {formStatus === "sending" ? "Sending..." : "Send Message"}
-              </button>
-            </form>
-          </div>
-
-          {/* Quick Links */}
-          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center pt-8 border-t border-emerald-500/20">
-            <a
-              href="mailto:logan.panucat2@gmail.com"
-              className="flex items-center gap-2 text-emerald-400 hover:text-emerald-300 transition-colors"
-            >
-              <EnvelopeIcon className="w-5 h-5" />
-              Gmail
-            </a>
-            <a
-              href="https://github.com/Ezgaminglogan"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 text-emerald-400 hover:text-emerald-300 transition-colors"
-            >
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                <path
-                  fillRule="evenodd"
-                  d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
-                  clipRule="evenodd"
-                />
-              </svg>
-              GitHub
-            </a>
-            <a
-              href="https://www.linkedin.com/in/logan-panucat-b319562a9/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 text-emerald-400 hover:text-emerald-300 transition-colors"
-            >
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
-              </svg>
-              LinkedIn
-            </a>
-          </div>
-
-          {/* Location Map */}
-          <div className="mt-16 pt-12 border-t border-white/[0.06]">
-            <h3 className="text-2xl font-bold text-white text-center mb-2">
-              My Location
-            </h3>
-            <p className="text-gray-400 text-sm text-center mb-8">
-              Based in Carcar City, Cebu, Philippines
-            </p>
-
-            <div className="grid grid-cols-1 lg:grid-cols-5 gap-5">
-              {/* Location Info Card */}
-              <div className="lg:col-span-2 rounded-2xl border border-white/[0.06] bg-white/[0.02] p-6 flex flex-col justify-center gap-5">
-                <div className="flex items-start gap-3">
-                  <div className="w-9 h-9 shrink-0 rounded-lg bg-emerald-500/10 border border-emerald-500/15 flex items-center justify-center">
-                    <MapPinIcon className="w-4 h-4 text-emerald-400" />
-                  </div>
-                  <div>
-                    <p className="text-[11px] font-medium uppercase tracking-wider text-gray-500 mb-0.5">
-                      Street Address
-                    </p>
-                    <p className="text-sm text-gray-200 font-medium">
-                      P. Vasquez St., Poblacion I
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3">
-                  <div className="w-9 h-9 shrink-0 rounded-lg bg-emerald-500/10 border border-emerald-500/15 flex items-center justify-center">
-                    <MapPinIcon className="w-4 h-4 text-emerald-400" />
-                  </div>
-                  <div>
-                    <p className="text-[11px] font-medium uppercase tracking-wider text-gray-500 mb-0.5">
-                      City
-                    </p>
-                    <p className="text-sm text-gray-200 font-medium">
-                      Carcar City, Cebu
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3">
-                  <div className="w-9 h-9 shrink-0 rounded-lg bg-emerald-500/10 border border-emerald-500/15 flex items-center justify-center">
-                    <svg
-                      className="w-4 h-4 text-emerald-400"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={1.5}
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582m15.686 0A11.953 11.953 0 0 1 12 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0 1 21 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0 1 12 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 0 1 3 12c0-1.605.42-3.113 1.157-4.418"
-                      />
-                    </svg>
-                  </div>
-                  <div>
-                    <p className="text-[11px] font-medium uppercase tracking-wider text-gray-500 mb-0.5">
-                      Country
-                    </p>
-                    <p className="text-sm text-gray-200 font-medium">
-                      Philippines 🇵🇭
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Interactive Map */}
-              <div className="lg:col-span-3 rounded-2xl border border-white/[0.06] overflow-hidden h-64 sm:h-72 lg:h-auto lg:min-h-[280px] relative">
-                <iframe
-                  title="Logan's Location - Carcar City, Cebu"
-                  src="https://maps.google.com/maps?q=P.+Vasquez+St.,+Poblacion+I,+Carcar+City,+Cebu,+Philippines&t=&z=15&ie=UTF8&iwloc=&output=embed"
-                  className="w-full h-full border-0 invert brightness-[0.85] contrast-[1.15] hue-rotate-[180deg] saturate-[0.3]"
-                  loading="lazy"
-                  referrerPolicy="no-referrer"
-                  allowFullScreen
-                ></iframe>
-                <div className="pointer-events-none absolute inset-0 bg-emerald-900/10 mix-blend-overlay"></div>
-              </div>
+              ))}
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Footer */}
-      <footer className="py-8 px-4 border-t border-emerald-900/20 bg-black">
-        <div className="max-w-6xl mx-auto text-center">
-          <p className="text-gray-400">
-            © 2025 Portfolio. Built with Next.js and Tailwind CSS
-          </p>
-          <div className="mt-4 flex justify-center gap-6">
-            <a
-              href="https://www.linkedin.com/in/logan-panucat-b319562a9/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gray-400 hover:text-emerald-400 transition-colors"
-            >
-              LinkedIn
-            </a>
-            <a
-              href="https://github.com/Ezgaminglogan"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gray-400 hover:text-emerald-400 transition-colors"
-            >
-              GitHub
-            </a>
+        {/* Contact Section */}
+        <section id="contact" className="py-32 border-t border-zinc-900/50">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
+            <div className="md:col-span-4">
+              <h2 className="text-3xl font-bold text-white tracking-tight mb-4">Contact.</h2>
+              <p className="text-zinc-500 mb-8">Let&apos;s build something together.</p>
+              
+              <div className="flex flex-col gap-4 text-sm text-zinc-400">
+                <a href="mailto:logan.panucat2@gmail.com" className="hover:text-white transition-colors flex items-center gap-2"><EnvelopeIcon className="w-4 h-4" /> logan.panucat2@gmail.com</a>
+                <a href="https://github.com/Ezgaminglogan" target="_blank" rel="noreferrer" className="hover:text-white transition-colors flex items-center gap-2">
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd"/></svg>
+                  GitHub
+                </a>
+                <a href="https://www.linkedin.com/in/logan-panucat-b319562a9/" target="_blank" rel="noreferrer" className="hover:text-white transition-colors flex items-center gap-2">
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" /></svg>
+                  LinkedIn
+                </a>
+              </div>
+            </div>
+            
+            <div className="md:col-span-8">
+               <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+                <div className="grid md:grid-cols-2 gap-6">
+                  <input type="text" name="name" value={formData.name} onChange={handleInputChange} required placeholder="Name" className="bg-transparent border-b border-zinc-800 py-3 text-white placeholder:text-zinc-600 focus:outline-none focus:border-zinc-500 transition-colors" />
+                  <input type="email" name="email" value={formData.email} onChange={handleInputChange} required placeholder="Email" className="bg-transparent border-b border-zinc-800 py-3 text-white placeholder:text-zinc-600 focus:outline-none focus:border-zinc-500 transition-colors" />
+                </div>
+                <input type="text" name="subject" value={formData.subject} onChange={handleInputChange} required placeholder="Subject" className="bg-transparent border-b border-zinc-800 py-3 text-white placeholder:text-zinc-600 focus:outline-none focus:border-zinc-500 transition-colors" />
+                <textarea name="message" value={formData.message} onChange={handleInputChange} required rows={4} placeholder="Message" className="bg-transparent border-b border-zinc-800 py-3 text-white placeholder:text-zinc-600 focus:outline-none focus:border-zinc-500 transition-colors resize-none"></textarea>
+                
+                <button type="submit" disabled={formStatus === "sending"} className="self-start bg-white text-black px-8 py-3 rounded-full text-sm font-medium hover:bg-zinc-200 transition-colors disabled:opacity-50 mt-4">
+                  {formStatus === "sending" ? "Sending..." : "Send Message"}
+                </button>
+              </form>
+            </div>
           </div>
+        </section>
+      </main>
+
+      <footer className="py-12 border-t border-zinc-900/50 flex flex-col items-center gap-6 text-xs text-zinc-600">
+        <div className="flex gap-8 text-sm font-medium">
+          <a href="https://github.com/Ezgaminglogan" target="_blank" rel="noreferrer" className="text-zinc-500 hover:text-white transition-colors">GitHub</a>
+          <a href="https://www.linkedin.com/in/logan-panucat-b319562a9/" target="_blank" rel="noreferrer" className="text-zinc-500 hover:text-white transition-colors">LinkedIn</a>
+          <a href="#" target="_blank" rel="noreferrer" className="text-zinc-500 hover:text-white transition-colors">Facebook</a>
         </div>
+        <p>© {new Date().getFullYear()} Logan Panucat. Minimalist Redesign.</p>
       </footer>
 
-      {/* Scroll to Top Button */}
       {showScrollTop && (
-        <button
-          onClick={scrollToTop}
-          className="fixed bottom-8 right-8 p-3 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-full shadow-lg hover:shadow-emerald-500/50 transition-all duration-300 hover:scale-110 z-50"
-          aria-label="Scroll to top"
-        >
-          <ChevronUpIcon className="w-6 h-6 text-white" />
+        <button onClick={scrollToTop} className="fixed bottom-8 right-8 p-3 rounded-full bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-white transition-colors z-50">
+          <ChevronUpIcon className="w-5 h-5" />
         </button>
       )}
 
-      {/* Modal Component */}
+      {selectedProject !== null && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-sm" onClick={closeProjectModal}>
+           <div className="relative w-full max-w-2xl bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+              <button onClick={closeProjectModal} className="absolute top-4 right-4 z-10 w-8 h-8 rounded-full bg-black/50 flex items-center justify-center text-zinc-400 hover:text-white transition-colors">
+                 <XMarkIcon className="w-5 h-5" />
+              </button>
+              <div className="relative w-full aspect-[16/9] bg-zinc-900">
+                  <Image src={projects[selectedProject].image} alt={projects[selectedProject].title} fill className="object-cover" />
+              </div>
+              <div className="p-8">
+                 <div className="text-xs uppercase tracking-widest text-zinc-500 mb-2">{projects[selectedProject].type}</div>
+                 <h3 className="text-2xl font-semibold text-white mb-4">{projects[selectedProject].title}</h3>
+                 <p className="text-zinc-400 leading-relaxed mb-6">{projects[selectedProject].description}</p>
+                 <div className="flex flex-wrap gap-2">
+                    {projects[selectedProject].tech.map(t => (
+                      <span key={t} className="px-3 py-1 bg-zinc-900 text-zinc-400 text-xs rounded-full">{t}</span>
+                    ))}
+                 </div>
+              </div>
+           </div>
+        </div>
+      )}
+
       <Modal
         isOpen={modalOpen}
         onClose={() => setModalOpen(false)}
-        title={
-          formStatus === "sending"
-            ? "Sending Message"
-            : formStatus === "success"
-              ? "Message Sent Successfully!"
-              : "Error Sending Message"
-        }
-        message={
-          formStatus === "sending"
-            ? "Please wait while we send your message..."
-            : formStatus === "success"
-              ? "Thank you for reaching out! I'll get back to you as soon as possible."
-              : "There was an error sending your message. Please try again later."
-        }
-        type={
-          formStatus === "sending"
-            ? "loading"
-            : (formStatus as "success" | "error")
-        }
+        title={formStatus === "sending" ? "Sending..." : formStatus === "success" ? "Sent" : "Error"}
+        message={formStatus === "success" ? "Your message was sent successfully." : "There was an issue sending your message."}
+        type={formStatus === "sending" ? "loading" : formStatus as "success" | "error"}
       />
     </div>
   );
