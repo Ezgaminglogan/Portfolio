@@ -293,7 +293,7 @@ export default function Home() {
               </p>
               <p>
                 My knowledge spans PHP, MySQL, C#, and ASP.NET MVC. With the
-                help of AI assistance, I enjoy transforming complex requirements
+                help of AI assistance, I enjoy transforming requirements
                 into functional, clean implementations, whether it&apos;s an
                 educational system or an industrial supply platform.
               </p>
