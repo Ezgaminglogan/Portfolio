@@ -1,230 +1,143 @@
 "use client";
 
 import Image from "next/image";
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import {
-    ChevronLeftIcon,
-    ChevronRightIcon,
-    PauseIcon,
-    PlayIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
 } from "@heroicons/react/24/outline";
 
 export interface CarouselImage {
-    src: string;
-    alt: string;
+  src: string;
+  alt: string;
 }
 
 interface ImageCarouselProps {
-    images: CarouselImage[];
-    autoplayInterval?: number;
+  images: CarouselImage[];
+  autoplayInterval?: number;
 }
 
+const variants = {
+  enter: (direction: number) => ({
+    x: direction > 0 ? 1000 : -1000,
+    opacity: 0,
+  }),
+  center: {
+    zIndex: 1,
+    x: 0,
+    opacity: 1,
+  },
+  exit: (direction: number) => ({
+    zIndex: 0,
+    x: direction < 0 ? 1000 : -1000,
+    opacity: 0,
+  }),
+};
+
+/**
+ * Swipe Confidence Threshold - the amount of distance the user must swipe
+ * to trigger a slide change.
+ */
+const swipeConfidenceThreshold = 10000;
+const swipePower = (offset: number, velocity: number) => {
+  return Math.abs(offset) * velocity;
+};
+
 export default function ImageCarousel({
-    images,
-    autoplayInterval = 4000,
+  images,
+  autoplayInterval = 5000,
 }: ImageCarouselProps) {
-    const [currentIndex, setCurrentIndex] = useState(0);
-    const [isTransitioning, setIsTransitioning] = useState(false);
-    const [isPaused, setIsPaused] = useState(false);
-    const [isHovered, setIsHovered] = useState(false);
-    const carouselRef = useRef<HTMLDivElement>(null);
-    const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [[page, direction], setPage] = useState([0, 0]);
 
-    const goToSlide = useCallback(
-        (index: number) => {
-            if (isTransitioning) return;
-            setIsTransitioning(true);
-            setCurrentIndex(index);
-            // Allow the CSS transition to complete
-            setTimeout(() => setIsTransitioning(false), 600);
-        },
-        [isTransitioning]
-    );
+  // We only have a finite amount of images, but this formula
+  // lets us infinite loop as we click the next/prev buttons.
+  const imageIndex = ((page % images.length) + images.length) % images.length;
 
-    const goToNext = useCallback(() => {
-        goToSlide((currentIndex + 1) % images.length);
-    }, [currentIndex, images.length, goToSlide]);
+  const paginate = (newDirection: number) => {
+    setPage([page + newDirection, newDirection]);
+  };
 
-    const goToPrev = useCallback(() => {
-        goToSlide((currentIndex - 1 + images.length) % images.length);
-    }, [currentIndex, images.length, goToSlide]);
+  useEffect(() => {
+    const timer = setInterval(() => {
+      paginate(1);
+    }, autoplayInterval);
+    return () => clearInterval(timer);
+  }, [page, autoplayInterval]);
 
-    // Autoplay
-    useEffect(() => {
-        if (isPaused || isHovered) {
-            if (timerRef.current) clearTimeout(timerRef.current);
-            return;
-        }
+  return (
+    <div className="relative w-full aspect-video overflow-hidden group">
+      <AnimatePresence initial={false} custom={direction}>
+        <motion.div
+          key={page}
+          custom={direction}
+          variants={variants}
+          initial="enter"
+          animate="center"
+          exit="exit"
+          transition={{
+            x: { type: "spring", stiffness: 300, damping: 30 },
+            opacity: { duration: 0.2 },
+          }}
+          drag="x"
+          dragConstraints={{ left: 0, right: 0 }}
+          dragElastic={1}
+          onDragEnd={(e, { offset, velocity }) => {
+            const swipe = swipePower(offset.x, velocity.x);
 
-        timerRef.current = setTimeout(goToNext, autoplayInterval);
-
-        return () => {
-            if (timerRef.current) clearTimeout(timerRef.current);
-        };
-    }, [currentIndex, isPaused, isHovered, autoplayInterval, goToNext]);
-
-    // Keyboard navigation
-    useEffect(() => {
-        const handleKeyDown = (e: KeyboardEvent) => {
-            // Only respond when the carousel or its children are focused
-            if (!carouselRef.current?.contains(document.activeElement)) return;
-
-            switch (e.key) {
-                case "ArrowLeft":
-                    e.preventDefault();
-                    goToPrev();
-                    break;
-                case "ArrowRight":
-                    e.preventDefault();
-                    goToNext();
-                    break;
-                case " ":
-                    e.preventDefault();
-                    setIsPaused((p) => !p);
-                    break;
+            if (swipe < -swipeConfidenceThreshold) {
+              paginate(1);
+            } else if (swipe > swipeConfidenceThreshold) {
+              paginate(-1);
             }
-        };
-
-        window.addEventListener("keydown", handleKeyDown);
-        return () => window.removeEventListener("keydown", handleKeyDown);
-    }, [goToNext, goToPrev]);
-
-    const togglePause = () => setIsPaused((p) => !p);
-
-    // Determine which slides to preload (current, next, and previous)
-    const prevIndex = (currentIndex - 1 + images.length) % images.length;
-    const nextIndex = (currentIndex + 1) % images.length;
-
-    return (
-        <div
-            ref={carouselRef}
-            className="relative w-full max-w-5xl mx-auto"
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-            role="region"
-            aria-roledescription="carousel"
-            aria-label="SQLite Portable screenshots"
-            tabIndex={0}
+          }}
+          className="absolute inset-0 cursor-grab active:cursor-grabbing"
         >
-            {/* Slide Area */}
-            <div className="relative aspect-video rounded-2xl overflow-hidden border border-emerald-500/20 bg-black/50 shadow-2xl shadow-emerald-500/5">
-                {images.map((image, index) => {
-                    const isActive = index === currentIndex;
-                    const shouldRender =
-                        index === currentIndex ||
-                        index === prevIndex ||
-                        index === nextIndex;
+          <Image
+            src={images[imageIndex].src}
+            alt={images[imageIndex].alt}
+            fill
+            className="object-cover pointer-events-none"
+            priority
+          />
+          
+          {/* Subtle overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          
+          {/* Caption */}
+          <div className="absolute bottom-0 left-0 right-0 p-8 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 opacity-0 group-hover:opacity-100">
+            <p className="text-white font-medium text-lg leading-tight">
+              {images[imageIndex].alt.replace("SQLite Portable - ", "")}
+            </p>
+          </div>
+        </motion.div>
+      </AnimatePresence>
 
-                    if (!shouldRender) return null;
+      {/* Navigation - Minimalist style */}
+      <button
+        className="absolute left-4 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-black/20 backdrop-blur-md border border-white/5 text-white/50 hover:text-white hover:bg-black/40 transition-all opacity-0 group-hover:opacity-100"
+        onClick={() => paginate(-1)}
+      >
+        <ChevronLeftIcon className="w-6 h-6" />
+      </button>
+      <button
+        className="absolute right-4 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-black/20 backdrop-blur-md border border-white/5 text-white/50 hover:text-white hover:bg-black/40 transition-all opacity-0 group-hover:opacity-100"
+        onClick={() => paginate(1)}
+      >
+        <ChevronRightIcon className="w-6 h-6" />
+      </button>
 
-                    return (
-                        <div
-                            key={index}
-                            className="absolute inset-0 transition-opacity duration-[600ms] ease-in-out"
-                            style={{ opacity: isActive ? 1 : 0 }}
-                            aria-hidden={!isActive}
-                            role="group"
-                            aria-roledescription="slide"
-                            aria-label={`Slide ${index + 1} of ${images.length}: ${image.alt}`}
-                        >
-                            <Image
-                                src={image.src}
-                                alt={image.alt}
-                                fill
-                                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 85vw, 64rem"
-                                className="object-cover"
-                                priority={isActive}
-                            />
-                        </div>
-                    );
-                })}
-
-                {/* Gradient overlays for depth */}
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-black/20 via-transparent to-black/20" />
-
-                {/* Caption bar */}
-                <div className="absolute bottom-0 left-0 right-0 px-6 py-4 bg-gradient-to-t from-black/80 to-transparent">
-                    <p className="text-white font-medium text-sm sm:text-base truncate">
-                        {images[currentIndex].alt.replace("SQLite Portable - ", "")}
-                    </p>
-                    <p className="text-emerald-400/80 text-xs mt-0.5">
-                        {currentIndex + 1} / {images.length}
-                    </p>
-                </div>
-
-                {/* Navigation buttons — visible on hover/focus */}
-                <button
-                    onClick={goToPrev}
-                    disabled={isTransitioning}
-                    className="absolute left-3 top-1/2 -translate-y-1/2 p-2.5 rounded-full bg-black/40 backdrop-blur-sm border border-white/10
-                     text-white/70 hover:text-white hover:bg-black/60 hover:border-emerald-500/30
-                     opacity-0 group-hover:opacity-100 focus:opacity-100 transition-all duration-300
-                     disabled:opacity-30 disabled:cursor-not-allowed
-                     sm:opacity-0 hover:sm:opacity-100"
-                    style={{ opacity: isHovered ? 1 : undefined }}
-                    aria-label="Previous slide"
-                >
-                    <ChevronLeftIcon className="w-6 h-6" />
-                </button>
-
-                <button
-                    onClick={goToNext}
-                    disabled={isTransitioning}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 p-2.5 rounded-full bg-black/40 backdrop-blur-sm border border-white/10
-                     text-white/70 hover:text-white hover:bg-black/60 hover:border-emerald-500/30
-                     opacity-0 group-hover:opacity-100 focus:opacity-100 transition-all duration-300
-                     disabled:opacity-30 disabled:cursor-not-allowed
-                     sm:opacity-0 hover:sm:opacity-100"
-                    style={{ opacity: isHovered ? 1 : undefined }}
-                    aria-label="Next slide"
-                >
-                    <ChevronRightIcon className="w-6 h-6" />
-                </button>
-            </div>
-
-            {/* Controls bar: dots + pause/play */}
-            <div className="mt-6 flex flex-col items-center gap-4">
-                {/* Dot indicators */}
-                <div className="flex items-center gap-1.5 flex-wrap justify-center max-w-md" role="tablist" aria-label="Slide indicators">
-                    {images.map((image, index) => (
-                        <button
-                            key={index}
-                            onClick={() => goToSlide(index)}
-                            disabled={isTransitioning}
-                            role="tab"
-                            aria-selected={index === currentIndex}
-                            aria-label={`Go to slide ${index + 1}: ${image.alt.replace("SQLite Portable - ", "")}`}
-                            className={`rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:ring-offset-1 focus:ring-offset-black
-                ${index === currentIndex
-                                    ? "w-6 h-2 bg-emerald-400 shadow-lg shadow-emerald-500/50"
-                                    : "w-2 h-2 bg-white/20 hover:bg-white/40"
-                                }`}
-                        />
-                    ))}
-                </div>
-
-                {/* Pause/Play toggle */}
-                <button
-                    onClick={togglePause}
-                    className="flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-medium
-                     bg-emerald-500/10 border border-emerald-500/20 text-emerald-400
-                     hover:bg-emerald-500/20 hover:border-emerald-500/40 transition-all duration-300"
-                    aria-label={isPaused ? "Resume autoplay" : "Pause autoplay"}
-                >
-                    {isPaused ? (
-                        <>
-                            <PlayIcon className="w-3.5 h-3.5" />
-                            <span>Resume</span>
-                        </>
-                    ) : (
-                        <>
-                            <PauseIcon className="w-3.5 h-3.5" />
-                            <span>Pause</span>
-                        </>
-                    )}
-                </button>
-            </div>
-        </div>
-    );
+      {/* Progress indicators - Minimalist dashes */}
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 flex gap-2">
+        {images.map((_, i) => (
+          <div
+            key={i}
+            className={`h-1 transition-all duration-300 rounded-full ${
+              i === imageIndex ? "w-8 bg-white" : "w-2 bg-white/20"
+            }`}
+          />
+        ))}
+      </div>
+    </div>
+  );
 }

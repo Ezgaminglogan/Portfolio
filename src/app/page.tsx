@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import {
   EnvelopeIcon,
   Bars3Icon,
@@ -214,12 +215,20 @@ export default function Home() {
 
       <main className="max-w-6xl mx-auto px-6">
         {/* Hero Section */}
-        <section
+        <motion.section
           id="home"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
           className="min-h-screen flex flex-col justify-center pt-20 pb-32"
         >
           <div className="flex flex-col-reverse lg:flex-row items-center justify-between gap-12 lg:gap-16">
-            <div className="max-w-2xl text-center lg:text-left flex flex-col items-center lg:items-start">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="max-w-2xl text-center lg:text-left flex flex-col items-center lg:items-start"
+            >
               <span className="text-zinc-500 font-medium tracking-wide text-sm mb-4 block">
                 AVAILABLE FOR WORK
               </span>
@@ -244,8 +253,13 @@ export default function Home() {
                   Get in Touch
                 </a>
               </div>
-            </div>
-            <div className="relative w-48 h-48 sm:w-56 sm:h-56 lg:w-72 lg:h-72 flex-shrink-0">
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              className="relative w-48 h-48 sm:w-56 sm:h-56 lg:w-72 lg:h-72 flex-shrink-0"
+            >
               <Image
                 src="/image/profile.jpg"
                 alt="Logan Panucat"
@@ -253,12 +267,18 @@ export default function Home() {
                 className="object-cover rounded-2xl transition-all duration-700"
                 priority
               />
-            </div>
+            </motion.div>
           </div>
-        </section>
+        </motion.section>
 
         {/* About Section */}
-        <section id="about" className="py-32 border-t border-zinc-900/50">
+        <motion.section
+          id="about"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="py-32 border-t border-zinc-900/50"
+        >
           <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
             <div className="md:col-span-4">
               <h2 className="text-3xl font-bold text-white tracking-tight">
@@ -309,10 +329,15 @@ export default function Home() {
               </a>
             </div>
           </div>
-        </section>
+        </motion.section>
 
-        {/* Skills Section */}
-        <section id="skills" className="py-32 border-t border-zinc-900/50">
+        <motion.section
+          id="skills"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="py-32 border-t border-zinc-900/50"
+        >
           <div className="mb-12">
             <h2 className="text-3xl font-bold text-white tracking-tight mb-4">
               Skills.
@@ -323,9 +348,13 @@ export default function Home() {
           </div>
           <div className="grid sm:grid-cols-2 gap-6">
             {skills.map((skill, index) => (
-              <div
+              <motion.div
                 key={index}
-                className="p-6 rounded-2xl border border-zinc-900 bg-zinc-950/50 hover:border-zinc-800 transition-colors"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.5, delay: index * 0.1 }}
+                whileHover={{ y: -5 }}
+                className="p-6 rounded-2xl border border-zinc-900 bg-zinc-950/50 hover:border-zinc-800 transition-colors cursor-default"
               >
                 <skill.icon className="w-6 h-6 text-zinc-400 mb-4" />
                 <h3 className="text-white font-medium mb-1">{skill.name}</h3>
@@ -340,13 +369,18 @@ export default function Home() {
                     </span>
                   ))}
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
-        </section>
+        </motion.section>
 
-        {/* Projects Section */}
-        <section id="projects" className="py-32 border-t border-zinc-900/50">
+        <motion.section
+          id="projects"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="py-32 border-t border-zinc-900/50"
+        >
           <div className="mb-20">
             <h2 className="text-3xl font-bold text-white tracking-tight mb-4">
               Selected Work.
@@ -357,8 +391,11 @@ export default function Home() {
           </div>
           <div className="grid md:grid-cols-2 gap-12">
             {projects.map((project, index) => (
-              <div
+              <motion.div
                 key={index}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.6, delay: index * 0.1 }}
                 onClick={() => openProjectModal(index)}
                 className="group cursor-pointer flex flex-col gap-6"
               >
@@ -387,25 +424,32 @@ export default function Home() {
                     ))}
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
-        </section>
+        </motion.section>
 
-        {/* SQLite Portable Section */}
-        <section
+        <motion.section
           id="sqlite-portable"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
           className="py-32 border-t border-zinc-900/50"
         >
           <div className="max-w-3xl mx-auto text-center mb-16">
-            <div className="w-16 h-16 mx-auto mb-6 relative">
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              whileInView={{ scale: 1, opacity: 1 }}
+                  transition={{ duration: 0.6 }}
+              className="w-16 h-16 mx-auto mb-6 relative"
+            >
               <Image
                 src="/image/sqlite-portables/SQLite-Portable.png"
                 alt="SQLite Portable"
                 fill
                 className="object-contain"
               />
-            </div>
+            </motion.div>
             <h2 className="text-3xl font-bold text-white tracking-tight mb-4">
               SQLite Portable.
             </h2>
@@ -422,13 +466,23 @@ export default function Home() {
               Download Now
             </a>
           </div>
-          <div className="rounded-2xl overflow-hidden border border-zinc-900">
-            <ImageCarousel images={sqliteImages} autoplayInterval={4000} />
-          </div>
-        </section>
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 1 }}
+            className="overflow-hidden bg-zinc-950 shadow-2xl"
+          >
+            <ImageCarousel images={sqliteImages} autoplayInterval={5000} />
+          </motion.div>
+        </motion.section>
 
-        {/* Experience Section */}
-        <section id="experience" className="py-32 border-t border-zinc-900/50">
+        <motion.section
+          id="experience"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="py-32 border-t border-zinc-900/50"
+        >
           <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
             <div className="md:col-span-4">
               <h2 className="text-3xl font-bold text-white tracking-tight">
@@ -437,8 +491,11 @@ export default function Home() {
             </div>
             <div className="md:col-span-8 flex flex-col gap-12">
               {experiences.map((exp, i) => (
-                <div
+                <motion.div
                   key={i}
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                          transition={{ duration: 0.6, delay: i * 0.1 }}
                   className="flex flex-col sm:flex-row gap-4 sm:gap-12 group"
                 >
                   <div className="sm:w-32 flex-shrink-0 text-zinc-500 text-sm pt-1">
@@ -453,15 +510,17 @@ export default function Home() {
                       {exp.description}
                     </p>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
           </div>
-        </section>
+        </motion.section>
 
-        {/* Certificates Section */}
-        <section
+        <motion.section
           id="certificates"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
           className="py-32 border-t border-zinc-900/50"
         >
           <div className="mb-20">
@@ -474,8 +533,11 @@ export default function Home() {
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {certificates.map((cert, index) => (
-              <div
+              <motion.div
                 key={index}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.5, delay: index * 0.1 }}
                 onClick={() => openCertificateModal(index)}
                 className="group flex flex-col gap-6 cursor-pointer"
               >
@@ -507,13 +569,18 @@ export default function Home() {
                     ))}
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
-        </section>
+        </motion.section>
 
-        {/* Contact Section */}
-        <section id="contact" className="py-32 border-t border-zinc-900/50">
+        <motion.section
+          id="contact"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="py-32 border-t border-zinc-900/50"
+        >
           <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
             <div className="md:col-span-4">
               <h2 className="text-3xl font-bold text-white tracking-tight mb-4">
@@ -567,7 +634,12 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="md:col-span-8">
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.8 }}
+              className="md:col-span-8"
+            >
               <form onSubmit={handleSubmit} className="flex flex-col gap-6">
                 <div className="grid md:grid-cols-2 gap-6">
                   <input
@@ -616,9 +688,9 @@ export default function Home() {
                   {formStatus === "sending" ? "Sending..." : "Send Message"}
                 </button>
               </form>
-            </div>
+            </motion.div>
           </div>
-        </section>
+        </motion.section>
       </main>
 
       <footer className="py-12 border-t border-zinc-900/50 flex flex-col items-center gap-6 text-xs text-zinc-600">
