@@ -11,7 +11,13 @@ import {
 } from "@heroicons/react/24/outline";
 import Modal from "@/components/Modal";
 import ImageCarousel from "@/components/ImageCarousel";
-import { skills, projects, experiences, sqliteImages } from "./data";
+import {
+  skills,
+  projects,
+  experiences,
+  sqliteImages,
+  certificates,
+} from "./data";
 
 export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -24,6 +30,9 @@ export default function Home() {
     message: "",
   });
   const [selectedProject, setSelectedProject] = useState<number | null>(null);
+  const [selectedCertificate, setSelectedCertificate] = useState<number | null>(
+    null,
+  );
   const [formStatus, setFormStatus] = useState<
     "idle" | "sending" | "success" | "error"
   >("idle");
@@ -39,9 +48,22 @@ export default function Home() {
     document.body.style.overflow = "";
   };
 
+  // Certificate modal handlers
+  const openCertificateModal = (index: number) => {
+    setSelectedCertificate(index);
+    document.body.style.overflow = "hidden";
+  };
+  const closeCertificateModal = () => {
+    setSelectedCertificate(null);
+    document.body.style.overflow = "";
+  };
+
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === "Escape") closeProjectModal();
+      if (e.key === "Escape") {
+        closeProjectModal();
+        closeCertificateModal();
+      }
     };
     window.addEventListener("keydown", handleEscape);
     return () => window.removeEventListener("keydown", handleEscape);
@@ -136,6 +158,7 @@ export default function Home() {
               "Skills",
               "Projects",
               "Experience",
+              "Certificates",
               "Contact",
             ].map((item) => (
               <a
@@ -173,6 +196,7 @@ export default function Home() {
               "Skills",
               "Projects",
               "Experience",
+              "Certificates",
               "Contact",
             ].map((item) => (
               <a
@@ -248,7 +272,7 @@ export default function Home() {
                 software solutions.
               </p>
               <p>
-                My expertise spans PHP, MySQL, C#, and ASP.NET MVC. With the
+                My knowledge spans PHP, MySQL, C#, and ASP.NET MVC. With the
                 help of AI assistance, I enjoy transforming complex requirements
                 into functional, clean implementations, whether it&apos;s an
                 educational system or an industrial supply platform.
@@ -289,37 +313,35 @@ export default function Home() {
 
         {/* Skills Section */}
         <section id="skills" className="py-32 border-t border-zinc-900/50">
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
-            <div className="md:col-span-4">
-              <h2 className="text-3xl font-bold text-white tracking-tight mb-4">
-                Skills.
-              </h2>
-              <p className="text-zinc-500">
-                Core technologies and tools I work with.
-              </p>
-            </div>
-            <div className="md:col-span-8 grid sm:grid-cols-2 gap-6">
-              {skills.map((skill, index) => (
-                <div
-                  key={index}
-                  className="p-6 rounded-2xl border border-zinc-900 bg-zinc-950/50 hover:border-zinc-800 transition-colors"
-                >
-                  <skill.icon className="w-6 h-6 text-zinc-400 mb-4" />
-                  <h3 className="text-white font-medium mb-1">{skill.name}</h3>
-                  <p className="text-sm text-zinc-500 mb-6">{skill.subtitle}</p>
-                  <div className="flex flex-wrap gap-2">
-                    {skill.technologies.map((tech) => (
-                      <span
-                        key={tech}
-                        className="px-2.5 py-1 text-xs rounded-full bg-zinc-900 font-medium text-zinc-400"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
+          <div className="mb-12">
+            <h2 className="text-3xl font-bold text-white tracking-tight mb-4">
+              Skills.
+            </h2>
+            <p className="text-zinc-500">
+              Frontend, Frameworks, Backend, and Libraries / Tools knowledge.
+            </p>
+          </div>
+          <div className="grid sm:grid-cols-2 gap-6">
+            {skills.map((skill, index) => (
+              <div
+                key={index}
+                className="p-6 rounded-2xl border border-zinc-900 bg-zinc-950/50 hover:border-zinc-800 transition-colors"
+              >
+                <skill.icon className="w-6 h-6 text-zinc-400 mb-4" />
+                <h3 className="text-white font-medium mb-1">{skill.name}</h3>
+                <p className="text-sm text-zinc-500 mb-6">{skill.subtitle}</p>
+                <div className="flex flex-wrap gap-2">
+                  {skill.technologies.map((tech) => (
+                    <span
+                      key={tech}
+                      className="px-2.5 py-1 text-xs rounded-full bg-zinc-900 font-medium text-zinc-400"
+                    >
+                      {tech}
+                    </span>
+                  ))}
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
         </section>
 
@@ -434,6 +456,59 @@ export default function Home() {
                 </div>
               ))}
             </div>
+          </div>
+        </section>
+
+        {/* Certificates Section */}
+        <section
+          id="certificates"
+          className="py-32 border-t border-zinc-900/50"
+        >
+          <div className="mb-20">
+            <h2 className="text-3xl font-bold text-white tracking-tight mb-4">
+              Certifications.
+            </h2>
+            <p className="text-zinc-500">
+              Professional credentials and continuous learning achievements.
+            </p>
+          </div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {certificates.map((cert, index) => (
+              <div
+                key={index}
+                onClick={() => openCertificateModal(index)}
+                className="group flex flex-col gap-6 cursor-pointer"
+              >
+                <div className="relative w-full aspect-[4/3] overflow-hidden rounded-2xl bg-zinc-900 border border-zinc-800/50">
+                  <Image
+                    src={cert.image}
+                    alt={cert.alt || cert.title}
+                    fill
+                    className="object-cover transition-all duration-700 ease-in-out group-hover:scale-105"
+                  />
+                </div>
+                <div>
+                  <div className="flex items-center gap-3 mb-3">
+                    <span className="text-xs uppercase tracking-wider text-zinc-500">
+                      {cert.category}
+                    </span>
+                  </div>
+                  <h3 className="text-xl font-medium text-white mb-2 group-hover:text-zinc-300 transition-colors">
+                    {cert.title}
+                  </h3>
+                  <div className="flex flex-wrap gap-2 mt-4">
+                    {cert.tags.map((t) => (
+                      <span
+                        key={t}
+                        className="px-2.5 py-1 bg-zinc-900 font-medium text-zinc-400 text-xs rounded-full"
+                      >
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </section>
 
@@ -628,6 +703,47 @@ export default function Home() {
                   </span>
                 ))}
               </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {selectedCertificate !== null && (
+        <div
+          className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+          onClick={closeCertificateModal}
+        >
+          <div
+            className="relative w-full max-w-5xl bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden flex flex-col shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={closeCertificateModal}
+              className="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-black/50 flex items-center justify-center text-zinc-400 hover:text-white transition-colors border border-white/10"
+            >
+              <XMarkIcon className="w-5 h-5" />
+            </button>
+            <div className="relative w-full h-[60vh] sm:h-[75vh] bg-zinc-900/50 flex-shrink-0 flex items-center justify-center p-4">
+              <div className="relative w-full h-full max-w-4xl max-h-full">
+                <Image
+                  src={certificates[selectedCertificate].image}
+                  alt={
+                    certificates[selectedCertificate].alt ||
+                    certificates[selectedCertificate].title
+                  }
+                  fill
+                  quality={100}
+                  className="object-contain"
+                />
+              </div>
+            </div>
+            <div className="p-6 border-t border-zinc-900 bg-zinc-950/90 backdrop-blur">
+              <h3 className="text-xl font-semibold text-white mb-2">
+                {certificates[selectedCertificate].title}
+              </h3>
+              <p className="text-zinc-400 text-sm">
+                {certificates[selectedCertificate].description}
+              </p>
             </div>
           </div>
         </div>

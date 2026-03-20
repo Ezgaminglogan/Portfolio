@@ -1,8 +1,8 @@
 import {
   CodeBracketIcon,
-  CpuChipIcon,
   ServerIcon,
-  RocketLaunchIcon,
+  Squares2X2Icon,
+  WrenchScrewdriverIcon,
 } from "@heroicons/react/24/outline";
 
 export const TYPEWRITER_WORDS = [
@@ -38,23 +38,34 @@ export const TECH_ICONS: Record<string, string> = {
 
 export const skills = [
   {
-    name: ".NET Developer",
-    icon: CpuChipIcon,
-    subtitle: "Enterprise & Desktop Algorithms",
-    technologies: [
-      "C#",
-      "ASP.NET MVC",
-      ".NET Framework",
-      "Entity Framework",
-      "Blazor",
-      "SQL Server",
-    ],
+    name: "Frontend",
+    icon: CodeBracketIcon,
+    subtitle: "User Interface & Experience",
+    technologies: ["React", "HTML5", "CSS3", "JavaScript"],
   },
   {
-    name: "Full Stack Developer",
-    icon: CodeBracketIcon,
-    subtitle: "Modern Web & APIs",
-    technologies: ["Next.js", "TanStack", "PHP", "MySQL", "TailwindCSS"],
+    name: "Frameworks",
+    icon: Squares2X2Icon,
+    subtitle: "Architectures & Systems",
+    technologies: ["Next.js", "ASP.NET MVC", ".NET Framework"],
+  },
+  {
+    name: "Backend",
+    icon: ServerIcon,
+    subtitle: "Server Logic & Data",
+    technologies: ["PHP", "C#", "MySQL", "SQL Server"],
+  },
+  {
+    name: "Libraries / Tools",
+    icon: WrenchScrewdriverIcon,
+    subtitle: "Utilities & Integrations",
+    technologies: [
+      "TypeScript",
+      "TailwindCSS",
+      "TanStack Start",
+      "Prisma ORM",
+      "Git",
+    ],
   },
 ];
 
@@ -160,7 +171,7 @@ export const experiences = [
     company: "Self-Learning & Academic Projects",
     period: "2023 - Present",
     description:
-      "Building expertise in PHP, MySQL, .NET, and modern web frameworks through hands-on projects and continuous learning.",
+      "Building knowledge in PHP, MySQL, .NET, and modern web frameworks through hands-on projects and continuous learning.",
   },
 ];
 

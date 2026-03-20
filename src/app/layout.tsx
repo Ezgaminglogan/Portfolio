@@ -107,9 +107,9 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: "/portfolio.png",
-    shortcut: "/portfolio.png",
-    apple: "/portfolio.png",
+    icon: "/grad-pic.jpg",
+    shortcut: "/grad-pic.jpg",
+    apple: "/grad-pic.jpg",
   },
   category: "portfolio",
   verification: {
