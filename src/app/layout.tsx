@@ -72,11 +72,11 @@ export const metadata: Metadata = {
     siteName: "Logan M. Panucat — Portfolio",
     images: [
       {
-        url: "/portfolio.png",
+        url: "/grad-pic.jpg",
         width: 1200,
         height: 630,
         alt: "Logan M. Panucat — Full Stack Developer Portfolio",
-        type: "image/png",
+        type: "image/jpeg",
       },
       {
         url: "/image/profile.jpg",
@@ -92,7 +92,7 @@ export const metadata: Metadata = {
     title: "Logan M. Panucat | Full Stack Developer",
     description:
       "Full Stack Developer from Cebu, Philippines. PHP, C#, React, Next.js, TypeScript. View my portfolio and projects.",
-    images: ["/portfolio.png"],
+    images: ["/grad-pic.jpg"],
     creator: "@ezgaminglogan",
   },
   robots: {
