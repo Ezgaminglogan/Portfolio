@@ -71,6 +71,25 @@ export const skills = [
 
 export const projects = [
   {
+    title: "MJE Enterprises (AirZen) System",
+    description:
+      "A full-stack premium service management and booking ecosystem combining a seamless public booking journey with a powerful admin suite for analytics, inventory, backups, and customer operations. Built with React 19 and TanStack Start, it features OTP-verified bookings, real-time WebSocket updates, and production-ready data integrity workflows.",
+    tech: [
+      "React 19",
+      "TanStack Start",
+      "Prisma ORM",
+      "Neon PostgreSQL",
+      "Bun Runtime",
+      "TailwindCSS",
+      "Framer Motion",
+      "WebSocket",
+    ],
+    gradient: "from-emerald-600 to-sky-600",
+    image: "/image/mjeenterprises.png",
+    liveUrl: "https://mjeenterprises.vercel.app/",
+    type: "Enterprise Service Management Platform",
+  },
+  {
     title: "LibraSys - Library Management System",
     description:
       "A comprehensive library management system developed for Cebu Technological University - Naga Extension Campus. It streamlines student borrowing records, book inventory tracking with ISBN support, and provides real-time analytics using TanStack and Prisma ORM.",

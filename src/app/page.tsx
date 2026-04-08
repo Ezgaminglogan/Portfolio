@@ -423,6 +423,17 @@ export default function Home() {
                       </span>
                     ))}
                   </div>
+                  {project.liveUrl && (
+                    <a
+                      href={project.liveUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      onClick={(e) => e.stopPropagation()}
+                      className="inline-block mt-4 text-sm text-white border-b border-zinc-700 hover:border-zinc-400 transition-colors"
+                    >
+                      Live Site
+                    </a>
+                  )}
                 </div>
               </motion.div>
             ))}
@@ -765,6 +776,16 @@ export default function Home() {
               <p className="text-zinc-400 leading-relaxed mb-6">
                 {projects[selectedProject].description}
               </p>
+              {projects[selectedProject].liveUrl && (
+                <a
+                  href={projects[selectedProject].liveUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-block mb-6 text-sm text-white border-b border-zinc-700 hover:border-zinc-400 transition-colors"
+                >
+                  Visit Live Site
+                </a>
+              )}
               <div className="flex flex-wrap gap-2">
                 {projects[selectedProject].tech.map((t) => (
                   <span
