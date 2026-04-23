@@ -3,6 +3,9 @@ import {
   ServerIcon,
   Squares2X2Icon,
   WrenchScrewdriverIcon,
+  CpuChipIcon,
+  ShieldCheckIcon,
+  RocketLaunchIcon,
 } from "@heroicons/react/24/outline";
 
 export const TYPEWRITER_WORDS = [
@@ -66,6 +69,51 @@ export const skills = [
       "Prisma ORM",
       "Git",
     ],
+  },
+];
+
+export const professionalSkills = [
+  {
+    icon: CpuChipIcon,
+    title: "Systems Administration",
+    description:
+      "Proficient in the installation, configuration, and deployment of new operating systems. Skilled in managing system resources, user access control, and maintaining optimal performance across diverse environments.",
+    highlights: [
+      "OS Installation & Configuration",
+      "User Access Control",
+      "System Monitoring",
+      "Network Setup",
+    ],
+    accent: "from-blue-500/20 to-cyan-500/10",
+    dot: "bg-blue-400",
+  },
+  {
+    icon: ShieldCheckIcon,
+    title: "IT Support & Security",
+    description:
+      "Expert in cross-platform troubleshooting, virus/malware removal, and lock-issue recovery for mobile and desktop devices. Committed to maintaining secure and reliable computing environments.",
+    highlights: [
+      "Malware Removal",
+      "Cross-Platform Troubleshooting",
+      "Device Recovery",
+      "Security Hardening",
+    ],
+    accent: "from-emerald-500/20 to-teal-500/10",
+    dot: "bg-emerald-400",
+  },
+  {
+    icon: RocketLaunchIcon,
+    title: "Software Engineering",
+    description:
+      "Accelerate software delivery and improve code efficiency by developing full-stack applications with advanced AI-assisted tools. Passionate about clean architecture and building scalable digital solutions.",
+    highlights: [
+      "Full-Stack Development",
+      "AI-Assisted Coding",
+      "Clean Architecture",
+      "Agile Workflow",
+    ],
+    accent: "from-violet-500/20 to-purple-500/10",
+    dot: "bg-violet-400",
   },
 ];
 

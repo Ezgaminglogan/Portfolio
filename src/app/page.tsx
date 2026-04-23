@@ -14,6 +14,7 @@ import Modal from "@/components/Modal";
 import ImageCarousel from "@/components/ImageCarousel";
 import {
   skills,
+  professionalSkills,
   projects,
   experiences,
   sqliteImages,
@@ -346,7 +347,9 @@ export default function Home() {
               Frontend, Frameworks, Backend, and Libraries / Tools knowledge.
             </p>
           </div>
-          <div className="grid sm:grid-cols-2 gap-6">
+
+          {/* Tech skill cards */}
+          <div className="grid sm:grid-cols-2 gap-6 mb-20">
             {skills.map((skill, index) => (
               <motion.div
                 key={index}
@@ -366,6 +369,59 @@ export default function Home() {
                       className="px-2.5 py-1 text-xs rounded-full bg-zinc-900 font-medium text-zinc-400"
                     >
                       {tech}
+                    </span>
+                  ))}
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Professional competencies */}
+          <div className="mb-8">
+            <h3 className="text-xl font-semibold text-white tracking-tight mb-2">
+              Professional Competencies
+            </h3>
+            <p className="text-zinc-500 text-sm">
+              Core disciplines beyond code — systems, security, and engineering practices.
+            </p>
+          </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {professionalSkills.map((ps, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.12 }}
+                whileHover={{ y: -6, scale: 1.01 }}
+                className={`relative overflow-hidden p-6 rounded-2xl border border-zinc-800/60 bg-gradient-to-br ${ps.accent} backdrop-blur-sm hover:border-zinc-700 transition-all duration-300 cursor-default group`}
+              >
+                {/* Glow blob */}
+                <div className="absolute -top-6 -right-6 w-24 h-24 rounded-full bg-white/5 blur-2xl group-hover:bg-white/10 transition-all duration-500" />
+
+                {/* Icon */}
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 rounded-xl bg-zinc-900/70 border border-zinc-800 flex items-center justify-center flex-shrink-0">
+                    <ps.icon className="w-5 h-5 text-zinc-300" />
+                  </div>
+                  <h4 className="text-white font-semibold text-sm leading-tight">
+                    {ps.title}
+                  </h4>
+                </div>
+
+                {/* Description */}
+                <p className="text-zinc-400 text-xs leading-relaxed mb-5">
+                  {ps.description}
+                </p>
+
+                {/* Highlights */}
+                <div className="flex flex-wrap gap-1.5">
+                  {ps.highlights.map((h) => (
+                    <span
+                      key={h}
+                      className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-zinc-900/70 border border-zinc-800/80 text-zinc-400 text-xs font-medium"
+                    >
+                      <span className={`w-1.5 h-1.5 rounded-full ${ps.dot} flex-shrink-0`} />
+                      {h}
                     </span>
                   ))}
                 </div>
