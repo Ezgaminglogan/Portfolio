@@ -84,8 +84,8 @@ export const professionalSkills = [
       "System Monitoring",
       "Network Setup",
     ],
-    accent: "from-blue-500/20 to-cyan-500/10",
-    dot: "bg-blue-400",
+    accent: "from-white/10 to-transparent",
+    dot: "bg-white",
   },
   {
     icon: ShieldCheckIcon,
@@ -98,8 +98,8 @@ export const professionalSkills = [
       "Device Recovery",
       "Security Hardening",
     ],
-    accent: "from-emerald-500/20 to-teal-500/10",
-    dot: "bg-emerald-400",
+    accent: "from-white/10 to-transparent",
+    dot: "bg-white",
   },
   {
     icon: RocketLaunchIcon,
@@ -112,8 +112,8 @@ export const professionalSkills = [
       "Clean Architecture",
       "Agile Workflow",
     ],
-    accent: "from-violet-500/20 to-purple-500/10",
-    dot: "bg-violet-400",
+    accent: "from-white/10 to-transparent",
+    dot: "bg-white",
   },
 ];
 

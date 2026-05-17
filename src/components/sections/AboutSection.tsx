@@ -1,0 +1,95 @@
+"use client";
+import { motion } from "framer-motion";
+import { ArrowDownTrayIcon } from "@heroicons/react/24/outline";
+import { Skeleton } from "@/components/ui/Skeleton";
+
+export default function AboutSection({ isLoading }: { isLoading?: boolean }) {
+  if (isLoading) {
+    return (
+      <section className="py-32 border-t border-white/5">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
+          <div className="md:col-span-4">
+            <Skeleton className="h-10 w-48 mb-4 bg-white/10" />
+          </div>
+          <div className="md:col-span-8">
+            <Skeleton className="h-4 w-full mb-3 bg-white/5" />
+            <Skeleton className="h-4 w-11/12 mb-3 bg-white/5" />
+            <Skeleton className="h-4 w-4/5 mb-8 bg-white/5" />
+
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 pt-6 border-t border-white/5">
+              {[...Array(4)].map((_, i) => (
+                <div key={i}>
+                  <Skeleton className="h-8 w-16 mb-2 bg-white/10" />
+                  <Skeleton className="h-3 w-24 bg-white/5" />
+                </div>
+              ))}
+            </div>
+            
+            <Skeleton className="h-6 w-40 mt-8 bg-white/10" />
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  return (
+    <motion.section
+      id="about"
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8 }}
+      className="py-32 border-t border-white/5"
+    >
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
+        <div className="md:col-span-4">
+          <h2 className="text-4xl font-extrabold text-white tracking-tighter">
+            About Me.
+          </h2>
+        </div>
+        <div className="md:col-span-8 flex flex-col gap-10 text-zinc-400 text-lg leading-relaxed">
+          <p>
+            I&apos;m a 4th-year IT student at Cebu Technological University
+            — Naga Extension Campus, passionate about building practical
+            software solutions.
+          </p>
+          <p>
+            My knowledge spans PHP, MySQL, C#, and ASP.NET MVC. With the
+            help of AI assistance, I enjoy transforming requirements
+            into functional, clean implementations, whether it&apos;s an
+            educational system or an industrial supply platform.
+          </p>
+
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 pt-6 border-t border-white/5">
+            <div>
+              <div className="text-3xl font-bold text-white mb-1">4th</div>
+              <div className="text-xs text-zinc-500 uppercase tracking-wider">
+                Year Student
+              </div>
+            </div>
+            <div>
+              <div className="text-3xl font-bold text-white mb-1">3+</div>
+              <div className="text-xs text-zinc-500 uppercase tracking-wider">
+                Major Projects
+              </div>
+            </div>
+            <div>
+              <div className="text-3xl font-bold text-white mb-1">Cebu</div>
+              <div className="text-xs text-zinc-500 uppercase tracking-wider">
+                Based In
+              </div>
+            </div>
+          </div>
+
+          <a
+            href="/CV_Portfolio/Resume.pdf"
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-2 text-sm text-white hover:text-zinc-300 w-fit border-b border-white/20 pb-1 mt-4 transition-colors group"
+          >
+            <ArrowDownTrayIcon className="w-4 h-4 group-hover:-translate-y-1 transition-transform" /> Download Resume
+          </a>
+        </div>
+      </div>
+    </motion.section>
+  );
+}
