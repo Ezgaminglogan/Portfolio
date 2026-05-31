@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { EnvelopeIcon } from "@heroicons/react/24/outline";
 import Modal from "@/components/Modal";
 import { Skeleton } from "@/components/ui/Skeleton";
+import { useParallax, useChildParallax } from "@/hooks/useParallax";
 
 export default function ContactSection({ isLoading }: { isLoading?: boolean }) {
   const [formData, setFormData] = useState({
@@ -16,6 +17,22 @@ export default function ContactSection({ isLoading }: { isLoading?: boolean }) {
     "idle" | "sending" | "success" | "error"
   >("idle");
   const [modalOpen, setModalOpen] = useState(false);
+  const statusMessage =
+    formStatus === "sending"
+      ? "Sending message."
+      : formStatus === "success"
+        ? "Your message was sent successfully."
+        : formStatus === "error"
+          ? "There was an issue sending your message."
+          : "";
+
+  const { ref, y, opacity, scrollYProgress } = useParallax({
+    speed: 0.1,
+    fadeIn: true,
+  });
+
+  const leftY = useChildParallax(scrollYProgress, 0.06);
+  const rightY = useChildParallax(scrollYProgress, -0.04);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -55,7 +72,7 @@ export default function ContactSection({ isLoading }: { isLoading?: boolean }) {
 
   if (isLoading) {
     return (
-      <section className="py-32 border-t border-white/5">
+      <section ref={ref} className="py-32 border-t border-white/5">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
           <div className="md:col-span-4">
             <Skeleton className="h-10 w-32 mb-4 bg-white/10" />
@@ -85,14 +102,16 @@ export default function ContactSection({ isLoading }: { isLoading?: boolean }) {
   return (
     <>
       <motion.section
+        ref={ref}
         id="contact"
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
+        style={{ y, opacity }}
         className="py-32 border-t border-white/5"
       >
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
-          <div className="md:col-span-4">
+          <motion.div className="md:col-span-4" style={{ y: leftY }}>
             <h2 className="text-4xl font-extrabold text-white tracking-tighter mb-4">
               Contact.
             </h2>
@@ -134,15 +153,23 @@ export default function ContactSection({ isLoading }: { isLoading?: boolean }) {
                 LinkedIn
               </a>
             </div>
-          </div>
+          </motion.div>
 
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
+            style={{ y: rightY }}
             className="md:col-span-8"
           >
-            <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+            <p className="sr-only" role="status" aria-live="polite">
+              {statusMessage}
+            </p>
+            <form
+              onSubmit={handleSubmit}
+              className="flex flex-col gap-6"
+              aria-busy={formStatus === "sending"}
+            >
               <div className="grid md:grid-cols-2 gap-6">
                 <input
                   type="text"
@@ -151,6 +178,7 @@ export default function ContactSection({ isLoading }: { isLoading?: boolean }) {
                   onChange={handleInputChange}
                   required
                   placeholder="Name"
+                  autoComplete="name"
                   className="bg-transparent border-b border-white/10 py-3 text-white placeholder:text-zinc-600 focus:outline-none focus:border-white transition-colors"
                 />
                 <input
@@ -160,6 +188,7 @@ export default function ContactSection({ isLoading }: { isLoading?: boolean }) {
                   onChange={handleInputChange}
                   required
                   placeholder="Email"
+                  autoComplete="email"
                   className="bg-transparent border-b border-white/10 py-3 text-white placeholder:text-zinc-600 focus:outline-none focus:border-white transition-colors"
                 />
               </div>
@@ -170,6 +199,7 @@ export default function ContactSection({ isLoading }: { isLoading?: boolean }) {
                 onChange={handleInputChange}
                 required
                 placeholder="Subject"
+                autoComplete="off"
                 className="bg-transparent border-b border-white/10 py-3 text-white placeholder:text-zinc-600 focus:outline-none focus:border-white transition-colors"
               />
               <textarea
@@ -179,6 +209,7 @@ export default function ContactSection({ isLoading }: { isLoading?: boolean }) {
                 required
                 rows={4}
                 placeholder="Message"
+                autoComplete="off"
                 className="bg-transparent border-b border-white/10 py-3 text-white placeholder:text-zinc-600 focus:outline-none focus:border-white transition-colors resize-none"
               ></textarea>
 

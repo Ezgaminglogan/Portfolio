@@ -4,11 +4,21 @@ import Image from "next/image";
 import ImageCarousel from "@/components/ImageCarousel";
 import { sqliteImages } from "@/app/data";
 import { Skeleton } from "@/components/ui/Skeleton";
+import { useParallax, useChildParallax } from "@/hooks/useParallax";
 
 export default function SqlitePortableSection({ isLoading }: { isLoading?: boolean }) {
+  const { ref, y, opacity, scale, scrollYProgress } = useParallax({
+    speed: 0.1,
+    fadeIn: true,
+    scale: true,
+    scaleRange: [0.95, 1],
+  });
+
+  const iconY = useChildParallax(scrollYProgress, 0.12);
+
   if (isLoading) {
     return (
-      <section className="py-32 border-t border-white/5">
+      <section ref={ref} className="py-32 border-t border-white/5">
         <div className="max-w-3xl mx-auto text-center mb-16 flex flex-col items-center">
           <Skeleton className="w-16 h-16 mb-6 rounded-full bg-white/10" />
           <Skeleton className="h-10 w-64 mb-4 bg-white/10" />
@@ -22,10 +32,12 @@ export default function SqlitePortableSection({ isLoading }: { isLoading?: boole
 
   return (
     <motion.section
+      ref={ref}
       id="sqlite-portable"
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8 }}
+      style={{ y, opacity, scale }}
       className="py-32 border-t border-white/5"
     >
       <div className="max-w-3xl mx-auto text-center mb-16">
@@ -33,12 +45,14 @@ export default function SqlitePortableSection({ isLoading }: { isLoading?: boole
           initial={{ scale: 0.8, opacity: 0 }}
           whileInView={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.6 }}
+          style={{ y: iconY }}
           className="w-16 h-16 mx-auto mb-6 relative"
         >
           <Image
             src="/image/sqlite-portables/SQLite-Portable.png"
             alt="SQLite Portable"
             fill
+            sizes="64px"
             className="object-contain"
           />
         </motion.div>

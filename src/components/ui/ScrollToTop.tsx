@@ -22,7 +22,9 @@ export default function ScrollToTop() {
 
   return (
     <button
+      type="button"
       onClick={scrollToTop}
+      aria-label="Scroll to top"
       className="fixed bottom-8 right-8 p-3 rounded-full bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-white transition-colors z-50"
     >
       <ChevronUpIcon className="w-5 h-5" />

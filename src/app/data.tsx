@@ -227,18 +227,18 @@ export const experiences = [
       "Currently in 4th year, focusing on web development, database management, and software engineering. Completed multiple AI-assisted capstone projects addressing real-world problems.",
   },
   {
-    title: "Capstone Project Developer",
-    company: "CTU Naga - Academic Project",
-    period: "2025",
-    description:
-      "Led AI-assisted development of capstone projects including Supplify (a cross-platform supply chain solution). Demonstrated full-stack development capabilities and real-world problem-solving skills.",
-  },
-  {
     title: "Web Development Student",
     company: "Self-Learning & Academic Projects",
     period: "2023 - Present",
     description:
       "Building knowledge in PHP, MySQL, .NET, and modern web frameworks through hands-on projects and continuous learning.",
+  },
+  {
+    title: "Capstone Project Developer",
+    company: "CTU Naga - Academic Project",
+    period: "2025",
+    description:
+      "Led AI-assisted development of capstone projects including Supplify (a cross-platform supply chain solution). Demonstrated full-stack development capabilities and real-world problem-solving skills.",
   },
 ];
 

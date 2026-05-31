@@ -97,8 +97,8 @@ export default function ImageCarousel({
             src={images[imageIndex].src}
             alt={images[imageIndex].alt}
             fill
+            sizes="100vw"
             className="object-cover pointer-events-none"
-            priority
           />
           
           {/* Subtle overlay */}
@@ -115,14 +115,18 @@ export default function ImageCarousel({
 
       {/* Navigation - Minimalist style */}
       <button
+        type="button"
         className="absolute left-4 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-black/20 backdrop-blur-md border border-white/5 text-white/50 hover:text-white hover:bg-black/40 transition-all opacity-0 group-hover:opacity-100"
         onClick={() => paginate(-1)}
+        aria-label="Previous image"
       >
         <ChevronLeftIcon className="w-6 h-6" />
       </button>
       <button
+        type="button"
         className="absolute right-4 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-black/20 backdrop-blur-md border border-white/5 text-white/50 hover:text-white hover:bg-black/40 transition-all opacity-0 group-hover:opacity-100"
         onClick={() => paginate(1)}
+        aria-label="Next image"
       >
         <ChevronRightIcon className="w-6 h-6" />
       </button>

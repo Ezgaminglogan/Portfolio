@@ -18,6 +18,8 @@ export default function Modal({
   message,
   type,
 }: ModalProps) {
+  const titleId = "modal-title";
+  const messageId = "modal-message";
   useEffect(() => {
     if (isOpen) {
       // Prevent body scroll when modal is open
@@ -111,7 +113,13 @@ export default function Modal({
       ></div>
 
       {/* Modal Content */}
-      <div className="relative w-full max-w-md transform transition-all duration-300 scale-100">
+      <div
+        className="relative w-full max-w-md transform transition-all duration-300 scale-100"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={titleId}
+        aria-describedby={messageId}
+      >
         <div className="relative bg-gradient-to-br from-gray-900 to-black border border-gray-800 rounded-2xl shadow-2xl overflow-hidden">
           {/* Gradient Border Effect */}
           <div
@@ -128,6 +136,8 @@ export default function Modal({
             {type !== "loading" && (
               <button
                 onClick={onClose}
+                type="button"
+                aria-label="Close dialog"
                 className="absolute top-4 right-4 p-2 text-gray-400 hover:text-white transition-colors duration-200"
               >
                 <XMarkIcon className="w-5 h-5" />
@@ -143,13 +153,17 @@ export default function Modal({
 
             {/* Title */}
             <h3
+              id={titleId}
               className={`text-2xl font-bold text-center mb-3 ${styles.titleColor}`}
             >
               {title}
             </h3>
 
             {/* Message */}
-            <p className={`text-center ${styles.messageColor} leading-relaxed`}>
+            <p
+              id={messageId}
+              className={`text-center ${styles.messageColor} leading-relaxed`}
+            >
               {message}
             </p>
 
@@ -157,6 +171,7 @@ export default function Modal({
             {type !== "loading" && (
               <button
                 onClick={onClose}
+                type="button"
                 className={`mt-6 w-full px-6 py-3 rounded-full font-semibold transition-all duration-300 hover:scale-105 ${
                   type === "error"
                     ? "bg-red-500/10 border border-red-500/30 text-red-400 hover:bg-red-500/20"
