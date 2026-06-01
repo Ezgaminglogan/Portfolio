@@ -2,6 +2,14 @@ import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 
 export async function POST(request: Request) {
+  if (!process.env.EMAIL_USER || !process.env.EMAIL_PASSWORD) {
+    console.error("Missing EMAIL_USER or EMAIL_PASSWORD env vars");
+    return NextResponse.json(
+      { error: "Server misconfigured" },
+      { status: 500 }
+    );
+  }
+
   try {
     const { name, email, subject, message } = await request.json();
 

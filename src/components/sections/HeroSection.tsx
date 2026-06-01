@@ -6,10 +6,9 @@ import {
   CodeBracketIcon,
   MapPinIcon,
 } from "@heroicons/react/24/outline";
-import { Skeleton } from "@/components/ui/Skeleton";
 import { useParallax, useChildParallax } from "@/hooks/useParallax";
 
-export default function HeroSection({ isLoading }: { isLoading?: boolean }) {
+export default function HeroSection() {
   const { ref, y, opacity, scale, scrollYProgress } = useParallax({
     speed: 0.3,
     fadeIn: false,
@@ -22,35 +21,6 @@ export default function HeroSection({ isLoading }: { isLoading?: boolean }) {
   const textY = useChildParallax(scrollYProgress, 0.15);
   // Image drifts down — opposite direction for depth
   const imageY = useChildParallax(scrollYProgress, -0.2);
-
-  if (isLoading) {
-    return (
-      <section ref={ref} className="min-h-screen flex flex-col justify-center pt-20 pb-32">
-        <div className="flex flex-col-reverse lg:flex-row items-center justify-between gap-12 lg:gap-16">
-          <div className="max-w-2xl w-full text-center lg:text-left flex flex-col items-center lg:items-start z-10">
-            <Skeleton className="h-4 w-32 mb-6 bg-white/5" />
-            <Skeleton className="h-16 sm:h-24 w-full max-w-md mb-4 bg-white/10" />
-            <Skeleton className="h-16 sm:h-24 w-3/4 max-w-sm mb-8 bg-white/10" />
-            <Skeleton className="h-5 w-full mb-3 bg-white/5" />
-            <Skeleton className="h-5 w-11/12 mb-3 bg-white/5" />
-            <Skeleton className="h-5 w-4/5 mb-6 bg-white/5" />
-            <div className="flex flex-wrap justify-center lg:justify-start gap-3 mb-10">
-              <Skeleton className="h-8 w-28 rounded-full bg-white/5" />
-              <Skeleton className="h-8 w-40 rounded-full bg-white/5" />
-              <Skeleton className="h-8 w-32 rounded-full bg-white/5" />
-            </div>
-            <div className="flex gap-4">
-              <Skeleton className="h-14 w-36 rounded-full bg-white/10" />
-              <Skeleton className="h-14 w-36 rounded-full bg-white/5" />
-            </div>
-          </div>
-          <div className="relative w-48 h-48 sm:w-56 sm:h-56 lg:w-72 lg:h-72 flex-shrink-0">
-            <Skeleton className="absolute inset-0 rounded-2xl bg-white/10" />
-          </div>
-        </div>
-      </section>
-    );
-  }
 
   return (
     <motion.section

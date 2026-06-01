@@ -8,13 +8,6 @@ import {
   RocketLaunchIcon,
 } from "@heroicons/react/24/outline";
 
-export const TYPEWRITER_WORDS = [
-  "A Full Stack Developer",
-  "A Vibe Coder",
-  "An UI/UX Enthusiast",
-  "A Problem Solver",
-];
-
 export const TECH_ICONS: Record<string, string> = {
   PHP: "php",
   MySQL: "mysql",

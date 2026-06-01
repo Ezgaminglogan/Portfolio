@@ -1,5 +1,5 @@
 export default function StructuredData() {
-  const SITE_URL = "https://portfolio-665c.vercel.app";
+  const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://portfolio-665c.vercel.app";
 
   const personSchema = {
     "@context": "https://schema.org",

@@ -4,10 +4,9 @@ import { motion, MotionValue } from "framer-motion";
 import Image from "next/image";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { certificates } from "@/app/data";
-import { Skeleton } from "@/components/ui/Skeleton";
 import { useParallax, useChildParallax } from "@/hooks/useParallax";
 
-export default function CertificatesSection({ isLoading }: { isLoading?: boolean }) {
+export default function CertificatesSection() {
   const [selectedCertificate, setSelectedCertificate] = useState<number | null>(
     null
   );
@@ -34,32 +33,6 @@ export default function CertificatesSection({ isLoading }: { isLoading?: boolean
     window.addEventListener("keydown", handleEscape);
     return () => window.removeEventListener("keydown", handleEscape);
   }, []);
-
-  if (isLoading) {
-    return (
-      <section ref={ref} className="py-32 border-t border-white/5">
-        <div className="mb-20">
-          <Skeleton className="h-10 w-64 mb-4 bg-white/10" />
-          <Skeleton className="h-4 w-80 bg-white/5" />
-        </div>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {[...Array(3)].map((_, i) => (
-            <div key={i} className="flex flex-col gap-6">
-              <Skeleton className="w-full aspect-[4/3] rounded-2xl bg-white/10" />
-              <div>
-                <Skeleton className="h-3 w-20 mb-3 bg-white/5" />
-                <Skeleton className="h-6 w-48 mb-3 bg-white/10" />
-                <div className="flex flex-wrap gap-2 mt-4">
-                  <Skeleton className="h-5 w-16 rounded-full bg-white/5" />
-                  <Skeleton className="h-5 w-20 rounded-full bg-white/5" />
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-    );
-  }
 
   return (
     <>

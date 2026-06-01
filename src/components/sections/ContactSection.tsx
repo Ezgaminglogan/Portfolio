@@ -3,10 +3,9 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { EnvelopeIcon } from "@heroicons/react/24/outline";
 import Modal from "@/components/Modal";
-import { Skeleton } from "@/components/ui/Skeleton";
 import { useParallax, useChildParallax } from "@/hooks/useParallax";
 
-export default function ContactSection({ isLoading }: { isLoading?: boolean }) {
+export default function ContactSection() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -69,35 +68,6 @@ export default function ContactSection({ isLoading }: { isLoading?: boolean }) {
       setTimeout(() => setFormStatus("idle"), 3000);
     }
   };
-
-  if (isLoading) {
-    return (
-      <section ref={ref} className="py-32 border-t border-white/5">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
-          <div className="md:col-span-4">
-            <Skeleton className="h-10 w-32 mb-4 bg-white/10" />
-            <Skeleton className="h-4 w-48 mb-8 bg-white/5" />
-            <div className="flex flex-col gap-4">
-              <Skeleton className="h-4 w-40 bg-white/5" />
-              <Skeleton className="h-4 w-32 bg-white/5" />
-              <Skeleton className="h-4 w-36 bg-white/5" />
-            </div>
-          </div>
-          <div className="md:col-span-8">
-            <div className="flex flex-col gap-6">
-              <div className="grid md:grid-cols-2 gap-6">
-                <Skeleton className="h-12 w-full bg-white/5" />
-                <Skeleton className="h-12 w-full bg-white/5" />
-              </div>
-              <Skeleton className="h-12 w-full bg-white/5" />
-              <Skeleton className="h-32 w-full bg-white/5" />
-              <Skeleton className="h-14 w-40 rounded-full bg-white/10 mt-4" />
-            </div>
-          </div>
-        </div>
-      </section>
-    );
-  }
 
   return (
     <>

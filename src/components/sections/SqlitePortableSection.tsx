@@ -3,10 +3,9 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import ImageCarousel from "@/components/ImageCarousel";
 import { sqliteImages } from "@/app/data";
-import { Skeleton } from "@/components/ui/Skeleton";
 import { useParallax, useChildParallax } from "@/hooks/useParallax";
 
-export default function SqlitePortableSection({ isLoading }: { isLoading?: boolean }) {
+export default function SqlitePortableSection() {
   const { ref, y, opacity, scale, scrollYProgress } = useParallax({
     speed: 0.1,
     fadeIn: true,
@@ -15,20 +14,6 @@ export default function SqlitePortableSection({ isLoading }: { isLoading?: boole
   });
 
   const iconY = useChildParallax(scrollYProgress, 0.12);
-
-  if (isLoading) {
-    return (
-      <section ref={ref} className="py-32 border-t border-white/5">
-        <div className="max-w-3xl mx-auto text-center mb-16 flex flex-col items-center">
-          <Skeleton className="w-16 h-16 mb-6 rounded-full bg-white/10" />
-          <Skeleton className="h-10 w-64 mb-4 bg-white/10" />
-          <Skeleton className="h-5 w-full max-w-lg mb-2 bg-white/5" />
-          <Skeleton className="h-5 w-4/5 max-w-md mb-8 bg-white/5" />
-          <Skeleton className="h-14 w-40 rounded-full bg-white/10" />
-        </div>
-      </section>
-    );
-  }
 
   return (
     <motion.section

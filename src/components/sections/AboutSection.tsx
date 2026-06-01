@@ -1,10 +1,9 @@
 "use client";
 import { motion } from "framer-motion";
 import { ArrowDownTrayIcon } from "@heroicons/react/24/outline";
-import { Skeleton } from "@/components/ui/Skeleton";
 import { useParallax, useChildParallax } from "@/hooks/useParallax";
 
-export default function AboutSection({ isLoading }: { isLoading?: boolean }) {
+export default function AboutSection() {
   const { ref, y, opacity, scrollYProgress } = useParallax({
     speed: 0.15,
     fadeIn: true,
@@ -14,34 +13,6 @@ export default function AboutSection({ isLoading }: { isLoading?: boolean }) {
   const leftY = useChildParallax(scrollYProgress, 0.08);
   // Right column moves a bit faster
   const rightY = useChildParallax(scrollYProgress, -0.05);
-
-  if (isLoading) {
-    return (
-      <section ref={ref} className="py-32 border-t border-white/5">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
-          <div className="md:col-span-4">
-            <Skeleton className="h-10 w-48 mb-4 bg-white/10" />
-          </div>
-          <div className="md:col-span-8">
-            <Skeleton className="h-4 w-full mb-3 bg-white/5" />
-            <Skeleton className="h-4 w-11/12 mb-3 bg-white/5" />
-            <Skeleton className="h-4 w-4/5 mb-8 bg-white/5" />
-
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 pt-6 border-t border-white/5">
-              {[...Array(4)].map((_, i) => (
-                <div key={i}>
-                  <Skeleton className="h-8 w-16 mb-2 bg-white/10" />
-                  <Skeleton className="h-3 w-24 bg-white/5" />
-                </div>
-              ))}
-            </div>
-            
-            <Skeleton className="h-6 w-40 mt-8 bg-white/10" />
-          </div>
-        </div>
-      </section>
-    );
-  }
 
   return (
     <motion.section

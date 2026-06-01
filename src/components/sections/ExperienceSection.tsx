@@ -2,29 +2,9 @@
 import { useRef } from "react";
 import { motion, useInView, useTransform } from "framer-motion";
 import { experiences } from "@/app/data";
-import { Skeleton } from "@/components/ui/Skeleton";
 import { useParallax, useChildParallax } from "@/hooks/useParallax";
 
-export function ExperienceSkeleton() {
-  return (
-    <div className="flex flex-col sm:flex-row gap-4 sm:gap-12 w-full">
-      <div className="sm:w-32 flex-shrink-0 pt-1">
-        <Skeleton className="h-4 w-20 bg-white/5" />
-      </div>
-      <div className="flex-1 w-full">
-        <Skeleton className="h-6 w-48 mb-3 bg-white/10" />
-        <Skeleton className="h-4 w-32 mb-6 bg-white/5" />
-        <div className="space-y-3">
-          <Skeleton className="h-4 w-full bg-white/5" />
-          <Skeleton className="h-4 w-11/12 bg-white/5" />
-          <Skeleton className="h-4 w-4/5 bg-white/5" />
-        </div>
-      </div>
-    </div>
-  );
-}
-
-export default function ExperienceSection({ isLoading }: { isLoading?: boolean }) {
+export default function ExperienceSection() {
   const { ref, y, opacity, scrollYProgress } = useParallax({
     speed: 0.12,
     fadeIn: true,
@@ -61,22 +41,9 @@ export default function ExperienceSection({ isLoading }: { isLoading?: boolean }
               style={{ scaleY: lineProgress }}
             />
             <div className="flex flex-col gap-12">
-              {isLoading ? (
-                Array.from({ length: 3 }).map((_, i) => (
-                  <motion.div
-                    key={`skeleton-${i}`}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                  >
-                    <ExperienceSkeleton />
-                  </motion.div>
-                ))
-              ) : (
-                experiences.map((exp, i) => (
-                  <TimelineItem key={i} exp={exp} index={i} />
-                ))
-              )}
+              {experiences.map((exp, i) => (
+                <TimelineItem key={i} exp={exp} index={i} />
+              ))}
             </div>
           </div>
         </motion.div>

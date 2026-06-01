@@ -4,10 +4,9 @@ import { motion, MotionValue } from "framer-motion";
 import Image from "next/image";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { projects } from "@/app/data";
-import { Skeleton } from "@/components/ui/Skeleton";
 import { useParallax, useChildParallax } from "@/hooks/useParallax";
 
-export default function ProjectsSection({ isLoading }: { isLoading?: boolean }) {
+export default function ProjectsSection() {
   const [selectedProject, setSelectedProject] = useState<number | null>(null);
 
   const { ref, y, opacity, scrollYProgress } = useParallax({
@@ -32,33 +31,6 @@ export default function ProjectsSection({ isLoading }: { isLoading?: boolean }) 
     window.addEventListener("keydown", handleEscape);
     return () => window.removeEventListener("keydown", handleEscape);
   }, []);
-
-  if (isLoading) {
-    return (
-      <section ref={ref} className="py-32 border-t border-white/5">
-        <div className="mb-20">
-          <Skeleton className="h-10 w-48 mb-4 bg-white/10" />
-          <Skeleton className="h-4 w-64 bg-white/5" />
-        </div>
-        <div className="grid md:grid-cols-2 gap-12">
-          {[...Array(4)].map((_, i) => (
-            <div key={i} className="flex flex-col gap-6">
-              <Skeleton className="w-full aspect-[4/3] rounded-2xl bg-white/10" />
-              <div>
-                <Skeleton className="h-3 w-24 mb-3 bg-white/5" />
-                <Skeleton className="h-6 w-48 mb-3 bg-white/10" />
-                <div className="flex flex-wrap gap-2">
-                  <Skeleton className="h-4 w-16 bg-white/5" />
-                  <Skeleton className="h-4 w-20 bg-white/5" />
-                  <Skeleton className="h-4 w-16 bg-white/5" />
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-    );
-  }
 
   return (
     <>
