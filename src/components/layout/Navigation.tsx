@@ -1,10 +1,11 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 
 export default function Navigation() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
+  const buttonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const sections = [
@@ -35,6 +36,18 @@ export default function Navigation() {
     handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    if (!mobileMenuOpen) return;
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setMobileMenuOpen(false);
+        buttonRef.current?.focus();
+      }
+    };
+    window.addEventListener("keydown", handleEscape);
+    return () => window.removeEventListener("keydown", handleEscape);
+  }, [mobileMenuOpen]);
 
   const navItems = [
     { label: "Home", id: "home" },
@@ -70,6 +83,7 @@ export default function Navigation() {
           ))}
         </div>
         <button
+          ref={buttonRef}
           type="button"
           className="lg:hidden p-2 -mr-2 text-zinc-400 hover:text-white"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -89,7 +103,11 @@ export default function Navigation() {
             <a
               key={item.id}
               href={`#${item.id}`}
-              className="text-zinc-400 hover:text-white"
+              className={`transition-colors py-2 ${
+                activeSection === item.id
+                  ? "text-white"
+                  : "text-zinc-500 hover:text-zinc-300"
+              }`}
               onClick={() => setMobileMenuOpen(false)}
             >
               {item.label}

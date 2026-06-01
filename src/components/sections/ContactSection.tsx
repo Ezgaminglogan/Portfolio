@@ -16,6 +16,10 @@ export default function ContactSection() {
     "idle" | "sending" | "success" | "error"
   >("idle");
   const [modalOpen, setModalOpen] = useState(false);
+  const [emailError, setEmailError] = useState("");
+
+  const isValidEmail = (email: string) =>
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   const statusMessage =
     formStatus === "sending"
       ? "Sending message."
@@ -37,10 +41,15 @@ export default function ContactSection() {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    if (e.target.name === "email") setEmailError("");
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!isValidEmail(formData.email)) {
+      setEmailError("Please enter a valid email address");
+      return;
+    }
     setFormStatus("sending");
     setModalOpen(true);
 
@@ -151,16 +160,27 @@ export default function ContactSection() {
                   autoComplete="name"
                   className="bg-transparent border-b border-white/10 py-3 text-white placeholder:text-zinc-600 focus:outline-none focus:border-white transition-colors"
                 />
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  required
-                  placeholder="Email"
-                  autoComplete="email"
-                  className="bg-transparent border-b border-white/10 py-3 text-white placeholder:text-zinc-600 focus:outline-none focus:border-white transition-colors"
-                />
+                <div>
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    required
+                    placeholder="Email"
+                    autoComplete="email"
+                    aria-invalid={!!emailError}
+                    aria-describedby={emailError ? "email-error" : undefined}
+                    className={`bg-transparent border-b py-3 text-white placeholder:text-zinc-600 focus:outline-none transition-colors w-full ${
+                      emailError ? "border-red-500/50 focus:border-red-500" : "border-white/10 focus:border-white"
+                    }`}
+                  />
+                  {emailError && (
+                    <p id="email-error" role="alert" className="text-red-400 text-xs mt-2">
+                      {emailError}
+                    </p>
+                  )}
+                </div>
               </div>
               <input
                 type="text"

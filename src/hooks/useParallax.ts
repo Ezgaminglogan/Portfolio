@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect, useState } from "react";
+import { useRef } from "react";
 import {
   useScroll,
   useTransform,
@@ -8,6 +8,7 @@ import {
   useReducedMotion,
   MotionValue,
 } from "framer-motion";
+import { useViewport } from "@/context/ViewportContext";
 
 interface ParallaxOptions {
   /** How far the element moves relative to scroll. Positive = moves down, negative = moves up. Default: 0.2 */
@@ -48,14 +49,7 @@ export function useParallax(options: ParallaxOptions = {}): ParallaxReturn {
 
   const ref = useRef<HTMLDivElement>(null);
   const prefersReducedMotion = useReducedMotion();
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
+  const { isMobile } = useViewport();
 
   const disabled = prefersReducedMotion || isMobile;
 
@@ -99,14 +93,7 @@ export function useChildParallax(
   speed: number = 0.1
 ) {
   const prefersReducedMotion = useReducedMotion();
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
+  const { isMobile } = useViewport();
 
   const disabled = prefersReducedMotion || isMobile;
   const range = disabled ? 0 : speed * 100;

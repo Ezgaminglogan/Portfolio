@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import StructuredData from "@/components/StructuredData";
 import SmoothScroll from "@/components/SmoothScroll";
+import { ViewportProvider } from "@/context/ViewportContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -131,7 +132,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <SmoothScroll>{children}</SmoothScroll>
+        <ViewportProvider><SmoothScroll>{children}</SmoothScroll></ViewportProvider>
       </body>
     </html>
   );
