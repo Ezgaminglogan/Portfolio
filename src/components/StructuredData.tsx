@@ -113,24 +113,27 @@ export default function StructuredData() {
     description:
       "Portfolio showcasing projects, skills, and experience of Logan M. Panucat, a Full Stack Developer specializing in PHP, C#, React, Next.js, and TypeScript.",
     dateCreated: "2025-01-01",
-    dateModified: new Date().toISOString().split("T")[0],
+    dateModified: "2026-06-13",
   };
 
   return (
     <>
       <script
+        id="jsonld-person"
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(personSchema),
         }}
       />
       <script
+        id="jsonld-website"
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(websiteSchema),
         }}
       />
       <script
+        id="jsonld-profile"
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(profilePageSchema),

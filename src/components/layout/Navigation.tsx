@@ -11,6 +11,7 @@ export default function Navigation() {
     const sections = [
       "home",
       "about",
+      "services",
       "skills",
       "projects",
       "sqlite-portable",
@@ -52,6 +53,7 @@ export default function Navigation() {
   const navItems = [
     { label: "Home", id: "home" },
     { label: "About", id: "about" },
+    { label: "Services", id: "services" },
     { label: "Skills", id: "skills" },
     { label: "Projects", id: "projects" },
     { label: "SQLite Portable", id: "sqlite-portable" },
@@ -61,31 +63,38 @@ export default function Navigation() {
   ];
 
   return (
-    <nav className="fixed top-0 w-full bg-emerald-950/40 backdrop-blur-xl z-50 border-b border-emerald-500/20 transition-all duration-300 shadow-[0_1px_20px_rgba(52,211,153,0.06)]">
-      <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-        <span className="text-lg font-semibold tracking-tight text-emerald-400 hover:text-emerald-300 transition-colors" style={{ textShadow: '0 0 12px rgba(52,211,153,0.4)' }}>
-          Logan
-        </span>
-        <div className="hidden lg:flex gap-8 text-sm font-medium">
+    <nav className="fixed top-0 w-full bg-black/60 backdrop-blur-lg z-50 border-b border-emerald-500/[0.08] transition-all duration-300 shadow-[0_4px_30px_rgba(0,0,0,0.5)]">
+      <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+        <a href="#home" className="flex items-center gap-2.5 group focus:outline-none">
+          <span className="relative flex h-2 w-2">
+            <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-400/40 animate-ping" />
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
+          </span>
+          <span className="text-xs font-extrabold uppercase tracking-widest text-white group-hover:text-emerald-400 transition-colors">
+            Logan M. Panucat
+          </span>
+        </a>
+
+        <div className="hidden lg:flex items-center gap-4 text-xs font-semibold uppercase tracking-wider">
           {navItems.map((item) => (
             <a
               key={item.id}
               href={`#${item.id}`}
               aria-current={activeSection === item.id ? "page" : undefined}
-              className={`transition-colors py-2 ${
-                activeSection === item.id
-                  ? "text-emerald-400"
-                  : "text-zinc-500 hover:text-emerald-300"
-              }`}
+              className={`transition-all duration-300 py-1.5 px-3 rounded-full border ${activeSection === item.id
+                ? "text-emerald-400 bg-emerald-500/[0.04] border-emerald-500/25 shadow-[0_0_12px_rgba(16,185,129,0.1)]"
+                : "text-zinc-500 border-transparent hover:text-emerald-300"
+                }`}
             >
               {item.label}
             </a>
           ))}
         </div>
+
         <button
           ref={buttonRef}
           type="button"
-          className="lg:hidden p-2 -mr-2 text-zinc-400 hover:text-emerald-400"
+          className="lg:hidden p-2 -mr-2 text-zinc-400 hover:text-emerald-400 focus:outline-none"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
           aria-expanded={mobileMenuOpen}
@@ -97,17 +106,16 @@ export default function Navigation() {
       {mobileMenuOpen && (
         <div
           id="mobile-menu"
-          className="lg:hidden px-6 py-4 bg-emerald-950/60 backdrop-blur-xl border-t border-emerald-500/20 flex flex-col gap-4 text-sm"
+          className="lg:hidden px-6 py-4 bg-black/90 backdrop-blur-xl border-t border-emerald-500/10 flex flex-col gap-4 text-xs uppercase tracking-wider font-semibold"
         >
           {navItems.map((item) => (
             <a
               key={item.id}
               href={`#${item.id}`}
-              className={`transition-colors py-2 ${
-                activeSection === item.id
-                  ? "text-emerald-400"
-                  : "text-zinc-500 hover:text-emerald-300"
-              }`}
+              className={`transition-all duration-300 py-2 ${activeSection === item.id
+                ? "text-emerald-400"
+                : "text-zinc-500 hover:text-emerald-300"
+                }`}
               onClick={() => setMobileMenuOpen(false)}
             >
               {item.label}

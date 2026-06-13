@@ -128,7 +128,6 @@ export const projects = [
     gradient: "from-emerald-600 to-sky-600",
     image: "/image/mjeenterprises.png",
     liveUrl: "https://mjeenterprises.vercel.app/",
-    githubUrl: "https://github.com/Ezgaminglogan/mje-enterprises",
     type: "Enterprise Service Management Platform",
     codeHighlight: {
       filename: "booking-transaction.ts",
@@ -170,7 +169,6 @@ export async function createVerifiedBooking(data: BookingInput) {
     tech: ["TanStack", "Prisma", "MySQL", "TailwindCSS"],
     gradient: "from-indigo-600 to-purple-600",
     image: "/image/LibraSys.png",
-    githubUrl: "https://github.com/Ezgaminglogan/LibraSys",
     type: "CTU Naga Extension Campus Project",
     codeHighlight: {
       filename: "useBookBorrow.ts",
@@ -219,7 +217,6 @@ export function useBookBorrow() {
     tech: ["TanStack", "Prisma", "JWT", "TailwindCSS"],
     gradient: "from-blue-600 to-cyan-500",
     image: "/image/IMS-CTU.png",
-    githubUrl: "https://github.com/Ezgaminglogan/IMS-CTU",
     type: "CTU Naga Extension Campus Project"
   },
 
@@ -230,7 +227,6 @@ export function useBookBorrow() {
     tech: ["Blazor Framework", "TailwindCSS", "C#", ".NET"],
     gradient: "from-blue-500 to-purple-600",
     image: "/image/Landing.png",
-    githubUrl: "https://github.com/Ezgaminglogan/Supplify",
     type: "Cross-Platform Capstone Project"
   },
 
@@ -241,7 +237,6 @@ export function useBookBorrow() {
     tech: ["PHP", "TailwindCSS", "PHPMailer", "MySQL"],
     gradient: "from-teal-500 to-cyan-600",
     image: "/image/Project 3.png",
-    githubUrl: "https://github.com/Ezgaminglogan/Moms-Food-Delicacies",
     type: "School Project",
     codeHighlight: {
       filename: "verify_otp.php",
@@ -290,7 +285,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     tech: ["Visual Basic WFA", "MySQL"],
     gradient: "from-purple-500 to-indigo-600",
     image: "/image/School-Project.png",
-    githubUrl: "https://github.com/Ezgaminglogan",
     type: "School Project"
   },
   {
@@ -307,7 +301,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     ],
     gradient: "from-red-500 to-orange-600",
     image: "/image/Ticket-Support.png",
-    githubUrl: "https://github.com/Ezgaminglogan/Ticket-Support-System",
     type: "School Project",
     codeHighlight: {
       filename: "SupportHub.cs",
@@ -358,7 +351,6 @@ public class SupportHub : Hub
     ],
     gradient: "from-yellow-500 to-amber-600",
     image: "/image/Luto-System.png",
-    githubUrl: "https://github.com/Ezgaminglogan",
     type: "School Project"
   },
 ];

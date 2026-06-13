@@ -20,7 +20,7 @@ export default function Home() {
       <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(0,0,0,0.6)_100%)] pointer-events-none -z-10" />
       <Navigation />
 
-      <main className="max-w-6xl mx-auto px-6 relative">
+      <main className="max-w-7xl mx-auto px-6 relative">
         <HeroSection />
         <AboutSection />
         <ServicesSection />

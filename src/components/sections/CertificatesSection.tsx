@@ -1,23 +1,23 @@
 "use client";
 import { useState, useEffect } from "react";
-import { motion, MotionValue } from "framer-motion";
+import { motion } from "framer-motion";
 import Image from "next/image";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { certificates } from "@/app/data";
-import { useParallax, useChildParallax } from "@/hooks/useParallax";
+import { useParallax } from "@/hooks/useParallax";
 
 export default function CertificatesSection() {
   const [selectedCertificate, setSelectedCertificate] = useState<number | null>(
     null
   );
 
-  const { ref, y, opacity, scrollYProgress } = useParallax({
-    speed: 0.1,
+  const { ref, y, opacity } = useParallax({
+    speed: 0.08,
     fadeIn: true,
   });
 
   const openCertificateModal = (index: number) => {
-    setSelectedCertificate(index);
+    setSelectedCertificate(index % certificates.length);
     document.body.style.overflow = "hidden";
   };
 
@@ -34,6 +34,9 @@ export default function CertificatesSection() {
     return () => window.removeEventListener("keydown", handleEscape);
   }, []);
 
+  // Duplicate certificates array for seamless marquee wrapping
+  const marqueeCertificates = [...certificates, ...certificates];
+
   return (
     <>
       <motion.section
@@ -43,7 +46,7 @@ export default function CertificatesSection() {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
         style={{ y, opacity }}
-        className="py-32 border-t border-emerald-500/10"
+        className="py-32 border-t border-emerald-500/10 relative overflow-hidden"
       >
         <div className="mb-20">
           <h2 className="text-4xl font-extrabold text-white tracking-tighter mb-4">
@@ -53,26 +56,70 @@ export default function CertificatesSection() {
             Professional credentials and continuous learning achievements.
           </p>
         </div>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {certificates.map((cert, index) => (
-            <CertificateCard
-              key={index}
-              cert={cert}
-              index={index}
-              scrollYProgress={scrollYProgress}
-              onOpen={() => openCertificateModal(index)}
-            />
-          ))}
+
+        {/* Infinite Carousel Container */}
+        <div className="relative w-full overflow-hidden select-none -mx-6 px-6">
+          {/* Side Fade Gradients for premium blending */}
+          <div className="absolute inset-y-0 left-0 w-16 md:w-32 bg-gradient-to-r from-black via-black/40 to-transparent z-10 pointer-events-none" />
+          <div className="absolute inset-y-0 right-0 w-16 md:w-32 bg-gradient-to-l from-black via-black/40 to-transparent z-10 pointer-events-none" />
+
+          {/* Marquee Track */}
+          <div className="animate-marquee gap-8 py-6">
+            {marqueeCertificates.map((cert, index) => (
+              <div
+                key={index}
+                onClick={() => openCertificateModal(index)}
+                className="w-[280px] sm:w-[350px] md:w-[400px] flex-shrink-0 group cursor-pointer bg-emerald-950/[0.02] hover:bg-emerald-500/[0.04] border border-emerald-500/10 hover:border-emerald-500/25 rounded-2xl p-5 transition-all duration-500 flex flex-col gap-4 shadow-[0_4px_25px_rgba(0,0,0,0.4)] hover:shadow-[0_0_30px_rgba(52,211,153,0.06)] hover:-translate-y-1"
+              >
+                {/* Certificate Preview Image */}
+                <div className="relative w-full aspect-[4/3] rounded-xl overflow-hidden bg-zinc-950 border border-emerald-500/5">
+                  <Image
+                    src={cert.image}
+                    alt={cert.alt || cert.title}
+                    fill
+                    sizes="(max-width: 768px) 280px, 400px"
+                    className="object-cover transition-transform duration-700 ease-in-out group-hover:scale-103"
+                  />
+                  <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500" />
+                </div>
+                
+                {/* Meta details */}
+                <div>
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-400 bg-emerald-500/[0.06] border border-emerald-500/10 px-2.5 py-1 rounded-full">
+                    {cert.category}
+                  </span>
+                  <h3 className="text-lg font-bold text-white mt-3.5 group-hover:text-emerald-300 transition-colors tracking-tight line-clamp-1">
+                    {cert.title}
+                  </h3>
+                  <p className="text-zinc-500 text-xs mt-2 leading-relaxed line-clamp-2">
+                    {cert.description}
+                  </p>
+                  
+                  <div className="flex flex-wrap gap-1.5 mt-4">
+                    {cert.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="px-2 py-0.5 bg-zinc-950 border border-emerald-500/5 font-semibold text-zinc-500 text-[10px] rounded"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </motion.section>
 
+      {/* Modal View */}
       {selectedCertificate !== null && (
         <div
-          className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/90 backdrop-blur-xl"
+          className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/95 backdrop-blur-xl animate-fade-in"
           onClick={closeCertificateModal}
         >
           <div
-            className="relative w-full max-w-5xl bg-black border border-emerald-500/15 rounded-2xl overflow-hidden flex flex-col shadow-2xl"
+            className="relative w-full max-w-5xl bg-black border border-emerald-500/15 rounded-2xl overflow-hidden flex flex-col shadow-2xl animate-scale-up"
             onClick={(e) => e.stopPropagation()}
           >
             <button
@@ -99,10 +146,10 @@ export default function CertificatesSection() {
               </div>
             </div>
             <div className="p-6 border-t border-emerald-500/10 bg-black/90 backdrop-blur">
-              <h3 className="text-xl font-semibold text-white mb-2">
+              <h3 className="text-xl font-bold text-white mb-2 tracking-tight">
                 {certificates[selectedCertificate].title}
               </h3>
-              <p className="text-zinc-400 text-sm">
+              <p className="text-zinc-400 text-sm leading-relaxed">
                 {certificates[selectedCertificate].description}
               </p>
             </div>
@@ -110,63 +157,5 @@ export default function CertificatesSection() {
         </div>
       )}
     </>
-  );
-}
-
-function CertificateCard({
-  cert,
-  index,
-  scrollYProgress,
-  onOpen,
-}: {
-  cert: (typeof certificates)[number];
-  index: number;
-  scrollYProgress: MotionValue<number>;
-  onOpen: () => void;
-}) {
-  // Alternating parallax speeds for visual variety
-  const speeds = [0.03, 0.06, 0.04];
-  const speed = speeds[index % speeds.length];
-  const cardY = useChildParallax(scrollYProgress, speed);
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.95 }}
-      whileInView={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.8, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
-      onClick={onOpen}
-      style={{ y: cardY }}
-      className="group flex flex-col gap-6 cursor-pointer"
-    >
-      <div className="relative w-full aspect-[4/3] overflow-hidden rounded-2xl bg-emerald-500/[0.02] border border-emerald-500/10">
-        <Image
-          src={cert.image}
-          alt={cert.alt || cert.title}
-          fill
-          sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
-          className="object-cover transition-all duration-700 ease-in-out group-hover:scale-105"
-        />
-      </div>
-      <div>
-        <div className="flex items-center gap-3 mb-3">
-          <span className="text-xs uppercase tracking-wider text-zinc-500">
-            {cert.category}
-          </span>
-        </div>
-        <h3 className="text-xl font-medium text-white mb-2 group-hover:text-emerald-300 transition-colors">
-          {cert.title}
-        </h3>
-        <div className="flex flex-wrap gap-2 mt-4">
-          {cert.tags.map((t) => (
-            <span
-              key={t}
-              className="px-2.5 py-1 bg-emerald-500/[0.05] border border-emerald-500/15 font-medium text-zinc-400 text-xs rounded-full"
-            >
-              {t}
-            </span>
-          ))}
-        </div>
-      </div>
-    </motion.div>
   );
 }
