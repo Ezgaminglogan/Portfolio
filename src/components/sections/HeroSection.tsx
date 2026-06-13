@@ -30,8 +30,11 @@ export default function HeroSection() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
       style={{ y, scale, opacity }}
-      className="min-h-screen flex flex-col justify-center pt-20 pb-32"
+      className="min-h-screen flex flex-col justify-center pt-20 pb-32 relative"
     >
+      {/* Ambient neon glow */}
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[600px] bg-emerald-500/[0.08] rounded-full blur-[150px] pointer-events-none glow-pulse" />
+      <div className="absolute bottom-1/4 right-0 w-[400px] h-[400px] bg-emerald-500/[0.06] rounded-full blur-[120px] pointer-events-none" />
       <div className="flex flex-col-reverse lg:flex-row items-center justify-between gap-12 lg:gap-16">
         <motion.div
           initial={{ opacity: 0, x: -20 }}
@@ -49,7 +52,7 @@ export default function HeroSection() {
           </div>
           <h1 className="text-6xl sm:text-8xl font-extrabold text-white tracking-tighter mb-8 leading-[0.9]">
             Logan M. <br className="hidden sm:block" />
-            <span className="text-zinc-600">Panucat</span>
+            <span className="text-emerald-500">Panucat</span>
           </h1>
           <p className="text-lg sm:text-xl text-zinc-400 leading-relaxed mb-6 max-w-xl">
             Full-stack developer building reliable web apps for schools and
@@ -57,29 +60,29 @@ export default function HeroSection() {
             React/Next.js experiences.
           </p>
           <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3 mb-10">
-            <div className="group flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.02] px-3.5 py-1.5 text-xs text-zinc-400 transition-all hover:-translate-y-0.5 hover:border-white/20 hover:text-white hover:bg-white/[0.05]">
-              <MapPinIcon className="w-4 h-4 text-zinc-500 group-hover:text-white/80 transition-colors" />
+            <div className="group flex items-center gap-2 rounded-full border border-emerald-500/15 bg-emerald-500/[0.03] px-3.5 py-1.5 text-xs text-zinc-400 transition-all hover:-translate-y-0.5 hover:border-emerald-500/30 hover:text-emerald-300 hover:bg-emerald-500/[0.06]">
+              <MapPinIcon className="w-4 h-4 text-zinc-500 group-hover:text-emerald-400/80 transition-colors" />
               Cebu, PH
             </div>
-            <div className="group flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.02] px-3.5 py-1.5 text-xs text-zinc-400 transition-all hover:-translate-y-0.5 hover:border-white/20 hover:text-white hover:bg-white/[0.05]">
-              <CodeBracketIcon className="w-4 h-4 text-zinc-500 group-hover:text-white/80 transition-colors" />
+            <div className="group flex items-center gap-2 rounded-full border border-emerald-500/15 bg-emerald-500/[0.03] px-3.5 py-1.5 text-xs text-zinc-400 transition-all hover:-translate-y-0.5 hover:border-emerald-500/30 hover:text-emerald-300 hover:bg-emerald-500/[0.06]">
+              <CodeBracketIcon className="w-4 h-4 text-zinc-500 group-hover:text-emerald-400/80 transition-colors" />
               PHP • .NET • React
             </div>
-            <div className="group flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.02] px-3.5 py-1.5 text-xs text-zinc-400 transition-all hover:-translate-y-0.5 hover:border-white/20 hover:text-white hover:bg-white/[0.05]">
-              <BriefcaseIcon className="w-4 h-4 text-zinc-500 group-hover:text-white/80 transition-colors" />
+            <div className="group flex items-center gap-2 rounded-full border border-emerald-500/15 bg-emerald-500/[0.03] px-3.5 py-1.5 text-xs text-zinc-400 transition-all hover:-translate-y-0.5 hover:border-emerald-500/30 hover:text-emerald-300 hover:bg-emerald-500/[0.06]">
+              <BriefcaseIcon className="w-4 h-4 text-zinc-500 group-hover:text-emerald-400/80 transition-colors" />
               Open to Freelance
             </div>
           </div>
           <div className="flex items-center justify-center lg:justify-start gap-4">
             <a
               href="#projects"
-              className="bg-white text-black px-8 py-4 rounded-full text-sm font-semibold hover:bg-zinc-200 transition-all duration-300 hover:scale-105 active:scale-95"
+              className="bg-emerald-500 text-black px-8 py-4 rounded-full text-sm font-semibold hover:bg-emerald-400 transition-all duration-300 hover:scale-105 active:scale-95 hover:shadow-[0_0_24px_rgba(52,211,153,0.3)]"
             >
               View Work
             </a>
             <a
               href="#contact"
-              className="px-8 py-4 rounded-full text-sm font-medium text-white border border-white/10 hover:bg-white/5 transition-all duration-300 hover:scale-105 active:scale-95"
+              className="px-8 py-4 rounded-full text-sm font-medium text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500/5 transition-all duration-300 hover:scale-105 active:scale-95"
             >
               Get in Touch
             </a>
@@ -93,7 +96,7 @@ export default function HeroSection() {
           whileHover={{ scale: 1.03 }}
           className="relative w-48 h-48 sm:w-56 sm:h-56 lg:w-72 lg:h-72 flex-shrink-0"
         >
-          <div className="absolute inset-0 bg-white/10 blur-3xl rounded-full" />
+          <div className="absolute inset-0 bg-emerald-500/10 blur-3xl rounded-full" />
           <Image
             src="/image/profile.jpg"
             alt="Logan Panucat"

@@ -23,8 +23,10 @@ export default function SqlitePortableSection() {
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8 }}
       style={{ y, opacity, scale }}
-      className="py-32 border-t border-white/5"
+      className="py-32 border-t border-emerald-500/10 relative"
     >
+      {/* Ambient neon glow */}
+      <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[500px] h-[500px] bg-emerald-500/[0.06] rounded-full blur-[140px] pointer-events-none glow-pulse" />
       <div className="max-w-3xl mx-auto text-center mb-16">
         <motion.div
           initial={{ scale: 0.8, opacity: 0 }}
@@ -52,7 +54,7 @@ export default function SqlitePortableSection() {
           href="https://www.mediafire.com/file/2pu0bqxgr979uam/SQLitePortableSetup.zip/file"
           target="_blank"
           rel="noreferrer"
-          className="inline-block bg-white text-black px-8 py-4 rounded-full text-sm font-semibold hover:bg-zinc-200 transition-all duration-300 hover:scale-105 active:scale-95"
+          className="inline-block bg-emerald-500 text-black px-8 py-4 rounded-full text-sm font-semibold hover:bg-emerald-400 transition-all duration-300 hover:scale-105 active:scale-95 hover:shadow-[0_0_24px_rgba(52,211,153,0.3)]"
         >
           Download Now
         </a>

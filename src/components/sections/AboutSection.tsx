@@ -22,7 +22,7 @@ export default function AboutSection() {
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8 }}
       style={{ y, opacity }}
-      className="py-32 border-t border-white/5"
+      className="py-32 border-t border-emerald-500/10"
     >
       <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
         <motion.div className="md:col-span-4" style={{ y: leftY }}>
@@ -46,7 +46,7 @@ export default function AboutSection() {
             and library platforms to industrial supply chain solutions.
           </p>
 
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 pt-6 border-t border-white/5">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 pt-6 border-t border-emerald-500/10">
             {[
               { value: "BSIT", label: "Graduate" },
               { value: "3+", label: "Major Projects" },
@@ -62,7 +62,7 @@ export default function AboutSection() {
                   ease: [0.16, 1, 0.3, 1],
                 }}
               >
-                <div className="text-3xl font-bold text-white mb-1">
+                <div className="text-3xl font-bold text-emerald-400 mb-1">
                   {stat.value}
                 </div>
                 <div className="text-xs text-zinc-500 uppercase tracking-wider">
@@ -76,7 +76,7 @@ export default function AboutSection() {
             href="/CV_Portfolio/Resume.pdf"
             target="_blank"
             rel="noreferrer"
-            className="inline-flex items-center gap-2 text-sm text-white hover:text-zinc-300 w-fit border-b border-white/20 pb-1 mt-4 transition-colors group"
+            className="inline-flex items-center gap-2 text-sm text-emerald-400 hover:text-emerald-300 w-fit border-b border-emerald-500/20 pb-1 mt-4 transition-colors group"
           >
             <ArrowDownTrayIcon className="w-4 h-4 group-hover:-translate-y-1 transition-transform" /> Download Resume
           </a>

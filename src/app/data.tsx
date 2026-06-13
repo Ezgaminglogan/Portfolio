@@ -78,7 +78,7 @@ export const professionalSkills = [
       "Network Setup",
     ],
     accent: "from-white/10 to-transparent",
-    dot: "bg-white",
+    dot: "bg-emerald-400",
   },
   {
     icon: ShieldCheckIcon,
@@ -92,7 +92,7 @@ export const professionalSkills = [
       "Security Hardening",
     ],
     accent: "from-white/10 to-transparent",
-    dot: "bg-white",
+    dot: "bg-emerald-400",
   },
   {
     icon: RocketLaunchIcon,
@@ -106,7 +106,7 @@ export const professionalSkills = [
       "Agile Workflow",
     ],
     accent: "from-white/10 to-transparent",
-    dot: "bg-white",
+    dot: "bg-emerald-400",
   },
 ];
 

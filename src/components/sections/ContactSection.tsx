@@ -87,8 +87,10 @@ export default function ContactSection() {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
         style={{ y, opacity }}
-        className="py-32 border-t border-white/5"
+        className="py-32 border-t border-emerald-500/10 relative"
       >
+        {/* Ambient neon glow */}
+        <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-[500px] h-[400px] bg-emerald-500/[0.06] rounded-full blur-[140px] pointer-events-none glow-pulse" />
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
           <motion.div className="md:col-span-4" style={{ y: leftY }}>
             <h2 className="text-4xl font-extrabold text-white tracking-tighter mb-4">
@@ -101,7 +103,7 @@ export default function ContactSection() {
             <div className="flex flex-col gap-4 text-sm text-zinc-400">
               <a
                 href="mailto:logan.panucat2@gmail.com"
-                className="hover:text-white transition-colors flex items-center gap-2"
+                className="hover:text-emerald-400 transition-colors flex items-center gap-2"
               >
                 <EnvelopeIcon className="w-4 h-4" /> logan.panucat2@gmail.com
               </a>
@@ -109,7 +111,7 @@ export default function ContactSection() {
                 href="https://github.com/Ezgaminglogan"
                 target="_blank"
                 rel="noreferrer"
-                className="hover:text-white transition-colors flex items-center gap-2"
+                className="hover:text-emerald-400 transition-colors flex items-center gap-2"
               >
                 <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                   <path
@@ -124,7 +126,7 @@ export default function ContactSection() {
                 href="https://www.linkedin.com/in/logan-panucat-b319562a9/"
                 target="_blank"
                 rel="noreferrer"
-                className="hover:text-white transition-colors flex items-center gap-2"
+                className="hover:text-emerald-400 transition-colors flex items-center gap-2"
               >
                 <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
@@ -158,7 +160,7 @@ export default function ContactSection() {
                   required
                   placeholder="Name"
                   autoComplete="name"
-                  className="bg-transparent border-b border-white/10 py-3 text-white placeholder:text-zinc-600 focus:outline-none focus:border-white transition-colors"
+                  className="bg-transparent border-b border-emerald-500/15 py-3 text-white placeholder:text-zinc-600 focus:outline-none focus:border-emerald-400 transition-colors"
                 />
                 <div>
                   <input
@@ -172,7 +174,7 @@ export default function ContactSection() {
                     aria-invalid={!!emailError}
                     aria-describedby={emailError ? "email-error" : undefined}
                     className={`bg-transparent border-b py-3 text-white placeholder:text-zinc-600 focus:outline-none transition-colors w-full ${
-                      emailError ? "border-red-500/50 focus:border-red-500" : "border-white/10 focus:border-white"
+                      emailError ? "border-red-500/50 focus:border-red-500" : "border-emerald-500/15 focus:border-emerald-400"
                     }`}
                   />
                   {emailError && (
@@ -190,7 +192,7 @@ export default function ContactSection() {
                 required
                 placeholder="Subject"
                 autoComplete="off"
-                className="bg-transparent border-b border-white/10 py-3 text-white placeholder:text-zinc-600 focus:outline-none focus:border-white transition-colors"
+                className="bg-transparent border-b border-emerald-500/15 py-3 text-white placeholder:text-zinc-600 focus:outline-none focus:border-emerald-400 transition-colors"
               />
               <textarea
                 name="message"
@@ -200,13 +202,13 @@ export default function ContactSection() {
                 rows={4}
                 placeholder="Message"
                 autoComplete="off"
-                className="bg-transparent border-b border-white/10 py-3 text-white placeholder:text-zinc-600 focus:outline-none focus:border-white transition-colors resize-none"
+                className="bg-transparent border-b border-emerald-500/15 py-3 text-white placeholder:text-zinc-600 focus:outline-none focus:border-emerald-400 transition-colors resize-none"
               ></textarea>
 
               <button
                 type="submit"
                 disabled={formStatus === "sending"}
-                className="self-start bg-white text-black px-8 py-4 rounded-full text-sm font-semibold hover:bg-zinc-200 transition-all duration-300 hover:scale-105 active:scale-95 disabled:opacity-50 mt-4"
+                className="self-start bg-emerald-500 text-black px-8 py-4 rounded-full text-sm font-semibold hover:bg-emerald-400 transition-all duration-300 hover:scale-105 active:scale-95 disabled:opacity-50 mt-4 hover:shadow-[0_0_24px_rgba(52,211,153,0.3)]"
               >
                 {formStatus === "sending" ? "Sending..." : "Send Message"}
               </button>

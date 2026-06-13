@@ -22,8 +22,10 @@ export default function ExperienceSection() {
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8 }}
       style={{ y, opacity }}
-      className="py-32 border-t border-white/5"
+      className="py-32 border-t border-emerald-500/10 relative"
     >
+      {/* Ambient neon glow */}
+      <div className="absolute top-1/2 left-0 -translate-y-1/2 w-[400px] h-[500px] bg-emerald-500/[0.05] rounded-full blur-[140px] pointer-events-none glow-pulse" />
       <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
         <motion.div className="md:col-span-4" style={{ y: leftY }}>
           <h2 className="text-4xl font-extrabold text-white tracking-tighter">
@@ -35,9 +37,9 @@ export default function ExperienceSection() {
           style={{ y: rightY }}
         >
           <div className="relative pl-10">
-            <span className="absolute left-2 top-2 bottom-2 w-px bg-white/10" />
+            <span className="absolute left-2 top-2 bottom-2 w-px bg-emerald-500/10" />
             <motion.span
-              className="absolute left-2 top-2 bottom-2 w-px origin-top bg-gradient-to-b from-white via-white to-white/30 shadow-[0_0_12px_rgba(255,255,255,0.35)]"
+              className="absolute left-2 top-2 bottom-2 w-px origin-top bg-gradient-to-b from-emerald-400 via-emerald-400 to-emerald-400/30 shadow-[0_0_12px_rgba(52,211,153,0.35)]"
               style={{ scaleY: lineProgress }}
             />
             <div className="flex flex-col gap-12">
@@ -72,13 +74,13 @@ function TimelineItem({
     >
       <div
         className={`sm:w-32 flex-shrink-0 text-sm pt-1 transition-colors ${
-          inView ? "text-zinc-300" : "text-zinc-500"
+          inView ? "text-emerald-300" : "text-zinc-500"
         }`}
       >
         {exp.period}
       </div>
       <div>
-        <h3 className="text-lg font-medium text-white mb-1 group-hover:text-zinc-300 transition-colors">
+        <h3 className="text-lg font-medium text-white mb-1 group-hover:text-emerald-300 transition-colors">
           {exp.title}
         </h3>
         <p

@@ -41,8 +41,10 @@ export default function ProjectsSection() {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
         style={{ y, opacity }}
-        className="py-32 border-t border-white/5"
+        className="py-32 border-t border-emerald-500/10 relative"
       >
+        {/* Ambient neon glow */}
+        <div className="absolute top-1/3 right-0 w-[600px] h-[600px] bg-emerald-500/[0.06] rounded-full blur-[150px] pointer-events-none glow-pulse" />
         <div className="mb-20">
           <h2 className="text-4xl font-extrabold text-white tracking-tighter mb-4">
             Selected Work.
@@ -66,22 +68,22 @@ export default function ProjectsSection() {
 
       {selectedProject !== null && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-xl"
+          className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/90 backdrop-blur-xl"
           onClick={closeProjectModal}
         >
           <div
-            className="relative w-full max-w-3xl bg-black border border-white/10 rounded-2xl overflow-hidden max-h-[90vh] overflow-y-auto"
+            className="relative w-full max-w-3xl bg-black border border-emerald-500/15 rounded-2xl overflow-hidden max-h-[90vh] overflow-y-auto thin-scrollbar"
             onClick={(e) => e.stopPropagation()}
           >
             <button
               onClick={closeProjectModal}
               type="button"
               aria-label="Close project details"
-              className="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-black/50 backdrop-blur-md flex items-center justify-center text-zinc-400 hover:text-white border border-white/10 transition-colors"
+              className="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-black/50 backdrop-blur-md flex items-center justify-center text-zinc-400 hover:text-emerald-400 border border-emerald-500/15 transition-colors"
             >
               <XMarkIcon className="w-5 h-5" />
             </button>
-            <div className="relative w-full aspect-[16/9] bg-white/[0.02]">
+            <div className="relative w-full aspect-[16/9] bg-emerald-500/[0.02]">
               <Image
                 src={projects[selectedProject].image}
                 alt={projects[selectedProject].title}
@@ -105,16 +107,16 @@ export default function ProjectsSection() {
                   href={projects[selectedProject].liveUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-block mb-8 px-6 py-3 bg-white text-black rounded-full text-sm font-semibold hover:bg-zinc-200 transition-colors"
+                  className="inline-block mb-8 px-6 py-3 bg-emerald-500 text-black rounded-full text-sm font-semibold hover:bg-emerald-400 transition-colors hover:shadow-[0_0_20px_rgba(52,211,153,0.25)]"
                 >
                   Visit Live Site
                 </a>
               )}
-              <div className="flex flex-wrap gap-2 pt-6 border-t border-white/5">
+              <div className="flex flex-wrap gap-2 pt-6 border-t border-emerald-500/10">
                 {projects[selectedProject].tech.map((t) => (
                   <span
                     key={t}
-                    className="px-3 py-1 bg-white/[0.05] border border-white/10 text-zinc-300 text-xs rounded-full"
+                    className="px-3 py-1 bg-emerald-500/[0.05] border border-emerald-500/15 text-zinc-300 text-xs rounded-full"
                   >
                     {t}
                   </span>
@@ -153,7 +155,7 @@ function ProjectCard({
       style={{ y: cardY }}
       className="group cursor-pointer flex flex-col gap-6"
     >
-      <div className="relative w-full aspect-[4/3] overflow-hidden rounded-2xl bg-white/[0.02] border border-white/5">
+      <div className="relative w-full aspect-[4/3] overflow-hidden rounded-2xl bg-emerald-500/[0.02] border border-emerald-500/10">
         <Image
           src={project.image}
           alt={project.title}
@@ -169,7 +171,7 @@ function ProjectCard({
             {project.type}
           </span>
         </div>
-        <h3 className="text-xl font-semibold text-white mb-3 group-hover:text-zinc-300 transition-colors">
+        <h3 className="text-xl font-semibold text-white mb-3 group-hover:text-emerald-300 transition-colors">
           {project.title}
         </h3>
         <div className="flex flex-wrap gap-2">
@@ -185,7 +187,7 @@ function ProjectCard({
             target="_blank"
             rel="noreferrer"
             onClick={(e) => e.stopPropagation()}
-            className="inline-block mt-4 text-sm text-white border-b border-white/20 hover:border-white transition-colors"
+            className="inline-block mt-4 text-sm text-emerald-400 border-b border-emerald-500/20 hover:border-emerald-400 transition-colors"
           >
             Live Site
           </a>

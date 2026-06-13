@@ -116,7 +116,7 @@ export default function ImageCarousel({
       {/* Navigation - Minimalist style */}
       <button
         type="button"
-        className="absolute left-4 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-black/20 backdrop-blur-md border border-white/5 text-white/50 hover:text-white hover:bg-black/40 transition-all opacity-0 group-hover:opacity-100"
+        className="absolute left-4 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-black/20 backdrop-blur-md border border-emerald-500/10 text-white/50 hover:text-emerald-400 hover:bg-black/40 transition-all opacity-0 group-hover:opacity-100"
         onClick={() => paginate(-1)}
         aria-label="Previous image"
       >
@@ -124,7 +124,7 @@ export default function ImageCarousel({
       </button>
       <button
         type="button"
-        className="absolute right-4 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-black/20 backdrop-blur-md border border-white/5 text-white/50 hover:text-white hover:bg-black/40 transition-all opacity-0 group-hover:opacity-100"
+        className="absolute right-4 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-black/20 backdrop-blur-md border border-emerald-500/10 text-white/50 hover:text-emerald-400 hover:bg-black/40 transition-all opacity-0 group-hover:opacity-100"
         onClick={() => paginate(1)}
         aria-label="Next image"
       >
@@ -137,7 +137,7 @@ export default function ImageCarousel({
           <div
             key={i}
             className={`h-1 transition-all duration-300 rounded-full ${
-              i === imageIndex ? "w-8 bg-white" : "w-2 bg-white/20"
+              i === imageIndex ? "w-8 bg-emerald-400" : "w-2 bg-emerald-500/20"
             }`}
           />
         ))}

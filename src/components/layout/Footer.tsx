@@ -1,12 +1,12 @@
 export default function Footer() {
   return (
-    <footer className="py-12 border-t border-zinc-900/50 flex flex-col items-center gap-6 text-xs text-zinc-600">
+    <footer className="py-12 border-t border-emerald-500/10 flex flex-col items-center gap-6 text-xs text-zinc-600">
       <div className="flex gap-8 text-sm font-medium">
         <a
           href="https://github.com/Ezgaminglogan"
           target="_blank"
           rel="noreferrer"
-          className="flex items-center gap-2 text-zinc-500 hover:text-white transition-colors"
+          className="flex items-center gap-2 text-zinc-500 hover:text-emerald-400 transition-colors"
         >
           <svg
             className="w-4 h-4"
@@ -26,7 +26,7 @@ export default function Footer() {
           href="https://www.linkedin.com/in/logan-panucat-b319562a9/"
           target="_blank"
           rel="noreferrer"
-          className="flex items-center gap-2 text-zinc-500 hover:text-white transition-colors"
+          className="flex items-center gap-2 text-zinc-500 hover:text-emerald-400 transition-colors"
         >
           <svg
             className="w-4 h-4"

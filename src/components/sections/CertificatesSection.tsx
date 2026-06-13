@@ -43,7 +43,7 @@ export default function CertificatesSection() {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
         style={{ y, opacity }}
-        className="py-32 border-t border-white/5"
+        className="py-32 border-t border-emerald-500/10"
       >
         <div className="mb-20">
           <h2 className="text-4xl font-extrabold text-white tracking-tighter mb-4">
@@ -72,18 +72,18 @@ export default function CertificatesSection() {
           onClick={closeCertificateModal}
         >
           <div
-            className="relative w-full max-w-5xl bg-black border border-white/10 rounded-2xl overflow-hidden flex flex-col shadow-2xl"
+            className="relative w-full max-w-5xl bg-black border border-emerald-500/15 rounded-2xl overflow-hidden flex flex-col shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             <button
               onClick={closeCertificateModal}
               type="button"
               aria-label="Close certificate"
-              className="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-black/50 backdrop-blur-md flex items-center justify-center text-zinc-400 hover:text-white transition-colors border border-white/10"
+              className="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-black/50 backdrop-blur-md flex items-center justify-center text-zinc-400 hover:text-emerald-400 transition-colors border border-emerald-500/15"
             >
               <XMarkIcon className="w-5 h-5" />
             </button>
-            <div className="relative w-full h-[60vh] sm:h-[75vh] bg-white/[0.02] flex-shrink-0 flex items-center justify-center p-4">
+            <div className="relative w-full h-[60vh] sm:h-[75vh] bg-emerald-500/[0.02] flex-shrink-0 flex items-center justify-center p-4">
               <div className="relative w-full h-full max-w-4xl max-h-full">
                 <Image
                   src={certificates[selectedCertificate].image}
@@ -98,7 +98,7 @@ export default function CertificatesSection() {
                 />
               </div>
             </div>
-            <div className="p-6 border-t border-white/5 bg-black/90 backdrop-blur">
+            <div className="p-6 border-t border-emerald-500/10 bg-black/90 backdrop-blur">
               <h3 className="text-xl font-semibold text-white mb-2">
                 {certificates[selectedCertificate].title}
               </h3>
@@ -138,7 +138,7 @@ function CertificateCard({
       style={{ y: cardY }}
       className="group flex flex-col gap-6 cursor-pointer"
     >
-      <div className="relative w-full aspect-[4/3] overflow-hidden rounded-2xl bg-white/[0.02] border border-white/5">
+      <div className="relative w-full aspect-[4/3] overflow-hidden rounded-2xl bg-emerald-500/[0.02] border border-emerald-500/10">
         <Image
           src={cert.image}
           alt={cert.alt || cert.title}
@@ -153,14 +153,14 @@ function CertificateCard({
             {cert.category}
           </span>
         </div>
-        <h3 className="text-xl font-medium text-white mb-2 group-hover:text-zinc-300 transition-colors">
+        <h3 className="text-xl font-medium text-white mb-2 group-hover:text-emerald-300 transition-colors">
           {cert.title}
         </h3>
         <div className="flex flex-wrap gap-2 mt-4">
           {cert.tags.map((t) => (
             <span
               key={t}
-              className="px-2.5 py-1 bg-white/[0.05] border border-white/10 font-medium text-zinc-400 text-xs rounded-full"
+              className="px-2.5 py-1 bg-emerald-500/[0.05] border border-emerald-500/15 font-medium text-zinc-400 text-xs rounded-full"
             >
               {t}
             </span>

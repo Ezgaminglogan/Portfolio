@@ -61,9 +61,9 @@ export default function Navigation() {
   ];
 
   return (
-    <nav className="fixed top-0 w-full bg-black/50 backdrop-blur-xl z-50 border-b border-white/5 transition-all duration-300">
+    <nav className="fixed top-0 w-full bg-emerald-950/40 backdrop-blur-xl z-50 border-b border-emerald-500/20 transition-all duration-300 shadow-[0_1px_20px_rgba(52,211,153,0.06)]">
       <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-        <span className="text-lg font-semibold tracking-tight text-white hover:text-zinc-300 transition-colors">
+        <span className="text-lg font-semibold tracking-tight text-emerald-400 hover:text-emerald-300 transition-colors" style={{ textShadow: '0 0 12px rgba(52,211,153,0.4)' }}>
           Logan
         </span>
         <div className="hidden lg:flex gap-8 text-sm font-medium">
@@ -74,8 +74,8 @@ export default function Navigation() {
               aria-current={activeSection === item.id ? "page" : undefined}
               className={`transition-colors py-2 ${
                 activeSection === item.id
-                  ? "text-white"
-                  : "text-zinc-500 hover:text-zinc-300"
+                  ? "text-emerald-400"
+                  : "text-zinc-500 hover:text-emerald-300"
               }`}
             >
               {item.label}
@@ -85,7 +85,7 @@ export default function Navigation() {
         <button
           ref={buttonRef}
           type="button"
-          className="lg:hidden p-2 -mr-2 text-zinc-400 hover:text-white"
+          className="lg:hidden p-2 -mr-2 text-zinc-400 hover:text-emerald-400"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
           aria-expanded={mobileMenuOpen}
@@ -97,7 +97,7 @@ export default function Navigation() {
       {mobileMenuOpen && (
         <div
           id="mobile-menu"
-          className="lg:hidden px-6 py-4 bg-black/95 backdrop-blur-xl border-t border-white/5 flex flex-col gap-4 text-sm"
+          className="lg:hidden px-6 py-4 bg-emerald-950/60 backdrop-blur-xl border-t border-emerald-500/20 flex flex-col gap-4 text-sm"
         >
           {navItems.map((item) => (
             <a
@@ -105,8 +105,8 @@ export default function Navigation() {
               href={`#${item.id}`}
               className={`transition-colors py-2 ${
                 activeSection === item.id
-                  ? "text-white"
-                  : "text-zinc-500 hover:text-zinc-300"
+                  ? "text-emerald-400"
+                  : "text-zinc-500 hover:text-emerald-300"
               }`}
               onClick={() => setMobileMenuOpen(false)}
             >
