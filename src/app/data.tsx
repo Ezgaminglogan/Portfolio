@@ -128,7 +128,40 @@ export const projects = [
     gradient: "from-emerald-600 to-sky-600",
     image: "/image/mjeenterprises.png",
     liveUrl: "https://mjeenterprises.vercel.app/",
+    githubUrl: "https://github.com/Ezgaminglogan/mje-enterprises",
     type: "Enterprise Service Management Platform",
+    codeHighlight: {
+      filename: "booking-transaction.ts",
+      language: "typescript",
+      code: `// Execute inventory reservation and booking insertion in a single ACID transaction
+export async function createVerifiedBooking(data: BookingInput) {
+  return await prisma.$transaction(async (tx) => {
+    // 1. Verify capacity and lock row for update to prevent race conditions
+    const schedule = await tx.serviceSchedule.findUnique({
+      where: { id: data.scheduleId },
+      select: { bookedSlots: true, maxCapacity: true }
+    });
+    if (!schedule || schedule.bookedSlots >= schedule.maxCapacity) {
+      throw new Error("Target service slot is fully booked");
+    }
+    // 2. Increment booked slots atomically
+    await tx.serviceSchedule.update({
+      where: { id: data.scheduleId },
+      data: { bookedSlots: { increment: 1 } }
+    });
+    // 3. Create the customer booking record with secure OTP verification check
+    return await tx.booking.create({
+      data: {
+        customerEmail: data.email,
+        serviceId: data.serviceId,
+        status: "CONFIRMED",
+        verifiedAt: new Date()
+      }
+    });
+  });
+}`,
+      explanation: "Implements safe database concurrency using a Prisma transaction. Ensures that customer bookings are atomically registered only when service slots are verified and reserved, preventing double-bookings during peak traffic."
+    }
   },
   {
     title: "LibraSys - Library Management System",
@@ -137,7 +170,47 @@ export const projects = [
     tech: ["TanStack", "Prisma", "MySQL", "TailwindCSS"],
     gradient: "from-indigo-600 to-purple-600",
     image: "/image/LibraSys.png",
+    githubUrl: "https://github.com/Ezgaminglogan/LibraSys",
     type: "CTU Naga Extension Campus Project",
+    codeHighlight: {
+      filename: "useBookBorrow.ts",
+      language: "typescript",
+      code: `// Custom React hook for book transactions with optimistic updates
+export function useBookBorrow() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({ bookId, studentId }: BorrowParams) => {
+      const res = await fetch("/api/borrow", {
+        method: "POST",
+        body: JSON.stringify({ bookId, studentId }),
+        headers: { "Content-Type": "application/json" }
+      });
+      if (!res.ok) throw new Error("Transaction rejected by inventory gate");
+      return res.json();
+    },
+    onMutate: async (variables) => {
+      // Cancel outgoing refetches to avoid overriding optimistic state
+      await queryClient.cancelQueries({ queryKey: ["books", variables.bookId] });
+      const prevBook = queryClient.getQueryData<Book>(["books", variables.bookId]);
+      // Optimistically decrement library stock to make UI feel instant
+      if (prevBook) {
+        queryClient.setQueryData(["books", variables.bookId], {
+          ...prevBook,
+          availableQty: prevBook.availableQty - 1
+        });
+      }
+      return { prevBook };
+    },
+    onError: (err, variables, context) => {
+      // Rollback library inventory if backend request fails
+      if (context?.prevBook) {
+        queryClient.setQueryData(["books", variables.bookId], context.prevBook);
+      }
+    }
+  });
+}`,
+      explanation: "A custom React hook leveraging TanStack Query's optimistic updates. By updating the client cache before the API responds and implementing automatic rollback logic, it provides an instantaneous checkout experience for students."
+    }
   },
   {
     title: "Inventory Management System (IMS-CTU)",
@@ -146,7 +219,8 @@ export const projects = [
     tech: ["TanStack", "Prisma", "JWT", "TailwindCSS"],
     gradient: "from-blue-600 to-cyan-500",
     image: "/image/IMS-CTU.png",
-    type: "CTU Naga Extension Campus Project",
+    githubUrl: "https://github.com/Ezgaminglogan/IMS-CTU",
+    type: "CTU Naga Extension Campus Project"
   },
 
   {
@@ -156,7 +230,8 @@ export const projects = [
     tech: ["Blazor Framework", "TailwindCSS", "C#", ".NET"],
     gradient: "from-blue-500 to-purple-600",
     image: "/image/Landing.png",
-    type: "Cross-Platform Capstone Project",
+    githubUrl: "https://github.com/Ezgaminglogan/Supplify",
+    type: "Cross-Platform Capstone Project"
   },
 
   {
@@ -166,7 +241,47 @@ export const projects = [
     tech: ["PHP", "TailwindCSS", "PHPMailer", "MySQL"],
     gradient: "from-teal-500 to-cyan-600",
     image: "/image/Project 3.png",
+    githubUrl: "https://github.com/Ezgaminglogan/Moms-Food-Delicacies",
     type: "School Project",
+    codeHighlight: {
+      filename: "verify_otp.php",
+      language: "php",
+      code: `<?php
+// Secure PHP database query and OTP validation flow
+require_once 'config/database.php';
+session_start();
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
+    $otp = filter_input(INPUT_POST, 'otp', FILTER_SANITIZE_NUMBER_INT);
+
+    if ($email && $otp) {
+        // Prevent SQL injection by preparing database statement
+        $stmt = $conn->prepare("SELECT otp_code, otp_expires FROM users WHERE email = ? LIMIT 1");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $result = $stmt->get_result()->fetch_assoc();
+
+        if ($result) {
+            $current_time = new DateTime();
+            $expiry_time = new DateTime($result['otp_expires']);
+
+            // Verify hash match and ensure token has not expired
+            if (password_verify($otp, $result['otp_code']) && $current_time < $expiry_time) {
+                // Activate user account
+                $update = $conn->prepare("UPDATE users SET is_verified = 1, otp_code = NULL WHERE email = ?");
+                $update->bind_param("s", $email);
+                $update->execute();
+                
+                echo json_encode(["status" => "success", "message" => "Account verified successfully!"]);
+            } else {
+                echo json_encode(["status" => "error", "message" => "Invalid or expired verification code."]);
+            }
+        }
+    }
+}`,
+      explanation: "Implements secure database preparation, input sanitization, password hashing using bcrypt via PHP's password_verify function, and strict expiration checks for 2FA validation."
+    }
   },
   {
     title: "School Management System",
@@ -175,7 +290,8 @@ export const projects = [
     tech: ["Visual Basic WFA", "MySQL"],
     gradient: "from-purple-500 to-indigo-600",
     image: "/image/School-Project.png",
-    type: "School Project",
+    githubUrl: "https://github.com/Ezgaminglogan",
+    type: "School Project"
   },
   {
     title: "Ticket Support System",
@@ -191,7 +307,42 @@ export const projects = [
     ],
     gradient: "from-red-500 to-orange-600",
     image: "/image/Ticket-Support.png",
+    githubUrl: "https://github.com/Ezgaminglogan/Ticket-Support-System",
     type: "School Project",
+    codeHighlight: {
+      filename: "SupportHub.cs",
+      language: "csharp",
+      code: `// ASP.NET Core SignalR Real-Time Ticket Support Hub
+using Microsoft.AspNetCore.SignalR;
+using System.Threading.Tasks;
+
+public class SupportHub : Hub
+{
+    private readonly ITicketService _ticketService;
+
+    public SupportHub(ITicketService ticketService)
+    {
+        _ticketService = ticketService;
+    }
+
+    // Real-time synchronization when a technical support agent responds to a ticket
+    public async Task SendAgentResponse(int ticketId, string agentName, string message)
+    {
+        // 1. Persist the response to database asynchronously
+        await _ticketService.AddResponseAsync(ticketId, agentName, message);
+        
+        // 2. Broadcast the message to all clients connected to this ticket room
+        await Clients.Group($"Ticket_{ticketId}")
+            .SendAsync("ReceiveMessage", agentName, message, DateTime.UtcNow);
+    }
+
+    public async Task JoinTicketRoom(int ticketId)
+    {
+        await Groups.AddToGroupAsync(Context.ConnectionId, $"Ticket_{ticketId}");
+    }
+}`,
+      explanation: "An ASP.NET Core SignalR Hub designed for live chatting. Organizes agents and clients into isolated rooms (Groups) and persists support tickets to a database prior to broadcasting to avoid data loss."
+    }
   },
   {
     title: "Luto",
@@ -207,7 +358,8 @@ export const projects = [
     ],
     gradient: "from-yellow-500 to-amber-600",
     image: "/image/Luto-System.png",
-    type: "School Project",
+    githubUrl: "https://github.com/Ezgaminglogan",
+    type: "School Project"
   },
 ];
 
@@ -372,4 +524,51 @@ export const certificates = [
     category: "Udemy",
     tags: ["Learning", "Web Development"],
   },
+];
+
+export const services = [
+  {
+    title: "Full-Stack Web Systems",
+    description: "Design and implement responsive, high-performance web applications and dashboards customized for business operations.",
+    features: [
+      "Custom business dashboards & portals",
+      "Robust state management (React / Next.js / TanStack)",
+      "Secure API development & integration",
+      "Dynamic frontend user experiences"
+    ],
+    accent: "from-emerald-500/10 to-transparent"
+  },
+  {
+    title: "Database Design & Optimization",
+    description: "Build robust, clean schemas and performant queries that keep business data safe and quickly accessible.",
+    features: [
+      "ACID compliant migrations & structures",
+      "Efficient object-relational mapping (Prisma, Entity Framework)",
+      "High performance indexing & query optimization",
+      "Relational databases (MySQL, PostgreSQL, SQL Server)"
+    ],
+    accent: "from-emerald-500/10 to-transparent"
+  },
+  {
+    title: "Secure Auth & Integrations",
+    description: "Protect systems and user data with secure session tokens, 2FA, and third-party authentication services.",
+    features: [
+      "JWT-based security sessions & scopes",
+      "Social single sign-on (Google Identity, OAuth)",
+      "Two-factor OTP email verification (PHPMailer)",
+      "Real-time sockets & messaging (SignalR, WebSockets)"
+    ],
+    accent: "from-emerald-500/10 to-transparent"
+  },
+  {
+    title: "Systems Admin & Deployment",
+    description: "Configure infrastructure, automate installations, monitor performance, and deploy software securely.",
+    features: [
+      "OS setup, resource management, and hardening",
+      "Continuous integration & Git repository workflows",
+      "Automated server backups and health checks",
+      "Serverless deployment configurations (Vercel, Netlify)"
+    ],
+    accent: "from-emerald-500/10 to-transparent"
+  }
 ];

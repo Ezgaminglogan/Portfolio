@@ -3,6 +3,7 @@ import Footer from "@/components/layout/Footer";
 import ScrollToTop from "@/components/ui/ScrollToTop";
 import HeroSection from "@/components/sections/HeroSection";
 import AboutSection from "@/components/sections/AboutSection";
+import ServicesSection from "@/components/sections/ServicesSection";
 import SkillsSection from "@/components/sections/SkillsSection";
 import ProjectsSection from "@/components/sections/ProjectsSection";
 import SqlitePortableSection from "@/components/sections/SqlitePortableSection";
@@ -22,6 +23,7 @@ export default function Home() {
       <main className="max-w-6xl mx-auto px-6 relative">
         <HeroSection />
         <AboutSection />
+        <ServicesSection />
         <SkillsSection />
         <ProjectsSection />
         <SqlitePortableSection />
