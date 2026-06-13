@@ -69,10 +69,10 @@ export default function CertificatesSection() {
               <div
                 key={index}
                 onClick={() => openCertificateModal(index)}
-                className="w-[280px] sm:w-[350px] md:w-[400px] flex-shrink-0 group cursor-pointer bg-emerald-950/[0.02] hover:bg-emerald-500/[0.04] border border-emerald-500/10 hover:border-emerald-500/25 rounded-2xl p-5 transition-all duration-500 flex flex-col gap-4 shadow-[0_4px_25px_rgba(0,0,0,0.4)] hover:shadow-[0_0_30px_rgba(52,211,153,0.06)] hover:-translate-y-1"
+                className="w-[280px] sm:w-[350px] md:w-[400px] flex-shrink-0 group cursor-pointer bg-emerald-950/[0.02] hover:bg-emerald-500/[0.04] border border-emerald-500/10 hover:border-emerald-500/25 rounded-sm p-5 transition-all duration-500 flex flex-col gap-4 shadow-[0_4px_25px_rgba(0,0,0,0.4)] hover:shadow-[0_0_30px_rgba(52,211,153,0.06)] hover:-translate-y-1"
               >
                 {/* Certificate Preview Image */}
-                <div className="relative w-full aspect-[4/3] rounded-xl overflow-hidden bg-zinc-950 border border-emerald-500/5">
+                <div className="relative w-full aspect-[4/3] rounded-sm overflow-hidden bg-zinc-950 border border-emerald-500/5">
                   <Image
                     src={cert.image}
                     alt={cert.alt || cert.title}
@@ -119,7 +119,7 @@ export default function CertificatesSection() {
           onClick={closeCertificateModal}
         >
           <div
-            className="relative w-full max-w-5xl bg-black border border-emerald-500/15 rounded-2xl overflow-hidden flex flex-col shadow-2xl animate-scale-up"
+            className="relative w-full max-w-5xl bg-black border border-emerald-500/15 rounded-sm overflow-hidden flex flex-col shadow-2xl animate-scale-up"
             onClick={(e) => e.stopPropagation()}
           >
             <button

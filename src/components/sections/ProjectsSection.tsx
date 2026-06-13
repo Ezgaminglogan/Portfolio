@@ -103,7 +103,7 @@ export default function ProjectsSection() {
           onClick={closeProjectModal}
         >
           <div
-            className="relative w-full max-w-3xl bg-black border border-emerald-500/15 rounded-2xl overflow-hidden max-h-[90vh] overflow-y-auto thin-scrollbar animate-scale-up"
+            className="relative w-full max-w-3xl bg-black border border-emerald-500/15 rounded-sm overflow-hidden max-h-[90vh] overflow-y-auto thin-scrollbar animate-scale-up"
             onClick={(e) => e.stopPropagation()}
           >
             <button
@@ -114,14 +114,27 @@ export default function ProjectsSection() {
             >
               <XMarkIcon className="w-5 h-5" />
             </button>
-            <div className="relative w-full aspect-[16/9] bg-emerald-500/[0.02]">
-              <Image
-                src={typedProjects[selectedProject].image}
-                alt={typedProjects[selectedProject].title}
-                fill
-                sizes="(min-width: 1024px) 768px, 100vw"
-                className="object-cover"
-              />
+            {/* Browser Window Mockup Frame */}
+            <div className="w-full bg-zinc-950 border-b border-emerald-500/10 overflow-hidden flex flex-col">
+              {/* Browser Header Top Bar */}
+              <div className="flex items-center gap-1.5 px-4 py-2.5 bg-zinc-900/60 border-b border-emerald-500/5 select-none">
+                <div className="w-2.5 h-2.5 rounded-full bg-red-500/60" />
+                <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/60" />
+                <div className="w-2.5 h-2.5 rounded-full bg-green-500/60" />
+                <div className="mx-auto text-[10px] font-mono text-zinc-500 truncate max-w-[200px]">
+                  {typedProjects[selectedProject].title.toLowerCase().replace(/\s+/g, "-")}.app
+                </div>
+              </div>
+              {/* Screenshot Viewport */}
+              <div className="relative w-full aspect-[16/9] bg-emerald-500/[0.01]">
+                <Image
+                  src={typedProjects[selectedProject].image}
+                  alt={typedProjects[selectedProject].title}
+                  fill
+                  sizes="(min-width: 1024px) 768px, 100vw"
+                  className="object-contain"
+                />
+              </div>
             </div>
             <div className="p-8">
               <div className="text-xs uppercase tracking-widest text-zinc-500 mb-2">
@@ -177,9 +190,9 @@ export default function ProjectsSection() {
                   transition={{ duration: 0.3 }}
                   className="mb-8 overflow-hidden"
                 >
-                  <div className="bg-zinc-950 border border-emerald-500/15 rounded-xl">
+                  <div className="bg-zinc-950 border border-emerald-500/15 rounded-sm">
                     {/* Terminal Header */}
-                    <div className="flex items-center justify-between px-4 py-3 bg-zinc-900 border-b border-emerald-500/10 rounded-t-xl">
+                    <div className="flex items-center justify-between px-4 py-3 bg-zinc-900 border-b border-emerald-500/10 rounded-t-[2px]">
                       <div className="flex items-center gap-2">
                         <div className="w-3.5 h-3.5 rounded-full bg-red-500/80" />
                         <div className="w-3.5 h-3.5 rounded-full bg-yellow-500/80" />
@@ -196,14 +209,14 @@ export default function ProjectsSection() {
                       </button>
                     </div>
                     {/* Terminal Code Body */}
-                    <div className="overflow-x-auto max-h-[350px] thin-scrollbar bg-black/60 p-4 rounded-b-xl">
+                    <div className="overflow-x-auto max-h-[350px] thin-scrollbar bg-black/60 p-4 rounded-b-[2px]">
                       <pre className="text-xs font-mono text-emerald-400/90 whitespace-pre leading-relaxed select-all">
                         <code>{typedProjects[selectedProject].codeHighlight.code}</code>
                       </pre>
                     </div>
                   </div>
                   {/* Code Explanation Details */}
-                  <div className="mt-3 p-4 bg-emerald-500/[0.02] border border-emerald-500/10 rounded-xl text-sm leading-relaxed text-zinc-400">
+                  <div className="mt-3 p-4 bg-emerald-500/[0.02] border border-emerald-500/10 rounded-sm text-sm leading-relaxed text-zinc-400">
                     <strong className="text-emerald-400">Architectural Note: </strong>
                     {typedProjects[selectedProject].codeHighlight.explanation}
                   </div>
@@ -253,15 +266,28 @@ function ProjectCard({
       style={{ y: cardY }}
       className="group cursor-pointer flex flex-col gap-6"
     >
-      <div className="relative w-full aspect-[4/3] overflow-hidden rounded-2xl bg-emerald-500/[0.02] border border-emerald-500/10">
-        <Image
-          src={project.image}
-          alt={project.title}
-          fill
-          sizes="(min-width: 768px) 50vw, 100vw"
-          className="object-cover object-top transition-transform duration-[1.5s] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
-        />
-        <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-700" />
+      {/* Browser Window Mockup Card Frame */}
+      <div className="w-full bg-zinc-950 border border-emerald-500/10 rounded-sm overflow-hidden flex flex-col shadow-[0_4px_25px_rgba(0,0,0,0.4)] group-hover:border-emerald-500/25 transition-all duration-300">
+        {/* Browser Header Top Bar */}
+        <div className="flex items-center gap-1.5 px-3 py-2 bg-zinc-900/60 border-b border-emerald-500/5 select-none">
+          <div className="w-2 h-2 rounded-full bg-red-500/60" />
+          <div className="w-2 h-2 rounded-full bg-yellow-500/60" />
+          <div className="w-2 h-2 rounded-full bg-green-500/60" />
+          <div className="mx-auto text-[9px] font-mono text-zinc-600 truncate max-w-[150px]">
+            {project.title.toLowerCase().replace(/\s+/g, "-")}.app
+          </div>
+        </div>
+        {/* Screenshot Viewport */}
+        <div className="relative w-full aspect-[16/9] overflow-hidden bg-emerald-500/[0.01]">
+          <Image
+            src={project.image}
+            alt={project.title}
+            fill
+            sizes="(min-width: 768px) 50vw, 100vw"
+            className="object-contain transition-transform duration-[1.5s] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-103"
+          />
+          <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-700" />
+        </div>
       </div>
       <div>
         <div className="flex items-center gap-3 mb-3">
