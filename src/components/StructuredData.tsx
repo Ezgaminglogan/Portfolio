@@ -22,7 +22,7 @@ export default function StructuredData() {
     ],
     jobTitle: "Full Stack Developer",
     description:
-      "Full Stack Developer from Carcar City, Cebu, Philippines. Specializing in PHP, MySQL, C#, ASP.NET MVC, .NET Framework, React, Next.js, and TypeScript. BSIT student at Cebu Technological University — Naga Extension Campus.",
+      "Full Stack Developer from Carcar City, Cebu, Philippines. Specializing in PHP, MySQL, C#, ASP.NET MVC, .NET Framework, React, Next.js, and TypeScript. BSIT graduate from Cebu Technological University — Naga Extension Campus.",
     knowsAbout: [
       "PHP",
       "MySQL",

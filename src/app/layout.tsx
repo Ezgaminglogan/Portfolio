@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     template: "%s | Logan M. Panucat",
   },
   description:
-    "Logan M. Panucat (Ezgaminglogan) — Full Stack Developer from Carcar City, Cebu, Philippines. Specializing in PHP, MySQL, C#, ASP.NET MVC, .NET Framework, React, Next.js, and TypeScript. BSIT student at CTU Naga. View my projects, skills, and experience.",
+    "Logan M. Panucat (Ezgaminglogan) — Full Stack Developer from Carcar City, Cebu, Philippines. Specializing in PHP, MySQL, C#, ASP.NET MVC, .NET Framework, React, Next.js, and TypeScript. BSIT graduate from CTU Naga. View my projects, skills, and experience.",
   keywords: [
     "Logan Panucat",
     "Logan M. Panucat",

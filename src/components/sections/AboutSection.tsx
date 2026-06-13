@@ -35,20 +35,20 @@ export default function AboutSection() {
           style={{ y: rightY }}
         >
           <p>
-            I&apos;m a 4th-year IT student at Cebu Technological University
-            — Naga Extension Campus, passionate about building practical
-            software solutions.
+            I&apos;m a Bachelor of Science in Information Technology
+            graduate from Cebu Technological University — Naga Extension
+            Campus, passionate about building practical software solutions.
           </p>
           <p>
-            My knowledge spans PHP, MySQL, C#, and ASP.NET MVC. With the
-            help of AI assistance, I enjoy transforming requirements
-            into functional, clean implementations, whether it&apos;s an
-            educational system or an industrial supply platform.
+            My expertise spans PHP, MySQL, C#, and ASP.NET MVC. With the
+            help of AI assistance, I transform requirements into
+            functional, clean implementations — from educational systems
+            and library platforms to industrial supply chain solutions.
           </p>
 
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 pt-6 border-t border-white/5">
             {[
-              { value: "4th", label: "Year Student" },
+              { value: "BSIT", label: "Graduate" },
               { value: "3+", label: "Major Projects" },
               { value: "Cebu", label: "Based In" },
             ].map((stat, i) => (

@@ -215,16 +215,16 @@ export const experiences = [
   {
     title: "Bachelor of Science in Information Technology",
     company: "Cebu Technological University - Naga Extension Campus",
-    period: "2022 - Present",
+    period: "2022 - 2026",
     description:
-      "Currently in 4th year, focusing on web development, database management, and software engineering. Completed multiple AI-assisted capstone projects addressing real-world problems.",
+      "Graduated with a focus on web development, database management, and software engineering. Completed multiple AI-assisted capstone projects addressing real-world problems.",
   },
   {
-    title: "Web Development Student",
-    company: "Self-Learning & Academic Projects",
+    title: "Web Development Engineer",
+    company: "Self-Learning & Professional Projects",
     period: "2023 - Present",
     description:
-      "Building knowledge in PHP, MySQL, .NET, and modern web frameworks through hands-on projects and continuous learning.",
+      "Continuously expanding expertise in PHP, MySQL, .NET, and modern web frameworks through hands-on projects and professional development.",
   },
   {
     title: "Capstone Project Developer",
