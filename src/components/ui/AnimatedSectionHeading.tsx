@@ -1,7 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
 import { useAnimatedHeading } from "@/hooks/useAnimatedHeading";
-import { ReactNode } from "react";
 
 interface AnimatedSectionHeadingProps {
   title: string;
@@ -43,7 +42,7 @@ export default function AnimatedSectionHeading({
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-xs font-semibold uppercase tracking-[0.3em] text-emerald-400/50 mb-4"
+            className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-400 mb-4"
           >
             {label}
           </motion.span>
@@ -58,7 +57,7 @@ export default function AnimatedSectionHeading({
           className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-black text-white tracking-tighter leading-none"
         >
           {displayTitle}
-          {hasPeriod && <span className="text-emerald-400">.</span>}
+          {hasPeriod && <span className="text-slate-400">.</span>}
         </motion.h2>
 
         {/* Subtitle */}
@@ -67,7 +66,7 @@ export default function AnimatedSectionHeading({
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-zinc-500 text-base mt-4 max-w-lg"
+            className="text-slate-400 text-base mt-4 max-w-lg"
           >
             {subtitle}
           </motion.p>
@@ -75,7 +74,7 @@ export default function AnimatedSectionHeading({
 
         {/* Animated decorative line */}
         <motion.div
-          className="h-px bg-linear-to-r from-transparent via-emerald-500/40 to-transparent mt-6"
+          className="h-px bg-linear-to-r from-transparent via-white/40 to-transparent mt-6"
           style={{ width: lineWidth }}
         />
       </motion.div>

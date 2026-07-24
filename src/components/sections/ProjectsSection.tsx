@@ -73,10 +73,10 @@ export default function ProjectsSection() {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
         style={{ y, opacity }}
-        className="py-32 border-t border-emerald-500/10 relative"
+        className="py-32 border-t border-white/10 relative"
       >
-        {/* Ambient neon glow */}
-        <div className="absolute top-1/3 right-0 w-150 h-150 bg-emerald-500/6 rounded-full blur-[150px] pointer-events-none glow-pulse" />
+        {/* Ambient silver glow */}
+        <div className="absolute top-1/3 right-0 w-150 h-150 bg-white/3 rounded-full blur-[150px] pointer-events-none glow-pulse" />
         <AnimatedSectionHeading
           title="Selected Work."
           label="Portfolio"
@@ -97,34 +97,34 @@ export default function ProjectsSection() {
 
       {selectedProject !== null && (
         <div
-          className="fixed inset-0 z-60 flex items-center justify-center p-4 bg-black/90 backdrop-blur-xl animate-fade-in"
+          className="fixed inset-0 z-60 flex items-center justify-center p-4 bg-[#0b0d12]/95 backdrop-blur-xl animate-fade-in"
           onClick={closeProjectModal}
         >
           <div
-            className="relative w-full max-w-3xl bg-black border border-emerald-500/15 rounded-sm overflow-hidden max-h-[90vh] overflow-y-auto thin-scrollbar animate-scale-up"
+            className="relative w-full max-w-3xl bg-[#0b0d12] border border-white/15 rounded-sm overflow-hidden max-h-[90vh] overflow-y-auto thin-scrollbar animate-scale-up"
             onClick={(e) => e.stopPropagation()}
           >
             <button
               onClick={closeProjectModal}
               type="button"
               aria-label="Close project details"
-              className="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-black/50 backdrop-blur-md flex items-center justify-center text-zinc-400 hover:text-emerald-400 border border-emerald-500/15 transition-colors"
+              className="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-black/50 backdrop-blur-md flex items-center justify-center text-zinc-400 hover:text-white border border-white/15 transition-colors"
             >
               <XMarkIcon className="w-5 h-5" />
             </button>
             {/* Browser Window Mockup Frame */}
-            <div className="w-full bg-zinc-950 border-b border-emerald-500/10 overflow-hidden flex flex-col">
+            <div className="w-full bg-[#12151e] border-b border-white/10 overflow-hidden flex flex-col">
               {/* Browser Header Top Bar */}
-              <div className="flex items-center gap-1.5 px-4 py-2.5 bg-zinc-900/60 border-b border-emerald-500/5 select-none">
+              <div className="flex items-center gap-1.5 px-4 py-2.5 bg-black/40 border-b border-white/5 select-none">
                 <div className="w-2.5 h-2.5 rounded-full bg-red-500/60" />
                 <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/60" />
                 <div className="w-2.5 h-2.5 rounded-full bg-green-500/60" />
-                <div className="mx-auto text-[10px] font-mono text-zinc-500 truncate max-w-50">
+                <div className="mx-auto text-[10px] font-mono text-zinc-400 truncate max-w-50">
                   {typedProjects[selectedProject].title.toLowerCase().replace(/\s+/g, "-")}.app
                 </div>
               </div>
               {/* Screenshot Viewport */}
-              <div className="relative w-full aspect-video bg-emerald-500/1">
+              <div className="relative w-full aspect-video bg-white/2">
                 <Image
                   src={typedProjects[selectedProject].image}
                   alt={typedProjects[selectedProject].title}
@@ -135,13 +135,13 @@ export default function ProjectsSection() {
               </div>
             </div>
             <div className="p-8">
-              <div className="text-xs uppercase tracking-widest text-zinc-500 mb-2">
+              <div className="text-xs uppercase tracking-widest text-slate-400 mb-2">
                 {typedProjects[selectedProject].type}
               </div>
               <h3 className="text-3xl font-bold text-white tracking-tight mb-4">
                 {typedProjects[selectedProject].title}
               </h3>
-              <p className="text-zinc-400 leading-relaxed mb-8">
+              <p className="text-slate-300 leading-relaxed mb-8">
                 {typedProjects[selectedProject].description}
               </p>
 
@@ -152,7 +152,7 @@ export default function ProjectsSection() {
                     href={typedProjects[selectedProject].liveUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="px-6 py-3 bg-emerald-500 text-black rounded-full text-sm font-semibold hover:bg-emerald-400 transition-colors hover:shadow-[0_0_20px_rgba(52,211,153,0.25)]"
+                    className="px-6 py-3 bg-white text-black rounded-full text-sm font-semibold hover:bg-slate-200 transition-colors hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]"
                   >
                     Visit Live Site
                   </a>
@@ -162,7 +162,7 @@ export default function ProjectsSection() {
                     href={typedProjects[selectedProject].githubUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-2 px-6 py-3 border border-emerald-500/20 text-emerald-400 rounded-full text-sm font-semibold hover:bg-emerald-500/5 transition-colors hover:shadow-[0_0_20px_rgba(52,211,153,0.1)]"
+                    className="inline-flex items-center gap-2 px-6 py-3 border border-white/20 text-white rounded-full text-sm font-semibold hover:bg-white/10 transition-colors hover:shadow-[0_0_20px_rgba(255,255,255,0.1)]"
                   >
                     <svg className="w-4 h-4 shrink-0" fill="currentColor" viewBox="0 0 24 24">
                       <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
@@ -173,7 +173,7 @@ export default function ProjectsSection() {
                 {typedProjects[selectedProject].codeHighlight && (
                   <button
                     onClick={() => setShowCode(!showCode)}
-                    className="inline-flex items-center gap-2 px-6 py-3 border border-emerald-500/20 text-emerald-400 rounded-full text-sm font-semibold hover:bg-emerald-500/5 transition-colors focus:outline-none"
+                    className="inline-flex items-center gap-2 px-6 py-3 border border-white/20 text-white rounded-full text-sm font-semibold hover:bg-white/10 transition-colors focus:outline-none"
                   >
                     {showCode ? "Hide Blueprint" : "Code Blueprint"}
                   </button>
@@ -188,44 +188,44 @@ export default function ProjectsSection() {
                   transition={{ duration: 0.3 }}
                   className="mb-8 overflow-hidden"
                 >
-                  <div className="bg-zinc-950 border border-emerald-500/15 rounded-sm">
+                  <div className="bg-[#12151e] border border-white/15 rounded-sm">
                     {/* Terminal Header */}
-                    <div className="flex items-center justify-between px-4 py-3 bg-zinc-900 border-b border-emerald-500/10 rounded-t-xs">
+                    <div className="flex items-center justify-between px-4 py-3 bg-black/40 border-b border-white/10 rounded-t-xs">
                       <div className="flex items-center gap-2">
                         <div className="w-3.5 h-3.5 rounded-full bg-red-500/80" />
                         <div className="w-3.5 h-3.5 rounded-full bg-yellow-500/80" />
                         <div className="w-3.5 h-3.5 rounded-full bg-green-500/80" />
-                        <span className="text-xs font-mono text-zinc-500 ml-2">
+                        <span className="text-xs font-mono text-zinc-400 ml-2">
                           {typedProjects[selectedProject].codeHighlight.filename}
                         </span>
                       </div>
                       <button
                         onClick={() => handleCopy(typedProjects[selectedProject].codeHighlight!.code)}
-                        className="text-xs text-zinc-500 hover:text-emerald-400 font-mono transition-colors focus:outline-none"
+                        className="text-xs text-zinc-400 hover:text-white font-mono transition-colors focus:outline-none"
                       >
                         {copied ? "[copied]" : "[copy]"}
                       </button>
                     </div>
                     {/* Terminal Code Body */}
-                    <div className="overflow-x-auto max-h-87.5 thin-scrollbar bg-black/60 p-4 rounded-b-xs">
-                      <pre className="text-xs font-mono text-emerald-400/90 whitespace-pre leading-relaxed select-all">
+                    <div className="overflow-x-auto max-h-87.5 thin-scrollbar bg-[#0b0d12]/90 p-4 rounded-b-xs">
+                      <pre className="text-xs font-mono text-slate-200 whitespace-pre leading-relaxed select-all">
                         <code>{typedProjects[selectedProject].codeHighlight.code}</code>
                       </pre>
                     </div>
                   </div>
                   {/* Code Explanation Details */}
-                  <div className="mt-3 p-4 bg-emerald-500/2 border border-emerald-500/10 rounded-sm text-sm leading-relaxed text-zinc-400">
-                    <strong className="text-emerald-400">Architectural Note: </strong>
+                  <div className="mt-3 p-4 bg-white/5 border border-white/10 rounded-sm text-sm leading-relaxed text-slate-300">
+                    <strong className="text-white">Architectural Note: </strong>
                     {typedProjects[selectedProject].codeHighlight.explanation}
                   </div>
                 </motion.div>
               )}
 
-              <div className="flex flex-wrap gap-2 pt-6 border-t border-emerald-500/10">
+              <div className="flex flex-wrap gap-2 pt-6 border-t border-white/10">
                 {typedProjects[selectedProject].tech.map((t) => (
                   <span
                     key={t}
-                    className="px-3 py-1 bg-emerald-500/5 border border-emerald-500/15 text-zinc-300 text-xs rounded-full"
+                    className="px-3 py-1 bg-white/5 border border-white/15 text-slate-300 text-xs rounded-full"
                   >
                     {t}
                   </span>
@@ -250,7 +250,6 @@ function ProjectCard({
   scrollYProgress: MotionValue<number>;
   onOpen: () => void;
 }) {
-  // Left column drifts up, right column drifts down
   const isLeft = index % 2 === 0;
   const speed = isLeft ? 0.05 : -0.05;
   const cardY = useChildParallax(scrollYProgress, speed);
@@ -265,18 +264,18 @@ function ProjectCard({
       className="group cursor-pointer flex flex-col gap-6"
     >
       {/* Browser Window Mockup Card Frame */}
-      <div className="w-full bg-zinc-950 border border-emerald-500/10 rounded-sm overflow-hidden flex flex-col shadow-[0_4px_25px_rgba(0,0,0,0.4)] group-hover:border-emerald-500/25 transition-all duration-300">
+      <div className="w-full bg-[#12151e] border border-white/10 rounded-sm overflow-hidden flex flex-col shadow-[0_4px_25px_rgba(0,0,0,0.5)] group-hover:border-white/25 transition-all duration-300">
         {/* Browser Header Top Bar */}
-        <div className="flex items-center gap-1.5 px-3 py-2 bg-zinc-900/60 border-b border-emerald-500/5 select-none">
+        <div className="flex items-center gap-1.5 px-3 py-2 bg-black/40 border-b border-white/5 select-none">
           <div className="w-2 h-2 rounded-full bg-red-500/60" />
           <div className="w-2 h-2 rounded-full bg-yellow-500/60" />
           <div className="w-2 h-2 rounded-full bg-green-500/60" />
-          <div className="mx-auto text-[9px] font-mono text-zinc-600 truncate max-w-37.5">
+          <div className="mx-auto text-[9px] font-mono text-zinc-400 truncate max-w-37.5">
             {project.title.toLowerCase().replace(/\s+/g, "-")}.app
           </div>
         </div>
         {/* Screenshot Viewport */}
-        <div className="relative w-full aspect-video overflow-hidden bg-emerald-500/1">
+        <div className="relative w-full aspect-video overflow-hidden bg-white/2">
           <Image
             src={project.image}
             alt={project.title}
@@ -289,16 +288,16 @@ function ProjectCard({
       </div>
       <div>
         <div className="flex items-center gap-3 mb-3">
-          <span className="text-xs uppercase tracking-widest text-zinc-500">
+          <span className="text-xs uppercase tracking-widest text-slate-400">
             {project.type}
           </span>
         </div>
-        <h3 className="text-xl font-semibold text-white mb-3 group-hover:text-emerald-300 transition-colors">
+        <h3 className="text-xl font-semibold text-white mb-3 group-hover:text-slate-200 transition-colors">
           {project.title}
         </h3>
         <div className="flex flex-wrap gap-2">
           {project.tech.map((t) => (
-            <span key={t} className="text-xs text-zinc-500">
+            <span key={t} className="text-xs text-slate-400">
               {t}
             </span>
           ))}
@@ -309,7 +308,7 @@ function ProjectCard({
             target="_blank"
             rel="noreferrer"
             onClick={(e) => e.stopPropagation()}
-            className="inline-block mt-4 text-sm text-emerald-400 border-b border-emerald-500/20 hover:border-emerald-400 transition-colors"
+            className="inline-block mt-4 text-sm text-white border-b border-white/20 hover:border-white transition-colors"
           >
             Live Site
           </a>

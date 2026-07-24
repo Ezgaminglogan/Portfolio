@@ -40,18 +40,18 @@ export default function Modal({
       case "loading":
         return {
           icon: (
-            <div className="w-16 h-16 border-4 border-emerald-500/30 border-t-emerald-500 rounded-full animate-spin"></div>
+            <div className="w-16 h-16 border-4 border-sky-500/30 border-t-sky-400 rounded-full animate-spin"></div>
           ),
-          iconBg: "bg-emerald-500/10",
-          borderColor: "border-emerald-500/30",
-          titleColor: "text-emerald-400",
+          iconBg: "bg-sky-500/10",
+          borderColor: "border-sky-500/30",
+          titleColor: "text-sky-400",
           messageColor: "text-gray-300",
         };
       case "success":
         return {
           icon: (
             <svg
-              className="w-16 h-16 text-emerald-400"
+              className="w-16 h-16 text-sky-400"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -64,9 +64,9 @@ export default function Modal({
               ></path>
             </svg>
           ),
-          iconBg: "bg-emerald-500/10",
-          borderColor: "border-emerald-500/30",
-          titleColor: "text-emerald-400",
+          iconBg: "bg-sky-500/10",
+          borderColor: "border-sky-500/30",
+          titleColor: "text-sky-400",
           messageColor: "text-gray-300",
         };
       case "error":
@@ -94,9 +94,9 @@ export default function Modal({
       default:
         return {
           icon: null,
-          iconBg: "bg-emerald-500/10",
-          borderColor: "border-emerald-500/30",
-          titleColor: "text-emerald-400",
+          iconBg: "bg-sky-500/10",
+          borderColor: "border-sky-500/30",
+          titleColor: "text-sky-400",
           messageColor: "text-gray-300",
         };
     }
@@ -105,10 +105,10 @@ export default function Modal({
   const styles = getModalStyles();
 
   return (
-    <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
+    <div className="fixed inset-0 z-60 flex items-center justify-center p-4">
       {/* Backdrop */}
       <div
-        className="absolute inset-0 bg-black/80 backdrop-blur-sm"
+        className="absolute inset-0 bg-[#070913]/80 backdrop-blur-sm"
         onClick={onClose}
       ></div>
 
@@ -120,13 +120,13 @@ export default function Modal({
         aria-labelledby={titleId}
         aria-describedby={messageId}
       >
-        <div className="relative bg-gradient-to-br from-gray-900 to-black border border-gray-800 rounded-2xl shadow-2xl overflow-hidden">
+        <div className="relative bg-linear-to-br from-slate-900 to-[#070913] border border-sky-500/20 rounded-2xl shadow-2xl overflow-hidden">
           {/* Gradient Border Effect */}
           <div
-            className={`absolute inset-0 bg-gradient-to-br ${
+            className={`absolute inset-0 bg-linear-to-br ${
               type === "error"
                 ? "from-red-500/20 to-orange-500/10"
-                : "from-emerald-500/20 to-teal-500/10"
+                : "from-sky-500/20 to-indigo-500/10"
             } opacity-50`}
           ></div>
 

@@ -47,7 +47,7 @@ export default function CertificatesSection() {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
         style={{ y, opacity }}
-        className="py-32 border-t border-emerald-500/10 relative overflow-hidden"
+        className="py-32 border-t border-white/10 relative overflow-hidden"
       >
         <AnimatedSectionHeading
           title="Certifications."
@@ -58,8 +58,8 @@ export default function CertificatesSection() {
         {/* Infinite Carousel Container */}
         <div className="relative w-full overflow-hidden select-none -mx-6 px-6">
           {/* Side Fade Gradients for premium blending */}
-          <div className="absolute inset-y-0 left-0 w-16 md:w-32 bg-linear-to-r from-black via-black/40 to-transparent z-10 pointer-events-none" />
-          <div className="absolute inset-y-0 right-0 w-16 md:w-32 bg-linear-to-l from-black via-black/40 to-transparent z-10 pointer-events-none" />
+          <div className="absolute inset-y-0 left-0 w-16 md:w-32 bg-linear-to-r from-[#0b0d12] via-[#0b0d12]/50 to-transparent z-10 pointer-events-none" />
+          <div className="absolute inset-y-0 right-0 w-16 md:w-32 bg-linear-to-l from-[#0b0d12] via-[#0b0d12]/50 to-transparent z-10 pointer-events-none" />
 
           {/* Marquee Track */}
           <div className="animate-marquee gap-8 py-6">
@@ -67,10 +67,10 @@ export default function CertificatesSection() {
               <div
                 key={index}
                 onClick={() => openCertificateModal(index)}
-                className="w-70 sm:w-87.5 md:w-100 shrink-0 group cursor-pointer bg-emerald-950/2 hover:bg-emerald-500/4 border border-emerald-500/10 hover:border-emerald-500/25 rounded-sm p-5 transition-all duration-500 flex flex-col gap-4 shadow-[0_4px_25px_rgba(0,0,0,0.4)] hover:shadow-[0_0_30px_rgba(52,211,153,0.06)] hover:-translate-y-1"
+                className="w-70 sm:w-87.5 md:w-100 shrink-0 group cursor-pointer bg-[#12151e]/60 hover:bg-white/4 border border-white/10 hover:border-white/25 rounded-sm p-5 transition-all duration-500 flex flex-col gap-4 shadow-[0_4px_25px_rgba(0,0,0,0.4)] hover:shadow-[0_0_30px_rgba(255,255,255,0.06)] hover:-translate-y-1"
               >
                 {/* Certificate Preview Image */}
-                <div className="relative w-full aspect-4/3 rounded-sm overflow-hidden bg-zinc-950 border border-emerald-500/5">
+                <div className="relative w-full aspect-4/3 rounded-sm overflow-hidden bg-[#0b0d12] border border-white/5">
                   <Image
                     src={cert.image}
                     alt={cert.alt || cert.title}
@@ -83,13 +83,13 @@ export default function CertificatesSection() {
 
                 {/* Meta details */}
                 <div>
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-400 bg-emerald-500/6 border border-emerald-500/10 px-2.5 py-1 rounded-full">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-white bg-white/10 border border-white/15 px-2.5 py-1 rounded-full">
                     {cert.category}
                   </span>
-                  <h3 className="text-lg font-bold text-white mt-3.5 group-hover:text-emerald-300 transition-colors tracking-tight line-clamp-1">
+                  <h3 className="text-lg font-bold text-white mt-3.5 group-hover:text-slate-200 transition-colors tracking-tight line-clamp-1">
                     {cert.title}
                   </h3>
-                  <p className="text-zinc-500 text-xs mt-2 leading-relaxed line-clamp-2">
+                  <p className="text-slate-400 text-xs mt-2 leading-relaxed line-clamp-2">
                     {cert.description}
                   </p>
 
@@ -97,7 +97,7 @@ export default function CertificatesSection() {
                     {cert.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="px-2 py-0.5 bg-zinc-950 border border-emerald-500/5 font-semibold text-zinc-500 text-[10px] rounded"
+                        className="px-2 py-0.5 bg-[#0b0d12] border border-white/10 font-semibold text-slate-300 text-[10px] rounded"
                       >
                         {tag}
                       </span>
@@ -113,22 +113,22 @@ export default function CertificatesSection() {
       {/* Modal View */}
       {selectedCertificate !== null && (
         <div
-          className="fixed inset-0 z-60 flex items-center justify-center p-4 bg-black/95 backdrop-blur-xl animate-fade-in"
+          className="fixed inset-0 z-60 flex items-center justify-center p-4 bg-[#0b0d12]/95 backdrop-blur-xl animate-fade-in"
           onClick={closeCertificateModal}
         >
           <div
-            className="relative w-full max-w-5xl bg-black border border-emerald-500/15 rounded-sm overflow-hidden flex flex-col shadow-2xl animate-scale-up"
+            className="relative w-full max-w-5xl bg-[#0b0d12] border border-white/15 rounded-sm overflow-hidden flex flex-col shadow-2xl animate-scale-up"
             onClick={(e) => e.stopPropagation()}
           >
             <button
               onClick={closeCertificateModal}
               type="button"
               aria-label="Close certificate"
-              className="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-black/50 backdrop-blur-md flex items-center justify-center text-zinc-400 hover:text-emerald-400 transition-colors border border-emerald-500/15"
+              className="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-black/50 backdrop-blur-md flex items-center justify-center text-zinc-400 hover:text-white transition-colors border border-white/15"
             >
               <XMarkIcon className="w-5 h-5" />
             </button>
-            <div className="relative w-full h-[60vh] sm:h-[75vh] bg-emerald-500/2 shrink-0 flex items-center justify-center p-4">
+            <div className="relative w-full h-[60vh] sm:h-[75vh] bg-white/2 shrink-0 flex items-center justify-center p-4">
               <div className="relative w-full h-full max-w-4xl max-h-full">
                 <Image
                   src={certificates[selectedCertificate].image}
@@ -143,11 +143,11 @@ export default function CertificatesSection() {
                 />
               </div>
             </div>
-            <div className="p-6 border-t border-emerald-500/10 bg-black/90 backdrop-blur">
+            <div className="p-6 border-t border-white/10 bg-[#0b0d12]/90 backdrop-blur">
               <h3 className="text-xl font-bold text-white mb-2 tracking-tight">
                 {certificates[selectedCertificate].title}
               </h3>
-              <p className="text-zinc-400 text-sm leading-relaxed">
+              <p className="text-slate-300 text-sm leading-relaxed">
                 {certificates[selectedCertificate].description}
               </p>
             </div>
