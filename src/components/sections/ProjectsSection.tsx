@@ -5,6 +5,7 @@ import Image from "next/image";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { projects } from "@/app/data";
 import { useParallax, useChildParallax } from "@/hooks/useParallax";
+import AnimatedSectionHeading from "@/components/ui/AnimatedSectionHeading";
 
 interface Project {
   title: string;
@@ -75,15 +76,12 @@ export default function ProjectsSection() {
         className="py-32 border-t border-emerald-500/10 relative"
       >
         {/* Ambient neon glow */}
-        <div className="absolute top-1/3 right-0 w-[600px] h-[600px] bg-emerald-500/[0.06] rounded-full blur-[150px] pointer-events-none glow-pulse" />
-        <div className="mb-20">
-          <h2 className="text-4xl font-extrabold text-white tracking-tighter mb-4">
-            Selected Work.
-          </h2>
-          <p className="text-zinc-500">
-            A curation of my recent development projects.
-          </p>
-        </div>
+        <div className="absolute top-1/3 right-0 w-150 h-150 bg-emerald-500/6 rounded-full blur-[150px] pointer-events-none glow-pulse" />
+        <AnimatedSectionHeading
+          title="Selected Work."
+          label="Portfolio"
+          subtitle="A curation of my recent development projects."
+        />
         <div className="grid md:grid-cols-2 gap-12">
           {typedProjects.map((project, index) => (
             <ProjectCard
@@ -99,7 +97,7 @@ export default function ProjectsSection() {
 
       {selectedProject !== null && (
         <div
-          className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/90 backdrop-blur-xl animate-fade-in"
+          className="fixed inset-0 z-60 flex items-center justify-center p-4 bg-black/90 backdrop-blur-xl animate-fade-in"
           onClick={closeProjectModal}
         >
           <div
@@ -121,12 +119,12 @@ export default function ProjectsSection() {
                 <div className="w-2.5 h-2.5 rounded-full bg-red-500/60" />
                 <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/60" />
                 <div className="w-2.5 h-2.5 rounded-full bg-green-500/60" />
-                <div className="mx-auto text-[10px] font-mono text-zinc-500 truncate max-w-[200px]">
+                <div className="mx-auto text-[10px] font-mono text-zinc-500 truncate max-w-50">
                   {typedProjects[selectedProject].title.toLowerCase().replace(/\s+/g, "-")}.app
                 </div>
               </div>
               {/* Screenshot Viewport */}
-              <div className="relative w-full aspect-[16/9] bg-emerald-500/[0.01]">
+              <div className="relative w-full aspect-video bg-emerald-500/1">
                 <Image
                   src={typedProjects[selectedProject].image}
                   alt={typedProjects[selectedProject].title}
@@ -192,7 +190,7 @@ export default function ProjectsSection() {
                 >
                   <div className="bg-zinc-950 border border-emerald-500/15 rounded-sm">
                     {/* Terminal Header */}
-                    <div className="flex items-center justify-between px-4 py-3 bg-zinc-900 border-b border-emerald-500/10 rounded-t-[2px]">
+                    <div className="flex items-center justify-between px-4 py-3 bg-zinc-900 border-b border-emerald-500/10 rounded-t-xs">
                       <div className="flex items-center gap-2">
                         <div className="w-3.5 h-3.5 rounded-full bg-red-500/80" />
                         <div className="w-3.5 h-3.5 rounded-full bg-yellow-500/80" />
@@ -209,14 +207,14 @@ export default function ProjectsSection() {
                       </button>
                     </div>
                     {/* Terminal Code Body */}
-                    <div className="overflow-x-auto max-h-[350px] thin-scrollbar bg-black/60 p-4 rounded-b-[2px]">
+                    <div className="overflow-x-auto max-h-87.5 thin-scrollbar bg-black/60 p-4 rounded-b-xs">
                       <pre className="text-xs font-mono text-emerald-400/90 whitespace-pre leading-relaxed select-all">
                         <code>{typedProjects[selectedProject].codeHighlight.code}</code>
                       </pre>
                     </div>
                   </div>
                   {/* Code Explanation Details */}
-                  <div className="mt-3 p-4 bg-emerald-500/[0.02] border border-emerald-500/10 rounded-sm text-sm leading-relaxed text-zinc-400">
+                  <div className="mt-3 p-4 bg-emerald-500/2 border border-emerald-500/10 rounded-sm text-sm leading-relaxed text-zinc-400">
                     <strong className="text-emerald-400">Architectural Note: </strong>
                     {typedProjects[selectedProject].codeHighlight.explanation}
                   </div>
@@ -227,7 +225,7 @@ export default function ProjectsSection() {
                 {typedProjects[selectedProject].tech.map((t) => (
                   <span
                     key={t}
-                    className="px-3 py-1 bg-emerald-500/[0.05] border border-emerald-500/15 text-zinc-300 text-xs rounded-full"
+                    className="px-3 py-1 bg-emerald-500/5 border border-emerald-500/15 text-zinc-300 text-xs rounded-full"
                   >
                     {t}
                   </span>
@@ -273,12 +271,12 @@ function ProjectCard({
           <div className="w-2 h-2 rounded-full bg-red-500/60" />
           <div className="w-2 h-2 rounded-full bg-yellow-500/60" />
           <div className="w-2 h-2 rounded-full bg-green-500/60" />
-          <div className="mx-auto text-[9px] font-mono text-zinc-600 truncate max-w-[150px]">
+          <div className="mx-auto text-[9px] font-mono text-zinc-600 truncate max-w-37.5">
             {project.title.toLowerCase().replace(/\s+/g, "-")}.app
           </div>
         </div>
         {/* Screenshot Viewport */}
-        <div className="relative w-full aspect-[16/9] overflow-hidden bg-emerald-500/[0.01]">
+        <div className="relative w-full aspect-video overflow-hidden bg-emerald-500/1">
           <Image
             src={project.image}
             alt={project.title}

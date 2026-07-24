@@ -347,27 +347,38 @@ public class SupportHub : Hub
   },
 ];
 
+export const education = [
+  {
+    degree: "Bachelor of Science in Information Technology",
+    institution: "Cebu Technological University - Naga Extension Campus",
+    period: "2022 - 2026",
+    honor: "Cum Laude",
+    description:
+      "Graduated Cum Laude with a focus on web development, database management, and software engineering. Completed multiple AI-assisted capstone projects addressing real-world problems.",
+    highlights: ["Cum Laude Graduate", "Software Engineering", "Database Systems"],
+  },
+];
+
 export const experiences = [
   {
-    title: "Bachelor of Science in Information Technology",
-    company: "Cebu Technological University - Naga Extension Campus",
-    period: "2022 - 2026",
-    description:
-      "Graduated with a focus on web development, database management, and software engineering. Completed multiple AI-assisted capstone projects addressing real-world problems.",
-  },
-  {
-    title: "Web Development Engineer",
-    company: "Self-Learning & Professional Projects",
+    role: "Full-Stack Web Development Engineer",
+    organization: "Independent & Client Projects",
     period: "2023 - Present",
+    type: "Engineering Experience",
+    badge: "Active",
     description:
-      "Continuously expanding expertise in PHP, MySQL, .NET, and modern web frameworks through hands-on projects and professional development.",
+      "Continuously architecting and developing full-stack web applications, custom databases, and client solutions utilizing PHP, MySQL, .NET, React, and Next.js.",
+    skills: ["PHP", "MySQL", "C#", "ASP.NET MVC", "React", "Next.js", "TailwindCSS"],
   },
   {
-    title: "Capstone Project Developer",
-    company: "CTU Naga - Academic Project",
+    role: "Lead Capstone Developer",
+    organization: "CTU Naga Extension Campus",
     period: "2025",
+    type: "System Architecture",
+    badge: "Lead Developer",
     description:
-      "Led AI-assisted development of capstone projects including Supplify (a cross-platform supply chain solution). Demonstrated full-stack development capabilities and real-world problem-solving skills.",
+      "Architected and deployed production-ready full-stack enterprise systems including Supplify (supply chain platform) and MJE Enterprises ecosystem.",
+    skills: ["TanStack", "Prisma ORM", "PostgreSQL", "Blazor Framework", "C#"],
   },
 ];
 

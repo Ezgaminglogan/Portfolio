@@ -5,6 +5,7 @@ import Image from "next/image";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { certificates } from "@/app/data";
 import { useParallax } from "@/hooks/useParallax";
+import AnimatedSectionHeading from "@/components/ui/AnimatedSectionHeading";
 
 export default function CertificatesSection() {
   const [selectedCertificate, setSelectedCertificate] = useState<number | null>(
@@ -48,20 +49,17 @@ export default function CertificatesSection() {
         style={{ y, opacity }}
         className="py-32 border-t border-emerald-500/10 relative overflow-hidden"
       >
-        <div className="mb-20">
-          <h2 className="text-4xl font-extrabold text-white tracking-tighter mb-4">
-            Certifications.
-          </h2>
-          <p className="text-zinc-500">
-            Professional credentials and continuous learning achievements.
-          </p>
-        </div>
+        <AnimatedSectionHeading
+          title="Certifications."
+          label="Credentials"
+          subtitle="Professional credentials and continuous learning achievements."
+        />
 
         {/* Infinite Carousel Container */}
         <div className="relative w-full overflow-hidden select-none -mx-6 px-6">
           {/* Side Fade Gradients for premium blending */}
-          <div className="absolute inset-y-0 left-0 w-16 md:w-32 bg-gradient-to-r from-black via-black/40 to-transparent z-10 pointer-events-none" />
-          <div className="absolute inset-y-0 right-0 w-16 md:w-32 bg-gradient-to-l from-black via-black/40 to-transparent z-10 pointer-events-none" />
+          <div className="absolute inset-y-0 left-0 w-16 md:w-32 bg-linear-to-r from-black via-black/40 to-transparent z-10 pointer-events-none" />
+          <div className="absolute inset-y-0 right-0 w-16 md:w-32 bg-linear-to-l from-black via-black/40 to-transparent z-10 pointer-events-none" />
 
           {/* Marquee Track */}
           <div className="animate-marquee gap-8 py-6">
@@ -69,10 +67,10 @@ export default function CertificatesSection() {
               <div
                 key={index}
                 onClick={() => openCertificateModal(index)}
-                className="w-[280px] sm:w-[350px] md:w-[400px] flex-shrink-0 group cursor-pointer bg-emerald-950/[0.02] hover:bg-emerald-500/[0.04] border border-emerald-500/10 hover:border-emerald-500/25 rounded-sm p-5 transition-all duration-500 flex flex-col gap-4 shadow-[0_4px_25px_rgba(0,0,0,0.4)] hover:shadow-[0_0_30px_rgba(52,211,153,0.06)] hover:-translate-y-1"
+                className="w-70 sm:w-87.5 md:w-100 shrink-0 group cursor-pointer bg-emerald-950/2 hover:bg-emerald-500/4 border border-emerald-500/10 hover:border-emerald-500/25 rounded-sm p-5 transition-all duration-500 flex flex-col gap-4 shadow-[0_4px_25px_rgba(0,0,0,0.4)] hover:shadow-[0_0_30px_rgba(52,211,153,0.06)] hover:-translate-y-1"
               >
                 {/* Certificate Preview Image */}
-                <div className="relative w-full aspect-[4/3] rounded-sm overflow-hidden bg-zinc-950 border border-emerald-500/5">
+                <div className="relative w-full aspect-4/3 rounded-sm overflow-hidden bg-zinc-950 border border-emerald-500/5">
                   <Image
                     src={cert.image}
                     alt={cert.alt || cert.title}
@@ -82,10 +80,10 @@ export default function CertificatesSection() {
                   />
                   <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500" />
                 </div>
-                
+
                 {/* Meta details */}
                 <div>
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-400 bg-emerald-500/[0.06] border border-emerald-500/10 px-2.5 py-1 rounded-full">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-400 bg-emerald-500/6 border border-emerald-500/10 px-2.5 py-1 rounded-full">
                     {cert.category}
                   </span>
                   <h3 className="text-lg font-bold text-white mt-3.5 group-hover:text-emerald-300 transition-colors tracking-tight line-clamp-1">
@@ -94,7 +92,7 @@ export default function CertificatesSection() {
                   <p className="text-zinc-500 text-xs mt-2 leading-relaxed line-clamp-2">
                     {cert.description}
                   </p>
-                  
+
                   <div className="flex flex-wrap gap-1.5 mt-4">
                     {cert.tags.map((tag) => (
                       <span
@@ -115,7 +113,7 @@ export default function CertificatesSection() {
       {/* Modal View */}
       {selectedCertificate !== null && (
         <div
-          className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/95 backdrop-blur-xl animate-fade-in"
+          className="fixed inset-0 z-60 flex items-center justify-center p-4 bg-black/95 backdrop-blur-xl animate-fade-in"
           onClick={closeCertificateModal}
         >
           <div
@@ -130,7 +128,7 @@ export default function CertificatesSection() {
             >
               <XMarkIcon className="w-5 h-5" />
             </button>
-            <div className="relative w-full h-[60vh] sm:h-[75vh] bg-emerald-500/[0.02] flex-shrink-0 flex items-center justify-center p-4">
+            <div className="relative w-full h-[60vh] sm:h-[75vh] bg-emerald-500/2 shrink-0 flex items-center justify-center p-4">
               <div className="relative w-full h-full max-w-4xl max-h-full">
                 <Image
                   src={certificates[selectedCertificate].image}

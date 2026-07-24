@@ -3,6 +3,7 @@ import { motion, MotionValue } from "framer-motion";
 import { stacks, professionalSkills, type SkillItem } from "@/app/data";
 import { useParallax, useChildParallax } from "@/hooks/useParallax";
 import { useState } from "react";
+import AnimatedSectionHeading from "@/components/ui/AnimatedSectionHeading";
 
 // Devicon CDN slug mapping (data.icon → devicon folder name)
 // For icons where the slug differs from the data key
@@ -53,8 +54,6 @@ export default function SkillsSection() {
     fadeIn: true,
   });
 
-  const headingY = useChildParallax(scrollYProgress, 0.1);
-
   return (
     <motion.section
       ref={ref}
@@ -67,14 +66,13 @@ export default function SkillsSection() {
     >
       {/* Ambient neon glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-175 h-125 bg-emerald-500/[0.07] rounded-full blur-[150px] pointer-events-none glow-pulse" />
-      <motion.div className="mb-14" style={{ y: headingY }}>
-        <h2 className="text-4xl font-extrabold text-white tracking-tighter mb-4">
-          Stacks.
-        </h2>
-        <p className="text-zinc-500">
-          Languages, frameworks, databases, and tools I build with.
-        </p>
-      </motion.div>
+
+      {/* Big animated heading */}
+      <AnimatedSectionHeading
+        title="Stacks."
+        label="Tech I use"
+        subtitle="Languages, frameworks, databases, and tools I build with."
+      />
 
       {/* Flat icon grid — no category labels */}
       <div className="flex flex-wrap gap-3 mb-24">
@@ -88,15 +86,13 @@ export default function SkillsSection() {
         ))}
       </div>
 
-      {/* Professional Competencies — kept as-is */}
-      <div className="mb-8">
-        <h3 className="text-xl font-semibold text-white tracking-tight mb-2">
-          Professional Competencies
-        </h3>
-        <p className="text-zinc-500 text-sm">
-          Core disciplines beyond code — systems, security, and engineering
-          practices.
-        </p>
+      {/* Professional Competencies */}
+      <div className="pt-16">
+        <AnimatedSectionHeading
+          title="Professional Competencies."
+          label="Beyond Code"
+          subtitle="Core disciplines beyond code — systems, security, and engineering practices."
+        />
       </div>
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {professionalSkills.map((ps, index) => (
