@@ -36,7 +36,9 @@ export default function AboutSection() {
         >
           <p>
             I&apos;m a Bachelor of Science in Information Technology
-            graduate from Cebu Technological University — Naga Extension
+            graduate{" "}
+            <span className="text-emerald-400 font-semibold">Cum Laude</span>{" "}
+            from Cebu Technological University — Naga Extension
             Campus, passionate about building practical software solutions.
           </p>
           <p>
@@ -48,7 +50,7 @@ export default function AboutSection() {
 
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 pt-6 border-t border-emerald-500/10">
             {[
-              { value: "BSIT", label: "Graduate" },
+              { value: "BSIT", label: "Cum Laude" },
               { value: "3+", label: "Major Projects" },
               { value: "Cebu", label: "Based In" },
             ].map((stat, i) => (
@@ -80,6 +82,35 @@ export default function AboutSection() {
           >
             <ArrowDownTrayIcon className="w-4 h-4 group-hover:-translate-y-1 transition-transform" /> Download Resume
           </a>
+
+          {/* Embedded Google Map */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="mt-8 rounded-2xl overflow-hidden border border-emerald-500/10 relative group"
+          >
+            <div className="absolute inset-0 rounded-2xl pointer-events-none z-10 border border-emerald-500/10 group-hover:border-emerald-500/20 transition-colors duration-300" />
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!4v1784887476845!6m8!1m7!1s2JuZYgHpcOZ3q2AMfGK7oQ!2m2!1d10.20907328199153!2d123.7569274720599!3f269.3249228032494!4f7.028315723754389!5f0.7820865974627469"
+              width="100%"
+              height="280"
+              style={{ border: 0, filter: "grayscale(0.3) brightness(0.7) contrast(1.1)" }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="strict-origin-when-cross-origin"
+              title="Location — Naga, Cebu"
+              className="w-full"
+            />
+            <a
+              href="https://maps.app.goo.gl/KZfeHGxGwRAiw9J5A"
+              target="_blank"
+              rel="noreferrer"
+              className="absolute bottom-3 right-3 z-20 text-[10px] uppercase tracking-wider text-zinc-500 hover:text-emerald-400 bg-black/70 backdrop-blur-sm px-2.5 py-1 rounded-full border border-white/5 hover:border-emerald-500/20 transition-all duration-300"
+            >
+              Open in Maps ↗
+            </a>
+          </motion.div>
         </motion.div>
       </div>
     </motion.section>
