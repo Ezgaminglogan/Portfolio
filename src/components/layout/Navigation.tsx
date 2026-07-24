@@ -54,7 +54,7 @@ export default function Navigation() {
     { label: "Home", id: "home" },
     { label: "About", id: "about" },
     { label: "Services", id: "services" },
-    { label: "Skills", id: "skills" },
+    { label: "Stacks", id: "skills" },
     { label: "Projects", id: "projects" },
     { label: "SQLite Portable", id: "sqlite-portable" },
     { label: "Experience", id: "experience" },
@@ -63,9 +63,12 @@ export default function Navigation() {
   ];
 
   return (
-    <nav className="fixed top-0 w-full bg-black/60 backdrop-blur-lg z-50 border-b border-emerald-500/[0.08] transition-all duration-300 shadow-[0_4px_30px_rgba(0,0,0,0.5)]">
+    <nav className="fixed top-0 w-full bg-black/60 backdrop-blur-lg z-50 border-b border-emerald-500/8 transition-all duration-300 shadow-[0_4px_30px_rgba(0,0,0,0.5)]">
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-        <a href="#home" className="flex items-center gap-2.5 group focus:outline-none">
+        <a
+          href="#home"
+          className="flex items-center gap-2.5 group focus:outline-none"
+        >
           <span className="relative flex h-2 w-2">
             <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-400/40 animate-ping" />
             <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
@@ -81,10 +84,11 @@ export default function Navigation() {
               key={item.id}
               href={`#${item.id}`}
               aria-current={activeSection === item.id ? "page" : undefined}
-              className={`transition-all duration-300 py-1.5 px-3 rounded-full border ${activeSection === item.id
-                ? "text-emerald-400 bg-emerald-500/[0.04] border-emerald-500/25 shadow-[0_0_12px_rgba(16,185,129,0.1)]"
-                : "text-zinc-500 border-transparent hover:text-emerald-300"
-                }`}
+              className={`transition-all duration-300 py-1.5 px-3 rounded-full border ${
+                activeSection === item.id
+                  ? "text-emerald-400 bg-emerald-500/4 border-emerald-500/25 shadow-[0_0_12px_rgba(16,185,129,0.1)]"
+                  : "text-zinc-500 border-transparent hover:text-emerald-300"
+              }`}
             >
               {item.label}
             </a>
@@ -100,7 +104,11 @@ export default function Navigation() {
           aria-expanded={mobileMenuOpen}
           aria-controls="mobile-menu"
         >
-          {mobileMenuOpen ? <XMarkIcon className="w-5 h-5" /> : <Bars3Icon className="w-5 h-5" />}
+          {mobileMenuOpen ? (
+            <XMarkIcon className="w-5 h-5" />
+          ) : (
+            <Bars3Icon className="w-5 h-5" />
+          )}
         </button>
       </div>
       {mobileMenuOpen && (
@@ -112,10 +120,11 @@ export default function Navigation() {
             <a
               key={item.id}
               href={`#${item.id}`}
-              className={`transition-all duration-300 py-2 ${activeSection === item.id
-                ? "text-emerald-400"
-                : "text-zinc-500 hover:text-emerald-300"
-                }`}
+              className={`transition-all duration-300 py-2 ${
+                activeSection === item.id
+                  ? "text-emerald-400"
+                  : "text-zinc-500 hover:text-emerald-300"
+              }`}
               onClick={() => setMobileMenuOpen(false)}
             >
               {item.label}

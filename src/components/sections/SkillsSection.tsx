@@ -1,7 +1,51 @@
 "use client";
 import { motion, MotionValue } from "framer-motion";
-import { skills, professionalSkills } from "@/app/data";
+import { stacks, professionalSkills, type SkillItem } from "@/app/data";
 import { useParallax, useChildParallax } from "@/hooks/useParallax";
+import { useState } from "react";
+
+// Devicon CDN slug mapping (data.icon → devicon folder name)
+// For icons where the slug differs from the data key
+const DEVICON_SLUGS: Record<string, string> = {
+  nextdotjs: "nextjs",
+  dotnet: "dotnetcore",
+  microsoftsqlserver: "microsoftsqlserver",
+  reactquery: "", // not on devicon, use Simple Icons CDN fallback
+};
+
+// Brand colors for hover glow effects
+const ICON_COLORS: Record<string, string> = {
+  react: "#61DAFB",
+  html5: "#E34F26",
+  css3: "#1572B6",
+  javascript: "#F7DF1E",
+  nextdotjs: "#ffffff",
+  dotnet: "#512BD4",
+  php: "#777BB4",
+  csharp: "#512BD4",
+  mysql: "#4479A1",
+  microsoftsqlserver: "#CC2927",
+  typescript: "#3178C6",
+  tailwindcss: "#06B6D4",
+  reactquery: "#FF4154",
+  prisma: "#2D3748",
+  git: "#F05032",
+};
+
+function getIconUrl(slug: string): string {
+  // These icons use Simple Icons CDN (either not on Devicon or dark-on-dark issue)
+  const simpleIconsFallbacks: Record<string, string> = {
+    reactquery: "FF4154",
+    nextdotjs: "ffffff",
+    prisma: "ffffff",
+  };
+  if (slug in simpleIconsFallbacks) {
+    return `https://cdn.simpleicons.org/${slug}/${simpleIconsFallbacks[slug]}`;
+  }
+  // Map to devicon folder name
+  const deviconSlug = DEVICON_SLUGS[slug] ?? slug;
+  return `https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/${deviconSlug}/${deviconSlug}-original.svg`;
+}
 
 export default function SkillsSection() {
   const { ref, y, opacity, scrollYProgress } = useParallax({
@@ -22,33 +66,36 @@ export default function SkillsSection() {
       className="py-32 border-t border-emerald-500/10 relative"
     >
       {/* Ambient neon glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-emerald-500/[0.07] rounded-full blur-[150px] pointer-events-none glow-pulse" />
-      <motion.div className="mb-12" style={{ y: headingY }}>
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-175 h-125 bg-emerald-500/[0.07] rounded-full blur-[150px] pointer-events-none glow-pulse" />
+      <motion.div className="mb-14" style={{ y: headingY }}>
         <h2 className="text-4xl font-extrabold text-white tracking-tighter mb-4">
-          Skills.
+          Stacks.
         </h2>
         <p className="text-zinc-500">
-          Frontend, Frameworks, Backend, and Libraries / Tools knowledge.
+          Languages, frameworks, databases, and tools I build with.
         </p>
       </motion.div>
 
-      <div className="grid sm:grid-cols-2 gap-6 mb-20">
-        {skills.map((skill, index) => (
-          <SkillCard
-            key={index}
+      {/* Flat icon grid — no category labels */}
+      <div className="flex flex-wrap gap-3 mb-24">
+        {stacks.map((skill, idx) => (
+          <SkillIcon
+            key={skill.name}
             skill={skill}
-            index={index}
+            index={idx}
             scrollYProgress={scrollYProgress}
           />
         ))}
       </div>
 
+      {/* Professional Competencies — kept as-is */}
       <div className="mb-8">
         <h3 className="text-xl font-semibold text-white tracking-tight mb-2">
           Professional Competencies
         </h3>
         <p className="text-zinc-500 text-sm">
-          Core disciplines beyond code — systems, security, and engineering practices.
+          Core disciplines beyond code — systems, security, and engineering
+          practices.
         </p>
       </div>
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -65,41 +112,67 @@ export default function SkillsSection() {
   );
 }
 
-function SkillCard({
+function SkillIcon({
   skill,
   index,
   scrollYProgress,
 }: {
-  skill: (typeof skills)[number];
+  skill: SkillItem;
   index: number;
   scrollYProgress: MotionValue<number>;
 }) {
-  // Alternating drift: odd cards drift slightly faster
-  const speed = index % 2 === 0 ? 0.03 : 0.06;
-  const cardY = useChildParallax(scrollYProgress, speed);
+  const [isHovered, setIsHovered] = useState(false);
+  const speed = index % 2 === 0 ? 0.02 : 0.04;
+  const itemY = useChildParallax(scrollYProgress, speed);
+  const brandColor = ICON_COLORS[skill.icon] || "#34d399";
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
-      whileHover={{ y: -5 }}
-      style={{ y: cardY }}
-      className="p-6 rounded-2xl border border-emerald-500/10 bg-emerald-500/[0.02] hover:bg-emerald-500/[0.05] transition-all duration-300 cursor-default hover:shadow-[0_0_20px_rgba(52,211,153,0.06)]"
+      initial={{ opacity: 0, y: 16, scale: 0.9 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      transition={{
+        duration: 0.4,
+        delay: index * 0.07,
+        ease: [0.16, 1, 0.3, 1],
+      }}
+      style={{ y: itemY }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      className="group relative flex items-center gap-3 px-4 py-3 rounded-xl border border-white/6 bg-white/2 hover:bg-white/5 transition-all duration-300 cursor-default"
     >
-      <skill.icon className="w-6 h-6 text-emerald-400 mb-4" />
-      <h3 className="text-white font-medium mb-1">{skill.name}</h3>
-      <p className="text-sm text-zinc-500 mb-6">{skill.subtitle}</p>
-      <div className="flex flex-wrap gap-2">
-        {skill.technologies.map((tech) => (
-          <span
-            key={tech}
-            className="px-2.5 py-1 text-xs rounded-full border border-emerald-500/15 bg-emerald-500/[0.05] font-medium text-zinc-400"
-          >
-            {tech}
-          </span>
-        ))}
+      {/* Glow effect behind icon on hover */}
+      <motion.div
+        className="absolute inset-0 rounded-xl pointer-events-none"
+        animate={{
+          boxShadow: isHovered
+            ? `0 0 20px ${brandColor}15, inset 0 0 20px ${brandColor}08`
+            : "0 0 0px transparent",
+          borderColor: isHovered ? `${brandColor}30` : "transparent",
+        }}
+        transition={{ duration: 0.3 }}
+        style={{ border: "1px solid transparent", borderRadius: "0.75rem" }}
+      />
+
+      {/* SVG icon from Devicon CDN */}
+      <div className="relative w-7 h-7 shrink-0 flex items-center justify-center">
+        <motion.img
+          src={getIconUrl(skill.icon)}
+          alt={skill.name}
+          className="w-5 h-5 object-contain"
+          animate={{
+            filter: isHovered
+              ? `drop-shadow(0 0 8px ${brandColor}60)`
+              : "drop-shadow(0 0 0px transparent)",
+          }}
+          transition={{ duration: 0.3 }}
+          loading="lazy"
+        />
       </div>
+
+      {/* Skill name */}
+      <span className="text-sm font-medium text-zinc-400 group-hover:text-zinc-200 transition-colors duration-300 whitespace-nowrap">
+        {skill.name}
+      </span>
     </motion.div>
   );
 }
@@ -120,15 +193,19 @@ function ProfessionalSkillCard({
     <motion.div
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: index * 0.12, ease: [0.16, 1, 0.3, 1] }}
+      transition={{
+        duration: 0.5,
+        delay: index * 0.12,
+        ease: [0.16, 1, 0.3, 1],
+      }}
       whileHover={{ y: -6, scale: 1.01 }}
       style={{ y: cardY }}
-      className="relative overflow-hidden p-6 rounded-2xl border border-emerald-500/10 bg-emerald-500/[0.02] hover:bg-emerald-500/[0.05] backdrop-blur-sm transition-all duration-300 cursor-default group hover:shadow-[0_0_20px_rgba(52,211,153,0.06)]"
+      className="relative overflow-hidden p-6 rounded-2xl border border-emerald-500/10 bg-emerald-500/2 hover:bg-emerald-500/5 backdrop-blur-sm transition-all duration-300 cursor-default group hover:shadow-[0_0_20px_rgba(52,211,153,0.06)]"
     >
       <div className="absolute -top-6 -right-6 w-24 h-24 rounded-full bg-emerald-500/5 blur-2xl group-hover:bg-emerald-500/10 transition-all duration-500" />
 
       <div className="flex items-center gap-3 mb-4">
-        <div className="w-10 h-10 rounded-xl bg-black border border-emerald-500/15 flex items-center justify-center flex-shrink-0">
+        <div className="w-10 h-10 rounded-xl bg-black border border-emerald-500/15 flex items-center justify-center shrink-0">
           <ps.icon className="w-5 h-5 text-emerald-400" />
         </div>
         <h4 className="text-white font-semibold text-sm leading-tight">
@@ -146,7 +223,7 @@ function ProfessionalSkillCard({
             key={h}
             className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black border border-emerald-500/15 text-zinc-400 text-xs font-medium"
           >
-            <span className={`w-1.5 h-1.5 rounded-full ${ps.dot} flex-shrink-0`} />
+            <span className={`w-1.5 h-1.5 rounded-full ${ps.dot} shrink-0`} />
             {h}
           </span>
         ))}

@@ -1,8 +1,4 @@
 import {
-  CodeBracketIcon,
-  ServerIcon,
-  Squares2X2Icon,
-  WrenchScrewdriverIcon,
   CpuChipIcon,
   ShieldCheckIcon,
   RocketLaunchIcon,
@@ -32,37 +28,33 @@ export const TECH_ICONS: Record<string, string> = {
   SignalR: "dotnet",
 };
 
-export const skills = [
-  {
-    name: "Frontend",
-    icon: CodeBracketIcon,
-    subtitle: "User Interface & Experience",
-    technologies: ["React", "HTML5", "CSS3", "JavaScript"],
-  },
-  {
-    name: "Frameworks",
-    icon: Squares2X2Icon,
-    subtitle: "Architectures & Systems",
-    technologies: ["Next.js", "ASP.NET MVC", ".NET Framework"],
-  },
-  {
-    name: "Backend",
-    icon: ServerIcon,
-    subtitle: "Server Logic & Data",
-    technologies: ["PHP", "C#", "MySQL", "SQL Server"],
-  },
-  {
-    name: "Libraries / Tools",
-    icon: WrenchScrewdriverIcon,
-    subtitle: "Utilities & Integrations",
-    technologies: [
-      "TypeScript",
-      "TailwindCSS",
-      "TanStack Start",
-      "Prisma ORM",
-      "Git",
-    ],
-  },
+export type SkillItem = {
+  name: string;
+  icon: string; // Devicon / Simple Icons slug
+};
+
+export const stacks: SkillItem[] = [
+  // Languages
+  { name: "JavaScript", icon: "javascript" },
+  { name: "TypeScript", icon: "typescript" },
+  { name: "C#", icon: "csharp" },
+  { name: "PHP", icon: "php" },
+  // Markup & Styling
+  { name: "HTML5", icon: "html5" },
+  { name: "CSS3", icon: "css3" },
+  { name: "TailwindCSS", icon: "tailwindcss" },
+  // Frameworks & Libraries
+  { name: "React", icon: "react" },
+  { name: "Next.js", icon: "nextdotjs" },
+  { name: "ASP.NET MVC", icon: "dotnet" },
+  { name: ".NET Framework", icon: "dotnet" },
+  { name: "TanStack", icon: "reactquery" },
+  // Data & ORM
+  { name: "MySQL", icon: "mysql" },
+  { name: "SQL Server", icon: "microsoftsqlserver" },
+  { name: "Prisma ORM", icon: "prisma" },
+  // Tooling
+  { name: "Git", icon: "git" },
 ];
 
 export const professionalSkills = [
