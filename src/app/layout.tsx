@@ -15,7 +15,8 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://portfolio-665c.vercel.app";
+const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL || "https://portfolio-665c.vercel.app";
 
 export const metadata: Metadata = {
   title: {
@@ -74,14 +75,14 @@ export const metadata: Metadata = {
     siteName: "Logan M. Panucat — Portfolio",
     images: [
       {
-        url: "/grad-pic.jpg",
+        url: "/grad-pic-cropped.jpg",
         width: 1200,
         height: 630,
         alt: "Logan M. Panucat — Full Stack Developer Portfolio",
         type: "image/jpeg",
       },
       {
-        url: "/image/profile.jpg",
+        url: "/grad-pic-cropped.jpg",
         width: 800,
         height: 800,
         alt: "Logan M. Panucat — Profile Photo",
@@ -94,7 +95,7 @@ export const metadata: Metadata = {
     title: "Logan M. Panucat | Full Stack Developer",
     description:
       "Full Stack Developer from Cebu, Philippines. PHP, C#, React, Next.js, TypeScript. View my portfolio and projects.",
-    images: ["/grad-pic.jpg"],
+    images: ["/grad-pic-cropped.jpg"],
     creator: "@ezgaminglogan",
   },
   robots: {
@@ -109,9 +110,9 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: "/grad-pic.jpg",
-    shortcut: "/grad-pic.jpg",
-    apple: "/grad-pic.jpg",
+    icon: "/icon.png",
+    shortcut: "/icon.png",
+    apple: "/icon.png",
   },
   category: "portfolio",
   verification: {
@@ -127,12 +128,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <link rel="icon" href="/icon.png" type="image/png" />
+        <link rel="apple-touch-icon" href="/icon.png" />
         <StructuredData />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ViewportProvider><SmoothScroll>{children}</SmoothScroll></ViewportProvider>
+        <ViewportProvider>
+          <SmoothScroll>{children}</SmoothScroll>
+        </ViewportProvider>
       </body>
     </html>
   );
