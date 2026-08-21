@@ -3,11 +3,11 @@
 import { useEffect } from "react";
 import Lenis from "lenis";
 
-export default function SmoothScroll({
-  children,
-}: {
+interface SmoothScrollProps {
   children: React.ReactNode;
-}) {
+}
+
+export default function SmoothScroll({ children }: SmoothScrollProps) {
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)"
@@ -26,14 +26,17 @@ export default function SmoothScroll({
       touchMultiplier: 2,
     });
 
+    let rafId: number;
+
     function raf(time: number) {
       lenis.raf(time);
-      requestAnimationFrame(raf);
+      rafId = requestAnimationFrame(raf);
     }
 
-    requestAnimationFrame(raf);
+    rafId = requestAnimationFrame(raf);
 
     return () => {
+      cancelAnimationFrame(rafId);
       lenis.destroy();
     };
   }, []);

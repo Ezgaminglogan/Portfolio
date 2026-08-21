@@ -1,6 +1,7 @@
 import Navigation from "@/components/layout/Navigation";
 import Footer from "@/components/layout/Footer";
 import ScrollToTop from "@/components/ui/ScrollToTop";
+import TechnicalBlueprintBackground from "@/components/ui/TechnicalBlueprintBackground";
 import HeroSection from "@/components/sections/HeroSection";
 import AboutSection from "@/components/sections/AboutSection";
 import ServicesSection from "@/components/sections/ServicesSection";
@@ -13,11 +14,10 @@ import ContactSection from "@/components/sections/ContactSection";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-black text-zinc-200 font-sans selection:bg-emerald-400/20 selection:text-emerald-100 dot-grid noise-overlay relative">
-      {/* Top gradient wash */}
-      <div className="fixed inset-0 bg-gradient-to-b from-emerald-500/[0.07] via-transparent to-transparent pointer-events-none -z-10" />
-      {/* Vignette effect */}
-      <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(0,0,0,0.6)_100%)] pointer-events-none -z-10" />
+    <div className="min-h-screen bg-[#06080e] text-zinc-200 font-sans selection:bg-blue-500/25 selection:text-blue-100 relative">
+      {/* Technical Architecture Blueprint Background */}
+      <TechnicalBlueprintBackground />
+
       <Navigation />
 
       <main className="max-w-7xl mx-auto px-6 relative">

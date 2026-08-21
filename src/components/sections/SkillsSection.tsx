@@ -1,8 +1,9 @@
 "use client";
-import { motion, MotionValue } from "framer-motion";
-import { stacks, professionalSkills, type SkillItem } from "@/app/data";
+import { useState, memo } from "react";
+import { motion, type MotionValue } from "framer-motion";
+import { stacks, professionalSkills } from "@/app/data";
+import type { SkillItem, ProfessionalSkill } from "~types";
 import { useParallax, useChildParallax } from "@/hooks/useParallax";
-import { useState } from "react";
 import AnimatedSectionHeading from "@/components/ui/AnimatedSectionHeading";
 
 // Devicon CDN slug mapping (data.icon → devicon folder name)
@@ -61,14 +62,11 @@ export default function SkillsSection() {
       style={{ y, opacity }}
       className="py-32 border-t border-white/10 relative"
     >
-      {/* Ambient silver glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-175 h-125 bg-white/3 rounded-full blur-[150px] pointer-events-none glow-pulse" />
-
       {/* Big animated heading */}
       <AnimatedSectionHeading
         title="Stacks."
-        label="Tech I use"
-        subtitle="Languages, frameworks, databases, and tools I build with."
+        label="Engineering Stack"
+        subtitle="Languages, frameworks, databases, and architectural tools I build with."
       />
 
       {/* Flat icon grid — no category labels */}
@@ -87,8 +85,8 @@ export default function SkillsSection() {
       <div className="pt-16">
         <AnimatedSectionHeading
           title="Professional Competencies."
-          label="Beyond Code"
-          subtitle="Core disciplines beyond code — systems, security, and engineering practices."
+          label="Core Disciplines"
+          subtitle="Core disciplines beyond code — systems administration, cloud security, and engineering practices."
         />
       </div>
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -105,19 +103,21 @@ export default function SkillsSection() {
   );
 }
 
-function SkillIcon({
-  skill,
-  index,
-  scrollYProgress,
-}: {
+interface SkillIconProps {
   skill: SkillItem;
   index: number;
   scrollYProgress: MotionValue<number>;
-}) {
+}
+
+const SkillIcon = memo(function SkillIcon({
+  skill,
+  index,
+  scrollYProgress,
+}: SkillIconProps) {
   const [isHovered, setIsHovered] = useState(false);
   const speed = index % 2 === 0 ? 0.02 : 0.04;
   const itemY = useChildParallax(scrollYProgress, speed);
-  const brandColor = ICON_COLORS[skill.icon] || "#ffffff";
+  const brandColor = ICON_COLORS[skill.icon] || "#3b82f6";
 
   return (
     <motion.div
@@ -131,16 +131,16 @@ function SkillIcon({
       style={{ y: itemY }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="group relative flex items-center gap-3 px-4 py-3 rounded-xl border border-white/10 bg-[#12151e]/50 hover:bg-white/6 transition-all duration-300 cursor-default"
+      className="group relative flex items-center gap-3 px-4 py-3 rounded-xl border border-white/10 bg-[#0f1422]/80 hover:bg-[#0f1422] transition-all duration-300 cursor-default"
     >
       {/* Glow effect behind icon on hover */}
       <motion.div
         className="absolute inset-0 rounded-xl pointer-events-none"
         animate={{
           boxShadow: isHovered
-            ? `0 0 20px ${brandColor}15, inset 0 0 20px ${brandColor}08`
+            ? `0 0 20px ${brandColor}20, inset 0 0 20px ${brandColor}10`
             : "0 0 0px transparent",
-          borderColor: isHovered ? `rgba(255,255,255,0.3)` : "transparent",
+          borderColor: isHovered ? `rgba(96,165,250,0.4)` : "transparent",
         }}
         transition={{ duration: 0.3 }}
         style={{ border: "1px solid transparent", borderRadius: "0.75rem" }}
@@ -168,17 +168,19 @@ function SkillIcon({
       </span>
     </motion.div>
   );
+});
+
+interface ProfessionalSkillCardProps {
+  ps: ProfessionalSkill;
+  index: number;
+  scrollYProgress: MotionValue<number>;
 }
 
-function ProfessionalSkillCard({
+const ProfessionalSkillCard = memo(function ProfessionalSkillCard({
   ps,
   index,
   scrollYProgress,
-}: {
-  ps: (typeof professionalSkills)[number];
-  index: number;
-  scrollYProgress: MotionValue<number>;
-}) {
+}: ProfessionalSkillCardProps) {
   const speed = index % 2 === 0 ? 0.04 : 0.07;
   const cardY = useChildParallax(scrollYProgress, speed);
 
@@ -193,15 +195,15 @@ function ProfessionalSkillCard({
       }}
       whileHover={{ y: -6, scale: 1.01 }}
       style={{ y: cardY }}
-      className="relative overflow-hidden p-6 rounded-2xl border border-white/10 bg-[#12151e]/60 hover:bg-white/4 backdrop-blur-sm transition-all duration-300 cursor-default group hover:shadow-[0_0_20px_rgba(255,255,255,0.05)]"
+      className="relative overflow-hidden p-6 rounded-2xl border border-white/10 bg-[#0f1422]/90 hover:border-blue-400/30 backdrop-blur-sm transition-all duration-300 cursor-default group hover:shadow-[0_0_30px_rgba(59,130,246,0.12)]"
     >
-      <div className="absolute -top-6 -right-6 w-24 h-24 rounded-full bg-white/3 blur-2xl group-hover:bg-white/6 transition-all duration-500" />
+      <div className="absolute -top-6 -right-6 w-24 h-24 rounded-full bg-blue-500/5 blur-2xl group-hover:bg-blue-500/10 transition-all duration-500" />
 
       <div className="flex items-center gap-3 mb-4">
-        <div className="w-10 h-10 rounded-xl bg-[#0b0d12] border border-white/15 flex items-center justify-center shrink-0">
-          <ps.icon className="w-5 h-5 text-white" />
+        <div className="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center shrink-0">
+          <ps.icon className="w-5 h-5 text-blue-300" />
         </div>
-        <h4 className="text-white font-semibold text-sm leading-tight">
+        <h4 className="text-white font-semibold text-sm leading-tight group-hover:text-blue-200 transition-colors">
           {ps.title}
         </h4>
       </div>
@@ -214,13 +216,13 @@ function ProfessionalSkillCard({
         {ps.highlights.map((h) => (
           <span
             key={h}
-            className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#0b0d12] border border-white/10 text-slate-300 text-xs font-medium"
+            className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#080b11] border border-white/10 text-slate-300 text-xs font-mono"
           >
-            <span className="w-1.5 h-1.5 rounded-full bg-white shrink-0" />
+            <span className="w-1.5 h-1.5 rounded-full bg-blue-400 shrink-0" />
             {h}
           </span>
         ))}
       </div>
     </motion.div>
   );
-}
+});

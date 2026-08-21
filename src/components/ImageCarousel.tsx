@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ChevronLeftIcon,
@@ -54,16 +54,16 @@ export default function ImageCarousel({
   // lets us infinite loop as we click the next/prev buttons.
   const imageIndex = ((page % images.length) + images.length) % images.length;
 
-  const paginate = (newDirection: number) => {
-    setPage([page + newDirection, newDirection]);
-  };
+  const paginate = useCallback((newDirection: number) => {
+    setPage(([prevPage]) => [prevPage + newDirection, newDirection]);
+  }, []);
 
   useEffect(() => {
     const timer = setInterval(() => {
       paginate(1);
     }, autoplayInterval);
     return () => clearInterval(timer);
-  }, [page, autoplayInterval]);
+  }, [paginate, autoplayInterval]);
 
   return (
     <div className="relative w-full aspect-video overflow-hidden group">
@@ -116,19 +116,19 @@ export default function ImageCarousel({
       {/* Navigation - Minimalist style */}
       <button
         type="button"
-        className="absolute left-4 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-black/20 backdrop-blur-md border border-emerald-500/10 text-white/50 hover:text-emerald-400 hover:bg-black/40 transition-all opacity-0 group-hover:opacity-100"
+        className="absolute left-4 top-1/2 -translate-y-1/2 z-10 p-2.5 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-blue-300 hover:text-white hover:border-blue-400/40 hover:bg-blue-500/20 transition-all opacity-0 group-hover:opacity-100 shadow-lg"
         onClick={() => paginate(-1)}
         aria-label="Previous image"
       >
-        <ChevronLeftIcon className="w-6 h-6" />
+        <ChevronLeftIcon className="w-5 h-5" />
       </button>
       <button
         type="button"
-        className="absolute right-4 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-black/20 backdrop-blur-md border border-emerald-500/10 text-white/50 hover:text-emerald-400 hover:bg-black/40 transition-all opacity-0 group-hover:opacity-100"
+        className="absolute right-4 top-1/2 -translate-y-1/2 z-10 p-2.5 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-blue-300 hover:text-white hover:border-blue-400/40 hover:bg-blue-500/20 transition-all opacity-0 group-hover:opacity-100 shadow-lg"
         onClick={() => paginate(1)}
         aria-label="Next image"
       >
-        <ChevronRightIcon className="w-6 h-6" />
+        <ChevronRightIcon className="w-5 h-5" />
       </button>
 
       {/* Progress indicators - Minimalist dashes */}
@@ -137,7 +137,7 @@ export default function ImageCarousel({
           <div
             key={i}
             className={`h-1 transition-all duration-300 rounded-full ${
-              i === imageIndex ? "w-8 bg-emerald-400" : "w-2 bg-emerald-500/20"
+              i === imageIndex ? "w-8 bg-blue-400 shadow-[0_0_12px_rgba(96,165,250,0.9)]" : "w-2 bg-white/20"
             }`}
           />
         ))}

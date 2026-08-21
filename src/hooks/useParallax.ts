@@ -6,7 +6,8 @@ import {
   useTransform,
   useSpring,
   useReducedMotion,
-  MotionValue,
+  type MotionValue,
+  type UseScrollOptions,
 } from "framer-motion";
 import { useViewport } from "@/context/ViewportContext";
 
@@ -14,8 +15,7 @@ interface ParallaxOptions {
   /** How far the element moves relative to scroll. Positive = moves down, negative = moves up. Default: 0.2 */
   speed?: number;
   /** Scroll offset range — when the effect starts and ends. Default: ["start end", "end start"] */
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  offset?: any;
+  offset?: UseScrollOptions["offset"];
   /** Whether to apply opacity fading. Default: true */
   fadeIn?: boolean;
   /** Whether to apply scale transform. Default: false */

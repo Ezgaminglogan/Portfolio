@@ -3,8 +3,21 @@ import {
   ShieldCheckIcon,
   RocketLaunchIcon,
 } from "@heroicons/react/24/outline";
+import type {
+  SkillItem,
+  ProfessionalSkill,
+  Project,
+  EducationItem,
+  ExperienceItem,
+  SqliteImageItem,
+  CertificateItem,
+  ServiceItem,
+  TechIconMap,
+} from "~types";
 
-export const TECH_ICONS: Record<string, string> = {
+export type { SkillItem, ProfessionalSkill, Project, EducationItem, ExperienceItem, SqliteImageItem, CertificateItem, ServiceItem };
+
+export const TECH_ICONS: TechIconMap = {
   PHP: "php",
   MySQL: "mysql",
   "C#": "csharp",
@@ -26,11 +39,6 @@ export const TECH_ICONS: Record<string, string> = {
   "SQL Server": "microsoftsqlserver",
   "JWT Auth": "jsonwebtokens",
   SignalR: "dotnet",
-};
-
-export type SkillItem = {
-  name: string;
-  icon: string; // Devicon / Simple Icons slug
 };
 
 export const stacks: SkillItem[] = [
@@ -57,7 +65,7 @@ export const stacks: SkillItem[] = [
   { name: "Git", icon: "git" },
 ];
 
-export const professionalSkills = [
+export const professionalSkills: ProfessionalSkill[] = [
   {
     icon: CpuChipIcon,
     title: "Systems Administration",
@@ -70,7 +78,7 @@ export const professionalSkills = [
       "Network Setup",
     ],
     accent: "from-white/10 to-transparent",
-    dot: "bg-emerald-400",
+    dot: "bg-white",
   },
   {
     icon: ShieldCheckIcon,
@@ -84,7 +92,7 @@ export const professionalSkills = [
       "Security Hardening",
     ],
     accent: "from-white/10 to-transparent",
-    dot: "bg-emerald-400",
+    dot: "bg-white",
   },
   {
     icon: RocketLaunchIcon,
@@ -98,11 +106,11 @@ export const professionalSkills = [
       "Agile Workflow",
     ],
     accent: "from-white/10 to-transparent",
-    dot: "bg-emerald-400",
+    dot: "bg-white",
   },
 ];
 
-export const projects = [
+export const projects: Project[] = [
   {
     title: "MJE Enterprises (AirZen) System",
     description:
@@ -347,7 +355,7 @@ public class SupportHub : Hub
   },
 ];
 
-export const education = [
+export const education: EducationItem[] = [
   {
     degree: "Bachelor of Science in Information Technology",
     institution: "Cebu Technological University - Naga Extension Campus",
@@ -359,7 +367,7 @@ export const education = [
   },
 ];
 
-export const experiences = [
+export const experiences: ExperienceItem[] = [
   {
     role: "Full-Stack Web Development Engineer",
     organization: "Independent & Client Projects",
@@ -382,7 +390,7 @@ export const experiences = [
   },
 ];
 
-export const sqliteImages = [
+export const sqliteImages: SqliteImageItem[] = [
   {
     src: "/image/sqlite-portables/Picture 1 - Landing Page Dark Mode.png",
     alt: "Landing Page Dark Mode",
@@ -473,7 +481,7 @@ export const sqliteImages = [
   },
 ];
 
-export const certificates = [
+export const certificates: CertificateItem[] = [
   {
     image: "/certificates/certificates-deployment.jpg",
     alt: "Certificate of Deployment - Logan M. Panucat",
@@ -521,7 +529,7 @@ export const certificates = [
   },
 ];
 
-export const services = [
+export const services: ServiceItem[] = [
   {
     title: "Full-Stack Web Systems",
     description: "Design and implement responsive, high-performance web applications and dashboards customized for business operations.",
@@ -531,7 +539,7 @@ export const services = [
       "Secure API development & integration",
       "Dynamic frontend user experiences"
     ],
-    accent: "from-emerald-500/10 to-transparent"
+    accent: "from-white/5 to-transparent"
   },
   {
     title: "Database Design & Optimization",
@@ -542,7 +550,7 @@ export const services = [
       "High performance indexing & query optimization",
       "Relational databases (MySQL, PostgreSQL, SQL Server)"
     ],
-    accent: "from-emerald-500/10 to-transparent"
+    accent: "from-white/5 to-transparent"
   },
   {
     title: "Secure Auth & Integrations",
@@ -553,7 +561,7 @@ export const services = [
       "Two-factor OTP email verification (PHPMailer)",
       "Real-time sockets & messaging (SignalR, WebSockets)"
     ],
-    accent: "from-emerald-500/10 to-transparent"
+    accent: "from-white/5 to-transparent"
   },
   {
     title: "Systems Admin & Deployment",
@@ -564,6 +572,6 @@ export const services = [
       "Automated server backups and health checks",
       "Serverless deployment configurations (Vercel, Netlify)"
     ],
-    accent: "from-emerald-500/10 to-transparent"
+    accent: "from-white/5 to-transparent"
   }
 ];

@@ -1,15 +1,15 @@
 export default function Footer() {
   return (
-    <footer className="py-12 border-t border-emerald-500/10 flex flex-col items-center gap-6 text-xs text-zinc-600">
+    <footer className="py-14 border-t border-white/10 flex flex-col items-center gap-6 text-xs text-zinc-500">
       <div className="flex gap-8 text-sm font-medium">
         <a
           href="https://github.com/Ezgaminglogan"
           target="_blank"
           rel="noreferrer"
-          className="flex items-center gap-2 text-zinc-500 hover:text-emerald-400 transition-colors"
+          className="flex items-center gap-2 text-zinc-400 hover:text-blue-300 transition-colors group"
         >
           <svg
-            className="w-4 h-4"
+            className="w-4 h-4 text-zinc-500 group-hover:text-blue-400 transition-colors"
             fill="currentColor"
             viewBox="0 0 24 24"
             aria-hidden="true"
@@ -26,10 +26,10 @@ export default function Footer() {
           href="https://www.linkedin.com/in/logan-panucat-b319562a9/"
           target="_blank"
           rel="noreferrer"
-          className="flex items-center gap-2 text-zinc-500 hover:text-emerald-400 transition-colors"
+          className="flex items-center gap-2 text-zinc-400 hover:text-blue-300 transition-colors group"
         >
           <svg
-            className="w-4 h-4"
+            className="w-4 h-4 text-zinc-500 group-hover:text-blue-400 transition-colors"
             fill="currentColor"
             viewBox="0 0 24 24"
             aria-hidden="true"
@@ -39,7 +39,9 @@ export default function Footer() {
           LinkedIn
         </a>
       </div>
-      <p>© {new Date().getFullYear()} Logan Panucat. Minimalist Redesign.</p>
+      <p className="text-zinc-500 font-mono tracking-wide">
+        © {new Date().getFullYear()} Logan M. Panucat • Systems & Full-Stack Architect
+      </p>
     </footer>
   );
 }

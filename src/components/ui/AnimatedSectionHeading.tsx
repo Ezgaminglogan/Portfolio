@@ -42,7 +42,7 @@ export default function AnimatedSectionHeading({
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-400 mb-4"
+            className="text-[11px] font-mono font-bold uppercase tracking-[0.25em] text-blue-400 mb-4 bg-blue-500/10 border border-blue-500/20 px-3 py-1 rounded-full"
           >
             {label}
           </motion.span>
@@ -54,10 +54,10 @@ export default function AnimatedSectionHeading({
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           style={{ letterSpacing: headingStyle.letterSpacing }}
-          className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-black text-white tracking-tighter leading-none"
+          className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-black text-white tracking-tight sm:tracking-tighter leading-[1.15] sm:leading-none break-words max-w-full px-2"
         >
           {displayTitle}
-          {hasPeriod && <span className="text-slate-400">.</span>}
+          {hasPeriod && <span className="text-blue-400">.</span>}
         </motion.h2>
 
         {/* Subtitle */}
@@ -74,7 +74,7 @@ export default function AnimatedSectionHeading({
 
         {/* Animated decorative line */}
         <motion.div
-          className="h-px bg-linear-to-r from-transparent via-white/40 to-transparent mt-6"
+          className="h-px bg-gradient-to-r from-transparent via-blue-500/40 to-transparent mt-6"
           style={{ width: lineWidth }}
         />
       </motion.div>

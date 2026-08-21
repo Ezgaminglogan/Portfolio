@@ -1,6 +1,5 @@
-"use client";
 import { useRef } from "react";
-import { useScroll, useTransform, useMotionTemplate, MotionValue } from "framer-motion";
+import { useScroll, useTransform, useMotionTemplate } from "framer-motion";
 
 /**
  * Reusable scroll-driven heading animation hook.
@@ -22,8 +21,8 @@ export function useAnimatedHeading() {
   const blur = useTransform(scrollYProgress, [0, 0.6, 1], [0, 0, 14]);
   const filter = useMotionTemplate`blur(${blur}px)`;
 
-  // Letter spread — only starts after 50%
-  const letterSpacingVal = useTransform(scrollYProgress, [0, 0.5, 1], [0, 0, 10]);
+  // Letter spread — subtle precision spread without causing word wrap clipping
+  const letterSpacingVal = useTransform(scrollYProgress, [0, 0.5, 1], [0, 0, 3]);
   const letterSpacing = useMotionTemplate`${letterSpacingVal}px`;
 
   // Decorative line
