@@ -1,7 +1,7 @@
 import {
   CpuChipIcon,
   ShieldCheckIcon,
-  RocketLaunchIcon,
+  ServerIcon,
 } from "@heroicons/react/24/outline";
 import type {
   SkillItem,
@@ -39,128 +39,114 @@ export const TECH_ICONS: TechIconMap = {
   "SQL Server": "microsoftsqlserver",
   "JWT Auth": "jsonwebtokens",
   SignalR: "dotnet",
+  "ShadCN UI": "shadcnui",
+  "Better Auth": "betterauth",
+  libSQL: "sqlite",
+  TanStack: "reactquery",
 };
 
 export const stacks: SkillItem[] = [
-  // Languages
-  { name: "JavaScript", icon: "javascript" },
-  { name: "TypeScript", icon: "typescript" },
-  { name: "C#", icon: "csharp" },
-  { name: "PHP", icon: "php" },
-  // Markup & Styling
-  { name: "HTML5", icon: "html5" },
-  { name: "CSS3", icon: "css3" },
-  { name: "TailwindCSS", icon: "tailwindcss" },
-  // Frameworks & Libraries
-  { name: "React", icon: "react" },
-  { name: "Next.js", icon: "nextdotjs" },
-  { name: "ASP.NET MVC", icon: "dotnet" },
-  { name: ".NET Framework", icon: "dotnet" },
-  { name: "TanStack", icon: "reactquery" },
-  // Data & ORM
-  { name: "MySQL", icon: "mysql" },
-  { name: "SQL Server", icon: "microsoftsqlserver" },
-  { name: "Prisma ORM", icon: "prisma" },
-  // Tooling
-  { name: "Git", icon: "git" },
+  { name: "React", icon: "react", role: "UI Library" },
+  { name: "Next.js", icon: "nextdotjs", role: "React Framework" },
+  { name: "TailwindCSS", icon: "tailwindcss", role: "Utility Styling" },
+  { name: "TanStack", icon: "reactquery", role: "Async State / Query" },
+  { name: "C#", icon: "csharp", role: ".NET Ecosystem" },
+  { name: "PHP", icon: "php", role: "Server-Side Core" },
+  { name: "MySQL", icon: "mysql", role: "Relational Database" },
+  { name: "SQL Server", icon: "microsoftsqlserver", role: "Enterprise Engine" },
+  { name: "Prisma", icon: "prisma", role: "Type-Safe ORM" },
+  { name: "EF Core", icon: "dotnet", role: ".NET ORM" },
+  { name: "Git", icon: "git", role: "Distributed VCS" },
+];
+
+export const stackCategories: { title: string; badge: string; description: string; items: SkillItem[] }[] = [
+  {
+    title: "Frontend & Web Ecosystem",
+    badge: "UI & State Architecture",
+    description: "Component-driven design systems, server-side rendering, and instant client caching.",
+    items: [
+      { name: "React", icon: "react", role: "UI Library" },
+      { name: "Next.js", icon: "nextdotjs", role: "React Framework" },
+      { name: "TailwindCSS", icon: "tailwindcss", role: "Utility Styling" },
+      { name: "TanStack", icon: "reactquery", role: "Query & Async State" },
+    ],
+  },
+  {
+    title: "Backend & Systems",
+    badge: "Backend Architecture",
+    description: "Multi-paradigm compiled languages and high-performance server architectures.",
+    items: [
+      { name: "C#", icon: "csharp", role: ".NET Ecosystem" },
+      { name: "PHP", icon: "php", role: "Server-Side Architecture" },
+    ],
+  },
+  {
+    title: "Databases & Data Layer",
+    badge: "Persistence & ORM",
+    description: "Structured ACID data stores, schema migrations, and typesafe query modeling.",
+    items: [
+      { name: "MySQL", icon: "mysql", role: "Relational Database" },
+      { name: "SQL Server", icon: "microsoftsqlserver", role: "Enterprise Engine" },
+      { name: "Prisma", icon: "prisma", role: "Type-Safe ORM" },
+      { name: "EF Core", icon: "dotnet", role: ".NET ORM" },
+    ],
+  },
+  {
+    title: "DevOps & Tooling",
+    badge: "Version Control",
+    description: "Source code collaboration, branching workflows, and production pipeline deployment.",
+    items: [
+      { name: "Git", icon: "git", role: "Distributed VCS" },
+    ],
+  },
 ];
 
 export const professionalSkills: ProfessionalSkill[] = [
   {
-    icon: CpuChipIcon,
-    title: "Systems Administration",
+    icon: ServerIcon,
+    title: "Database Architecture & ORM",
     description:
-      "Proficient in the installation, configuration, and deployment of new operating systems. Skilled in managing system resources, user access control, and maintaining optimal performance across diverse environments.",
-    highlights: [
-      "OS Installation & Configuration",
-      "User Access Control",
-      "System Monitoring",
-      "Network Setup",
-    ],
-    accent: "from-white/10 to-transparent",
-    dot: "bg-white",
+      "Designing resilient relational schemas, indexing strategies, and high-performance transactional pipelines using MySQL, SQLite, and Prisma ORM.",
+    highlights: ["ACID Compliance", "Schema Design", "ORM Modeling"],
+    accent: "from-blue-600 to-indigo-600",
+    dot: "bg-blue-600",
   },
   {
     icon: ShieldCheckIcon,
-    title: "IT Support & Security",
+    title: "Authentication & Security",
     description:
-      "Expert in cross-platform troubleshooting, virus/malware removal, and lock-issue recovery for mobile and desktop devices. Committed to maintaining secure and reliable computing environments.",
-    highlights: [
-      "Malware Removal",
-      "Cross-Platform Troubleshooting",
-      "Device Recovery",
-      "Security Hardening",
-    ],
-    accent: "from-white/10 to-transparent",
-    dot: "bg-white",
+      "Architecting enterprise-grade RBAC, session integrity, OTP flows, and token-based authentication models.",
+    highlights: ["JWT / OAuth / 2FA", "RBAC Architecture", "Endpoint Hardening"],
+    accent: "from-indigo-600 to-violet-600",
+    dot: "bg-indigo-600",
   },
   {
-    icon: RocketLaunchIcon,
-    title: "Software Engineering",
+    icon: CpuChipIcon,
+    title: "Systems & Full-Stack Architecture",
     description:
-      "Accelerate software delivery and improve code efficiency by developing full-stack applications with advanced AI-assisted tools. Passionate about clean architecture and building scalable digital solutions.",
-    highlights: [
-      "Full-Stack Development",
-      "AI-Assisted Coding",
-      "Clean Architecture",
-      "Agile Workflow",
-    ],
-    accent: "from-white/10 to-transparent",
-    dot: "bg-white",
+      "Bridging compiled desktop applications (C# .NET, WinForms, Blazor) with modern web stacks (Next.js, React, Tailwind).",
+    highlights: [".NET Ecosystem", "Next.js SSR/SSG", "API Contract Design"],
+    accent: "from-sky-600 to-blue-600",
+    dot: "bg-sky-600",
   },
 ];
 
 export const projects: Project[] = [
   {
-    title: "MJE Enterprises (AirZen) System",
+    title: "CTU Faculty Grade Portal",
     description:
-      "A full-stack premium service management and booking ecosystem combining a seamless public booking journey with a powerful admin suite for analytics, inventory, backups, and customer operations. Built with React 19 and TanStack Start, it features OTP-verified bookings, real-time WebSocket updates, and production-ready data integrity workflows.",
+      "An automated grading and transmutation portal built for CTU Naga Extension Campus instructors. It streamlines score encoding, calculates lecture and laboratory unit distributions, and automatically applies official CTU 1.0 to 5.0 grade transmutations.",
     tech: [
-      "React 19",
-      "TanStack Start",
-      "Prisma ORM",
-      "Neon PostgreSQL",
-      "Bun Runtime",
+      "TanStack",
+      "ShadCN UI",
+      "Better Auth",
+      "Prisma",
+      "libSQL",
       "TailwindCSS",
-      "Framer Motion",
-      "WebSocket",
     ],
-    gradient: "from-emerald-600 to-sky-600",
-    image: "/image/mjeenterprises.png",
-    liveUrl: "https://mjeenterprises.vercel.app/",
-    type: "Enterprise Service Management Platform",
-    codeHighlight: {
-      filename: "booking-transaction.ts",
-      language: "typescript",
-      code: `// Execute inventory reservation and booking insertion in a single ACID transaction
-export async function createVerifiedBooking(data: BookingInput) {
-  return await prisma.$transaction(async (tx) => {
-    // 1. Verify capacity and lock row for update to prevent race conditions
-    const schedule = await tx.serviceSchedule.findUnique({
-      where: { id: data.scheduleId },
-      select: { bookedSlots: true, maxCapacity: true }
-    });
-    if (!schedule || schedule.bookedSlots >= schedule.maxCapacity) {
-      throw new Error("Target service slot is fully booked");
-    }
-    // 2. Increment booked slots atomically
-    await tx.serviceSchedule.update({
-      where: { id: data.scheduleId },
-      data: { bookedSlots: { increment: 1 } }
-    });
-    // 3. Create the customer booking record with secure OTP verification check
-    return await tx.booking.create({
-      data: {
-        customerEmail: data.email,
-        serviceId: data.serviceId,
-        status: "CONFIRMED",
-        verifiedAt: new Date()
-      }
-    });
-  });
-}`,
-      explanation: "Implements safe database concurrency using a Prisma transaction. Ensures that customer bookings are atomically registered only when service slots are verified and reserved, preventing double-bookings during peak traffic."
-    }
+    gradient: "from-amber-500 to-orange-600",
+    image: "/image/Grade Portal.jpeg",
+    type: "Ongoing CTU Naga Extension Campus Project"
   },
   {
     title: "LibraSys - Library Management System",
@@ -169,46 +155,7 @@ export async function createVerifiedBooking(data: BookingInput) {
     tech: ["TanStack", "Prisma", "MySQL", "TailwindCSS"],
     gradient: "from-indigo-600 to-purple-600",
     image: "/image/LibraSys.png",
-    type: "CTU Naga Extension Campus Project",
-    codeHighlight: {
-      filename: "useBookBorrow.ts",
-      language: "typescript",
-      code: `// Custom React hook for book transactions with optimistic updates
-export function useBookBorrow() {
-  const queryClient = useQueryClient();
-  return useMutation({
-    mutationFn: async ({ bookId, studentId }: BorrowParams) => {
-      const res = await fetch("/api/borrow", {
-        method: "POST",
-        body: JSON.stringify({ bookId, studentId }),
-        headers: { "Content-Type": "application/json" }
-      });
-      if (!res.ok) throw new Error("Transaction rejected by inventory gate");
-      return res.json();
-    },
-    onMutate: async (variables) => {
-      // Cancel outgoing refetches to avoid overriding optimistic state
-      await queryClient.cancelQueries({ queryKey: ["books", variables.bookId] });
-      const prevBook = queryClient.getQueryData<Book>(["books", variables.bookId]);
-      // Optimistically decrement library stock to make UI feel instant
-      if (prevBook) {
-        queryClient.setQueryData(["books", variables.bookId], {
-          ...prevBook,
-          availableQty: prevBook.availableQty - 1
-        });
-      }
-      return { prevBook };
-    },
-    onError: (err, variables, context) => {
-      // Rollback library inventory if backend request fails
-      if (context?.prevBook) {
-        queryClient.setQueryData(["books", variables.bookId], context.prevBook);
-      }
-    }
-  });
-}`,
-      explanation: "A custom React hook leveraging TanStack Query's optimistic updates. By updating the client cache before the API responds and implementing automatic rollback logic, it provides an instantaneous checkout experience for students."
-    }
+    type: "CTU Naga Extension Campus Project"
   },
   {
     title: "Inventory Management System (IMS-CTU)",
@@ -237,46 +184,7 @@ export function useBookBorrow() {
     tech: ["PHP", "TailwindCSS", "PHPMailer", "MySQL"],
     gradient: "from-teal-500 to-cyan-600",
     image: "/image/Project 3.png",
-    type: "School Project",
-    codeHighlight: {
-      filename: "verify_otp.php",
-      language: "php",
-      code: `<?php
-// Secure PHP database query and OTP validation flow
-require_once 'config/database.php';
-session_start();
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
-    $otp = filter_input(INPUT_POST, 'otp', FILTER_SANITIZE_NUMBER_INT);
-
-    if ($email && $otp) {
-        // Prevent SQL injection by preparing database statement
-        $stmt = $conn->prepare("SELECT otp_code, otp_expires FROM users WHERE email = ? LIMIT 1");
-        $stmt->bind_param("s", $email);
-        $stmt->execute();
-        $result = $stmt->get_result()->fetch_assoc();
-
-        if ($result) {
-            $current_time = new DateTime();
-            $expiry_time = new DateTime($result['otp_expires']);
-
-            // Verify hash match and ensure token has not expired
-            if (password_verify($otp, $result['otp_code']) && $current_time < $expiry_time) {
-                // Activate user account
-                $update = $conn->prepare("UPDATE users SET is_verified = 1, otp_code = NULL WHERE email = ?");
-                $update->bind_param("s", $email);
-                $update->execute();
-                
-                echo json_encode(["status" => "success", "message" => "Account verified successfully!"]);
-            } else {
-                echo json_encode(["status" => "error", "message" => "Invalid or expired verification code."]);
-            }
-        }
-    }
-}`,
-      explanation: "Implements secure database preparation, input sanitization, password hashing using bcrypt via PHP's password_verify function, and strict expiration checks for 2FA validation."
-    }
+    type: "School Project"
   },
   {
     title: "School Management System",
@@ -301,41 +209,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     ],
     gradient: "from-red-500 to-orange-600",
     image: "/image/Ticket-Support.png",
-    type: "School Project",
-    codeHighlight: {
-      filename: "SupportHub.cs",
-      language: "csharp",
-      code: `// ASP.NET Core SignalR Real-Time Ticket Support Hub
-using Microsoft.AspNetCore.SignalR;
-using System.Threading.Tasks;
-
-public class SupportHub : Hub
-{
-    private readonly ITicketService _ticketService;
-
-    public SupportHub(ITicketService ticketService)
-    {
-        _ticketService = ticketService;
-    }
-
-    // Real-time synchronization when a technical support agent responds to a ticket
-    public async Task SendAgentResponse(int ticketId, string agentName, string message)
-    {
-        // 1. Persist the response to database asynchronously
-        await _ticketService.AddResponseAsync(ticketId, agentName, message);
-        
-        // 2. Broadcast the message to all clients connected to this ticket room
-        await Clients.Group($"Ticket_{ticketId}")
-            .SendAsync("ReceiveMessage", agentName, message, DateTime.UtcNow);
-    }
-
-    public async Task JoinTicketRoom(int ticketId)
-    {
-        await Groups.AddToGroupAsync(Context.ConnectionId, $"Ticket_{ticketId}");
-    }
-}`,
-      explanation: "An ASP.NET Core SignalR Hub designed for live chatting. Organizes agents and clients into isolated rooms (Groups) and persists support tickets to a database prior to broadcasting to avoid data loss."
-    }
+    type: "School Project"
   },
   {
     title: "Luto",
@@ -362,17 +236,17 @@ export const education: EducationItem[] = [
     period: "2022 - 2026",
     honor: "Cum Laude",
     description:
-      "Graduated Cum Laude with a focus on web development, database management, and software engineering. Completed multiple AI-assisted capstone projects addressing real-world problems.",
-    highlights: ["Cum Laude Graduate", "Software Engineering", "Database Systems"],
+      "Graduated Cum Laude with a focus on web development, database management, and software architecture. Completed multiple capstone projects addressing real-world problems.",
+    highlights: ["Cum Laude Graduate", "Software Development", "Database Systems"],
   },
 ];
 
 export const experiences: ExperienceItem[] = [
   {
-    role: "Full-Stack Web Development Engineer",
+    role: "Full-Stack Web Developer",
     organization: "Independent & Client Projects",
     period: "2023 - Present",
-    type: "Engineering Experience",
+    type: "Development Experience",
     badge: "Active",
     description:
       "Continuously architecting and developing full-stack web applications, custom databases, and client solutions utilizing PHP, MySQL, .NET, React, and Next.js.",
@@ -385,7 +259,7 @@ export const experiences: ExperienceItem[] = [
     type: "System Architecture",
     badge: "Lead Developer",
     description:
-      "Architected and deployed production-ready full-stack enterprise systems including Supplify (supply chain platform) and MJE Enterprises ecosystem.",
+      "Architected and deployed production-ready full-stack enterprise systems including Supplify (supply chain platform) and institutional resource platforms.",
     skills: ["TanStack", "Prisma ORM", "PostgreSQL", "Blazor Framework", "C#"],
   },
 ];

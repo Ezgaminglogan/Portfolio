@@ -7,6 +7,13 @@ export interface TechIconMap {
 export interface SkillItem {
   name: string;
   icon: string;
+  role?: string;
+}
+
+export interface StackCategory {
+  title: string;
+  badge: string;
+  items: SkillItem[];
 }
 
 export interface ProfessionalSkill {

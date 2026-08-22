@@ -14,13 +14,13 @@ import ContactSection from "@/components/sections/ContactSection";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-[#06080e] text-zinc-200 font-sans selection:bg-blue-500/25 selection:text-blue-100 relative">
-      {/* Technical Architecture Blueprint Background */}
+    <div className="min-h-screen bg-[#f8fafc] text-slate-900 font-sans selection:bg-blue-600 selection:text-white relative antialiased">
+      {/* Light Architectural Blueprint Canvas Background */}
       <TechnicalBlueprintBackground />
 
       <Navigation />
 
-      <main className="max-w-7xl mx-auto px-6 relative">
+      <main className="w-full max-w-full px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 2xl:px-24 relative">
         <HeroSection />
         <AboutSection />
         <ServicesSection />

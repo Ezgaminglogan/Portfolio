@@ -26,7 +26,7 @@ export default function AnimatedSectionHeading({
   const displayTitle = hasPeriod ? title.slice(0, -1) : title;
 
   return (
-    <div ref={containerRef} className="relative mb-20">
+    <div ref={containerRef} className="relative mb-16 sm:mb-20">
       <motion.div
         className="flex flex-col items-center justify-center text-center"
         style={{
@@ -42,7 +42,7 @@ export default function AnimatedSectionHeading({
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-[11px] font-mono font-bold uppercase tracking-[0.25em] text-blue-400 mb-4 bg-blue-500/10 border border-blue-500/20 px-3 py-1 rounded-full"
+            className="text-[11px] font-mono font-bold uppercase tracking-[0.25em] text-blue-700 mb-4 bg-blue-50 border border-blue-200/80 px-3.5 py-1 rounded-full shadow-[0_2px_8px_rgba(37,99,235,0.06)]"
           >
             {label}
           </motion.span>
@@ -54,10 +54,10 @@ export default function AnimatedSectionHeading({
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           style={{ letterSpacing: headingStyle.letterSpacing }}
-          className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-black text-white tracking-tight sm:tracking-tighter leading-[1.15] sm:leading-none break-words max-w-full px-2"
+          className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-black text-slate-950 tracking-tight sm:tracking-tighter leading-[1.15] sm:leading-none break-words max-w-full px-2"
         >
           {displayTitle}
-          {hasPeriod && <span className="text-blue-400">.</span>}
+          {hasPeriod && <span className="text-blue-600">.</span>}
         </motion.h2>
 
         {/* Subtitle */}
@@ -66,7 +66,7 @@ export default function AnimatedSectionHeading({
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-slate-400 text-base mt-4 max-w-lg"
+            className="text-slate-600 text-base mt-4 max-w-xl leading-relaxed"
           >
             {subtitle}
           </motion.p>
@@ -74,7 +74,7 @@ export default function AnimatedSectionHeading({
 
         {/* Animated decorative line */}
         <motion.div
-          className="h-px bg-gradient-to-r from-transparent via-blue-500/40 to-transparent mt-6"
+          className="h-px bg-gradient-to-r from-transparent via-blue-500/35 to-transparent mt-6"
           style={{ width: lineWidth }}
         />
       </motion.div>

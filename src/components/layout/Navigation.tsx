@@ -24,35 +24,48 @@ export default function Navigation() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
+  // High-accuracy scroll spy for reliable active section tracking
   useEffect(() => {
-    const sectionIds = NAV_ITEMS.map((item) => item.id);
-    const elements: HTMLElement[] = [];
+    let ticking = false;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const scrollY = window.scrollY;
+
+          // 1. Guaranteed "Home" lock when near or at the top of page
+          if (scrollY < 120) {
+            setActiveSection("home");
+            ticking = false;
+            return;
           }
-        }
-      },
-      {
-        rootMargin: "-20% 0px -70% 0px",
-        threshold: 0,
-      }
-    );
 
-    for (const id of sectionIds) {
-      const el = document.getElementById(id);
-      if (el) {
-        elements.push(el);
-        observer.observe(el);
-      }
-    }
+          // 2. Check each section from bottom to top
+          const navbarOffset = 110;
+          const sectionIds = NAV_ITEMS.map((item) => item.id);
+          let current = "home";
 
-    return () => {
-      observer.disconnect();
+          for (const id of sectionIds) {
+            const el = document.getElementById(id);
+            if (el) {
+              const top = el.getBoundingClientRect().top + scrollY - navbarOffset;
+              if (scrollY >= top) {
+                current = id;
+              }
+            }
+          }
+
+          setActiveSection(current);
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll(); // Initial check on mount
+
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const closeMobileMenu = useCallback(() => {
@@ -62,6 +75,40 @@ export default function Navigation() {
   const toggleMobileMenu = useCallback(() => {
     setMobileMenuOpen((prev) => !prev);
   }, []);
+
+  const handleNavClick = useCallback(
+    (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+      e.preventDefault();
+      closeMobileMenu();
+
+      if (id === "home") {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        if (window.history.pushState) {
+          window.history.pushState(null, "", window.location.pathname);
+        }
+        setActiveSection("home");
+        return;
+      }
+
+      const element = document.getElementById(id);
+      if (element) {
+        const navbarHeight = 72;
+        const elementPosition = element.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - navbarHeight;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: "smooth",
+        });
+
+        if (window.history.pushState) {
+          window.history.pushState(null, "", `#${id}`);
+        }
+        setActiveSection(id);
+      }
+    },
+    [closeMobileMenu]
+  );
 
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
@@ -76,14 +123,15 @@ export default function Navigation() {
   }, [mobileMenuOpen, closeMobileMenu]);
 
   return (
-    <nav className="fixed top-0 w-full bg-[#06080e]/90 backdrop-blur-xl z-50 border-b border-white/10 transition-all duration-300 shadow-[0_4px_30px_rgba(0,0,0,0.8)]">
-      <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+    <nav className="fixed top-0 w-full bg-white/85 backdrop-blur-xl z-50 border-b border-slate-200/80 transition-all duration-300 shadow-[0_4px_25px_rgba(0,0,0,0.03)]">
+      <div className="w-full max-w-full px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 2xl:px-24 h-16 flex items-center justify-between">
         <a
-          href="#"
-          className="text-white text-sm font-bold tracking-wider uppercase flex items-center gap-2 group"
+          href="#home"
+          onClick={(e) => handleNavClick(e, "home")}
+          className="text-slate-900 text-sm font-bold tracking-wider uppercase flex items-center gap-2 group cursor-pointer"
         >
-          <span className="w-2 h-2 rounded-full bg-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.9)] animate-pulse" />
-          <span className="group-hover:text-slate-300 transition-colors">
+          <span className="w-2.5 h-2.5 rounded-full bg-blue-600 shadow-[0_0_12px_rgba(37,99,235,0.7)] animate-pulse" />
+          <span className="group-hover:text-blue-600 transition-colors">
             Logan M. Panucat
           </span>
         </a>
@@ -93,10 +141,11 @@ export default function Navigation() {
             <a
               key={item.id}
               href={`#${item.id}`}
-              className={`transition-all duration-300 py-1.5 px-3 rounded-full border ${
+              onClick={(e) => handleNavClick(e, item.id)}
+              className={`transition-all duration-300 py-1.5 px-3 rounded-full border cursor-pointer ${
                 activeSection === item.id
-                  ? "text-white bg-blue-500/15 border-blue-400/30 shadow-[0_0_15px_rgba(59,130,246,0.25)] font-bold"
-                  : "text-zinc-400 border-transparent hover:text-white hover:bg-white/5"
+                  ? "text-blue-600 bg-blue-50 border-blue-200 shadow-[0_0_15px_rgba(37,99,235,0.12)] font-bold"
+                  : "text-slate-600 border-transparent hover:text-slate-950 hover:bg-slate-100/80"
               }`}
             >
               {item.label}
@@ -107,7 +156,7 @@ export default function Navigation() {
         <button
           ref={buttonRef}
           type="button"
-          className="lg:hidden p-2 -mr-2 text-zinc-400 hover:text-white focus:outline-none"
+          className="lg:hidden p-2 -mr-2 text-slate-600 hover:text-slate-950 focus:outline-none cursor-pointer"
           onClick={toggleMobileMenu}
           aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
           aria-expanded={mobileMenuOpen}
@@ -123,18 +172,18 @@ export default function Navigation() {
       {mobileMenuOpen && (
         <div
           id="mobile-menu"
-          className="lg:hidden px-6 py-4 bg-[#06080e]/98 backdrop-blur-xl border-t border-white/10 flex flex-col gap-3 text-xs uppercase tracking-wider font-semibold"
+          className="lg:hidden px-6 py-4 bg-white/98 backdrop-blur-xl border-t border-slate-200 flex flex-col gap-2 text-xs uppercase tracking-wider font-semibold shadow-lg"
         >
           {NAV_ITEMS.map((item) => (
             <a
               key={item.id}
               href={`#${item.id}`}
-              className={`transition-all duration-300 py-2 px-3 rounded-lg ${
+              onClick={(e) => handleNavClick(e, item.id)}
+              className={`transition-all duration-300 py-2.5 px-3.5 rounded-lg cursor-pointer ${
                 activeSection === item.id
-                  ? "text-white font-bold bg-blue-500/15 border border-blue-400/30"
-                  : "text-zinc-400 hover:text-white hover:bg-white/5"
+                  ? "text-blue-600 font-bold bg-blue-50 border border-blue-200"
+                  : "text-slate-600 hover:text-slate-950 hover:bg-slate-50"
               }`}
-              onClick={closeMobileMenu}
             >
               {item.label}
             </a>

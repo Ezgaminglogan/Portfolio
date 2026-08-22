@@ -1,11 +1,15 @@
 @import "tailwindcss";
 
 :root {
-  --background: #080b11;
-  --foreground: #f8fafc;
-  --accent: #3b82f6;
-  --accent-light: #60a5fa;
-  --accent-glow: rgba(59, 130, 246, 0.15);
+  --background: #f8fafc;
+  --foreground: #090d16;
+  --foreground-muted: #64748b;
+  --accent: #2563eb;
+  --accent-light: #3b82f6;
+  --accent-hover: #1d4ed8;
+  --accent-glow: rgba(37, 99, 235, 0.12);
+  --card-bg: #ffffff;
+  --card-border: rgba(226, 232, 240, 0.9);
 }
 
 @theme inline {
@@ -23,29 +27,29 @@ body {
   overflow-x: hidden;
 }
 
-/* Engineered Blueprint Tech Grid */
+/* Light Architectural Tech Grid */
 .tech-grid {
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 0;
   background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.018) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.018) 1px, transparent 1px),
-    radial-gradient(circle, rgba(96, 165, 250, 0.08) 1px, transparent 1px);
-  background-size: 56px 56px, 56px 56px, 28px 28px;
-  mask-image: radial-gradient(ellipse 90% 80% at 50% 25%, #000 35%, transparent 85%);
-  -webkit-mask-image: radial-gradient(ellipse 90% 80% at 50% 25%, #000 35%, transparent 85%);
+    linear-gradient(to right, rgba(37, 99, 235, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(37, 99, 235, 0.04) 1px, transparent 1px),
+    radial-gradient(circle, rgba(37, 99, 235, 0.08) 1px, transparent 1px);
+  background-size: 48px 48px, 48px 48px, 24px 24px;
+  mask-image: radial-gradient(ellipse 90% 80% at 50% 25%, #000 45%, transparent 90%);
+  -webkit-mask-image: radial-gradient(ellipse 90% 80% at 50% 25%, #000 45%, transparent 90%);
 }
 
-/* Noise texture overlay */
+/* Subtle noise texture overlay */
 .noise-overlay::before {
   content: '';
   position: fixed;
   inset: 0;
   z-index: 1;
   pointer-events: none;
-  opacity: 0.02;
+  opacity: 0.015;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
   background-repeat: repeat;
   background-size: 256px 256px;
@@ -63,34 +67,35 @@ body {
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
 }
 
 :focus-visible {
-  outline: 2px solid rgba(255, 255, 255, 0.7);
-  outline-offset: 3px;
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
 }
 
-/* Custom scrollbar */
+/* Custom scrollbar - Light White & Blue Theme */
 ::-webkit-scrollbar {
   width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #0b0d12;
+  background: #f1f5f9;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #272c38;
+  background: #cbd5e1;
   border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #3b4254;
+  background: #94a3b8;
 }
 
 /* Thin scrollbar for modals */
 .thin-scrollbar::-webkit-scrollbar {
-  width: 4px;
+  width: 5px;
 }
 
 .thin-scrollbar::-webkit-scrollbar-track {
@@ -98,12 +103,12 @@ html {
 }
 
 .thin-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(148, 163, 184, 0.4);
   border-radius: 4px;
 }
 
 .thin-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.4);
+  background: rgba(100, 116, 139, 0.6);
 }
 
 @keyframes blink {
@@ -120,26 +125,6 @@ html {
   animation: blink 0.8s step-end infinite;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(16px) scale(0.98);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
 @keyframes marquee {
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
@@ -148,7 +133,7 @@ html {
 .animate-marquee {
   display: flex;
   width: max-content;
-  animation: marquee var(--marquee-duration, 25s) linear infinite;
+  animation: marquee var(--marquee-duration, 28s) linear infinite;
 }
 
 .animate-marquee:hover {

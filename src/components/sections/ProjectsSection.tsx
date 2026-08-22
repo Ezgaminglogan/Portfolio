@@ -2,39 +2,57 @@
 import { useState, useEffect, useCallback, memo } from "react";
 import { motion, type MotionValue } from "framer-motion";
 import Image from "next/image";
-import { XMarkIcon } from "@heroicons/react/24/outline";
+import { XMarkIcon, ArrowTopRightOnSquareIcon } from "@heroicons/react/24/outline";
 import { projects } from "@/app/data";
 import type { Project } from "~types";
 import { useParallax, useChildParallax } from "@/hooks/useParallax";
 import AnimatedSectionHeading from "@/components/ui/AnimatedSectionHeading";
 
+// Tech stack icon CDN mapping for crisp branded SVG logos
+const TECH_ICON_SLUGS: Record<string, string> = {
+  TanStack: "https://cdn.simpleicons.org/reactquery/FF4154",
+  "ShadCN UI": "https://cdn.simpleicons.org/shadcnui/000000",
+  "Better Auth": "https://cdn.simpleicons.org/auth0/2563EB",
+  Prisma: "https://cdn.simpleicons.org/prisma/2D3748",
+  "Prisma ORM": "https://cdn.simpleicons.org/prisma/2D3748",
+  libSQL: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/sqlite/sqlite-original.svg",
+  SQLite: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/sqlite/sqlite-original.svg",
+  TailwindCSS: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg",
+  MySQL: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg",
+  JWT: "https://cdn.simpleicons.org/jsonwebtokens/000000",
+  "Blazor Framework": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/dot-net/dot-net-original.svg",
+  "C#": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/csharp/csharp-original.svg",
+  ".NET": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/dotnetcore/dotnetcore-original.svg",
+  PHP: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/php/php-original.svg",
+  PHPMailer: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/php/php-original.svg",
+  "Visual Basic WFA": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/visualbasic/visualbasic-original.svg",
+  "ASP.NET Web MVC": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/dotnetcore/dotnetcore-original.svg",
+  SignalR: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/dot-net/dot-net-original.svg",
+  "Entity Framework": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/dotnetcore/dotnetcore-original.svg",
+  "EF Core": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/dotnetcore/dotnetcore-original.svg",
+  "Google reCAPTCHA v3": "https://cdn.simpleicons.org/google/4285F4",
+  "Google Sign-In": "https://cdn.simpleicons.org/google/4285F4",
+  React: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg",
+  "Next.js": "https://cdn.simpleicons.org/nextdotjs/000000",
+  TypeScript: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg",
+  JavaScript: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg",
+};
+
 export default function ProjectsSection() {
   const [selectedProject, setSelectedProject] = useState<number | null>(null);
-  const [showCode, setShowCode] = useState(false);
-  const [copied, setCopied] = useState(false);
 
   const { ref, y, opacity, scrollYProgress } = useParallax({
     speed: 0.1,
     fadeIn: true,
   });
 
-  const handleCopy = useCallback((text: string) => {
-    navigator.clipboard.writeText(text);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  }, []);
-
   const openProjectModal = useCallback((index: number) => {
     setSelectedProject(index);
-    setShowCode(false);
-    setCopied(false);
     document.body.style.overflow = "hidden";
   }, []);
 
   const closeProjectModal = useCallback(() => {
     setSelectedProject(null);
-    setShowCode(false);
-    setCopied(false);
     document.body.style.overflow = "";
   }, []);
 
@@ -55,14 +73,14 @@ export default function ProjectsSection() {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
         style={{ y, opacity }}
-        className="py-32 border-t border-white/10 relative"
+        className="py-24 sm:py-32 border-t border-slate-200/80 relative"
       >
         <AnimatedSectionHeading
           title="Selected Work."
           label="Featured Architecture"
           subtitle="A curation of my full-stack web, desktop, and enterprise software systems."
         />
-        <div className="flex flex-col gap-12">
+        <div className="flex flex-col gap-10">
           {/* Flagship Spotlight Hero Project (First Project) */}
           {projects[0] && (
             <FeaturedFlagshipCard
@@ -73,7 +91,7 @@ export default function ProjectsSection() {
           )}
 
           {/* Secondary & Campus Projects Grid */}
-          <div className="grid md:grid-cols-2 gap-12">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-7">
             {projects.slice(1).map((project, idx) => {
               const actualIndex = idx + 1;
               return (
@@ -90,141 +108,120 @@ export default function ProjectsSection() {
         </div>
       </motion.section>
 
+      {/* Project Details Modal — Maximized Immersive Widescreen Modal */}
       {selectedProject !== null && projects[selectedProject] && (
         <div
-          className="fixed inset-0 z-60 flex items-center justify-center p-4 bg-[#06080e]/95 backdrop-blur-xl animate-fade-in"
+          className="fixed inset-0 z-60 flex items-center justify-center p-3 sm:p-5 lg:p-7 bg-slate-950/70 backdrop-blur-md animate-fade-in"
           onClick={closeProjectModal}
         >
           <div
-            className="relative w-full max-w-3xl bg-[#06080e] border border-white/15 rounded-xl overflow-hidden max-h-[90vh] overflow-y-auto thin-scrollbar animate-scale-up shadow-[0_15px_50px_rgba(0,0,0,0.9)]"
+            className="relative w-full max-w-[1380px] bg-white border border-slate-200 rounded-3xl sm:rounded-[36px] overflow-hidden shadow-[0_30px_100px_rgba(0,0,0,0.35)] max-h-[92vh] flex flex-col"
             onClick={(e) => e.stopPropagation()}
           >
+            {/* Floating Close Button */}
             <button
               onClick={closeProjectModal}
               type="button"
               aria-label="Close project details"
-              className="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-black/60 backdrop-blur-md flex items-center justify-center text-zinc-400 hover:text-white border border-white/15 transition-colors"
+              className="absolute top-4 right-4 sm:top-6 sm:right-6 z-30 w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-white/95 backdrop-blur-md flex items-center justify-center text-slate-600 hover:text-slate-950 border border-slate-200 transition-all shadow-md cursor-pointer hover:scale-108 active:scale-95"
             >
-              <XMarkIcon className="w-5 h-5" />
+              <XMarkIcon className="w-5 h-5 sm:w-6 sm:h-6 stroke-2" />
             </button>
-            {/* Browser Window Mockup Frame */}
-            <div className="w-full bg-[#0f1422] border-b border-white/10 overflow-hidden flex flex-col">
-              {/* Browser Header Top Bar */}
-              <div className="flex items-center gap-1.5 px-4 py-2.5 bg-black/50 border-b border-white/5 select-none">
-                <div className="w-2.5 h-2.5 rounded-full bg-red-500/70" />
-                <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/70" />
-                <div className="w-2.5 h-2.5 rounded-full bg-green-500/70" />
-                <div className="mx-auto text-[10px] font-mono text-zinc-400 truncate max-w-50">
-                  {projects[selectedProject].title.toLowerCase().replace(/\s+/g, "-")}.app
+
+            {/* 2-Grid Side-by-Side Layout — Fluid Responsive Proportion */}
+            <div className="grid lg:grid-cols-12 min-h-0 flex-1 overflow-y-auto thin-scrollbar">
+              {/* Left Column (7 cols): High-Impact Viewport & CAD Chrome */}
+              <div className="lg:col-span-7 bg-slate-950 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-slate-800 relative">
+                {/* Browser Header Bar */}
+                <div className="flex items-center gap-2 px-4 sm:px-6 py-3 sm:py-4 bg-black/60 border-b border-white/10 select-none shrink-0">
+                  <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-red-500/85" />
+                  <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-yellow-500/85" />
+                  <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-green-500/85" />
+                  <div className="mx-auto text-[11px] sm:text-xs font-mono text-slate-300 tracking-wider truncate max-w-[200px] sm:max-w-sm">
+                    {projects[selectedProject].title.toLowerCase().replace(/\s+/g, "-")}.app
+                  </div>
+                </div>
+
+                {/* Maximized Screenshot Container */}
+                <div className="relative w-full flex-1 aspect-[16/10] sm:aspect-video lg:aspect-auto min-h-[240px] sm:min-h-[320px] lg:min-h-[500px] bg-[#070b16] flex items-center justify-center p-3 sm:p-6 lg:p-8">
+                  <Image
+                    src={projects[selectedProject].image}
+                    alt={projects[selectedProject].title}
+                    fill
+                    sizes="(min-width: 1400px) 800px, (min-width: 1024px) 60vw, 100vw"
+                    className="object-contain p-1 sm:p-2"
+                    priority
+                  />
                 </div>
               </div>
-              {/* Screenshot Viewport */}
-              <div className="relative w-full aspect-video bg-white/2">
-                <Image
-                  src={projects[selectedProject].image}
-                  alt={projects[selectedProject].title}
-                  fill
-                  sizes="(min-width: 1024px) 768px, 100vw"
-                  className="object-contain"
-                />
-              </div>
-            </div>
-            <div className="p-8">
-              <div className="inline-block text-[11px] font-mono font-bold uppercase tracking-widest text-blue-400 bg-blue-500/10 border border-blue-500/20 px-2.5 py-0.5 rounded-full mb-3">
-                {projects[selectedProject].type}
-              </div>
-              <h3 className="text-3xl font-bold text-white tracking-tight mb-4">
-                {projects[selectedProject].title}
-              </h3>
-              <p className="text-slate-300 leading-relaxed mb-8">
-                {projects[selectedProject].description}
-              </p>
 
-              {/* Action Buttons Wrapper */}
-              <div className="flex flex-wrap items-center gap-3.5 mb-8">
-                {projects[selectedProject].liveUrl && (
-                  <a
-                    href={projects[selectedProject].liveUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-500 text-white rounded-full text-sm font-semibold hover:from-blue-500 hover:to-blue-400 transition-all shadow-[0_0_20px_rgba(59,130,246,0.35)]"
-                  >
-                    Visit Live Site ↗
-                  </a>
-                )}
-                {projects[selectedProject].githubUrl && (
-                  <a
-                    href={projects[selectedProject].githubUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center gap-2 px-6 py-3 border border-white/20 bg-[#0f1422] text-white rounded-full text-sm font-semibold hover:bg-white/10 hover:border-blue-400/30 transition-colors"
-                  >
-                    <svg className="w-4 h-4 shrink-0 text-zinc-400" fill="currentColor" viewBox="0 0 24 24">
-                      <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
-                    </svg>
-                    Source Code
-                  </a>
-                )}
-                {projects[selectedProject].codeHighlight && (
-                  <button
-                    onClick={() => setShowCode(!showCode)}
-                    className="inline-flex items-center gap-2 px-6 py-3 border border-blue-400/30 bg-blue-500/10 text-blue-300 rounded-full text-sm font-semibold hover:bg-blue-500/20 transition-colors focus:outline-none"
-                  >
-                    {showCode ? "Hide Blueprint" : "Code Blueprint"}
-                  </button>
-                )}
-              </div>
+              {/* Right Column (5 cols): Expanded Info, High-Contrast Typography, Tech Badges */}
+              <div className="lg:col-span-5 p-6 sm:p-8 lg:p-10 xl:p-12 flex flex-col justify-between bg-white overflow-y-auto">
+                <div>
+                  <div className="inline-flex items-center gap-2 text-[11px] sm:text-xs font-mono font-bold uppercase tracking-wider text-blue-700 bg-blue-50 border border-blue-200 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full mb-4 sm:mb-6 shadow-xs">
+                    <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                    {projects[selectedProject].type}
+                  </div>
+                  
+                  <h3 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-950 tracking-tight mb-4 sm:mb-6 leading-tight">
+                    {projects[selectedProject].title}
+                  </h3>
 
-              {/* Code Highlight Drawer */}
-              {projects[selectedProject].codeHighlight && showCode && (
-                <motion.div
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: "auto" }}
-                  transition={{ duration: 0.3 }}
-                  className="mb-8 overflow-hidden"
-                >
-                  <div className="bg-[#0f1422] border border-white/15 rounded-lg overflow-hidden">
-                    {/* Terminal Header */}
-                    <div className="flex items-center justify-between px-4 py-3 bg-black/50 border-b border-white/10">
-                      <div className="flex items-center gap-2">
-                        <div className="w-3 h-3 rounded-full bg-red-500/70" />
-                        <div className="w-3 h-3 rounded-full bg-yellow-500/70" />
-                        <div className="w-3 h-3 rounded-full bg-green-500/70" />
-                        <span className="text-xs font-mono text-blue-300 ml-2">
-                          {projects[selectedProject].codeHighlight!.filename}
-                        </span>
-                      </div>
-                      <button
-                        onClick={() => handleCopy(projects[selectedProject].codeHighlight!.code)}
-                        className="text-xs text-blue-400 hover:text-blue-300 font-mono transition-colors focus:outline-none"
+                  <p className="text-slate-600 leading-relaxed text-sm sm:text-base lg:text-lg mb-6 sm:mb-8">
+                    {projects[selectedProject].description}
+                  </p>
+                </div>
+
+                <div className="pt-2 sm:pt-4">
+                  {/* Action Buttons */}
+                  <div className="flex flex-wrap items-center gap-3 sm:gap-4 mb-6 sm:mb-8">
+                    {projects[selectedProject].liveUrl && (
+                      <a
+                        href={projects[selectedProject].liveUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center gap-2 px-6 py-3 sm:px-8 sm:py-3.5 bg-blue-600 text-white rounded-full text-sm sm:text-base font-bold hover:bg-blue-700 transition-all shadow-[0_8px_25px_rgba(37,99,235,0.3)] hover:scale-102 active:scale-98 cursor-pointer"
                       >
-                        {copied ? "[copied!]" : "[copy]"}
-                      </button>
-                    </div>
-                    {/* Terminal Code Body */}
-                    <div className="overflow-x-auto max-h-87.5 thin-scrollbar bg-[#080b11] p-4">
-                      <pre className="text-xs font-mono text-slate-200 whitespace-pre leading-relaxed select-all">
-                        <code>{projects[selectedProject].codeHighlight!.code}</code>
-                      </pre>
-                    </div>
+                        <span>Visit Live Site</span>
+                        <ArrowTopRightOnSquareIcon className="w-4 h-4 sm:w-5 sm:h-5 stroke-2" />
+                      </a>
+                    )}
+                    {projects[selectedProject].githubUrl && (
+                      <a
+                        href={projects[selectedProject].githubUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center gap-2 px-6 py-3 sm:px-8 sm:py-3.5 border border-slate-200 bg-white text-slate-900 rounded-full text-sm sm:text-base font-bold hover:bg-slate-50 hover:border-slate-300 transition-all shadow-xs cursor-pointer hover:scale-102 active:scale-98"
+                      >
+                        <svg className="w-4 h-4 sm:w-5 sm:h-5 shrink-0 text-slate-800" fill="currentColor" viewBox="0 0 24 24">
+                          <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+                        </svg>
+                        <span>Source Code</span>
+                      </a>
+                    )}
                   </div>
-                  {/* Code Explanation Details */}
-                  <div className="mt-3 p-4 bg-blue-500/10 border border-blue-500/20 rounded-lg text-sm leading-relaxed text-slate-300">
-                    <strong className="text-blue-300 font-semibold">Architectural Note: </strong>
-                    {projects[selectedProject].codeHighlight!.explanation}
-                  </div>
-                </motion.div>
-              )}
 
-              <div className="flex flex-wrap gap-2 pt-6 border-t border-white/10">
-                {projects[selectedProject].tech.map((t) => (
-                  <span
-                    key={t}
-                    className="px-3 py-1 bg-[#0f1422] border border-white/15 text-slate-300 text-xs rounded-full font-medium"
-                  >
-                    {t}
-                  </span>
-                ))}
+                  {/* Expanded Tech Badges with Brand Icons */}
+                  <div className="flex flex-wrap gap-2 sm:gap-2.5 pt-4 sm:pt-6 border-t border-slate-100">
+                    {projects[selectedProject].tech.map((t) => (
+                      <span
+                        key={t}
+                        className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2.5 bg-slate-50 hover:bg-slate-100 border border-slate-200/90 text-slate-800 text-xs sm:text-sm rounded-xl font-semibold shadow-xs transition-colors"
+                      >
+                        {TECH_ICON_SLUGS[t] && (
+                          /* eslint-disable-next-line @next/next/no-img-element */
+                          <img
+                            src={TECH_ICON_SLUGS[t]}
+                            alt={t}
+                            className="w-3.5 h-3.5 sm:w-4.5 sm:h-4.5 object-contain shrink-0"
+                            loading="lazy"
+                          />
+                        )}
+                        <span>{t}</span>
+                      </span>
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -254,73 +251,82 @@ const FeaturedFlagshipCard = memo(function FeaturedFlagshipCard({
       transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
       onClick={onOpen}
       style={{ y: cardY }}
-      className="group cursor-pointer p-6 sm:p-8 rounded-2xl bg-[#0f1422]/90 hover:bg-white/4 border border-white/15 hover:border-blue-400/40 transition-all duration-500 shadow-[0_10px_40px_rgba(0,0,0,0.8)] hover:shadow-[0_0_35px_rgba(59,130,246,0.15)]"
+      className="group cursor-pointer p-6 sm:p-8 lg:p-10 rounded-3xl bg-white border border-slate-200 hover:border-blue-300 transition-all duration-500 shadow-[0_4px_25px_rgba(0,0,0,0.03)] hover:shadow-[0_15px_45px_rgba(37,99,235,0.08)]"
     >
-      <div className="grid lg:grid-cols-12 gap-8 items-center">
+      <div className="grid lg:grid-cols-12 gap-8 lg:gap-10 items-center">
         {/* Browser Mockup Column */}
-        <div className="lg:col-span-7 w-full bg-[#080b11] border border-white/10 rounded-sm overflow-hidden flex flex-col shadow-2xl group-hover:border-blue-400/30 transition-all duration-300">
-          <div className="flex items-center gap-1.5 px-3 py-2 bg-black/50 border-b border-white/5 select-none">
-            <div className="w-2.5 h-2.5 rounded-full bg-red-500/70" />
-            <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/70" />
-            <div className="w-2.5 h-2.5 rounded-full bg-green-500/70" />
-            <div className="mx-auto text-[10px] font-mono text-zinc-400 truncate max-w-50">
+        <div className="lg:col-span-7 w-full bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden flex flex-col shadow-md group-hover:border-blue-400/40 transition-all duration-300">
+          <div className="flex items-center gap-2 px-4 py-3 bg-black/40 border-b border-white/5 select-none">
+            <div className="w-2.5 h-2.5 rounded-full bg-red-500/80" />
+            <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/80" />
+            <div className="w-2.5 h-2.5 rounded-full bg-green-500/80" />
+            <div className="mx-auto text-[10px] font-mono text-slate-400 truncate max-w-50">
               {project.title.toLowerCase().replace(/\s+/g, "-")}.app
             </div>
           </div>
-          <div className="relative w-full aspect-video overflow-hidden bg-white/2">
+          <div className="relative w-full aspect-video overflow-hidden bg-[#0b1329] p-2">
             <Image
               src={project.image}
               alt={project.title}
               fill
               sizes="(min-width: 1024px) 60vw, 100vw"
-              className="object-contain transition-transform duration-[1.5s] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-103"
+              className="object-contain transition-transform duration-[1.2s] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-103 p-1"
             />
-            <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-700" />
           </div>
         </div>
 
         {/* Narrative & Details Column */}
         <div className="lg:col-span-5 flex flex-col gap-4">
           <div className="flex items-center gap-2">
-            <span className="inline-flex items-center gap-1.5 text-[10px] font-mono font-bold uppercase tracking-widest text-blue-300 bg-blue-500/10 border border-blue-500/25 px-3 py-1 rounded-full">
-              <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />
-              Featured Case Study
+            <span className="inline-flex items-center gap-1.5 text-[10px] font-mono font-bold uppercase tracking-widest text-blue-700 bg-blue-50 border border-blue-200 px-3.5 py-1 rounded-full shadow-xs">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              {project.type.includes("Ongoing") ? "Active Ongoing Project" : "Featured Case Study"}
             </span>
           </div>
 
-          <h3 className="text-2xl sm:text-3xl font-bold text-white tracking-tight group-hover:text-blue-200 transition-colors">
+          <h3 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-950 tracking-tight group-hover:text-blue-600 transition-colors">
             {project.title}
           </h3>
 
-          <p className="text-slate-300 text-sm leading-relaxed">
+          <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
             {project.description}
           </p>
 
-          <div className="flex flex-wrap gap-1.5 pt-2">
+          {/* Tech Badges with Brand Icons */}
+          <div className="flex flex-wrap gap-2 pt-2">
             {project.tech.map((t) => (
               <span
                 key={t}
-                className="px-2.5 py-1 text-xs rounded-full border border-white/10 bg-[#080b11] text-slate-300 font-medium"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-xl border border-slate-200 bg-slate-50 text-slate-700 font-medium hover:bg-slate-100 transition-colors"
               >
-                {t}
+                {TECH_ICON_SLUGS[t] && (
+                  /* eslint-disable-next-line @next/next/no-img-element */
+                  <img
+                    src={TECH_ICON_SLUGS[t]}
+                    alt={t}
+                    className="w-3.5 h-3.5 object-contain shrink-0"
+                    loading="lazy"
+                  />
+                )}
+                <span>{t}</span>
               </span>
             ))}
           </div>
 
-          <div className="flex items-center gap-4 pt-4 border-t border-white/10">
+          <div className="flex items-center gap-4 pt-4 border-t border-slate-100">
             {project.liveUrl && (
               <a
                 href={project.liveUrl}
                 target="_blank"
                 rel="noreferrer"
                 onClick={(e) => e.stopPropagation()}
-                className="px-5 py-2.5 bg-gradient-to-r from-blue-600 to-blue-500 text-white rounded-full text-xs font-semibold hover:from-blue-500 hover:to-blue-400 transition-all shadow-[0_0_20px_rgba(59,130,246,0.35)]"
+                className="px-6 py-2.5 bg-blue-600 text-white rounded-full text-xs font-semibold hover:bg-blue-700 transition-all shadow-[0_4px_15px_rgba(37,99,235,0.25)] cursor-pointer"
               >
                 Live Production ↗
               </a>
             )}
-            <span className="text-xs text-blue-400 font-mono group-hover:text-blue-300 transition-colors">
-              Click to view blueprint →
+            <span className="text-xs text-blue-600 font-mono font-semibold group-hover:text-blue-700 transition-colors">
+              View Project Details →
             </span>
           </div>
         </div>
@@ -343,7 +349,7 @@ const ProjectCard = memo(function ProjectCard({
   onOpen,
 }: ProjectCardProps) {
   const isLeft = index % 2 === 0;
-  const speed = isLeft ? 0.05 : -0.05;
+  const speed = isLeft ? 0.04 : -0.04;
   const cardY = useChildParallax(scrollYProgress, speed);
 
   return (
@@ -353,58 +359,66 @@ const ProjectCard = memo(function ProjectCard({
       transition={{ duration: 0.8, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
       onClick={onOpen}
       style={{ y: cardY }}
-      className="group cursor-pointer flex flex-col gap-6"
+      className="group cursor-pointer flex flex-col gap-5 p-6 sm:p-7 rounded-2xl bg-white border border-slate-200 hover:border-blue-300 transition-all duration-300 shadow-[0_2px_12px_rgba(0,0,0,0.02)] hover:shadow-[0_12px_35px_rgba(37,99,235,0.08)]"
     >
       {/* Browser Window Mockup Card Frame */}
-      <div className="w-full bg-[#0f1422] border border-white/10 rounded-sm overflow-hidden flex flex-col shadow-[0_4px_25px_rgba(0,0,0,0.6)] group-hover:border-blue-400/30 group-hover:shadow-[0_0_30px_rgba(59,130,246,0.1)] transition-all duration-300">
-        {/* Browser Header Top Bar */}
-        <div className="flex items-center gap-1.5 px-3 py-2 bg-black/50 border-b border-white/5 select-none">
-          <div className="w-2 h-2 rounded-full bg-red-500/60" />
-          <div className="w-2 h-2 rounded-full bg-yellow-500/60" />
-          <div className="w-2 h-2 rounded-full bg-green-500/60" />
-          <div className="mx-auto text-[9px] font-mono text-zinc-400 truncate max-w-37.5">
+      <div className="w-full bg-slate-900 border border-slate-800 rounded-xl overflow-hidden flex flex-col shadow-xs group-hover:border-blue-400/40 transition-all duration-300">
+        <div className="flex items-center gap-1.5 px-3 py-2 bg-black/40 border-b border-white/5 select-none">
+          <div className="w-2 h-2 rounded-full bg-red-500/80" />
+          <div className="w-2 h-2 rounded-full bg-yellow-500/80" />
+          <div className="w-2 h-2 rounded-full bg-green-500/80" />
+          <div className="mx-auto text-[9px] font-mono text-slate-400 truncate max-w-36">
             {project.title.toLowerCase().replace(/\s+/g, "-")}.app
           </div>
         </div>
-        {/* Screenshot Viewport */}
-        <div className="relative w-full aspect-video overflow-hidden bg-white/2">
+        <div className="relative w-full aspect-video overflow-hidden bg-[#0b1329] p-1.5">
           <Image
             src={project.image}
             alt={project.title}
             fill
             sizes="(min-width: 768px) 50vw, 100vw"
-            className="object-contain transition-transform duration-[1.5s] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-103"
+            className="object-contain transition-transform duration-[1.2s] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-103 p-1"
           />
-          <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-700" />
         </div>
       </div>
+
       <div>
         <div className="flex items-center gap-3 mb-2">
-          <span className="text-[11px] font-mono uppercase tracking-widest text-blue-400 font-semibold">
+          <span className="text-[11px] font-mono uppercase tracking-widest text-blue-700 font-bold">
             {project.type}
           </span>
         </div>
-        <h3 className="text-xl font-semibold text-white mb-3 group-hover:text-blue-200 transition-colors">
+        <h3 className="text-xl font-bold text-slate-900 mb-2.5 group-hover:text-blue-600 transition-colors">
           {project.title}
         </h3>
-        <div className="flex flex-wrap gap-2">
+        <p className="text-slate-600 text-xs sm:text-sm leading-relaxed mb-4 line-clamp-2">
+          {project.description}
+        </p>
+
+        {/* Tech Badges with Brand Icons */}
+        <div className="flex flex-wrap gap-1.5 mb-4">
           {project.tech.map((t) => (
-            <span key={t} className="text-xs text-slate-400">
-              {t}
+            <span
+              key={t}
+              className="inline-flex items-center gap-1 px-2.5 py-1 text-[11px] text-slate-700 bg-slate-50 border border-slate-200/80 rounded-lg font-medium"
+            >
+              {TECH_ICON_SLUGS[t] && (
+                /* eslint-disable-next-line @next/next/no-img-element */
+                <img
+                  src={TECH_ICON_SLUGS[t]}
+                  alt={t}
+                  className="w-3 h-3 object-contain shrink-0"
+                  loading="lazy"
+                />
+              )}
+              <span>{t}</span>
             </span>
           ))}
         </div>
-        {project.liveUrl && (
-          <a
-            href={project.liveUrl}
-            target="_blank"
-            rel="noreferrer"
-            onClick={(e) => e.stopPropagation()}
-            className="inline-block mt-4 text-xs font-mono text-blue-400 border-b border-blue-500/30 hover:text-blue-300 hover:border-blue-400 transition-colors"
-          >
-            Live Site ↗
-          </a>
-        )}
+
+        <span className="inline-block text-xs font-mono font-semibold text-blue-600 hover:text-blue-700 transition-colors pt-1">
+          View Details →
+        </span>
       </div>
     </motion.div>
   );
