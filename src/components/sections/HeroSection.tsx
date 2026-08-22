@@ -15,8 +15,8 @@ import { useParallax, useChildParallax } from "@/hooks/useParallax";
 
 const ROLES = [
   "Full-Stack Developer",
+  "BSIT College Instructor",
   ".NET & Next.js Developer",
-  "Web & Database Developer",
   "Software Developer",
 ];
 
@@ -310,7 +310,7 @@ export default function HeroSection() {
               ★
             </div>
             <div>
-              <div className="text-[11px] font-bold text-slate-900 leading-tight">Cum Laude Honor</div>
+              <div className="text-[11px] font-bold text-slate-900 leading-tight">BSIT Instructor &amp; Honors</div>
               <div className="text-[9px] font-mono text-blue-600">CTU Naga Campus</div>
             </div>
           </motion.div>

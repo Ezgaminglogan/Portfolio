@@ -20,9 +20,9 @@ export default function StructuredData() {
       "https://github.com/Ezgaminglogan",
       "https://www.linkedin.com/in/logan-panucat-b319562a9/",
     ],
-    jobTitle: "Full Stack Developer",
+    jobTitle: "BSIT College Instructor & Full Stack Developer",
     description:
-      "Full Stack Developer from Carcar City, Cebu, Philippines. Specializing in PHP, MySQL, C#, ASP.NET MVC, .NET Framework, React, Next.js, and TypeScript. BSIT graduate from Cebu Technological University — Naga Extension Campus.",
+      "BSIT College Instructor at Cebu Technological University — Naga Extension Campus and Full Stack Developer from Carcar City, Cebu, Philippines. Specializing in PHP, MySQL, C#, ASP.NET MVC, .NET Framework, React, Next.js, and TypeScript.",
     knowsAbout: [
       "PHP",
       "MySQL",

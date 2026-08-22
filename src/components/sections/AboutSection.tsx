@@ -34,11 +34,9 @@ export default function AboutSection() {
         style={{ y: rightY }}
       >
         <p>
-          I&apos;m a Bachelor of Science in Information Technology
-          graduate{" "}
+          I&apos;m a Bachelor of Science in Information Technology graduate{" "}
           <span className="text-slate-950 font-bold underline decoration-blue-600 underline-offset-4">Cum Laude</span>{" "}
-          from Cebu Technological University — Naga Extension
-          Campus, dedicated to building high-performance, practical software solutions.
+          and currently a <span className="text-blue-700 font-bold">BSIT College Instructor</span> at Cebu Technological University — Naga Extension Campus, combining academic mentorship in computing with practical, production-ready software development.
         </p>
         <p>
           My core stack spans PHP, MySQL, C#, and ASP.NET MVC alongside modern TypeScript & Next.js. With the
@@ -48,7 +46,7 @@ export default function AboutSection() {
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-8 border-t border-slate-200/80">
           {[
-            { value: "BSIT", label: "Cum Laude Honors", subtext: "CTU Naga Campus" },
+            { value: "BSIT", label: "Instructor & Cum Laude", subtext: "CTU Naga Campus" },
             { value: "5+", label: "Project Systems", subtext: "Web, Desktop, Cloud" },
             { value: "Cebu", label: "Location / Timezone", subtext: "Philippines (GMT+8)" },
           ].map((stat, i) => (

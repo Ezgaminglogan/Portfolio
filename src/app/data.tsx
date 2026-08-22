@@ -243,6 +243,16 @@ export const education: EducationItem[] = [
 
 export const experiences: ExperienceItem[] = [
   {
+    role: "College Instructor (BSIT)",
+    organization: "Cebu Technological University - Naga Extension Campus",
+    period: "2026 - Present",
+    type: "Academic & Tech Instruction",
+    badge: "Current Role",
+    description:
+      "Instructing and mentoring students in the Bachelor of Science in Information Technology (BSIT) program. Delivering hands-on curriculum across software development, web & database technologies, and modern system architectures.",
+    skills: ["BSIT Program", "Web Development", "Database Systems", "Software Architecture", "Programming"],
+  },
+  {
     role: "Full-Stack Web Developer",
     organization: "Independent & Client Projects",
     period: "2023 - Present",
