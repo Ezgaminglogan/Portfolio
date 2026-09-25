@@ -16,12 +16,6 @@ interface ParallaxOptions {
   speed?: number;
   /** Scroll offset range — when the effect starts and ends. Default: ["start end", "end start"] */
   offset?: UseScrollOptions["offset"];
-  /** Whether to apply opacity fading. Default: true */
-  fadeIn?: boolean;
-  /** Whether to apply scale transform. Default: false */
-  scale?: boolean;
-  /** Scale range [min, max]. Default: [0.95, 1] */
-  scaleRange?: [number, number];
   /** Spring stiffness for smoothing. Default: 100 */
   stiffness?: number;
   /** Spring damping. Default: 30 */
@@ -31,8 +25,6 @@ interface ParallaxOptions {
 interface ParallaxReturn {
   ref: React.RefObject<HTMLDivElement | null>;
   y: MotionValue<number>;
-  opacity: MotionValue<number>;
-  scale: MotionValue<number>;
   scrollYProgress: MotionValue<number>;
 }
 
@@ -40,9 +32,6 @@ export function useParallax(options: ParallaxOptions = {}): ParallaxReturn {
   const {
     speed = 0.2,
     offset = ["start end", "end start"] as const,
-    fadeIn = true,
-    scale: enableScale = false,
-    scaleRange = [0.95, 1],
     stiffness = 100,
     damping = 30,
   } = options;
@@ -63,25 +52,7 @@ export function useParallax(options: ParallaxOptions = {}): ParallaxReturn {
   const rawY = useTransform(scrollYProgress, [0, 1], [yRange, -yRange]);
   const y = useSpring(rawY, { stiffness, damping });
 
-  // Opacity — fades in from 0.3 to 1 over the first 40% of scroll range
-  const rawOpacity = useTransform(
-    scrollYProgress,
-    fadeIn && !disabled ? [0, 0.3, 0.7, 1] : [0, 0, 1, 1],
-    fadeIn && !disabled ? [0.2, 1, 1, 0.2] : [1, 1, 1, 1]
-  );
-  const opacity = useSpring(rawOpacity, { stiffness: 80, damping: 20 });
-
-  // Scale — subtle zoom
-  const rawScale = useTransform(
-    scrollYProgress,
-    [0, 0.3, 0.7, 1],
-    enableScale && !disabled
-      ? [scaleRange[0], scaleRange[1], scaleRange[1], scaleRange[0]]
-      : [1, 1, 1, 1]
-  );
-  const scale = useSpring(rawScale, { stiffness: 80, damping: 20 });
-
-  return { ref, y, opacity, scale, scrollYProgress };
+  return { ref, y, scrollYProgress };
 }
 
 /**
@@ -90,7 +61,7 @@ export function useParallax(options: ParallaxOptions = {}): ParallaxReturn {
  */
 export function useChildParallax(
   scrollYProgress: MotionValue<number>,
-  speed: number = 0.1
+  speed: number = 0.1,
 ) {
   const prefersReducedMotion = useReducedMotion();
   const { isMobile } = useViewport();

@@ -1,17 +1,13 @@
 "use client";
 import { useState, memo } from "react";
-import { motion, type MotionValue } from "framer-motion";
+import { motion } from "framer-motion";
 import { stackCategories, professionalSkills } from "@/app/data";
 import type { SkillItem, ProfessionalSkill } from "~types";
-import { useParallax, useChildParallax } from "@/hooks/useParallax";
 import AnimatedSectionHeading from "@/components/ui/AnimatedSectionHeading";
 
-// Devicon CDN slug mapping
-const DEVICON_SLUGS: Record<string, string> = {
-  nextdotjs: "nextjs",
+// Self-hosted icons in /public/icons (snapshotted from Devicon / Simple Icons); slug → file name overrides
+const ICON_FILES: Record<string, string> = {
   dotnet: "dotnetcore",
-  microsoftsqlserver: "microsoftsqlserver",
-  reactquery: "",
 };
 
 const ICON_COLORS: Record<string, string> = {
@@ -33,32 +29,17 @@ const ICON_COLORS: Record<string, string> = {
 };
 
 function getIconUrl(slug: string): string {
-  const simpleIconsFallbacks: Record<string, string> = {
-    reactquery: "FF4154",
-    nextdotjs: "000000",
-    prisma: "2D3748",
-  };
-  if (slug in simpleIconsFallbacks) {
-    return `https://cdn.simpleicons.org/${slug}/${simpleIconsFallbacks[slug]}`;
-  }
-  const deviconSlug = DEVICON_SLUGS[slug] ?? slug;
-  return `https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/${deviconSlug}/${deviconSlug}-original.svg`;
+  return `/icons/${ICON_FILES[slug] ?? slug}.svg`;
 }
 
 export default function SkillsSection() {
-  const { ref, y, opacity, scrollYProgress } = useParallax({
-    speed: 0.12,
-    fadeIn: true,
-  });
-
   return (
     <motion.section
-      ref={ref}
       id="skills"
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.1 }}
       transition={{ duration: 0.8 }}
-      style={{ y, opacity }}
       className="py-24 sm:py-32 border-t border-slate-200/80 relative"
     >
       {/* Big animated heading */}
@@ -75,7 +56,6 @@ export default function SkillsSection() {
             key={category.title}
             category={category}
             index={catIdx}
-            scrollYProgress={scrollYProgress}
           />
         ))}
       </div>
@@ -90,12 +70,7 @@ export default function SkillsSection() {
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
         {professionalSkills.map((ps, index) => (
-          <ProfessionalSkillCard
-            key={index}
-            ps={ps}
-            index={index}
-            scrollYProgress={scrollYProgress}
-          />
+          <ProfessionalSkillCard key={index} ps={ps} index={index} />
         ))}
       </div>
     </motion.section>
@@ -110,24 +85,22 @@ interface CategoryRowProps {
     items: SkillItem[];
   };
   index: number;
-  scrollYProgress: MotionValue<number>;
 }
 
 const CategoryRow = memo(function CategoryRow({
   category,
   index,
-  scrollYProgress,
 }: CategoryRowProps) {
-  const speed = index % 2 === 0 ? 0.03 : -0.03;
-  const rowY = useChildParallax(scrollYProgress, speed);
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 35 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.15 }}
-      transition={{ duration: 0.7, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
-      style={{ y: rowY }}
+      transition={{
+        duration: 0.7,
+        delay: index * 0.1,
+        ease: [0.16, 1, 0.3, 1],
+      }}
       className="border-b border-slate-200/80 pb-12 last:border-b-0"
     >
       {/* Row Header without box card */}
@@ -172,7 +145,11 @@ interface SkillPillProps {
   categoryIndex: number;
 }
 
-const SkillPill = memo(function SkillPill({ skill, index, categoryIndex }: SkillPillProps) {
+const SkillPill = memo(function SkillPill({
+  skill,
+  index,
+  categoryIndex,
+}: SkillPillProps) {
   const [isHovered, setIsHovered] = useState(false);
   const brandColor = ICON_COLORS[skill.icon] || "#2563eb";
 
@@ -246,17 +223,12 @@ const SkillPill = memo(function SkillPill({ skill, index, categoryIndex }: Skill
 interface ProfessionalSkillCardProps {
   ps: ProfessionalSkill;
   index: number;
-  scrollYProgress: MotionValue<number>;
 }
 
 const ProfessionalSkillCard = memo(function ProfessionalSkillCard({
   ps,
   index,
-  scrollYProgress,
 }: ProfessionalSkillCardProps) {
-  const speed = index % 2 === 0 ? 0.04 : 0.07;
-  const cardY = useChildParallax(scrollYProgress, speed);
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 28 }}
@@ -268,7 +240,6 @@ const ProfessionalSkillCard = memo(function ProfessionalSkillCard({
         ease: [0.16, 1, 0.3, 1],
       }}
       whileHover={{ y: -6 }}
-      style={{ y: cardY }}
       className="relative overflow-hidden p-6 rounded-2xl border border-slate-200 bg-white hover:border-blue-300 transition-all duration-300 cursor-default group shadow-[0_2px_10px_rgba(0,0,0,0.02)] hover:shadow-[0_12px_35px_rgba(37,99,235,0.08)]"
     >
       <div className="flex items-center gap-3.5 mb-4">

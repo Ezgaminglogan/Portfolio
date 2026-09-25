@@ -11,6 +11,29 @@ import {
   DocumentDuplicateIcon,
 } from "@heroicons/react/24/outline";
 
+// Format time in Asia/Manila (GMT+8) - 12-Hour Format
+const timeFormatter = new Intl.DateTimeFormat("en-US", {
+  timeZone: "Asia/Manila",
+  hour: "2-digit",
+  minute: "2-digit",
+  second: "2-digit",
+  hour12: true,
+});
+
+const dateFormatter = new Intl.DateTimeFormat("en-US", {
+  timeZone: "Asia/Manila",
+  weekday: "short",
+  month: "short",
+  day: "numeric",
+  year: "numeric",
+});
+
+const hourFormatter = new Intl.DateTimeFormat("en-US", {
+  timeZone: "Asia/Manila",
+  hour: "numeric",
+  hour12: false,
+});
+
 export default memo(function GeoTelemetryCard() {
   const [timeStr, setTimeStr] = useState<string>("");
   const [dateStr, setDateStr] = useState<string>("");
@@ -25,30 +48,6 @@ export default memo(function GeoTelemetryCard() {
     setMounted(true);
     const updateTime = () => {
       const now = new Date();
-      
-      // Format time in Asia/Manila (GMT+8) - 12-Hour Format
-      const timeFormatter = new Intl.DateTimeFormat("en-US", {
-        timeZone: "Asia/Manila",
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-        hour12: true,
-      });
-
-      const dateFormatter = new Intl.DateTimeFormat("en-US", {
-        timeZone: "Asia/Manila",
-        weekday: "short",
-        month: "short",
-        day: "numeric",
-        year: "numeric",
-      });
-
-      const hourFormatter = new Intl.DateTimeFormat("en-US", {
-        timeZone: "Asia/Manila",
-        hour: "numeric",
-        hour12: false,
-      });
-
       setTimeStr(timeFormatter.format(now));
       setDateStr(dateFormatter.format(now));
 
@@ -71,6 +70,7 @@ export default memo(function GeoTelemetryCard() {
     <motion.div
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
       transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
       className="mt-8 w-full rounded-2xl border border-slate-200 bg-white overflow-hidden shadow-[0_12px_40px_rgba(37,99,235,0.06)] relative group hover:border-blue-300 transition-all duration-500"
     >
@@ -132,9 +132,63 @@ export default memo(function GeoTelemetryCard() {
             {/* Background Grid Pattern */}
             <div className="absolute inset-0 opacity-20 bg-[linear-gradient(to_right,#38bdf820_1px,transparent_1px),linear-gradient(to_bottom,#38bdf820_1px,transparent_1px)] bg-[size:24px_24px]" />
 
+            {/* Radar Sweep + Hub Ping — HTML layer so the infinite rotation is compositor-driven (SVG-internal transform animations run on the main thread) */}
+            <div
+              className="absolute inset-0 flex items-center justify-center pointer-events-none"
+              aria-hidden="true"
+            >
+              <div className="relative h-full max-h-[280px] aspect-square">
+                <div className="absolute inset-0 animate-[spin_6s_linear_infinite]">
+                  <svg
+                    className="w-full h-full overflow-visible"
+                    viewBox="0 0 200 200"
+                  >
+                    <defs>
+                      <linearGradient
+                        id="radarSweepGradient"
+                        x1="0%"
+                        y1="100%"
+                        x2="0%"
+                        y2="0%"
+                      >
+                        <stop offset="0%" stopColor="rgba(56, 189, 248, 0.2)" />
+                        <stop offset="100%" stopColor="#38bdf8" />
+                      </linearGradient>
+                      <radialGradient
+                        id="radarBeamSweep"
+                        cx="50%"
+                        cy="50%"
+                        r="50%"
+                      >
+                        <stop offset="0%" stopColor="rgba(56, 189, 248, 0)" />
+                        <stop
+                          offset="100%"
+                          stopColor="rgba(56, 189, 248, 0.45)"
+                        />
+                      </radialGradient>
+                    </defs>
+                    <line
+                      x1="100"
+                      y1="100"
+                      x2="100"
+                      y2="10"
+                      stroke="url(#radarSweepGradient)"
+                      strokeWidth="2"
+                    />
+                    <path
+                      d="M 100 100 L 100 10 A 90 90 0 0 1 180 60 Z"
+                      fill="url(#radarBeamSweep)"
+                      opacity="0.3"
+                    />
+                  </svg>
+                </div>
+                <span className="absolute left-1/2 top-1/2 w-[4%] h-[4%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#2563eb] opacity-75 animate-ping" />
+              </div>
+            </div>
+
             {/* Radar Circular Rings & Crosshairs */}
             <svg
-              className="w-full h-full max-w-[280px] max-h-[280px] select-none pointer-events-none overflow-visible"
+              className="relative w-full h-full max-w-[280px] max-h-[280px] select-none pointer-events-none overflow-visible"
               viewBox="0 0 200 200"
             >
               {/* Concentric Range Rings */}
@@ -192,48 +246,36 @@ export default memo(function GeoTelemetryCard() {
               />
 
               {/* Distance Labels */}
-              <text x="104" y="38" fill="rgba(186, 230, 253, 0.7)" fontSize="6" fontFamily="monospace">
+              <text
+                x="104"
+                y="38"
+                fill="rgba(186, 230, 253, 0.7)"
+                fontSize="6"
+                fontFamily="monospace"
+              >
                 25 KM
               </text>
-              <text x="104" y="63" fill="rgba(186, 230, 253, 0.8)" fontSize="6" fontFamily="monospace">
+              <text
+                x="104"
+                y="63"
+                fill="rgba(186, 230, 253, 0.8)"
+                fontSize="6"
+                fontFamily="monospace"
+              >
                 15 KM
               </text>
-              <text x="104" y="88" fill="rgba(186, 230, 253, 0.9)" fontSize="6" fontFamily="monospace">
+              <text
+                x="104"
+                y="88"
+                fill="rgba(186, 230, 253, 0.9)"
+                fontSize="6"
+                fontFamily="monospace"
+              >
                 05 KM
               </text>
 
-              {/* Animated Radar Sweep Line */}
-              <g className="origin-center animate-[spin_6s_linear_infinite]">
-                <line
-                  x1="100"
-                  y1="100"
-                  x2="100"
-                  y2="10"
-                  stroke="url(#radarSweepGradient)"
-                  strokeWidth="2"
-                />
-                <path
-                  d="M 100 100 L 100 10 A 90 90 0 0 1 180 60 Z"
-                  fill="url(#radarBeamSweep)"
-                  opacity="0.3"
-                />
-              </g>
-
-              {/* Gradients */}
-              <defs>
-                <linearGradient id="radarSweepGradient" x1="0%" y1="100%" x2="0%" y2="0%">
-                  <stop offset="0%" stopColor="rgba(56, 189, 248, 0.2)" />
-                  <stop offset="100%" stopColor="#38bdf8" />
-                </linearGradient>
-                <radialGradient id="radarBeamSweep" cx="50%" cy="50%" r="50%">
-                  <stop offset="0%" stopColor="rgba(56, 189, 248, 0)" />
-                  <stop offset="100%" stopColor="rgba(56, 189, 248, 0.45)" />
-                </radialGradient>
-              </defs>
-
               {/* Central Target Reticle: Cebu / Naga Hub */}
               <g transform="translate(100, 100)">
-                <circle r="4" fill="#2563eb" className="animate-ping opacity-75" />
                 <circle r="3" fill="#38bdf8" />
                 <circle r="1" fill="#ffffff" />
               </g>
@@ -241,7 +283,14 @@ export default memo(function GeoTelemetryCard() {
               {/* Secondary Node: CTU Naga Campus */}
               <g transform="translate(125, 82)">
                 <rect x="-2" y="-2" width="4" height="4" fill="#38bdf8" />
-                <text x="5" y="2" fill="#bae6fd" fontSize="5.5" fontFamily="monospace" fontWeight="bold">
+                <text
+                  x="5"
+                  y="2"
+                  fill="#bae6fd"
+                  fontSize="5.5"
+                  fontFamily="monospace"
+                  fontWeight="bold"
+                >
                   CTU_NAGA
                 </text>
               </g>
@@ -249,7 +298,13 @@ export default memo(function GeoTelemetryCard() {
               {/* Secondary Node: Carcar Base */}
               <g transform="translate(75, 125)">
                 <rect x="-2" y="-2" width="4" height="4" fill="#60a5fa" />
-                <text x="5" y="2" fill="#bae6fd" fontSize="5.5" fontFamily="monospace">
+                <text
+                  x="5"
+                  y="2"
+                  fill="#bae6fd"
+                  fontSize="5.5"
+                  fontFamily="monospace"
+                >
                   CARCAR_BASE
                 </text>
               </g>
@@ -257,7 +312,13 @@ export default memo(function GeoTelemetryCard() {
               {/* Secondary Node: Cebu IT Park Hub */}
               <g transform="translate(135, 45)">
                 <circle r="2" fill="#818cf8" />
-                <text x="5" y="2" fill="#c7d2fe" fontSize="5.5" fontFamily="monospace">
+                <text
+                  x="5"
+                  y="2"
+                  fill="#c7d2fe"
+                  fontSize="5.5"
+                  fontFamily="monospace"
+                >
                   CEBU_METRO
                 </text>
               </g>
@@ -268,7 +329,9 @@ export default memo(function GeoTelemetryCard() {
           <div className="mt-4 flex items-center justify-between text-[11px] font-mono text-slate-400 pt-3 border-t border-white/10">
             <div className="flex items-center gap-2">
               <SignalIcon className="w-3.5 h-3.5 text-emerald-400" />
-              <span className="text-slate-200 font-semibold">BEACON ACTIVE</span>
+              <span className="text-slate-200 font-semibold">
+                BEACON ACTIVE
+              </span>
               <span className="text-blue-400">•</span>
               <span className="text-slate-400">LATENCY: &lt;18ms</span>
             </div>
@@ -311,15 +374,21 @@ export default memo(function GeoTelemetryCard() {
             <div className="space-y-2 text-xs font-mono">
               <div className="flex items-center justify-between p-2.5 rounded-lg bg-slate-50 border border-slate-100">
                 <span className="text-slate-500">Primary Hub</span>
-                <span className="text-slate-900 font-semibold">Carcar / Naga, Cebu, PH</span>
+                <span className="text-slate-900 font-semibold">
+                  Carcar / Naga, Cebu, PH
+                </span>
               </div>
               <div className="flex items-center justify-between p-2.5 rounded-lg bg-slate-50 border border-slate-100">
                 <span className="text-slate-500">Timezone</span>
-                <span className="text-blue-700 font-semibold">Asia/Manila (GMT+8)</span>
+                <span className="text-blue-700 font-semibold">
+                  Asia/Manila (GMT+8)
+                </span>
               </div>
               <div className="flex items-center justify-between p-2.5 rounded-lg bg-slate-50 border border-slate-100">
                 <span className="text-slate-500">Coordinates</span>
-                <span className="text-slate-800 font-medium">{coordinates}</span>
+                <span className="text-slate-800 font-medium">
+                  {coordinates}
+                </span>
               </div>
               <div className="flex items-center justify-between p-2.5 rounded-lg bg-slate-50 border border-slate-100">
                 <span className="text-slate-500">Availability</span>

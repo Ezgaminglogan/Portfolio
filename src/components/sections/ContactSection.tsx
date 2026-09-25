@@ -10,7 +10,6 @@ import {
   ClockIcon,
 } from "@heroicons/react/24/outline";
 import Modal from "@/components/Modal";
-import { useParallax, useChildParallax } from "@/hooks/useParallax";
 import AnimatedSectionHeading from "@/components/ui/AnimatedSectionHeading";
 import { contactApi, type ContactPayload } from "~features/contact/api/contactApi";
 
@@ -47,14 +46,6 @@ export default function ContactSection() {
         : formStatus === "error"
           ? "There was an issue sending your message."
           : "";
-
-  const { ref, y, opacity, scrollYProgress } = useParallax({
-    speed: 0.1,
-    fadeIn: true,
-  });
-
-  const leftY = useChildParallax(scrollYProgress, 0.05);
-  const rightY = useChildParallax(scrollYProgress, -0.03);
 
   const handleInputChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -95,12 +86,11 @@ export default function ContactSection() {
   return (
     <>
       <motion.section
-        ref={ref}
         id="contact"
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.1 }}
         transition={{ duration: 0.8 }}
-        style={{ y, opacity }}
         className="py-24 sm:py-32 border-t border-slate-200/80 relative"
       >
         <AnimatedSectionHeading
@@ -111,7 +101,7 @@ export default function ContactSection() {
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 w-full">
           {/* Left Column: High-Craft Direct Channels */}
-          <motion.div className="lg:col-span-5 flex flex-col justify-between gap-6" style={{ y: leftY }}>
+          <div className="lg:col-span-5 flex flex-col justify-between gap-6">
             <div>
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-200/80 text-emerald-700 font-mono text-[11px] font-bold uppercase tracking-wider mb-4 shadow-2xs">
                 <span className="relative flex h-2 w-2">
@@ -234,14 +224,14 @@ export default function ContactSection() {
                 <span>Mon – Sat Active</span>
               </div>
             </div>
-          </motion.div>
+          </div>
 
           {/* Right Column: Contact Inquiry Form */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            style={{ y: rightY }}
             className="lg:col-span-7 bg-white p-7 sm:p-9 rounded-3xl border border-slate-200/90 shadow-[0_10px_35px_rgba(0,0,0,0.03)] flex flex-col justify-between"
           >
             <div>

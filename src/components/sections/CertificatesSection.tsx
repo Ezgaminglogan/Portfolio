@@ -4,8 +4,8 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { certificates } from "@/app/data";
-import { useParallax } from "@/hooks/useParallax";
 import AnimatedSectionHeading from "@/components/ui/AnimatedSectionHeading";
+import { lockScroll, unlockScroll } from "@/components/SmoothScroll";
 
 // Duplicate certificates array for seamless marquee wrapping
 const MARQUEE_CERTIFICATES = [...certificates, ...certificates];
@@ -15,19 +15,14 @@ export default function CertificatesSection() {
     null
   );
 
-  const { ref, y, opacity } = useParallax({
-    speed: 0.08,
-    fadeIn: true,
-  });
-
   const openCertificateModal = useCallback((index: number) => {
     setSelectedCertificate(index % certificates.length);
-    document.body.style.overflow = "hidden";
+    lockScroll();
   }, []);
 
   const closeCertificateModal = useCallback(() => {
     setSelectedCertificate(null);
-    document.body.style.overflow = "";
+    unlockScroll();
   }, []);
 
   useEffect(() => {
@@ -41,12 +36,11 @@ export default function CertificatesSection() {
   return (
     <>
       <motion.section
-        ref={ref}
         id="certificates"
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.1 }}
         transition={{ duration: 0.8 }}
-        style={{ y, opacity }}
         className="py-24 sm:py-32 border-t border-slate-200/80 relative overflow-hidden"
       >
         <AnimatedSectionHeading
@@ -112,6 +106,7 @@ export default function CertificatesSection() {
       {/* Modal View */}
       {selectedCertificate !== null && (
         <div
+          data-lenis-prevent
           className="fixed inset-0 z-60 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-md animate-fade-in"
           onClick={closeCertificateModal}
         >
@@ -136,7 +131,7 @@ export default function CertificatesSection() {
                     certificates[selectedCertificate].title
                   }
                   fill
-                  quality={100}
+                  quality={90}
                   sizes="(min-width: 1024px) 960px, 100vw"
                   className="object-contain"
                 />

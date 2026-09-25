@@ -19,7 +19,7 @@ export default function AnimatedSectionHeading({
   subtitle,
   label,
 }: AnimatedSectionHeadingProps) {
-  const { containerRef, headingStyle, lineWidth } = useAnimatedHeading();
+  const { containerRef, headingStyle, lineScaleX } = useAnimatedHeading();
 
   // Split title into text + trailing period
   const hasPeriod = title.endsWith(".");
@@ -33,7 +33,6 @@ export default function AnimatedSectionHeading({
           opacity: headingStyle.opacity,
           scale: headingStyle.scale,
           y: headingStyle.y,
-          filter: headingStyle.filter,
         }}
       >
         {/* Subtle label */}
@@ -41,6 +40,7 @@ export default function AnimatedSectionHeading({
           <motion.span
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.1 }}
             className="text-[11px] font-mono font-bold uppercase tracking-[0.25em] text-blue-700 mb-4 bg-blue-50 border border-blue-200/80 px-3.5 py-1 rounded-full shadow-[0_2px_8px_rgba(37,99,235,0.06)]"
           >
@@ -52,8 +52,8 @@ export default function AnimatedSectionHeading({
         <motion.h2
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          style={{ letterSpacing: headingStyle.letterSpacing }}
           className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-black text-slate-950 tracking-tight sm:tracking-tighter leading-[1.15] sm:leading-none break-words max-w-full px-2"
         >
           {displayTitle}
@@ -65,6 +65,7 @@ export default function AnimatedSectionHeading({
           <motion.p
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
             className="text-slate-600 text-base mt-4 max-w-xl leading-relaxed"
           >
@@ -74,8 +75,8 @@ export default function AnimatedSectionHeading({
 
         {/* Animated decorative line */}
         <motion.div
-          className="h-px bg-gradient-to-r from-transparent via-blue-500/35 to-transparent mt-6"
-          style={{ width: lineWidth }}
+          className="h-px w-full bg-gradient-to-r from-transparent via-blue-500/35 to-transparent mt-6"
+          style={{ scaleX: lineScaleX }}
         />
       </motion.div>
     </div>

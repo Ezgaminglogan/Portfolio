@@ -2,6 +2,7 @@
 
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { useEffect } from "react";
+import { lockScroll, unlockScroll } from "@/components/SmoothScroll";
 
 interface ModalProps {
   isOpen: boolean;
@@ -20,17 +21,11 @@ export default function Modal({
 }: ModalProps) {
   const titleId = "modal-title";
   const messageId = "modal-message";
-  
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "unset";
-    }
 
-    return () => {
-      document.body.style.overflow = "unset";
-    };
+  useEffect(() => {
+    if (!isOpen) return;
+    lockScroll();
+    return unlockScroll;
   }, [isOpen]);
 
   if (!isOpen) return null;

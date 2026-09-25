@@ -3,35 +3,24 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import ImageCarousel from "@/components/ImageCarousel";
 import { sqliteImages } from "@/app/data";
-import { useParallax, useChildParallax } from "@/hooks/useParallax";
 import AnimatedSectionHeading from "@/components/ui/AnimatedSectionHeading";
 
 export default function SqlitePortableSection() {
-  const { ref, y, opacity, scale, scrollYProgress } = useParallax({
-    speed: 0.1,
-    fadeIn: true,
-    scale: true,
-    scaleRange: [0.95, 1],
-  });
-
-  const iconY = useChildParallax(scrollYProgress, 0.12);
-
   return (
     <motion.section
-      ref={ref}
       id="sqlite-portable"
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.1 }}
       transition={{ duration: 0.8 }}
-      style={{ y, opacity, scale }}
       className="py-24 sm:py-32 border-t border-slate-200/80 relative"
     >
       <div className="max-w-4xl mx-auto text-center mb-14">
         <motion.div
           initial={{ scale: 0.8, opacity: 0 }}
           whileInView={{ scale: 1, opacity: 1 }}
+          viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          style={{ y: iconY }}
           className="w-16 h-16 mx-auto mb-6 relative p-2 bg-white rounded-2xl border border-slate-200 shadow-sm"
         >
           <Image
@@ -59,6 +48,7 @@ export default function SqlitePortableSection() {
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         className="overflow-hidden bg-slate-950 shadow-[0_20px_60px_rgba(0,0,0,0.15)] border border-slate-800 rounded-2xl w-full mx-auto"
       >

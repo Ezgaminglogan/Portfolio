@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect, useCallback } from "react";
 import { ChevronUpIcon } from "@heroicons/react/24/outline";
+import { scrollToY } from "@/components/SmoothScroll";
 
 export default function ScrollToTop() {
   const [showScrollTop, setShowScrollTop] = useState(false);
@@ -23,9 +24,7 @@ export default function ScrollToTop() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const scrollToTop = useCallback(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }, []);
+  const scrollToTop = useCallback(() => scrollToY(0), []);
 
   if (!showScrollTop) return null;
 

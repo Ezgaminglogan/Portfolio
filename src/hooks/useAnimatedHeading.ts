@@ -1,10 +1,11 @@
 import { useRef } from "react";
-import { useScroll, useTransform, useMotionTemplate } from "framer-motion";
+import { useScroll, useTransform } from "framer-motion";
 
 /**
  * Reusable scroll-driven heading animation hook.
- * Returns a ref + motion style values that fade, scale, blur,
- * spread letters, and shrink a decorative line on scroll.
+ * Returns a ref + motion style values that fade, scale, lift,
+ * and shrink a decorative line on scroll. Only compositor-friendly
+ * properties (opacity/transform) are animated to avoid per-frame layout.
  */
 export function useAnimatedHeading() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -18,21 +19,14 @@ export function useAnimatedHeading() {
   const opacity = useTransform(scrollYProgress, [0, 0.6, 1], [1, 1, 0]);
   const scale = useTransform(scrollYProgress, [0, 0.6, 1], [1, 1, 0.85]);
   const y = useTransform(scrollYProgress, [0, 0.6, 1], [0, 0, -80]);
-  const blur = useTransform(scrollYProgress, [0, 0.6, 1], [0, 0, 14]);
-  const filter = useMotionTemplate`blur(${blur}px)`;
-
-  // Letter spread — subtle precision spread without causing word wrap clipping
-  const letterSpacingVal = useTransform(scrollYProgress, [0, 0.5, 1], [0, 0, 3]);
-  const letterSpacing = useMotionTemplate`${letterSpacingVal}px`;
 
   // Decorative line
-  const lineWidthVal = useTransform(scrollYProgress, [0, 0.6, 1], [100, 100, 0]);
-  const lineWidth = useMotionTemplate`${lineWidthVal}%`;
+  const lineScaleX = useTransform(scrollYProgress, [0, 0.6, 1], [1, 1, 0]);
 
   return {
     containerRef,
-    headingStyle: { opacity, scale, y, filter, letterSpacing },
-    lineWidth,
+    headingStyle: { opacity, scale, y },
+    lineScaleX,
     scrollYProgress,
   };
 }

@@ -385,7 +385,7 @@ export const certificates: CertificateItem[] = [
     tags: ["Professional", "Team Project"],
   },
   {
-    image: "/certificates/certificates-nextjs.jpg",
+    image: "/certificates/certificates-nextjs-web.jpg",
     alt: "Next.js Certificate",
     title: "Next.js Certification",
     description:
@@ -394,7 +394,7 @@ export const certificates: CertificateItem[] = [
     tags: ["Technical", "React"],
   },
   {
-    image: "/certificates/certificates-1-nextjs.jpg",
+    image: "/certificates/certificates-1-nextjs-web.jpg",
     alt: "Next.js Advanced Certificate",
     title: "Next.js App Router Fundamentals",
     description:

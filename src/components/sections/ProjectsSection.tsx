@@ -1,59 +1,57 @@
 "use client";
 import { useState, useEffect, useCallback, memo } from "react";
-import { motion, type MotionValue } from "framer-motion";
+import { motion } from "framer-motion";
 import Image from "next/image";
-import { XMarkIcon, ArrowTopRightOnSquareIcon } from "@heroicons/react/24/outline";
+import {
+  XMarkIcon,
+  ArrowTopRightOnSquareIcon,
+} from "@heroicons/react/24/outline";
 import { projects } from "@/app/data";
 import type { Project } from "~types";
-import { useParallax, useChildParallax } from "@/hooks/useParallax";
 import AnimatedSectionHeading from "@/components/ui/AnimatedSectionHeading";
+import { lockScroll, unlockScroll } from "@/components/SmoothScroll";
 
-// Tech stack icon CDN mapping for crisp branded SVG logos
+// Tech stack icon mapping for crisp branded SVG logos (self-hosted in /public/icons)
 const TECH_ICON_SLUGS: Record<string, string> = {
-  TanStack: "https://cdn.simpleicons.org/reactquery/FF4154",
-  "ShadCN UI": "https://cdn.simpleicons.org/shadcnui/000000",
-  "Better Auth": "https://cdn.simpleicons.org/auth0/2563EB",
-  Prisma: "https://cdn.simpleicons.org/prisma/2D3748",
-  "Prisma ORM": "https://cdn.simpleicons.org/prisma/2D3748",
-  libSQL: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/sqlite/sqlite-original.svg",
-  SQLite: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/sqlite/sqlite-original.svg",
-  TailwindCSS: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg",
-  MySQL: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg",
-  JWT: "https://cdn.simpleicons.org/jsonwebtokens/000000",
-  "Blazor Framework": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/dot-net/dot-net-original.svg",
-  "C#": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/csharp/csharp-original.svg",
-  ".NET": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/dotnetcore/dotnetcore-original.svg",
-  PHP: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/php/php-original.svg",
-  PHPMailer: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/php/php-original.svg",
-  "Visual Basic WFA": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/visualbasic/visualbasic-original.svg",
-  "ASP.NET Web MVC": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/dotnetcore/dotnetcore-original.svg",
-  SignalR: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/dot-net/dot-net-original.svg",
-  "Entity Framework": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/dotnetcore/dotnetcore-original.svg",
-  "EF Core": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/dotnetcore/dotnetcore-original.svg",
-  "Google reCAPTCHA v3": "https://cdn.simpleicons.org/google/4285F4",
-  "Google Sign-In": "https://cdn.simpleicons.org/google/4285F4",
-  React: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg",
-  "Next.js": "https://cdn.simpleicons.org/nextdotjs/000000",
-  TypeScript: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg",
-  JavaScript: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg",
+  TanStack: "/icons/reactquery.svg",
+  "ShadCN UI": "/icons/shadcnui.svg",
+  "Better Auth": "/icons/auth0.svg",
+  Prisma: "/icons/prisma.svg",
+  "Prisma ORM": "/icons/prisma.svg",
+  libSQL: "/icons/sqlite.svg",
+  SQLite: "/icons/sqlite.svg",
+  TailwindCSS: "/icons/tailwindcss.svg",
+  MySQL: "/icons/mysql.svg",
+  JWT: "/icons/jsonwebtokens.svg",
+  "Blazor Framework": "/icons/dot-net.svg",
+  "C#": "/icons/csharp.svg",
+  ".NET": "/icons/dotnetcore.svg",
+  PHP: "/icons/php.svg",
+  PHPMailer: "/icons/php.svg",
+  "Visual Basic WFA": "/icons/visualbasic.svg",
+  "ASP.NET Web MVC": "/icons/dotnetcore.svg",
+  SignalR: "/icons/dot-net.svg",
+  "Entity Framework": "/icons/dotnetcore.svg",
+  "EF Core": "/icons/dotnetcore.svg",
+  "Google reCAPTCHA v3": "/icons/google.svg",
+  "Google Sign-In": "/icons/google.svg",
+  React: "/icons/react.svg",
+  "Next.js": "/icons/nextdotjs.svg",
+  TypeScript: "/icons/typescript.svg",
+  JavaScript: "/icons/javascript.svg",
 };
 
 export default function ProjectsSection() {
   const [selectedProject, setSelectedProject] = useState<number | null>(null);
 
-  const { ref, y, opacity, scrollYProgress } = useParallax({
-    speed: 0.1,
-    fadeIn: true,
-  });
-
   const openProjectModal = useCallback((index: number) => {
     setSelectedProject(index);
-    document.body.style.overflow = "hidden";
+    lockScroll();
   }, []);
 
   const closeProjectModal = useCallback(() => {
     setSelectedProject(null);
-    document.body.style.overflow = "";
+    unlockScroll();
   }, []);
 
   useEffect(() => {
@@ -67,12 +65,11 @@ export default function ProjectsSection() {
   return (
     <>
       <motion.section
-        ref={ref}
         id="projects"
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.1 }}
         transition={{ duration: 0.8 }}
-        style={{ y, opacity }}
         className="py-24 sm:py-32 border-t border-slate-200/80 relative"
       >
         <AnimatedSectionHeading
@@ -85,7 +82,6 @@ export default function ProjectsSection() {
           {projects[0] && (
             <FeaturedFlagshipCard
               project={projects[0]}
-              scrollYProgress={scrollYProgress}
               onOpen={() => openProjectModal(0)}
             />
           )}
@@ -99,7 +95,6 @@ export default function ProjectsSection() {
                   key={project.title}
                   project={project}
                   index={actualIndex}
-                  scrollYProgress={scrollYProgress}
                   onOpen={() => openProjectModal(actualIndex)}
                 />
               );
@@ -111,6 +106,7 @@ export default function ProjectsSection() {
       {/* Project Details Modal — Maximized Immersive Widescreen Modal */}
       {selectedProject !== null && projects[selectedProject] && (
         <div
+          data-lenis-prevent
           className="fixed inset-0 z-60 flex items-center justify-center p-3 sm:p-5 lg:p-7 bg-slate-950/70 backdrop-blur-md animate-fade-in"
           onClick={closeProjectModal}
         >
@@ -138,7 +134,10 @@ export default function ProjectsSection() {
                   <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-yellow-500/85" />
                   <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-green-500/85" />
                   <div className="mx-auto text-[11px] sm:text-xs font-mono text-slate-300 tracking-wider truncate max-w-[200px] sm:max-w-sm">
-                    {projects[selectedProject].title.toLowerCase().replace(/\s+/g, "-")}.app
+                    {projects[selectedProject].title
+                      .toLowerCase()
+                      .replace(/\s+/g, "-")}
+                    .app
                   </div>
                 </div>
 
@@ -162,7 +161,7 @@ export default function ProjectsSection() {
                     <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                     {projects[selectedProject].type}
                   </div>
-                  
+
                   <h3 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-950 tracking-tight mb-4 sm:mb-6 leading-tight">
                     {projects[selectedProject].title}
                   </h3>
@@ -193,8 +192,16 @@ export default function ProjectsSection() {
                         rel="noreferrer"
                         className="inline-flex items-center gap-2 px-6 py-3 sm:px-8 sm:py-3.5 border border-slate-200 bg-white text-slate-900 rounded-full text-sm sm:text-base font-bold hover:bg-slate-50 hover:border-slate-300 transition-all shadow-xs cursor-pointer hover:scale-102 active:scale-98"
                       >
-                        <svg className="w-4 h-4 sm:w-5 sm:h-5 shrink-0 text-slate-800" fill="currentColor" viewBox="0 0 24 24">
-                          <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+                        <svg
+                          className="w-4 h-4 sm:w-5 sm:h-5 shrink-0 text-slate-800"
+                          fill="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            clipRule="evenodd"
+                            d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
+                          />
                         </svg>
                         <span>Source Code</span>
                       </a>
@@ -233,24 +240,20 @@ export default function ProjectsSection() {
 
 interface FeaturedFlagshipCardProps {
   project: Project;
-  scrollYProgress: MotionValue<number>;
   onOpen: () => void;
 }
 
 const FeaturedFlagshipCard = memo(function FeaturedFlagshipCard({
   project,
-  scrollYProgress,
   onOpen,
 }: FeaturedFlagshipCardProps) {
-  const cardY = useChildParallax(scrollYProgress, 0.03);
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
       transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
       onClick={onOpen}
-      style={{ y: cardY }}
       className="group cursor-pointer p-6 sm:p-8 lg:p-10 rounded-3xl bg-white border border-slate-200 hover:border-blue-300 transition-all duration-500 shadow-[0_4px_25px_rgba(0,0,0,0.03)] hover:shadow-[0_15px_45px_rgba(37,99,235,0.08)]"
     >
       <div className="grid lg:grid-cols-12 gap-8 lg:gap-10 items-center">
@@ -280,7 +283,9 @@ const FeaturedFlagshipCard = memo(function FeaturedFlagshipCard({
           <div className="flex items-center gap-2">
             <span className="inline-flex items-center gap-1.5 text-[10px] font-mono font-bold uppercase tracking-widest text-blue-700 bg-blue-50 border border-blue-200 px-3.5 py-1 rounded-full shadow-xs">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-              {project.type.includes("Ongoing") ? "Active Ongoing Project" : "Featured Case Study"}
+              {project.type.includes("Ongoing")
+                ? "Active Ongoing Project"
+                : "Featured Case Study"}
             </span>
           </div>
 
@@ -338,27 +343,25 @@ const FeaturedFlagshipCard = memo(function FeaturedFlagshipCard({
 interface ProjectCardProps {
   project: Project;
   index: number;
-  scrollYProgress: MotionValue<number>;
   onOpen: () => void;
 }
 
 const ProjectCard = memo(function ProjectCard({
   project,
   index,
-  scrollYProgress,
   onOpen,
 }: ProjectCardProps) {
-  const isLeft = index % 2 === 0;
-  const speed = isLeft ? 0.04 : -0.04;
-  const cardY = useChildParallax(scrollYProgress, speed);
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
+      viewport={{ once: true }}
+      transition={{
+        duration: 0.8,
+        delay: index * 0.1,
+        ease: [0.16, 1, 0.3, 1],
+      }}
       onClick={onOpen}
-      style={{ y: cardY }}
       className="group cursor-pointer flex flex-col gap-5 p-6 sm:p-7 rounded-2xl bg-white border border-slate-200 hover:border-blue-300 transition-all duration-300 shadow-[0_2px_12px_rgba(0,0,0,0.02)] hover:shadow-[0_12px_35px_rgba(37,99,235,0.08)]"
     >
       {/* Browser Window Mockup Card Frame */}

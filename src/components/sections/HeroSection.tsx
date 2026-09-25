@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, type MotionStyle } from "framer-motion";
 import Image from "next/image";
 import {
   ArrowDownTrayIcon,
@@ -21,13 +21,28 @@ const ROLES = [
 ];
 
 const HERO_STACKS = [
-  { name: "Next.js", icon: "https://cdn.simpleicons.org/nextdotjs/000000" },
-  { name: "React", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" },
-  { name: "C#", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/csharp/csharp-original.svg" },
-  { name: "PHP", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/php/php-original.svg" },
-  { name: "MySQL", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg" },
-  { name: "Prisma", icon: "https://cdn.simpleicons.org/prisma/2D3748" },
-  { name: "TailwindCSS", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg" },
+  { name: "Next.js", icon: "/icons/nextdotjs.svg" },
+  {
+    name: "React",
+    icon: "/icons/react.svg",
+  },
+  {
+    name: "C#",
+    icon: "/icons/csharp.svg",
+  },
+  {
+    name: "PHP",
+    icon: "/icons/php.svg",
+  },
+  {
+    name: "MySQL",
+    icon: "/icons/mysql.svg",
+  },
+  { name: "Prisma", icon: "/icons/prisma.svg" },
+  {
+    name: "TailwindCSS",
+    icon: "/icons/tailwindcss.svg",
+  },
 ];
 
 function RoleRotator() {
@@ -42,7 +57,7 @@ function RoleRotator() {
 
   return (
     <div className="h-10 sm:h-12 overflow-hidden relative inline-flex items-center">
-      <AnimatePresence mode="wait">
+      <AnimatePresence mode="wait" initial={false}>
         <motion.span
           key={roleIndex}
           initial={{ y: 28, opacity: 0, filter: "blur(6px)" }}
@@ -60,11 +75,8 @@ function RoleRotator() {
 
 export default function HeroSection() {
   const [activeTab, setActiveTab] = useState<"code" | "schema">("code");
-  const { ref, y, opacity, scale, scrollYProgress } = useParallax({
+  const { ref, y, scrollYProgress } = useParallax({
     speed: 0.25,
-    fadeIn: false,
-    scale: true,
-    scaleRange: [1, 1],
     offset: ["start start", "end start"] as const,
   });
 
@@ -75,20 +87,20 @@ export default function HeroSection() {
     <motion.section
       ref={ref}
       id="home"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, ease: "easeOut" }}
-      style={{ y, scale, opacity }}
+      style={{ y }}
       className="min-h-[94vh] flex flex-col justify-center pt-24 pb-20 sm:pt-28 sm:pb-28 relative"
     >
       <div className="flex flex-col-reverse lg:flex-row items-center justify-between gap-12 lg:gap-16 xl:gap-20">
         {/* Left Column: Editorial Headline, Bio & Interactive Stack Ribbon */}
         <motion.div
-          initial={{ opacity: 0, x: -30 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.9, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-          style={{ y: textY }}
-          className="max-w-2xl lg:max-w-3xl xl:max-w-4xl text-center lg:text-left flex flex-col items-center lg:items-start z-10"
+          style={
+            {
+              y: textY,
+              "--enter-x": "-24px",
+              "--enter-y": "0px",
+            } as MotionStyle
+          }
+          className="animate-enter max-w-2xl lg:max-w-3xl xl:max-w-4xl text-center lg:text-left flex flex-col items-center lg:items-start z-10"
         >
           {/* Status & Honor Meta Pills */}
           <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2.5 mb-6">
@@ -121,7 +133,9 @@ export default function HeroSection() {
 
           {/* Lead Bio Description */}
           <p className="text-base sm:text-lg text-slate-600 leading-relaxed mb-7 max-w-2xl font-normal">
-            Software developer crafting resilient full-stack web applications, desktop utilities, and high-integrity database systems with PHP, .NET/C#, Next.js, and modern TypeScript.
+            Software developer crafting resilient full-stack web applications,
+            desktop utilities, and high-integrity database systems with PHP,
+            .NET/C#, Next.js, and modern TypeScript.
           </p>
 
           {/* Interactive Micro Tech-Stack Ribbon */}
@@ -138,9 +152,12 @@ export default function HeroSection() {
                   key={stack.name}
                   className="flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-white border border-slate-200/90 shadow-2xs hover:border-blue-300 hover:shadow-xs transition-all duration-200"
                 >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={stack.icon}
                     alt={stack.name}
+                    width={14}
+                    height={14}
                     className="w-3.5 h-3.5 object-contain"
                   />
                   <span className="text-xs font-mono font-medium text-slate-700">
@@ -182,11 +199,15 @@ export default function HeroSection() {
 
         {/* Right Column: Creative Cyber-Architect Code Matrix Showcase */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.92 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.9, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-          style={{ y: imageY }}
-          className="relative w-[320px] h-[360px] sm:w-[390px] sm:h-[430px] lg:w-[440px] lg:h-[460px] shrink-0 select-none flex items-center justify-center"
+          style={
+            {
+              y: imageY,
+              "--enter-y": "0px",
+              "--enter-scale": "0.94",
+              "--enter-delay": "0.1s",
+            } as MotionStyle
+          }
+          className="animate-enter relative w-[320px] h-[360px] sm:w-[390px] sm:h-[430px] lg:w-[440px] lg:h-[460px] shrink-0 select-none flex items-center justify-center"
         >
           {/* Ambient Blue Radial Flare */}
           <div className="absolute inset-0 bg-gradient-to-tr from-blue-600/20 via-sky-400/15 to-indigo-500/20 rounded-full blur-3xl transform scale-110 pointer-events-none" />
@@ -205,7 +226,9 @@ export default function HeroSection() {
                   type="button"
                   onClick={() => setActiveTab("code")}
                   className={`flex items-center gap-1 px-2 py-0.5 rounded transition-colors ${
-                    activeTab === "code" ? "text-blue-400 bg-blue-950/60 font-bold" : "text-slate-500 hover:text-slate-300"
+                    activeTab === "code"
+                      ? "text-blue-400 bg-blue-950/60 font-bold"
+                      : "text-slate-500 hover:text-slate-300"
                   }`}
                 >
                   <CommandLineIcon className="w-3 h-3" />
@@ -215,7 +238,9 @@ export default function HeroSection() {
                   type="button"
                   onClick={() => setActiveTab("schema")}
                   className={`flex items-center gap-1 px-2 py-0.5 rounded transition-colors ${
-                    activeTab === "schema" ? "text-blue-400 bg-blue-950/60 font-bold" : "text-slate-500 hover:text-slate-300"
+                    activeTab === "schema"
+                      ? "text-blue-400 bg-blue-950/60 font-bold"
+                      : "text-slate-500 hover:text-slate-300"
                   }`}
                 >
                   <DocumentTextIcon className="w-3 h-3" />
@@ -228,14 +253,19 @@ export default function HeroSection() {
             <div className="font-mono text-[10px] sm:text-[11px] leading-relaxed space-y-1 select-none opacity-85">
               {activeTab === "code" ? (
                 <>
-                  <p className="text-slate-500">{"// Software & Full-Stack Architecture"}</p>
+                  <p className="text-slate-500">
+                    {"// Software & Full-Stack Architecture"}
+                  </p>
                   <p>
                     <span className="text-purple-400">const</span>{" "}
                     <span className="text-blue-300">developer</span> = &#123;
                   </p>
                   <p className="pl-3">
                     <span className="text-sky-300">name</span>:{" "}
-                    <span className="text-emerald-300">&quot;Logan M. Panucat&quot;</span>,
+                    <span className="text-emerald-300">
+                      &quot;Logan M. Panucat&quot;
+                    </span>
+                    ,
                   </p>
                   <p className="pl-3">
                     <span className="text-sky-300">stack</span>: [
@@ -246,27 +276,50 @@ export default function HeroSection() {
                   </p>
                   <p className="pl-3">
                     <span className="text-sky-300">education</span>:{" "}
-                    <span className="text-emerald-300">&quot;BSIT Cum Laude&quot;</span>,
+                    <span className="text-emerald-300">
+                      &quot;BSIT Cum Laude&quot;
+                    </span>
+                    ,
                   </p>
                   <p className="pl-3">
                     <span className="text-blue-400">deploy</span>:{" "}
-                    <span className="text-purple-400">async</span> () =&gt; &#123;
+                    <span className="text-purple-400">async</span> () =&gt;
+                    &#123;
                   </p>
-                  <p className="pl-6 text-emerald-400">return &quot;Production Ready 🚀&quot;;</p>
+                  <p className="pl-6 text-emerald-400">
+                    return &quot;Production Ready 🚀&quot;;
+                  </p>
                   <p className="pl-3">&#125;</p>
                   <p>&#125;;</p>
                 </>
               ) : (
                 <>
-                  <p className="text-slate-500">{"-- Relational Database Systems"}</p>
+                  <p className="text-slate-500">
+                    {"-- Relational Database Systems"}
+                  </p>
                   <p>
                     <span className="text-purple-400">CREATE TABLE</span>{" "}
                     <span className="text-sky-300">project_systems</span> (
                   </p>
-                  <p className="pl-3 text-slate-300">id <span className="text-amber-300">UUID PRIMARY KEY</span>,</p>
-                  <p className="pl-3 text-slate-300">title <span className="text-amber-300">VARCHAR(255)</span>,</p>
-                  <p className="pl-3 text-slate-300">role <span className="text-emerald-300">&apos;FullStack&apos;</span>,</p>
-                  <p className="pl-3 text-slate-300">status <span className="text-emerald-400">&apos;DEPLOYED&apos;</span></p>
+                  <p className="pl-3 text-slate-300">
+                    id <span className="text-amber-300">UUID PRIMARY KEY</span>,
+                  </p>
+                  <p className="pl-3 text-slate-300">
+                    title <span className="text-amber-300">VARCHAR(255)</span>,
+                  </p>
+                  <p className="pl-3 text-slate-300">
+                    role{" "}
+                    <span className="text-emerald-300">
+                      &apos;FullStack&apos;
+                    </span>
+                    ,
+                  </p>
+                  <p className="pl-3 text-slate-300">
+                    status{" "}
+                    <span className="text-emerald-400">
+                      &apos;DEPLOYED&apos;
+                    </span>
+                  </p>
                   <p>);</p>
                 </>
               )}
@@ -286,10 +339,9 @@ export default function HeroSection() {
 
             <div className="relative w-full h-full rounded-2xl overflow-hidden bg-slate-100">
               <Image
-                src="/image/profile.jpg"
+                src="/image/profile-hero.jpg"
                 alt="Logan Panucat"
                 fill
-                unoptimized
                 sizes="(min-width: 1024px) 16rem, (min-width: 640px) 14rem, 12rem"
                 className="object-cover transition-transform duration-700 group-hover:scale-105"
                 priority
@@ -300,45 +352,66 @@ export default function HeroSection() {
           </div>
 
           {/* Floating Honors Badge (Top Right) */}
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.6 }}
-            className="absolute -top-3 -right-2 sm:-right-4 z-20 bg-white/95 backdrop-blur-md px-3.5 py-2 rounded-2xl border border-blue-100 shadow-[0_10px_25px_rgba(0,0,0,0.08)] flex items-center gap-2"
+          <div
+            style={
+              {
+                "--enter-y": "12px",
+                "--enter-delay": "0.35s",
+                "--enter-duration": "0.5s",
+              } as React.CSSProperties
+            }
+            className="animate-enter absolute -top-3 -right-2 sm:-right-4 z-20 bg-white/95 backdrop-blur-md px-3.5 py-2 rounded-2xl border border-blue-100 shadow-[0_10px_25px_rgba(0,0,0,0.08)] flex items-center gap-2"
           >
             <div className="w-6 h-6 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-xs">
               ★
             </div>
             <div>
-              <div className="text-[11px] font-bold text-slate-900 leading-tight">BSIT Instructor &amp; Honors</div>
-              <div className="text-[9px] font-mono text-blue-600">CTU Naga Campus</div>
+              <div className="text-[11px] font-bold text-slate-900 leading-tight">
+                BSIT Instructor &amp; Honors
+              </div>
+              <div className="text-[9px] font-mono text-blue-600">
+                CTU Naga Campus
+              </div>
             </div>
-          </motion.div>
+          </div>
 
           {/* Floating Project Systems Badge (Bottom Left) */}
-          <motion.div
-            initial={{ opacity: 0, y: -15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.7 }}
-            className="absolute -bottom-3 -left-2 sm:-left-4 z-20 bg-white/95 backdrop-blur-md px-3.5 py-2 rounded-2xl border border-slate-200/90 shadow-[0_10px_25px_rgba(0,0,0,0.08)] flex items-center gap-2"
+          <div
+            style={
+              {
+                "--enter-y": "-12px",
+                "--enter-delay": "0.42s",
+                "--enter-duration": "0.5s",
+              } as React.CSSProperties
+            }
+            className="animate-enter absolute -bottom-3 -left-2 sm:-left-4 z-20 bg-white/95 backdrop-blur-md px-3.5 py-2 rounded-2xl border border-slate-200/90 shadow-[0_10px_25px_rgba(0,0,0,0.08)] flex items-center gap-2"
           >
             <CheckCircleIcon className="w-5 h-5 text-emerald-500 shrink-0" />
             <div>
-              <div className="text-[11px] font-bold text-slate-900 leading-tight">5+ Project Systems</div>
-              <div className="text-[9px] font-mono text-slate-500">Web • Desktop • Cloud</div>
+              <div className="text-[11px] font-bold text-slate-900 leading-tight">
+                5+ Project Systems
+              </div>
+              <div className="text-[9px] font-mono text-slate-500">
+                Web • Desktop • Cloud
+              </div>
             </div>
-          </motion.div>
+          </div>
 
           {/* Floating Mini Live Status Pill (Bottom Right) */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.8 }}
-            className="absolute -bottom-6 right-2 sm:right-6 z-20 bg-slate-950 text-white px-3 py-1.5 rounded-full border border-slate-800 shadow-md font-mono text-[10px] flex items-center gap-1.5"
+          <div
+            style={
+              {
+                "--enter-y": "0px",
+                "--enter-scale": "0.9",
+                "--enter-delay": "0.5s",
+                "--enter-duration": "0.5s",
+              } as React.CSSProperties
+            }
+            className="animate-enter absolute -bottom-6 right-2 sm:right-6 z-20 bg-slate-950 text-white px-3 py-1.5 rounded-full border border-slate-800 shadow-md font-mono text-[10px] flex items-center gap-1.5"
           >
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
             <span className="text-slate-300">&lt;status: active /&gt;</span>
-          </motion.div>
+          </div>
         </motion.div>
       </div>
     </motion.section>

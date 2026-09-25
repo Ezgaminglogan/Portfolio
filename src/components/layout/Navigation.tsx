@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import { scrollToY } from "@/components/SmoothScroll";
 
 interface NavItem {
   label: string;
@@ -19,53 +20,73 @@ const NAV_ITEMS: readonly NavItem[] = [
   { label: "Contact", id: "contact" },
 ];
 
+// offsetTop chain ignores CSS transforms (entrance/parallax), unlike getBoundingClientRect
+function pageTop(el: HTMLElement) {
+  let top = 0;
+  for (
+    let node: HTMLElement | null = el;
+    node;
+    node = node.offsetParent as HTMLElement | null
+  ) {
+    top += node.offsetTop;
+  }
+  return top;
+}
+
 export default function Navigation() {
   const [activeSection, setActiveSection] = useState("home");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
-  // High-accuracy scroll spy for reliable active section tracking
+  // Scroll spy: section offsets are measured only on layout changes (ResizeObserver),
+  // so the scroll path never forces a synchronous layout read.
   useEffect(() => {
+    const navbarOffset = 110;
+    let sectionTops: { id: string; top: number }[] = [];
     let ticking = false;
 
-    const handleScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          const scrollY = window.scrollY;
-
-          // 1. Guaranteed "Home" lock when near or at the top of page
-          if (scrollY < 120) {
-            setActiveSection("home");
-            ticking = false;
-            return;
-          }
-
-          // 2. Check each section from bottom to top
-          const navbarOffset = 110;
-          const sectionIds = NAV_ITEMS.map((item) => item.id);
-          let current = "home";
-
-          for (const id of sectionIds) {
-            const el = document.getElementById(id);
-            if (el) {
-              const top = el.getBoundingClientRect().top + scrollY - navbarOffset;
-              if (scrollY >= top) {
-                current = id;
-              }
-            }
-          }
-
-          setActiveSection(current);
-          ticking = false;
-        });
-        ticking = true;
-      }
+    const measure = () => {
+      sectionTops = NAV_ITEMS.flatMap(({ id }) => {
+        const el = document.getElementById(id);
+        return el ? [{ id, top: pageTop(el) - navbarOffset }] : [];
+      });
     };
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll(); // Initial check on mount
+    const update = () => {
+      ticking = false;
+      const scrollY = window.scrollY;
 
-    return () => window.removeEventListener("scroll", handleScroll);
+      // Guaranteed "Home" lock when near or at the top of page
+      if (scrollY < 120) {
+        setActiveSection("home");
+        return;
+      }
+
+      let current = "home";
+      for (const { id, top } of sectionTops) {
+        if (scrollY >= top) current = id;
+      }
+      setActiveSection(current);
+    };
+
+    const handleScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(update);
+    };
+
+    const resizeObserver = new ResizeObserver(() => {
+      measure();
+      update();
+    });
+    resizeObserver.observe(document.body);
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => {
+      resizeObserver.disconnect();
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
   const closeMobileMenu = useCallback(() => {
@@ -82,7 +103,7 @@ export default function Navigation() {
       closeMobileMenu();
 
       if (id === "home") {
-        window.scrollTo({ top: 0, behavior: "smooth" });
+        scrollToY(0);
         if (window.history.pushState) {
           window.history.pushState(null, "", window.location.pathname);
         }
@@ -93,13 +114,7 @@ export default function Navigation() {
       const element = document.getElementById(id);
       if (element) {
         const navbarHeight = 72;
-        const elementPosition = element.getBoundingClientRect().top;
-        const offsetPosition = elementPosition + window.pageYOffset - navbarHeight;
-
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: "smooth",
-        });
+        scrollToY(pageTop(element) - navbarHeight);
 
         if (window.history.pushState) {
           window.history.pushState(null, "", `#${id}`);
@@ -107,7 +122,7 @@ export default function Navigation() {
         setActiveSection(id);
       }
     },
-    [closeMobileMenu]
+    [closeMobileMenu],
   );
 
   useEffect(() => {

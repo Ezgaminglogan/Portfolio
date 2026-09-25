@@ -10,7 +10,6 @@ import {
 } from "@heroicons/react/24/outline";
 import { services } from "@/app/data";
 import type { ServiceItem } from "~types";
-import { useParallax, useChildParallax } from "@/hooks/useParallax";
 import AnimatedSectionHeading from "@/components/ui/AnimatedSectionHeading";
 
 const ICONS = [CommandLineIcon, ServerIcon, ShieldCheckIcon, CpuChipIcon];
@@ -20,7 +19,10 @@ interface ServiceCardProps {
   index: number;
 }
 
-const ServiceCard = memo(function ServiceCard({ service, index }: ServiceCardProps) {
+const ServiceCard = memo(function ServiceCard({
+  service,
+  index,
+}: ServiceCardProps) {
   const IconComponent = ICONS[index] || CommandLineIcon;
 
   return (
@@ -47,7 +49,10 @@ const ServiceCard = memo(function ServiceCard({ service, index }: ServiceCardPro
 
       <ul className="space-y-2.5 border-t border-slate-100 pt-5">
         {service.features.map((feature, idx) => (
-          <li key={idx} className="flex items-start gap-2.5 text-xs text-slate-700">
+          <li
+            key={idx}
+            className="flex items-start gap-2.5 text-xs text-slate-700"
+          >
             <CheckIcon className="w-4 h-4 text-blue-600 shrink-0 mt-0.5" />
             <span>{feature}</span>
           </li>
@@ -58,21 +63,13 @@ const ServiceCard = memo(function ServiceCard({ service, index }: ServiceCardPro
 });
 
 export default function ServicesSection() {
-  const { ref, y, opacity, scrollYProgress } = useParallax({
-    speed: 0.1,
-    fadeIn: true,
-  });
-
-  const contentY = useChildParallax(scrollYProgress, -0.05);
-
   return (
     <motion.section
-      ref={ref}
       id="services"
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.1 }}
       transition={{ duration: 0.8 }}
-      style={{ y, opacity }}
       className="py-24 sm:py-32 border-t border-slate-200/80 relative"
     >
       {/* Big animated heading */}
@@ -83,14 +80,11 @@ export default function ServicesSection() {
       />
 
       {/* Service cards */}
-      <motion.div
-        className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full"
-        style={{ y: contentY }}
-      >
+      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
         {services.map((service, i) => (
           <ServiceCard key={service.title} service={service} index={i} />
         ))}
-      </motion.div>
+      </div>
     </motion.section>
   );
 }

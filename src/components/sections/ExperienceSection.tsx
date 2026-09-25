@@ -3,26 +3,17 @@ import { useRef, memo } from "react";
 import { motion } from "framer-motion";
 import { education, experiences } from "@/app/data";
 import type { EducationItem, ExperienceItem } from "~types";
-import { useParallax, useChildParallax } from "@/hooks/useParallax";
 import AnimatedSectionHeading from "@/components/ui/AnimatedSectionHeading";
 import { BriefcaseIcon, AcademicCapIcon, SparklesIcon } from "@heroicons/react/24/outline";
 
 export default function ExperienceSection() {
-  const { ref, y, opacity, scrollYProgress } = useParallax({
-    speed: 0.12,
-    fadeIn: true,
-  });
-
-  const contentY = useChildParallax(scrollYProgress, -0.04);
-
   return (
     <motion.section
-      ref={ref}
       id="experience"
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.1 }}
       transition={{ duration: 0.8 }}
-      style={{ y, opacity }}
       className="py-24 sm:py-32 border-t border-slate-200/80 relative"
     >
       <AnimatedSectionHeading
@@ -31,10 +22,7 @@ export default function ExperienceSection() {
         subtitle="Academic foundation, honors, and professional software development journey."
       />
 
-      <motion.div
-        className="w-full flex flex-col gap-16"
-        style={{ y: contentY }}
-      >
+      <div className="w-full flex flex-col gap-16">
         {/* Education Subsection */}
         <div>
           <div className="flex items-center gap-3 mb-8">
@@ -82,7 +70,7 @@ export default function ExperienceSection() {
             ))}
           </div>
         </div>
-      </motion.div>
+      </div>
     </motion.section>
   );
 }
@@ -103,6 +91,7 @@ const EducationCard = memo(function EducationCard({
       ref={cardRef}
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
       transition={{ duration: 0.6, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
       className="group relative bg-white border border-slate-200 hover:border-blue-300 rounded-2xl p-6 sm:p-8 transition-all duration-300 shadow-[0_2px_12px_rgba(0,0,0,0.02)] hover:shadow-[0_12px_35px_rgba(37,99,235,0.08)]"
     >
@@ -162,6 +151,7 @@ const ExperienceCard = memo(function ExperienceCard({
       ref={cardRef}
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
       transition={{ duration: 0.6, delay: index * 0.12, ease: [0.16, 1, 0.3, 1] }}
       className="group relative bg-white border border-slate-200 hover:border-blue-300 rounded-2xl p-6 sm:p-8 transition-all duration-300 flex flex-col justify-between shadow-[0_2px_12px_rgba(0,0,0,0.02)] hover:shadow-[0_12px_35px_rgba(37,99,235,0.08)] hover:-translate-y-1"
     >

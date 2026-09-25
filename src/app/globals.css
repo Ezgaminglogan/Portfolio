@@ -33,18 +33,29 @@ body {
   inset: 0;
   pointer-events: none;
   z-index: 0;
-  background-image: 
+  background-image:
     linear-gradient(to right, rgba(37, 99, 235, 0.04) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(37, 99, 235, 0.04) 1px, transparent 1px),
     radial-gradient(circle, rgba(37, 99, 235, 0.08) 1px, transparent 1px);
-  background-size: 48px 48px, 48px 48px, 24px 24px;
-  mask-image: radial-gradient(ellipse 90% 80% at 50% 25%, #000 45%, transparent 90%);
-  -webkit-mask-image: radial-gradient(ellipse 90% 80% at 50% 25%, #000 45%, transparent 90%);
+  background-size:
+    48px 48px,
+    48px 48px,
+    24px 24px;
+  mask-image: radial-gradient(
+    ellipse 90% 80% at 50% 25%,
+    #000 45%,
+    transparent 90%
+  );
+  -webkit-mask-image: radial-gradient(
+    ellipse 90% 80% at 50% 25%,
+    #000 45%,
+    transparent 90%
+  );
 }
 
 /* Subtle noise texture overlay */
 .noise-overlay::before {
-  content: '';
+  content: "";
   position: fixed;
   inset: 0;
   z-index: 1;
@@ -57,17 +68,42 @@ body {
 
 /* Gradient glow animation */
 @keyframes glowPulse {
-  0%, 100% { opacity: 0.35; transform: translate(-50%, -50%) scale(1); }
-  50% { opacity: 0.65; transform: translate(-50%, -50%) scale(1.08); }
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    opacity: 0.65;
+    transform: translate(-50%, -50%) scale(1.08);
+  }
 }
 
 .glow-pulse {
   animation: glowPulse 10s ease-in-out infinite;
 }
 
+/* No CSS scroll-behavior: smooth — it fights Lenis. Smooth scrolling is handled by Lenis / scrollToY(). */
 html {
-  scroll-behavior: smooth;
   scroll-padding-top: 5rem;
+}
+
+/* Lenis base styles (from lenis/dist/lenis.css, inlined to avoid an extra render-blocking stylesheet) */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-stopped {
+  overflow: clip;
+}
+
+.lenis [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
 }
 
 :focus-visible {
@@ -125,9 +161,34 @@ html {
   animation: blink 0.8s step-end infinite;
 }
 
+/* First-paint entrance: CSS-driven so content shows without waiting for hydration.
+   Uses individual translate/scale so it composes with Framer's inline transform. */
+@keyframes enter {
+  from {
+    opacity: 0;
+    translate: var(--enter-x, 0) var(--enter-y, 16px);
+    scale: var(--enter-scale, 1);
+  }
+}
+
+.animate-enter {
+  animation: enter var(--enter-duration, 0.7s) cubic-bezier(0.16, 1, 0.3, 1)
+    var(--enter-delay, 0s) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-enter {
+    animation: none;
+  }
+}
+
 @keyframes marquee {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
 .animate-marquee {
