@@ -4,33 +4,7 @@ import { motion } from "framer-motion";
 import { stackCategories, professionalSkills } from "@/app/data";
 import type { SkillItem, ProfessionalSkill } from "~types";
 import AnimatedSectionHeading from "@/components/ui/AnimatedSectionHeading";
-
-// Self-hosted icons in /public/icons (snapshotted from Devicon / Simple Icons); slug → file name overrides
-const ICON_FILES: Record<string, string> = {
-  dotnet: "dotnetcore",
-};
-
-const ICON_COLORS: Record<string, string> = {
-  react: "#61DAFB",
-  html5: "#E34F26",
-  css3: "#1572B6",
-  javascript: "#F7DF1E",
-  nextdotjs: "#000000",
-  dotnet: "#512BD4",
-  php: "#777BB4",
-  csharp: "#512BD4",
-  mysql: "#4479A1",
-  microsoftsqlserver: "#CC2927",
-  typescript: "#3178C6",
-  tailwindcss: "#06B6D4",
-  reactquery: "#FF4154",
-  prisma: "#2D3748",
-  git: "#F05032",
-};
-
-function getIconUrl(slug: string): string {
-  return `/icons/${ICON_FILES[slug] ?? slug}.svg`;
-}
+import { techIconPath, TECH_BRAND_COLORS } from "@/constants/tech-icons";
 
 export default function SkillsSection() {
   return (
@@ -151,7 +125,8 @@ const SkillPill = memo(function SkillPill({
   categoryIndex,
 }: SkillPillProps) {
   const [isHovered, setIsHovered] = useState(false);
-  const brandColor = ICON_COLORS[skill.icon] || "#2563eb";
+  const brandColor = TECH_BRAND_COLORS[skill.icon] || "#2563eb";
+  const iconSrc = techIconPath(skill.icon);
 
   return (
     <motion.div
@@ -192,17 +167,19 @@ const SkillPill = memo(function SkillPill({
 
       {/* Icon Container with Parallax Elevation */}
       <div className="w-11 h-11 rounded-xl bg-slate-50 border border-slate-200/80 flex items-center justify-center shrink-0 shadow-xs group-hover:bg-white group-hover:border-blue-200 transition-all duration-300 relative z-10">
-        <motion.img
-          src={getIconUrl(skill.icon)}
-          alt={skill.name}
-          className="w-5 h-5 sm:w-6 sm:h-6 object-contain"
-          animate={{
-            scale: isHovered ? 1.18 : 1,
-            rotate: isHovered ? [0, -4, 4, 0] : 0,
-          }}
-          transition={{ duration: 0.35, ease: "easeOut" }}
-          loading="lazy"
-        />
+        {iconSrc && (
+          <motion.img
+            src={iconSrc}
+            alt=""
+            className="w-5 h-5 sm:w-6 sm:h-6 object-contain"
+            animate={{
+              scale: isHovered ? 1.18 : 1,
+              rotate: isHovered ? [0, -4, 4, 0] : 0,
+            }}
+            transition={{ duration: 0.35, ease: "easeOut" }}
+            loading="lazy"
+          />
+        )}
       </div>
 
       {/* Text Info */}

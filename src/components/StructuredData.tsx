@@ -1,11 +1,19 @@
-export default function StructuredData() {
-  const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://portfolio-665c.vercel.app";
+import {
+  AUTHOR_EMAIL,
+  AUTHOR_GITHUB,
+  AUTHOR_LINKEDIN,
+  AUTHOR_NAME,
+  SITE_DESCRIPTION,
+  SITE_NAME,
+  SITE_URL,
+} from "@/constants/seo";
 
+export default function StructuredData() {
   const personSchema = {
     "@context": "https://schema.org",
     "@type": "Person",
     "@id": `${SITE_URL}/#person`,
-    name: "Logan M. Panucat",
+    name: AUTHOR_NAME,
     givenName: "Logan",
     familyName: "Panucat",
     additionalName: "M.",
@@ -14,15 +22,11 @@ export default function StructuredData() {
     image: {
       "@type": "ImageObject",
       url: `${SITE_URL}/image/profile.jpg`,
-      caption: "Logan M. Panucat — Full Stack Developer",
+      caption: `${AUTHOR_NAME} — Full Stack Developer`,
     },
-    sameAs: [
-      "https://github.com/Ezgaminglogan",
-      "https://www.linkedin.com/in/logan-panucat-b319562a9/",
-    ],
+    sameAs: [AUTHOR_GITHUB, AUTHOR_LINKEDIN],
     jobTitle: "BSIT College Instructor & Full Stack Developer",
-    description:
-      "BSIT College Instructor at Cebu Technological University — Naga Extension Campus and Full Stack Developer from Carcar City, Cebu, Philippines. Specializing in PHP, MySQL, C#, ASP.NET MVC, .NET Framework, React, Next.js, and TypeScript.",
+    description: SITE_DESCRIPTION,
     knowsAbout: [
       "PHP",
       "MySQL",
@@ -46,16 +50,15 @@ export default function StructuredData() {
       "Git",
       "Responsive Design",
     ],
+    // City/region/country only — street address, phone, and birth date are
+    // intentionally omitted rather than published to every crawler.
     address: {
       "@type": "PostalAddress",
-      streetAddress: "P. Vasquez St., Poblacion I",
       addressLocality: "Carcar City",
       addressRegion: "Cebu",
       addressCountry: "PH",
     },
-    email: "logan.panucat2@gmail.com",
-    telephone: "+639915519424",
-    birthDate: "2002-09-08",
+    email: AUTHOR_EMAIL,
     nationality: {
       "@type": "Country",
       name: "Philippines",
@@ -93,7 +96,7 @@ export default function StructuredData() {
     "@context": "https://schema.org",
     "@type": "WebSite",
     "@id": `${SITE_URL}/#website`,
-    name: "Logan M. Panucat — Portfolio",
+    name: SITE_NAME,
     alternateName: "Ezgaminglogan Portfolio",
     url: SITE_URL,
     description:
@@ -107,7 +110,7 @@ export default function StructuredData() {
     "@context": "https://schema.org",
     "@type": "ProfilePage",
     "@id": `${SITE_URL}/#profilepage`,
-    name: "Logan M. Panucat — Full Stack Developer Portfolio",
+    name: `${AUTHOR_NAME} — Full Stack Developer Portfolio`,
     url: SITE_URL,
     mainEntity: { "@id": `${SITE_URL}/#person` },
     description:

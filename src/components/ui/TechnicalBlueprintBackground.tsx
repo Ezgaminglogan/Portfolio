@@ -54,21 +54,21 @@ export default memo(function TechnicalBlueprintBackground() {
       {/* ─── 2. RADIANT COBALT & SKY BLUE AMBIENT DIFFUSE GLOWS ─── */}
       {/* Pre-softened radial gradients instead of filter: blur() — same look, no per-frame blur raster cost */}
       <div
-        className="absolute -top-[424px] left-1/2 -translate-x-1/2 w-[1460px] h-[1110px] pointer-events-none"
+        className="absolute -top-106 left-1/2 -translate-x-1/2 w-365 h-277.5 pointer-events-none"
         style={{
           background:
             "radial-gradient(closest-side, rgba(59,130,246,0.065), rgba(56,189,248,0.04) 50%, transparent)",
         }}
       />
       <div
-        className="absolute top-[calc(40%-320px)] -right-[432px] w-[1340px] h-[1340px] pointer-events-none"
+        className="absolute top-[calc(40%-320px)] -right-108 w-335 h-335 pointer-events-none"
         style={{
           background:
             "radial-gradient(closest-side, rgba(37,99,235,0.07), rgba(37,99,235,0.045) 50%, transparent)",
         }}
       />
       <div
-        className="absolute -bottom-[260px] -left-[396px] w-[1250px] h-[1250px] pointer-events-none"
+        className="absolute -bottom-65 -left-99 w-312.5 h-312.5 pointer-events-none"
         style={{
           background:
             "radial-gradient(closest-side, rgba(14,165,233,0.055), rgba(14,165,233,0.035) 50%, transparent)",

@@ -12,6 +12,7 @@ import {
 import Modal from "@/components/Modal";
 import AnimatedSectionHeading from "@/components/ui/AnimatedSectionHeading";
 import { contactApi, type ContactPayload } from "~features/contact/api/contactApi";
+import { AUTHOR_EMAIL, AUTHOR_GITHUB, AUTHOR_LINKEDIN } from "@/constants/seo";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const isValidEmail = (email: string): boolean => EMAIL_REGEX.test(email);
@@ -22,6 +23,7 @@ export default function ContactSection() {
     email: "",
     subject: "",
     message: "",
+    website: "",
   });
   const [formStatus, setFormStatus] = useState<
     "idle" | "sending" | "success" | "error"
@@ -33,7 +35,7 @@ export default function ContactSection() {
   const copyEmailToClipboard = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    navigator.clipboard.writeText("logan.panucat2@gmail.com");
+    navigator.clipboard.writeText(AUTHOR_EMAIL);
     setCopiedEmail(true);
     setTimeout(() => setCopiedEmail(false), 2500);
   };
@@ -69,7 +71,13 @@ export default function ContactSection() {
       try {
         await contactApi.sendMessage(formData);
         setFormStatus("success");
-        setFormData({ name: "", email: "", subject: "", message: "" });
+        setFormData({
+          name: "",
+          email: "",
+          subject: "",
+          message: "",
+          website: "",
+        });
         setTimeout(() => {
           setFormStatus("idle");
           setModalOpen(false);
@@ -123,7 +131,7 @@ export default function ContactSection() {
                 {/* 01: Direct Email Card */}
                 <div className="group relative flex items-center justify-between p-4 rounded-2xl border border-slate-200/90 bg-white hover:border-blue-300 hover:shadow-[0_10px_25px_rgba(37,99,235,0.08)] transition-all duration-300 shadow-2xs overflow-hidden">
                   <a
-                    href="mailto:logan.panucat2@gmail.com"
+                    href={`mailto:${AUTHOR_EMAIL}`}
                     className="flex items-center gap-3.5 min-w-0 flex-1 cursor-pointer"
                   >
                     <div className="w-11 h-11 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center shrink-0 text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300 shadow-xs">
@@ -134,7 +142,7 @@ export default function ContactSection() {
                         01 // Direct Email
                       </div>
                       <div className="text-sm sm:text-base font-bold text-slate-900 truncate group-hover:text-blue-700 transition-colors">
-                        logan.panucat2@gmail.com
+                        {AUTHOR_EMAIL}
                       </div>
                     </div>
                   </a>
@@ -159,7 +167,7 @@ export default function ContactSection() {
 
                 {/* 02: GitHub Profile Card */}
                 <a
-                  href="https://github.com/Ezgaminglogan"
+                  href={AUTHOR_GITHUB}
                   target="_blank"
                   rel="noreferrer"
                   className="group flex items-center justify-between p-4 rounded-2xl border border-slate-200/90 bg-white hover:border-slate-400 hover:shadow-[0_10px_25px_rgba(0,0,0,0.06)] transition-all duration-300 shadow-2xs cursor-pointer"
@@ -188,7 +196,7 @@ export default function ContactSection() {
 
                 {/* 03: LinkedIn Profile Card */}
                 <a
-                  href="https://github.com/Ezgaminglogan"
+                  href={AUTHOR_LINKEDIN}
                   target="_blank"
                   rel="noreferrer"
                   className="group flex items-center justify-between p-4 rounded-2xl border border-slate-200/90 bg-white hover:border-blue-400 hover:shadow-[0_10px_25px_rgba(37,99,235,0.08)] transition-all duration-300 shadow-2xs cursor-pointer"
@@ -241,7 +249,7 @@ export default function ContactSection() {
                     Send a Message
                   </h4>
                   <p className="text-xs text-slate-500">
-                    Direct delivery to logan.panucat2@gmail.com
+                    Direct delivery to {AUTHOR_EMAIL}
                   </p>
                 </div>
                 <span className="text-[11px] font-mono font-bold text-blue-700 bg-blue-50 border border-blue-200 px-3 py-1 rounded-full">
@@ -257,62 +265,104 @@ export default function ContactSection() {
                 className="flex flex-col gap-5"
                 aria-busy={formStatus === "sending"}
               >
+                {/* Honeypot: hidden from humans, bots fill it and get a fake success */}
+                <div className="hidden" aria-hidden="true">
+                  <label htmlFor="contact-website">Website</label>
+                  <input
+                    type="text"
+                    id="contact-website"
+                    name="website"
+                    value={formData.website}
+                    onChange={handleInputChange}
+                    tabIndex={-1}
+                    autoComplete="off"
+                  />
+                </div>
                 <div className="grid sm:grid-cols-2 gap-5">
                   <div>
-                    <label className="block text-xs font-semibold text-slate-700 mb-1.5 font-mono uppercase tracking-wider">
+                    <label
+                      htmlFor="contact-name"
+                      className="block text-xs font-semibold text-slate-700 mb-1.5 font-mono uppercase tracking-wider"
+                    >
                       Name
                     </label>
                     <input
                       type="text"
+                      id="contact-name"
                       name="name"
                       value={formData.name}
                       onChange={handleInputChange}
                       required
+                      maxLength={100}
                       placeholder="Your Name"
                       className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-blue-600 focus:ring-2 focus:ring-blue-100 transition-all text-sm"
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-semibold text-slate-700 mb-1.5 font-mono uppercase tracking-wider">
+                    <label
+                      htmlFor="contact-email"
+                      className="block text-xs font-semibold text-slate-700 mb-1.5 font-mono uppercase tracking-wider"
+                    >
                       Email
                     </label>
                     <input
                       type="email"
+                      id="contact-email"
                       name="email"
                       value={formData.email}
                       onChange={handleInputChange}
                       required
+                      maxLength={254}
                       placeholder="Your Email"
+                      aria-invalid={emailError ? true : undefined}
+                      aria-describedby={
+                        emailError ? "contact-email-error" : undefined
+                      }
                       className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-blue-600 focus:ring-2 focus:ring-blue-100 transition-all text-sm"
                     />
                     {emailError && (
-                      <p className="text-red-600 text-xs mt-1">{emailError}</p>
+                      <p
+                        id="contact-email-error"
+                        className="text-red-600 text-xs mt-1"
+                      >
+                        {emailError}
+                      </p>
                     )}
                   </div>
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1.5 font-mono uppercase tracking-wider">
+                  <label
+                    htmlFor="contact-subject"
+                    className="block text-xs font-semibold text-slate-700 mb-1.5 font-mono uppercase tracking-wider"
+                  >
                     Subject
                   </label>
                   <input
                     type="text"
+                    id="contact-subject"
                     name="subject"
                     value={formData.subject}
                     onChange={handleInputChange}
                     required
+                    maxLength={200}
                     placeholder="Subject / Project Inquiry"
                     className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-blue-600 focus:ring-2 focus:ring-blue-100 transition-all text-sm"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1.5 font-mono uppercase tracking-wider">
+                  <label
+                    htmlFor="contact-message"
+                    className="block text-xs font-semibold text-slate-700 mb-1.5 font-mono uppercase tracking-wider"
+                  >
                     Message
                   </label>
                   <textarea
+                    id="contact-message"
                     name="message"
                     value={formData.message}
                     onChange={handleInputChange}
                     required
+                    maxLength={5000}
                     rows={5}
                     placeholder="Describe your project, systems scope, or role inquiry..."
                     className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-blue-600 focus:ring-2 focus:ring-blue-100 transition-all resize-none text-sm"

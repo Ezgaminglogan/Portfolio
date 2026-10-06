@@ -1,8 +1,7 @@
 "use client";
 
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import { useEffect } from "react";
-import { lockScroll, unlockScroll } from "@/components/SmoothScroll";
+import { useModal } from "@/hooks/useModal";
 
 interface ModalProps {
   isOpen: boolean;
@@ -21,12 +20,7 @@ export default function Modal({
 }: ModalProps) {
   const titleId = "modal-title";
   const messageId = "modal-message";
-
-  useEffect(() => {
-    if (!isOpen) return;
-    lockScroll();
-    return unlockScroll;
-  }, [isOpen]);
+  const dialogRef = useModal(isOpen, onClose);
 
   if (!isOpen) return null;
 
@@ -109,6 +103,8 @@ export default function Modal({
 
       {/* Modal Content */}
       <div
+        ref={dialogRef}
+        tabIndex={-1}
         className="relative w-full max-w-md transform transition-all duration-300 scale-100 animate-scale-up"
         role="dialog"
         aria-modal="true"

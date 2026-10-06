@@ -12,52 +12,9 @@ import type {
   SqliteImageItem,
   CertificateItem,
   ServiceItem,
-  TechIconMap,
 } from "~types";
 
 export type { SkillItem, ProfessionalSkill, Project, EducationItem, ExperienceItem, SqliteImageItem, CertificateItem, ServiceItem };
-
-export const TECH_ICONS: TechIconMap = {
-  PHP: "php",
-  MySQL: "mysql",
-  "C#": "csharp",
-  JavaScript: "javascript",
-  TypeScript: "typescript",
-  React: "react",
-  "Next.js": "nextdotjs",
-  TailwindCSS: "tailwindcss",
-  Bootstrap: "bootstrap",
-  HTML: "html5",
-  CSS: "css3",
-  "Prisma ORM": "prisma",
-  ".NET Framework": "dotnet",
-  "ASP.NET MVC": "dotnet",
-  Blazor: "blazor",
-  Git: "git",
-  Vercel: "vercel",
-  "Entity Framework": "dotnet",
-  "SQL Server": "microsoftsqlserver",
-  "JWT Auth": "jsonwebtokens",
-  SignalR: "dotnet",
-  "ShadCN UI": "shadcnui",
-  "Better Auth": "betterauth",
-  libSQL: "sqlite",
-  TanStack: "reactquery",
-};
-
-export const stacks: SkillItem[] = [
-  { name: "React", icon: "react", role: "UI Library" },
-  { name: "Next.js", icon: "nextdotjs", role: "React Framework" },
-  { name: "TailwindCSS", icon: "tailwindcss", role: "Utility Styling" },
-  { name: "TanStack", icon: "reactquery", role: "Async State / Query" },
-  { name: "C#", icon: "csharp", role: ".NET Ecosystem" },
-  { name: "PHP", icon: "php", role: "Server-Side Core" },
-  { name: "MySQL", icon: "mysql", role: "Relational Database" },
-  { name: "SQL Server", icon: "microsoftsqlserver", role: "Enterprise Engine" },
-  { name: "Prisma", icon: "prisma", role: "Type-Safe ORM" },
-  { name: "EF Core", icon: "dotnet", role: ".NET ORM" },
-  { name: "Git", icon: "git", role: "Distributed VCS" },
-];
 
 export const stackCategories: { title: string; badge: string; description: string; items: SkillItem[] }[] = [
   {
@@ -144,7 +101,6 @@ export const projects: Project[] = [
       "libSQL",
       "TailwindCSS",
     ],
-    gradient: "from-amber-500 to-orange-600",
     image: "/image/Grade Portal.jpeg",
     type: "Ongoing CTU Naga Extension Campus Project"
   },
@@ -153,7 +109,6 @@ export const projects: Project[] = [
     description:
       "A comprehensive library management system developed for Cebu Technological University - Naga Extension Campus. It streamlines student borrowing records, book inventory tracking with ISBN support, and provides real-time analytics using TanStack and Prisma ORM.",
     tech: ["TanStack", "Prisma", "MySQL", "TailwindCSS"],
-    gradient: "from-indigo-600 to-purple-600",
     image: "/image/LibraSys.png",
     type: "CTU Naga Extension Campus Project"
   },
@@ -162,7 +117,6 @@ export const projects: Project[] = [
     description:
       "A specialized administrative platform for Cebu Technological University - Naga Extension Campus. This high-performance system streamlines institutional resource tracking using Prisma ORM, secure JWT authentication, and TanStack for real-time data synchronization.",
     tech: ["TanStack", "Prisma", "JWT", "TailwindCSS"],
-    gradient: "from-blue-600 to-cyan-500",
     image: "/image/IMS-CTU.png",
     type: "CTU Naga Extension Campus Project"
   },
@@ -172,7 +126,6 @@ export const projects: Project[] = [
     description:
       "Cross-platform supply chain management solution for mobile and web applications. Streamlined inventory tracking, order management, and real-time analytics.",
     tech: ["Blazor Framework", "TailwindCSS", "C#", ".NET"],
-    gradient: "from-blue-500 to-purple-600",
     image: "/image/Landing.png",
     type: "Cross-Platform Capstone Project"
   },
@@ -182,7 +135,6 @@ export const projects: Project[] = [
     description:
       "E-commerce platform for home-cooked food delicacies featuring email verification with PHPMailer, OTP authentication, and secure user management.",
     tech: ["PHP", "TailwindCSS", "PHPMailer", "MySQL"],
-    gradient: "from-teal-500 to-cyan-600",
     image: "/image/Project 3.png",
     type: "School Project"
   },
@@ -191,7 +143,6 @@ export const projects: Project[] = [
     description:
       "Desktop application for school management with student records, grade tracking, and administrative functions. Built with Windows Forms Architecture for efficient data management.",
     tech: ["Visual Basic WFA", "MySQL"],
-    gradient: "from-purple-500 to-indigo-600",
     image: "/image/School-Project.png",
     type: "School Project"
   },
@@ -207,7 +158,6 @@ export const projects: Project[] = [
       "Google reCAPTCHA v3",
       "TailwindCSS",
     ],
-    gradient: "from-red-500 to-orange-600",
     image: "/image/Ticket-Support.png",
     type: "School Project"
   },
@@ -223,7 +173,6 @@ export const projects: Project[] = [
       ".NET",
       "TailwindCSS",
     ],
-    gradient: "from-yellow-500 to-amber-600",
     image: "/image/Luto-System.png",
     type: "School Project"
   },

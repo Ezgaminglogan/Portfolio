@@ -1,24 +1,20 @@
 import { MetadataRoute } from "next";
+import { SITE_URL } from "@/constants/seo";
 
 export default function robots(): MetadataRoute.Robots {
-  const SITE_URL = "https://portfolio-665c.vercel.app";
-
   return {
     rules: [
       {
         userAgent: "*",
         allow: "/",
-      },
-      {
-        userAgent: "Googlebot",
-        allow: "/",
+        disallow: ["/api/"],
       },
       {
         userAgent: "Googlebot-Image",
         allow: "/image/",
-        disallow: "",
       },
     ],
     sitemap: `${SITE_URL}/sitemap.xml`,
+    host: SITE_URL,
   };
 }

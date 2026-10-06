@@ -102,7 +102,7 @@ export default function ImageCarousel({
           />
           
           {/* Subtle overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           
           {/* Caption */}
           <div className="absolute bottom-0 left-0 right-0 p-8 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 opacity-0 group-hover:opacity-100">
@@ -113,10 +113,10 @@ export default function ImageCarousel({
         </motion.div>
       </AnimatePresence>
 
-      {/* Navigation - Minimalist style */}
+      {/* Navigation - Minimalist style (revealed on hover, focus, or keyboard focus within) */}
       <button
         type="button"
-        className="absolute left-4 top-1/2 -translate-y-1/2 z-10 p-2.5 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-blue-300 hover:text-white hover:border-blue-400/40 hover:bg-blue-500/20 transition-all opacity-0 group-hover:opacity-100 shadow-lg"
+        className="absolute left-4 top-1/2 -translate-y-1/2 z-10 p-2.5 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-blue-300 hover:text-white hover:border-blue-400/40 hover:bg-blue-500/20 transition-all opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 focus-visible:opacity-100 shadow-lg"
         onClick={() => paginate(-1)}
         aria-label="Previous image"
       >
@@ -124,15 +124,18 @@ export default function ImageCarousel({
       </button>
       <button
         type="button"
-        className="absolute right-4 top-1/2 -translate-y-1/2 z-10 p-2.5 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-blue-300 hover:text-white hover:border-blue-400/40 hover:bg-blue-500/20 transition-all opacity-0 group-hover:opacity-100 shadow-lg"
+        className="absolute right-4 top-1/2 -translate-y-1/2 z-10 p-2.5 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-blue-300 hover:text-white hover:border-blue-400/40 hover:bg-blue-500/20 transition-all opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 focus-visible:opacity-100 shadow-lg"
         onClick={() => paginate(1)}
         aria-label="Next image"
       >
         <ChevronRightIcon className="w-5 h-5" />
       </button>
 
-      {/* Progress indicators - Minimalist dashes */}
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 flex gap-2">
+      {/* Progress indicators - Minimalist dashes (decorative) */}
+      <div
+        aria-hidden="true"
+        className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 flex gap-2"
+      >
         {images.map((_, i) => (
           <div
             key={i}

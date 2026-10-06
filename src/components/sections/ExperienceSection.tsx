@@ -37,7 +37,7 @@ export default function ExperienceSection() {
                 Academic Degrees & Honors
               </p>
             </div>
-            <div className="flex-1 h-px bg-gradient-to-r from-blue-200 to-transparent ml-4" />
+            <div className="flex-1 h-px bg-linear-to-r from-blue-200 to-transparent ml-4" />
           </div>
 
           <div className="grid grid-cols-1 gap-6">
@@ -61,7 +61,7 @@ export default function ExperienceSection() {
                 Developer Roles & Systems
               </p>
             </div>
-            <div className="flex-1 h-px bg-gradient-to-r from-blue-200 to-transparent ml-4" />
+            <div className="flex-1 h-px bg-linear-to-r from-blue-200 to-transparent ml-4" />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

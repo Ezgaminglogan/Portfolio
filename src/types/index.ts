@@ -1,19 +1,9 @@
 import type { ComponentType, SVGProps } from "react";
 
-export interface TechIconMap {
-  [key: string]: string;
-}
-
 export interface SkillItem {
   name: string;
   icon: string;
   role?: string;
-}
-
-export interface StackCategory {
-  title: string;
-  badge: string;
-  items: SkillItem[];
 }
 
 export interface ProfessionalSkill {
@@ -36,7 +26,6 @@ export interface Project {
   title: string;
   description: string;
   tech: string[];
-  gradient: string;
   image: string;
   type: string;
   liveUrl?: string;

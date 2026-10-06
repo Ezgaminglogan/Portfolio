@@ -3,6 +3,8 @@ export interface ContactPayload {
   email: string;
   subject: string;
   message: string;
+  /** Honeypot — must stay empty; filled only by bots. */
+  website?: string;
 }
 
 export interface ContactResponse {

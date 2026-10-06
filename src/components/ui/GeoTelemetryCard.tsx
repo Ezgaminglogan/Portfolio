@@ -123,21 +123,21 @@ export default memo(function GeoTelemetryCard() {
       {/* Main Telemetry Grid Layout */}
       <div className="grid lg:grid-cols-12 divide-y lg:divide-y-0 lg:divide-x divide-slate-200/80">
         {/* Left Interactive Radar Screen (7 Cols) */}
-        <div className="lg:col-span-7 p-6 sm:p-8 flex flex-col justify-between relative overflow-hidden bg-[#0a0f1d] min-h-[300px]">
+        <div className="lg:col-span-7 p-6 sm:p-8 flex flex-col justify-between relative overflow-hidden bg-[#0a0f1d] min-h-75">
           {/* Subtle Ambient Radial Glow */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-blue-500/15 rounded-full blur-3xl pointer-events-none" />
 
           {/* SVG Tactical Radar Display */}
-          <div className="relative w-full aspect-[16/9] max-h-[260px] mx-auto flex items-center justify-center">
+          <div className="relative w-full aspect-video max-h-65 mx-auto flex items-center justify-center">
             {/* Background Grid Pattern */}
-            <div className="absolute inset-0 opacity-20 bg-[linear-gradient(to_right,#38bdf820_1px,transparent_1px),linear-gradient(to_bottom,#38bdf820_1px,transparent_1px)] bg-[size:24px_24px]" />
+            <div className="absolute inset-0 opacity-20 bg-[linear-gradient(to_right,#38bdf820_1px,transparent_1px),linear-gradient(to_bottom,#38bdf820_1px,transparent_1px)] bg-size-[24px_24px]" />
 
             {/* Radar Sweep + Hub Ping — HTML layer so the infinite rotation is compositor-driven (SVG-internal transform animations run on the main thread) */}
             <div
               className="absolute inset-0 flex items-center justify-center pointer-events-none"
               aria-hidden="true"
             >
-              <div className="relative h-full max-h-[280px] aspect-square">
+              <div className="relative h-full max-h-70 aspect-square">
                 <div className="absolute inset-0 animate-[spin_6s_linear_infinite]">
                   <svg
                     className="w-full h-full overflow-visible"
@@ -188,7 +188,7 @@ export default memo(function GeoTelemetryCard() {
 
             {/* Radar Circular Rings & Crosshairs */}
             <svg
-              className="relative w-full h-full max-w-[280px] max-h-[280px] select-none pointer-events-none overflow-visible"
+              className="relative w-full h-full max-w-70 max-h-70 select-none pointer-events-none overflow-visible"
               viewBox="0 0 200 200"
             >
               {/* Concentric Range Rings */}

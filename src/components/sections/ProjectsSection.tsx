@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useCallback, memo } from "react";
+import { useState, useCallback, memo } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import {
@@ -9,58 +9,69 @@ import {
 import { projects } from "@/app/data";
 import type { Project } from "~types";
 import AnimatedSectionHeading from "@/components/ui/AnimatedSectionHeading";
-import { lockScroll, unlockScroll } from "@/components/SmoothScroll";
+import { useModal } from "@/hooks/useModal";
+import { techIconPath } from "@/constants/tech-icons";
 
-// Tech stack icon mapping for crisp branded SVG logos (self-hosted in /public/icons)
-const TECH_ICON_SLUGS: Record<string, string> = {
-  TanStack: "/icons/reactquery.svg",
-  "ShadCN UI": "/icons/shadcnui.svg",
-  "Better Auth": "/icons/auth0.svg",
-  Prisma: "/icons/prisma.svg",
-  "Prisma ORM": "/icons/prisma.svg",
-  libSQL: "/icons/sqlite.svg",
-  SQLite: "/icons/sqlite.svg",
-  TailwindCSS: "/icons/tailwindcss.svg",
-  MySQL: "/icons/mysql.svg",
-  JWT: "/icons/jsonwebtokens.svg",
-  "Blazor Framework": "/icons/dot-net.svg",
-  "C#": "/icons/csharp.svg",
-  ".NET": "/icons/dotnetcore.svg",
-  PHP: "/icons/php.svg",
-  PHPMailer: "/icons/php.svg",
-  "Visual Basic WFA": "/icons/visualbasic.svg",
-  "ASP.NET Web MVC": "/icons/dotnetcore.svg",
-  SignalR: "/icons/dot-net.svg",
-  "Entity Framework": "/icons/dotnetcore.svg",
-  "EF Core": "/icons/dotnetcore.svg",
-  "Google reCAPTCHA v3": "/icons/google.svg",
-  "Google Sign-In": "/icons/google.svg",
-  React: "/icons/react.svg",
-  "Next.js": "/icons/nextdotjs.svg",
-  TypeScript: "/icons/typescript.svg",
-  JavaScript: "/icons/javascript.svg",
-};
+const BADGE_STYLES = {
+  card: "inline-flex items-center gap-1 px-2.5 py-1 text-[11px] text-slate-700 bg-slate-50 border border-slate-200/80 rounded-lg font-medium",
+  list: "inline-flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-xl border border-slate-200 bg-slate-50 text-slate-700 font-medium hover:bg-slate-100 transition-colors",
+  modal:
+    "inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2.5 bg-slate-50 hover:bg-slate-100 border border-slate-200/90 text-slate-800 text-xs sm:text-sm rounded-xl font-semibold shadow-xs transition-colors",
+} as const;
+
+const BADGE_ICON_STYLES = {
+  card: "w-3 h-3",
+  list: "w-3.5 h-3.5",
+  modal: "w-3.5 h-3.5 sm:w-4.5 sm:h-4.5",
+} as const;
+
+function TechBadge({
+  name,
+  variant,
+}: {
+  name: string;
+  variant: keyof typeof BADGE_STYLES;
+}) {
+  const icon = techIconPath(name);
+  return (
+    <span className={BADGE_STYLES[variant]}>
+      {icon && (
+        /* eslint-disable-next-line @next/next/no-img-element */
+        <img
+          src={icon}
+          alt=""
+          className={`${BADGE_ICON_STYLES[variant]} object-contain shrink-0`}
+          loading="lazy"
+        />
+      )}
+      <span>{name}</span>
+    </span>
+  );
+}
+
+/** Open on Enter/Space for non-native interactive elements. */
+function activateOnKey(onOpen: () => void) {
+  return (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      onOpen();
+    }
+  };
+}
 
 export default function ProjectsSection() {
   const [selectedProject, setSelectedProject] = useState<number | null>(null);
 
   const openProjectModal = useCallback((index: number) => {
     setSelectedProject(index);
-    lockScroll();
   }, []);
 
   const closeProjectModal = useCallback(() => {
     setSelectedProject(null);
-    unlockScroll();
   }, []);
 
-  useEffect(() => {
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === "Escape") closeProjectModal();
-    };
-    window.addEventListener("keydown", handleEscape);
-    return () => window.removeEventListener("keydown", handleEscape);
-  }, [closeProjectModal]);
+  const dialogRef = useModal(selectedProject !== null, closeProjectModal);
+  const selected = selectedProject !== null ? projects[selectedProject] : null;
 
   return (
     <>
@@ -104,14 +115,19 @@ export default function ProjectsSection() {
       </motion.section>
 
       {/* Project Details Modal — Maximized Immersive Widescreen Modal */}
-      {selectedProject !== null && projects[selectedProject] && (
+      {selected && (
         <div
           data-lenis-prevent
           className="fixed inset-0 z-60 flex items-center justify-center p-3 sm:p-5 lg:p-7 bg-slate-950/70 backdrop-blur-md animate-fade-in"
           onClick={closeProjectModal}
         >
           <div
-            className="relative w-full max-w-[1380px] bg-white border border-slate-200 rounded-3xl sm:rounded-[36px] overflow-hidden shadow-[0_30px_100px_rgba(0,0,0,0.35)] max-h-[92vh] flex flex-col"
+            ref={dialogRef}
+            role="dialog"
+            aria-modal="true"
+            aria-label={selected.title}
+            tabIndex={-1}
+            className="relative w-full max-w-345 bg-white border border-slate-200 rounded-3xl sm:rounded-[36px] overflow-hidden shadow-[0_30px_100px_rgba(0,0,0,0.35)] max-h-[92vh] flex flex-col"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Floating Close Button */}
@@ -133,19 +149,16 @@ export default function ProjectsSection() {
                   <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-red-500/85" />
                   <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-yellow-500/85" />
                   <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-green-500/85" />
-                  <div className="mx-auto text-[11px] sm:text-xs font-mono text-slate-300 tracking-wider truncate max-w-[200px] sm:max-w-sm">
-                    {projects[selectedProject].title
-                      .toLowerCase()
-                      .replace(/\s+/g, "-")}
-                    .app
+                  <div className="mx-auto text-[11px] sm:text-xs font-mono text-slate-300 tracking-wider truncate max-w-50 sm:max-w-sm">
+                    {selected.title.toLowerCase().replace(/\s+/g, "-")}.app
                   </div>
                 </div>
 
                 {/* Maximized Screenshot Container */}
-                <div className="relative w-full flex-1 aspect-[16/10] sm:aspect-video lg:aspect-auto min-h-[240px] sm:min-h-[320px] lg:min-h-[500px] bg-[#070b16] flex items-center justify-center p-3 sm:p-6 lg:p-8">
+                <div className="relative w-full flex-1 aspect-16/10 sm:aspect-video lg:aspect-auto min-h-60 sm:min-h-80 lg:min-h-125 bg-[#070b16] flex items-center justify-center p-3 sm:p-6 lg:p-8">
                   <Image
-                    src={projects[selectedProject].image}
-                    alt={projects[selectedProject].title}
+                    src={selected.image}
+                    alt={selected.title}
                     fill
                     sizes="(min-width: 1400px) 800px, (min-width: 1024px) 60vw, 100vw"
                     className="object-contain p-1 sm:p-2"
@@ -159,24 +172,24 @@ export default function ProjectsSection() {
                 <div>
                   <div className="inline-flex items-center gap-2 text-[11px] sm:text-xs font-mono font-bold uppercase tracking-wider text-blue-700 bg-blue-50 border border-blue-200 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full mb-4 sm:mb-6 shadow-xs">
                     <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                    {projects[selectedProject].type}
+                    {selected.type}
                   </div>
 
                   <h3 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-950 tracking-tight mb-4 sm:mb-6 leading-tight">
-                    {projects[selectedProject].title}
+                    {selected.title}
                   </h3>
 
                   <p className="text-slate-600 leading-relaxed text-sm sm:text-base lg:text-lg mb-6 sm:mb-8">
-                    {projects[selectedProject].description}
+                    {selected.description}
                   </p>
                 </div>
 
                 <div className="pt-2 sm:pt-4">
                   {/* Action Buttons */}
                   <div className="flex flex-wrap items-center gap-3 sm:gap-4 mb-6 sm:mb-8">
-                    {projects[selectedProject].liveUrl && (
+                    {selected.liveUrl && (
                       <a
-                        href={projects[selectedProject].liveUrl}
+                        href={selected.liveUrl}
                         target="_blank"
                         rel="noreferrer"
                         className="inline-flex items-center gap-2 px-6 py-3 sm:px-8 sm:py-3.5 bg-blue-600 text-white rounded-full text-sm sm:text-base font-bold hover:bg-blue-700 transition-all shadow-[0_8px_25px_rgba(37,99,235,0.3)] hover:scale-102 active:scale-98 cursor-pointer"
@@ -185,9 +198,9 @@ export default function ProjectsSection() {
                         <ArrowTopRightOnSquareIcon className="w-4 h-4 sm:w-5 sm:h-5 stroke-2" />
                       </a>
                     )}
-                    {projects[selectedProject].githubUrl && (
+                    {selected.githubUrl && (
                       <a
-                        href={projects[selectedProject].githubUrl}
+                        href={selected.githubUrl}
                         target="_blank"
                         rel="noreferrer"
                         className="inline-flex items-center gap-2 px-6 py-3 sm:px-8 sm:py-3.5 border border-slate-200 bg-white text-slate-900 rounded-full text-sm sm:text-base font-bold hover:bg-slate-50 hover:border-slate-300 transition-all shadow-xs cursor-pointer hover:scale-102 active:scale-98"
@@ -210,22 +223,8 @@ export default function ProjectsSection() {
 
                   {/* Expanded Tech Badges with Brand Icons */}
                   <div className="flex flex-wrap gap-2 sm:gap-2.5 pt-4 sm:pt-6 border-t border-slate-100">
-                    {projects[selectedProject].tech.map((t) => (
-                      <span
-                        key={t}
-                        className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2.5 bg-slate-50 hover:bg-slate-100 border border-slate-200/90 text-slate-800 text-xs sm:text-sm rounded-xl font-semibold shadow-xs transition-colors"
-                      >
-                        {TECH_ICON_SLUGS[t] && (
-                          /* eslint-disable-next-line @next/next/no-img-element */
-                          <img
-                            src={TECH_ICON_SLUGS[t]}
-                            alt={t}
-                            className="w-3.5 h-3.5 sm:w-4.5 sm:h-4.5 object-contain shrink-0"
-                            loading="lazy"
-                          />
-                        )}
-                        <span>{t}</span>
-                      </span>
+                    {selected.tech.map((t) => (
+                      <TechBadge key={t} name={t} variant="modal" />
                     ))}
                   </div>
                 </div>
@@ -254,6 +253,9 @@ const FeaturedFlagshipCard = memo(function FeaturedFlagshipCard({
       viewport={{ once: true }}
       transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
       onClick={onOpen}
+      onKeyDown={activateOnKey(onOpen)}
+      role="button"
+      tabIndex={0}
       className="group cursor-pointer p-6 sm:p-8 lg:p-10 rounded-3xl bg-white border border-slate-200 hover:border-blue-300 transition-all duration-500 shadow-[0_4px_25px_rgba(0,0,0,0.03)] hover:shadow-[0_15px_45px_rgba(37,99,235,0.08)]"
     >
       <div className="grid lg:grid-cols-12 gap-8 lg:gap-10 items-center">
@@ -300,21 +302,7 @@ const FeaturedFlagshipCard = memo(function FeaturedFlagshipCard({
           {/* Tech Badges with Brand Icons */}
           <div className="flex flex-wrap gap-2 pt-2">
             {project.tech.map((t) => (
-              <span
-                key={t}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-xl border border-slate-200 bg-slate-50 text-slate-700 font-medium hover:bg-slate-100 transition-colors"
-              >
-                {TECH_ICON_SLUGS[t] && (
-                  /* eslint-disable-next-line @next/next/no-img-element */
-                  <img
-                    src={TECH_ICON_SLUGS[t]}
-                    alt={t}
-                    className="w-3.5 h-3.5 object-contain shrink-0"
-                    loading="lazy"
-                  />
-                )}
-                <span>{t}</span>
-              </span>
+              <TechBadge key={t} name={t} variant="list" />
             ))}
           </div>
 
@@ -362,6 +350,9 @@ const ProjectCard = memo(function ProjectCard({
         ease: [0.16, 1, 0.3, 1],
       }}
       onClick={onOpen}
+      onKeyDown={activateOnKey(onOpen)}
+      role="button"
+      tabIndex={0}
       className="group cursor-pointer flex flex-col gap-5 p-6 sm:p-7 rounded-2xl bg-white border border-slate-200 hover:border-blue-300 transition-all duration-300 shadow-[0_2px_12px_rgba(0,0,0,0.02)] hover:shadow-[0_12px_35px_rgba(37,99,235,0.08)]"
     >
       {/* Browser Window Mockup Card Frame */}
@@ -401,21 +392,7 @@ const ProjectCard = memo(function ProjectCard({
         {/* Tech Badges with Brand Icons */}
         <div className="flex flex-wrap gap-1.5 mb-4">
           {project.tech.map((t) => (
-            <span
-              key={t}
-              className="inline-flex items-center gap-1 px-2.5 py-1 text-[11px] text-slate-700 bg-slate-50 border border-slate-200/80 rounded-lg font-medium"
-            >
-              {TECH_ICON_SLUGS[t] && (
-                /* eslint-disable-next-line @next/next/no-img-element */
-                <img
-                  src={TECH_ICON_SLUGS[t]}
-                  alt={t}
-                  className="w-3 h-3 object-contain shrink-0"
-                  loading="lazy"
-                />
-              )}
-              <span>{t}</span>
-            </span>
+            <TechBadge key={t} name={t} variant="card" />
           ))}
         </div>
 

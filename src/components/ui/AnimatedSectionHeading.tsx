@@ -54,7 +54,7 @@ export default function AnimatedSectionHeading({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-black text-slate-950 tracking-tight sm:tracking-tighter leading-[1.15] sm:leading-none break-words max-w-full px-2"
+          className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-black text-slate-950 tracking-tight sm:tracking-tighter leading-[1.15] sm:leading-none wrap-break-word max-w-full px-2"
         >
           {displayTitle}
           {hasPeriod && <span className="text-blue-600">.</span>}
@@ -75,7 +75,7 @@ export default function AnimatedSectionHeading({
 
         {/* Animated decorative line */}
         <motion.div
-          className="h-px w-full bg-gradient-to-r from-transparent via-blue-500/35 to-transparent mt-6"
+          className="h-px w-full bg-linear-to-r from-transparent via-blue-500/35 to-transparent mt-6"
           style={{ scaleX: lineScaleX }}
         />
       </motion.div>

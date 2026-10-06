@@ -12,6 +12,7 @@ import {
   DocumentTextIcon,
 } from "@heroicons/react/24/outline";
 import { useParallax, useChildParallax } from "@/hooks/useParallax";
+import { techIconPath } from "@/constants/tech-icons";
 
 const ROLES = [
   "Full-Stack Developer",
@@ -21,28 +22,13 @@ const ROLES = [
 ];
 
 const HERO_STACKS = [
-  { name: "Next.js", icon: "/icons/nextdotjs.svg" },
-  {
-    name: "React",
-    icon: "/icons/react.svg",
-  },
-  {
-    name: "C#",
-    icon: "/icons/csharp.svg",
-  },
-  {
-    name: "PHP",
-    icon: "/icons/php.svg",
-  },
-  {
-    name: "MySQL",
-    icon: "/icons/mysql.svg",
-  },
-  { name: "Prisma", icon: "/icons/prisma.svg" },
-  {
-    name: "TailwindCSS",
-    icon: "/icons/tailwindcss.svg",
-  },
+  "Next.js",
+  "React",
+  "C#",
+  "PHP",
+  "MySQL",
+  "Prisma",
+  "TailwindCSS",
 ];
 
 function RoleRotator() {
@@ -64,7 +50,7 @@ function RoleRotator() {
           animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
           exit={{ y: -28, opacity: 0, filter: "blur(6px)" }}
           transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-          className="text-2xl sm:text-3xl lg:text-4xl font-extrabold bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-600 bg-clip-text text-transparent block tracking-tight"
+          className="text-2xl sm:text-3xl lg:text-4xl font-extrabold bg-linear-to-r from-blue-600 via-blue-700 to-indigo-600 bg-clip-text text-transparent block tracking-tight"
         >
           {ROLES[roleIndex]}
         </motion.span>
@@ -144,24 +130,26 @@ export default function HeroSection() {
               <span className="text-[11px] font-mono font-bold uppercase tracking-widest text-slate-500">
                 Core Tech Matrix
               </span>
-              <span className="h-px flex-1 bg-slate-200/80 max-w-[120px] hidden sm:block" />
+              <span className="h-px flex-1 bg-slate-200/80 max-w-30 hidden sm:block" />
             </div>
             <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2">
-              {HERO_STACKS.map((stack) => (
+              {HERO_STACKS.map((name) => (
                 <div
-                  key={stack.name}
+                  key={name}
                   className="flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-white border border-slate-200/90 shadow-2xs hover:border-blue-300 hover:shadow-xs transition-all duration-200"
                 >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={stack.icon}
-                    alt={stack.name}
-                    width={14}
-                    height={14}
-                    className="w-3.5 h-3.5 object-contain"
-                  />
+                  {techIconPath(name) && (
+                    /* eslint-disable-next-line @next/next/no-img-element */
+                    <img
+                      src={techIconPath(name)!}
+                      alt=""
+                      width={14}
+                      height={14}
+                      className="w-3.5 h-3.5 object-contain"
+                    />
+                  )}
                   <span className="text-xs font-mono font-medium text-slate-700">
-                    {stack.name}
+                    {name}
                   </span>
                 </div>
               ))}
@@ -207,10 +195,10 @@ export default function HeroSection() {
               "--enter-delay": "0.1s",
             } as MotionStyle
           }
-          className="animate-enter relative w-[320px] h-[360px] sm:w-[390px] sm:h-[430px] lg:w-[440px] lg:h-[460px] shrink-0 select-none flex items-center justify-center"
+          className="animate-enter relative w-80 h-90 sm:w-97.5 sm:h-107.5 lg:w-110 lg:h-115 shrink-0 select-none flex items-center justify-center"
         >
           {/* Ambient Blue Radial Flare */}
-          <div className="absolute inset-0 bg-gradient-to-tr from-blue-600/20 via-sky-400/15 to-indigo-500/20 rounded-full blur-3xl transform scale-110 pointer-events-none" />
+          <div className="absolute inset-0 bg-linear-to-tr from-blue-600/20 via-sky-400/15 to-indigo-500/20 rounded-full blur-3xl transform scale-110 pointer-events-none" />
 
           {/* Layer 1: Angled Interactive Coding Terminal Backplate */}
           <div className="absolute -inset-2 sm:-inset-4 bg-slate-950/95 border border-slate-800 rounded-[28px] p-4 sm:p-5 shadow-[0_25px_60px_rgba(0,0,0,0.28)] transform -rotate-3 sm:-rotate-5 transition-transform duration-700 hover:-rotate-1 overflow-hidden">
@@ -326,9 +314,9 @@ export default function HeroSection() {
             </div>
 
             {/* Dynamic Claw / Scratch Accent Slits Across the Terminal */}
-            <div className="absolute -inset-x-10 top-1/4 h-0.5 bg-gradient-to-r from-transparent via-blue-500/50 to-transparent transform -rotate-35 pointer-events-none" />
-            <div className="absolute -inset-x-10 top-1/2 h-1 bg-gradient-to-r from-transparent via-cyan-400/40 to-transparent transform -rotate-35 pointer-events-none" />
-            <div className="absolute -inset-x-10 top-3/4 h-0.5 bg-gradient-to-r from-transparent via-indigo-500/50 to-transparent transform -rotate-35 pointer-events-none" />
+            <div className="absolute -inset-x-10 top-1/4 h-0.5 bg-linear-to-r from-transparent via-blue-500/50 to-transparent transform -rotate-35 pointer-events-none" />
+            <div className="absolute -inset-x-10 top-1/2 h-1 bg-linear-to-r from-transparent via-cyan-400/40 to-transparent transform -rotate-35 pointer-events-none" />
+            <div className="absolute -inset-x-10 top-3/4 h-0.5 bg-linear-to-r from-transparent via-indigo-500/50 to-transparent transform -rotate-35 pointer-events-none" />
           </div>
 
           {/* Layer 2: Main Portrait Card with Tech Notch Framing */}
@@ -347,7 +335,7 @@ export default function HeroSection() {
                 priority
               />
               {/* Subtle Tech Overlay Mesh on Hover */}
-              <div className="absolute inset-0 bg-gradient-to-t from-blue-950/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="absolute inset-0 bg-linear-to-t from-blue-950/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </div>
           </div>
 

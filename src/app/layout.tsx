@@ -4,6 +4,22 @@ import "./globals.css";
 import StructuredData from "@/components/StructuredData";
 import SmoothScroll from "@/components/SmoothScroll";
 import { ViewportProvider } from "@/context/ViewportContext";
+import {
+  AUTHOR_NAME,
+  GOOGLE_SITE_VERIFICATION,
+  OG_IMAGE_HEIGHT,
+  OG_IMAGE_PATH,
+  OG_IMAGE_WIDTH,
+  SITE_DESCRIPTION,
+  SITE_DESCRIPTION_SHORT,
+  SITE_KEYWORDS,
+  SITE_LOCALE,
+  SITE_NAME,
+  SITE_TITLE_DEFAULT,
+  SITE_TITLE_TEMPLATE,
+  SITE_TWITTER_HANDLE,
+  SITE_URL,
+} from "@/constants/seo";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,47 +31,16 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL || "https://portfolio-665c.vercel.app";
-
 export const metadata: Metadata = {
   title: {
-    default: "Logan M. Panucat | Full Stack Developer Portfolio",
-    template: "%s | Logan M. Panucat",
+    default: SITE_TITLE_DEFAULT,
+    template: SITE_TITLE_TEMPLATE,
   },
-  description:
-    "Logan M. Panucat (Ezgaminglogan) — Full Stack Developer from Carcar City, Cebu, Philippines. Specializing in PHP, MySQL, C#, ASP.NET MVC, .NET Framework, React, Next.js, and TypeScript. BSIT graduate from CTU Naga. View my projects, skills, and experience.",
-  keywords: [
-    "Logan Panucat",
-    "Logan M. Panucat",
-    "Ezgaminglogan",
-    "ezgaminglogan",
-    "Full Stack Developer",
-    "Web Developer",
-    "PHP Developer",
-    "C# Developer",
-    "React Developer",
-    "Next.js Developer",
-    "TypeScript Developer",
-    "ASP.NET MVC",
-    ".NET Framework",
-    "MySQL",
-    "Cebu Developer",
-    "Filipino Developer",
-    "Carcar City",
-    "CTU Naga",
-    "BSIT",
-    "Portfolio",
-    "Frontend Developer",
-    "Backend Developer",
-    "Node.js",
-    "JavaScript",
-    "TailwindCSS",
-    "Blazor Framework",
-  ],
-  authors: [{ name: "Logan M. Panucat", url: SITE_URL }],
-  creator: "Logan M. Panucat",
-  publisher: "Logan M. Panucat",
+  description: SITE_DESCRIPTION,
+  keywords: SITE_KEYWORDS,
+  authors: [{ name: AUTHOR_NAME, url: SITE_URL }],
+  creator: AUTHOR_NAME,
+  publisher: AUTHOR_NAME,
   formatDetection: {
     email: false,
     address: false,
@@ -67,25 +52,17 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: "website",
-    locale: "en_US",
+    locale: SITE_LOCALE,
     url: SITE_URL,
-    title: "Logan M. Panucat | Full Stack Developer Portfolio",
-    description:
-      "Logan M. Panucat (Ezgaminglogan) — Full Stack Developer from Cebu, Philippines. Building modern web applications with PHP, C#, React, Next.js, and TypeScript. View my projects and experience.",
-    siteName: "Logan M. Panucat — Portfolio",
+    title: SITE_TITLE_DEFAULT,
+    description: SITE_DESCRIPTION,
+    siteName: SITE_NAME,
     images: [
       {
-        url: "/grad-pic-cropped.jpg",
-        width: 1200,
-        height: 630,
+        url: OG_IMAGE_PATH,
+        width: OG_IMAGE_WIDTH,
+        height: OG_IMAGE_HEIGHT,
         alt: "Logan M. Panucat — Full Stack Developer Portfolio",
-        type: "image/jpeg",
-      },
-      {
-        url: "/grad-pic-cropped.jpg",
-        width: 800,
-        height: 800,
-        alt: "Logan M. Panucat — Profile Photo",
         type: "image/jpeg",
       },
     ],
@@ -93,10 +70,9 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Logan M. Panucat | Full Stack Developer",
-    description:
-      "Full Stack Developer from Cebu, Philippines. PHP, C#, React, Next.js, TypeScript. View my portfolio and projects.",
-    images: ["/grad-pic-cropped.jpg"],
-    creator: "@ezgaminglogan",
+    description: SITE_DESCRIPTION_SHORT,
+    images: [OG_IMAGE_PATH],
+    creator: SITE_TWITTER_HANDLE,
   },
   robots: {
     index: true,
@@ -111,7 +87,7 @@ export const metadata: Metadata = {
   },
   category: "portfolio",
   verification: {
-    google: "googlebae7fa9d71fe05c7",
+    google: GOOGLE_SITE_VERIFICATION,
   },
 };
 
@@ -122,12 +98,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        <StructuredData />
-      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        {/* JSON-LD is equally valid in <body>; a manual <head> element inside
+            <html> is non-standard markup. */}
+        <StructuredData />
         <ViewportProvider>
           <SmoothScroll>{children}</SmoothScroll>
         </ViewportProvider>
