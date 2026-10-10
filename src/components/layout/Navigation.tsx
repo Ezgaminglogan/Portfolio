@@ -1,210 +1,92 @@
 "use client";
-import { useState, useEffect, useRef, useCallback } from "react";
+
+import { useEffect, useRef, useState } from "react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import { scrollToY } from "@/components/SmoothScroll";
 
-interface NavItem {
-  label: string;
-  id: string;
-}
-
-const NAV_ITEMS: readonly NavItem[] = [
-  { label: "Home", id: "home" },
-  { label: "About", id: "about" },
-  { label: "Services", id: "services" },
-  { label: "Stacks", id: "skills" },
+const NAV_ITEMS = [
   { label: "Projects", id: "projects" },
-  { label: "SQLite Portable", id: "sqlite-portable" },
-  { label: "Experience", id: "experience" },
+  { label: "More Work", id: "more-work" },
+  { label: "About", id: "about" },
+  { label: "Skills", id: "skills" },
   { label: "Certificates", id: "certificates" },
   { label: "Contact", id: "contact" },
 ];
 
-// offsetTop chain ignores CSS transforms (entrance/parallax), unlike getBoundingClientRect
-function pageTop(el: HTMLElement) {
-  let top = 0;
-  for (
-    let node: HTMLElement | null = el;
-    node;
-    node = node.offsetParent as HTMLElement | null
-  ) {
-    top += node.offsetTop;
-  }
-  return top;
-}
-
 export default function Navigation() {
-  const [activeSection, setActiveSection] = useState("home");
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const buttonRef = useRef<HTMLButtonElement>(null);
+  const [active, setActive] = useState<string | null>(null);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuButton = useRef<HTMLButtonElement>(null);
 
-  // Scroll spy: section offsets are measured only on layout changes (ResizeObserver),
-  // so the scroll path never forces a synchronous layout read.
+  // Highlight the section crossing the middle band of the viewport.
   useEffect(() => {
-    const navbarOffset = 110;
-    let sectionTops: { id: string; top: number }[] = [];
-    let ticking = false;
-
-    const measure = () => {
-      sectionTops = NAV_ITEMS.flatMap(({ id }) => {
-        const el = document.getElementById(id);
-        return el ? [{ id, top: pageTop(el) - navbarOffset }] : [];
-      });
-    };
-
-    const update = () => {
-      ticking = false;
-      const scrollY = window.scrollY;
-
-      // Guaranteed "Home" lock when near or at the top of page
-      if (scrollY < 120) {
-        setActiveSection("home");
-        return;
-      }
-
-      let current = "home";
-      for (const { id, top } of sectionTops) {
-        if (scrollY >= top) current = id;
-      }
-      setActiveSection(current);
-    };
-
-    const handleScroll = () => {
-      if (ticking) return;
-      ticking = true;
-      window.requestAnimationFrame(update);
-    };
-
-    const resizeObserver = new ResizeObserver(() => {
-      measure();
-      update();
-    });
-    resizeObserver.observe(document.body);
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-
-    return () => {
-      resizeObserver.disconnect();
-      window.removeEventListener("scroll", handleScroll);
-    };
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) if (entry.isIntersecting) setActive(entry.target.id);
+      },
+      { rootMargin: "-45% 0px -50% 0px" },
+    );
+    for (const el of document.querySelectorAll("main > section[id]")) observer.observe(el);
+    return () => observer.disconnect();
   }, []);
-
-  const closeMobileMenu = useCallback(() => {
-    setMobileMenuOpen(false);
-  }, []);
-
-  const toggleMobileMenu = useCallback(() => {
-    setMobileMenuOpen((prev) => !prev);
-  }, []);
-
-  const handleNavClick = useCallback(
-    (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
-      e.preventDefault();
-      closeMobileMenu();
-
-      if (id === "home") {
-        scrollToY(0);
-        if (window.history.pushState) {
-          window.history.pushState(null, "", window.location.pathname);
-        }
-        setActiveSection("home");
-        return;
-      }
-
-      const element = document.getElementById(id);
-      if (element) {
-        const navbarHeight = 72;
-        scrollToY(pageTop(element) - navbarHeight);
-
-        if (window.history.pushState) {
-          window.history.pushState(null, "", `#${id}`);
-        }
-        setActiveSection(id);
-      }
-    },
-    [closeMobileMenu],
-  );
 
   useEffect(() => {
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && mobileMenuOpen) {
-        closeMobileMenu();
-        buttonRef.current?.focus();
+    if (!menuOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setMenuOpen(false);
+        menuButton.current?.focus();
       }
     };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [menuOpen]);
 
-    window.addEventListener("keydown", handleEscape);
-    return () => window.removeEventListener("keydown", handleEscape);
-  }, [mobileMenuOpen, closeMobileMenu]);
+  const links = (className: string) =>
+    NAV_ITEMS.map(({ label, id }) => (
+      <a
+        key={id}
+        href={`#${id}`}
+        onClick={() => setMenuOpen(false)}
+        aria-current={active === id ? "true" : undefined}
+        className={`${className} border-2 ${
+          active === id
+            ? "border-white bg-mint text-ink"
+            : "border-transparent text-white/80 hover:border-white/60 hover:text-white"
+        }`}
+      >
+        {label}
+      </a>
+    ));
 
   return (
-    <nav className="fixed top-0 w-full bg-white/85 backdrop-blur-xl z-50 border-b border-slate-200/80 transition-all duration-300 shadow-[0_4px_25px_rgba(0,0,0,0.03)]">
-      <div className="w-full max-w-full px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 2xl:px-24 h-16 flex items-center justify-between">
-        <a
-          href="#home"
-          onClick={(e) => handleNavClick(e, "home")}
-          className="text-slate-900 text-sm font-bold tracking-wider uppercase flex items-center gap-2 group cursor-pointer"
-        >
-          <span className="w-2.5 h-2.5 rounded-full bg-blue-600 shadow-[0_0_12px_rgba(37,99,235,0.7)] animate-pulse" />
-          <span className="group-hover:text-blue-600 transition-colors">
-            Logan M. Panucat
-          </span>
+    <header className="on-forest fixed inset-x-0 top-0 z-40 border-b-2 border-mint bg-forest">
+      <nav aria-label="Main" className="shell flex h-16 items-center justify-between">
+        <a href="#top" className="inline-flex min-h-11 items-center font-mono text-sm font-bold whitespace-nowrap text-white">
+          Logan M. Panucat
         </a>
 
-        <div className="hidden lg:flex items-center gap-1 text-xs uppercase tracking-wider font-semibold">
-          {NAV_ITEMS.map((item) => (
-            <a
-              key={item.id}
-              href={`#${item.id}`}
-              onClick={(e) => handleNavClick(e, item.id)}
-              className={`transition-all duration-300 py-1.5 px-3 rounded-full border cursor-pointer ${
-                activeSection === item.id
-                  ? "text-blue-600 bg-blue-50 border-blue-200 shadow-[0_0_15px_rgba(37,99,235,0.12)] font-bold"
-                  : "text-slate-600 border-transparent hover:text-slate-950 hover:bg-slate-100/80"
-              }`}
-            >
-              {item.label}
-            </a>
-          ))}
+        <div className="hidden items-center gap-1 md:flex">
+          {links("rounded-md px-3 py-1.5 text-sm font-semibold whitespace-nowrap transition-colors")}
         </div>
 
         <button
-          ref={buttonRef}
+          ref={menuButton}
           type="button"
-          className="lg:hidden p-2 -mr-2 text-slate-600 hover:text-slate-950 focus:outline-none cursor-pointer"
-          onClick={toggleMobileMenu}
-          aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
-          aria-expanded={mobileMenuOpen}
+          onClick={() => setMenuOpen((open) => !open)}
+          aria-expanded={menuOpen}
           aria-controls="mobile-menu"
+          className="inline-flex h-11 w-11 items-center justify-center rounded-md border-2 border-white text-white hover:bg-white/10 md:hidden"
         >
-          {mobileMenuOpen ? (
-            <XMarkIcon className="w-5 h-5" />
-          ) : (
-            <Bars3Icon className="w-5 h-5" />
-          )}
+          {menuOpen ? <XMarkIcon className="h-6 w-6" aria-hidden="true" /> : <Bars3Icon className="h-6 w-6" aria-hidden="true" />}
+          <span className="sr-only">{menuOpen ? "Close menu" : "Open menu"}</span>
         </button>
-      </div>
-      {mobileMenuOpen && (
-        <div
-          id="mobile-menu"
-          className="lg:hidden px-6 py-4 bg-white/98 backdrop-blur-xl border-t border-slate-200 flex flex-col gap-2 text-xs uppercase tracking-wider font-semibold shadow-lg"
-        >
-          {NAV_ITEMS.map((item) => (
-            <a
-              key={item.id}
-              href={`#${item.id}`}
-              onClick={(e) => handleNavClick(e, item.id)}
-              className={`transition-all duration-300 py-2.5 px-3.5 rounded-lg cursor-pointer ${
-                activeSection === item.id
-                  ? "text-blue-600 font-bold bg-blue-50 border border-blue-200"
-                  : "text-slate-600 hover:text-slate-950 hover:bg-slate-50"
-              }`}
-            >
-              {item.label}
-            </a>
-          ))}
+      </nav>
+
+      <div id="mobile-menu" hidden={!menuOpen} className="border-t-2 border-white/20 md:hidden">
+        <div className="shell flex flex-col gap-1 py-3">
+          {links("rounded-md px-3 py-2.5 text-base font-semibold")}
         </div>
-      )}
-    </nav>
+      </div>
+    </header>
   );
 }

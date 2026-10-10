@@ -1,166 +1,73 @@
-"use client";
-import { useState, useCallback } from "react";
-import { motion } from "framer-motion";
 import Image from "next/image";
-import { XMarkIcon } from "@heroicons/react/24/outline";
-import { certificates } from "@/app/data";
-import AnimatedSectionHeading from "@/components/ui/AnimatedSectionHeading";
-import { useModal } from "@/hooks/useModal";
-
-// Duplicate certificates array for seamless marquee wrapping
-const MARQUEE_CERTIFICATES = [...certificates, ...certificates];
+import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/outline";
+import { certificates } from "@/data";
+import SectionHeading from "@/components/ui/SectionHeading";
+import Dialog from "@/components/ui/Dialog";
 
 export default function CertificatesSection() {
-  const [selectedCertificate, setSelectedCertificate] = useState<number | null>(
-    null
-  );
-
-  const openCertificateModal = useCallback((index: number) => {
-    setSelectedCertificate(index % certificates.length);
-  }, []);
-
-  const closeCertificateModal = useCallback(() => {
-    setSelectedCertificate(null);
-  }, []);
-
-  const dialogRef = useModal(
-    selectedCertificate !== null,
-    closeCertificateModal
-  );
-  const selected =
-    selectedCertificate !== null ? certificates[selectedCertificate] : null;
-
   return (
-    <>
-      <motion.section
-        id="certificates"
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.1 }}
-        transition={{ duration: 0.8 }}
-        className="py-24 sm:py-32 border-t border-slate-200/80 relative overflow-hidden"
-      >
-        <AnimatedSectionHeading
-          title="Certifications."
-          label="Credentials"
-          subtitle="Professional credentials and continuous learning achievements."
+    <section id="certificates" aria-labelledby="certificates-title" className="section">
+      <div className="shell">
+        <SectionHeading
+          id="certificates-title"
+          eyebrow="Certificates"
+          title="Deployments and courses"
+          description="Certificates of deployment from a client, and completed online courses."
         />
-
-        {/* Infinite Carousel Container */}
-        <div className="relative w-full overflow-hidden select-none -mx-6 px-6">
-          {/* Side Fade Gradients for premium blending */}
-          <div className="absolute inset-y-0 left-0 w-12 md:w-32 bg-linear-to-r from-[#f8fafc] via-[#f8fafc]/80 to-transparent z-10 pointer-events-none" />
-          <div className="absolute inset-y-0 right-0 w-12 md:w-32 bg-linear-to-l from-[#f8fafc] via-[#f8fafc]/80 to-transparent z-10 pointer-events-none" />
-
-          {/* Marquee Track */}
-          <div className="animate-marquee gap-6 sm:gap-8 py-6">
-            {MARQUEE_CERTIFICATES.map((cert, index) => {
-              // Second half is a visual duplicate — hide it from AT and the tab order
-              const isDuplicate = index >= certificates.length;
-              return (
-                <div
-                  key={`${cert.title}-${index}`}
-                  onClick={() => openCertificateModal(index)}
-                  onKeyDown={(e) => {
-                    if (isDuplicate) return;
-                    if (e.key === "Enter" || e.key === " ") {
-                      e.preventDefault();
-                      openCertificateModal(index);
-                    }
-                  }}
-                  role="button"
-                  tabIndex={isDuplicate ? -1 : 0}
-                  aria-hidden={isDuplicate}
-                  className="w-64 sm:w-80 md:w-96 shrink-0 group cursor-pointer bg-white border border-slate-200 hover:border-blue-300 rounded-2xl p-4 sm:p-5 transition-all duration-300 flex flex-col gap-4 shadow-[0_2px_12px_rgba(0,0,0,0.02)] hover:shadow-[0_12px_35px_rgba(37,99,235,0.08)] hover:-translate-y-1"
-                >
-                  {/* Certificate Preview Image */}
-                  <div className="relative w-full aspect-4/3 rounded-xl overflow-hidden bg-slate-50 border border-slate-100">
-                    <Image
-                      src={cert.image}
-                      alt={cert.alt || cert.title}
-                      fill
-                      sizes="(max-width: 768px) 280px, 400px"
-                      className="object-cover transition-transform duration-700 ease-in-out group-hover:scale-103"
-                    />
-                  </div>
-
-                  {/* Meta details */}
-                  <div>
-                    <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-blue-700 bg-blue-50 border border-blue-200 px-2.5 py-1 rounded-full">
-                      {cert.category}
-                    </span>
-                    <h3 className="text-lg font-bold text-slate-900 mt-3 group-hover:text-blue-600 transition-colors tracking-tight line-clamp-1">
-                      {cert.title}
-                    </h3>
-                    <p className="text-slate-600 text-xs mt-1.5 leading-relaxed line-clamp-2">
-                      {cert.description}
-                    </p>
-
-                    <div className="flex flex-wrap gap-1.5 mt-4">
-                      {cert.tags.map((tag) => (
-                        <span
-                          key={tag}
-                          className="px-2 py-0.5 bg-slate-50 border border-slate-200/80 font-mono text-slate-700 text-[10px] rounded"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </motion.section>
-
-      {/* Modal View */}
-      {selected && (
-        <div
-          data-lenis-prevent
-          className="fixed inset-0 z-60 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-md animate-fade-in"
-          onClick={closeCertificateModal}
-        >
-          <div
-            ref={dialogRef}
-            role="dialog"
-            aria-modal="true"
-            aria-label={selected.title}
-            tabIndex={-1}
-            className="relative w-full max-w-5xl bg-white border border-slate-200 rounded-2xl overflow-hidden flex flex-col shadow-2xl animate-scale-up"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button
-              onClick={closeCertificateModal}
-              type="button"
-              aria-label="Close certificate"
-              className="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-white/90 backdrop-blur-md flex items-center justify-center text-slate-600 hover:text-slate-950 transition-colors border border-slate-200 shadow-sm cursor-pointer"
-            >
-              <XMarkIcon className="w-5 h-5" />
-            </button>
-            <div className="relative w-full h-[60vh] sm:h-[75vh] bg-slate-50 shrink-0 flex items-center justify-center p-4">
-              <div className="relative w-full h-full max-w-4xl max-h-full">
+        <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {certificates.map((cert) => (
+            <li key={cert.title} className="card card-lift reveal flex overflow-hidden sm:flex-col">
+              {/* Small thumbnail beside the text on phones, full preview from sm up. */}
+              <div className="relative m-3 mr-0 aspect-[4/3] w-28 shrink-0 self-start rounded-md border-2 border-ink bg-porcelain sm:m-0 sm:w-full sm:self-auto sm:rounded-none sm:border-0 sm:border-b-2">
                 <Image
-                  src={selected.image}
-                  alt={selected.alt || selected.title}
+                  src={cert.image}
+                  alt={cert.alt}
                   fill
-                  quality={90}
-                  sizes="(min-width: 1024px) 960px, 100vw"
-                  className="object-contain"
+                  sizes="(min-width: 1024px) 22rem, (min-width: 640px) 50vw, 7rem"
+                  className="object-contain p-1.5 sm:p-3"
                 />
               </div>
-            </div>
-            <div className="p-6 border-t border-slate-100 bg-white">
-              <h3 className="text-xl font-bold text-slate-950 mb-2 tracking-tight">
-                {selected.title}
-              </h3>
-              <p className="text-slate-600 text-sm leading-relaxed">
-                {selected.description}
-              </p>
-            </div>
-          </div>
-        </div>
-      )}
-    </>
+              <div className="flex min-w-0 flex-1 flex-col gap-1 p-4 sm:p-5">
+                <p className="font-mono text-xs font-semibold text-muted">{cert.kind}</p>
+                <h3 className="font-black leading-snug">{cert.title}</h3>
+                <p className="text-sm text-muted">
+                  {cert.issuer} · {cert.date}
+                </p>
+                <div className="mt-auto flex flex-wrap gap-2 pt-4">
+                  <Dialog
+                    title={cert.title}
+                    triggerClassName="btn btn-outline"
+                    trigger={
+                      <>
+                        View certificate<span className="sr-only">: {cert.title}</span>
+                      </>
+                    }
+                  >
+                    <Image
+                      src={cert.image}
+                      alt={cert.alt}
+                      width={2000}
+                      height={1400}
+                      sizes="(min-width: 1024px) 56rem, 100vw"
+                      className="h-auto max-h-[70vh] w-full rounded-md border-2 border-ink object-contain"
+                    />
+                    <p className="mt-4 text-sm text-muted">
+                      {cert.issuer} · {cert.date}
+                    </p>
+                    {cert.note && <p className="mt-2 text-sm">{cert.note}</p>}
+                  </Dialog>
+                  {cert.verifyUrl && (
+                    <a href={cert.verifyUrl} target="_blank" rel="noreferrer" className="btn btn-outline">
+                      <ArrowTopRightOnSquareIcon className="h-4 w-4" aria-hidden="true" />
+                      Verify<span className="sr-only"> {cert.title} on {cert.issuer}</span>
+                    </a>
+                  )}
+                </div>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
   );
 }

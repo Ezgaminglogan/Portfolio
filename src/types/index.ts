@@ -1,36 +1,31 @@
-import type { ComponentType, SVGProps } from "react";
-
-export interface SkillItem {
-  name: string;
-  icon: string;
-  role?: string;
-}
-
-export interface ProfessionalSkill {
-  icon: ComponentType<SVGProps<SVGSVGElement>>;
-  title: string;
-  description: string;
-  highlights: string[];
-  accent: string;
-  dot: string;
-}
-
-export interface CodeHighlight {
-  filename: string;
-  language: string;
-  code: string;
-  explanation: string;
+export interface Screenshot {
+  src: string;
+  alt: string;
 }
 
 export interface Project {
   title: string;
-  description: string;
+  summary: string;
+  features: string[];
   tech: string[];
-  image: string;
-  type: string;
-  liveUrl?: string;
+  images: Screenshot[];
+  kind: "Web application" | "Desktop application" | "Cross-platform application";
+  context: string;
+  featured?: boolean;
+  /** Only set when verified (e.g. by a certificate or the repo). */
+  status?: string;
+  role?: string;
+  outcome?: string;
   githubUrl?: string;
-  codeHighlight?: CodeHighlight;
+  liveUrl?: string;
+}
+
+export interface ExperienceItem {
+  role: string;
+  organization: string;
+  period: string;
+  description: string;
+  skills: string[];
 }
 
 export interface EducationItem {
@@ -39,36 +34,20 @@ export interface EducationItem {
   period: string;
   honor?: string;
   description: string;
-  highlights?: string[];
 }
 
-export interface ExperienceItem {
-  role: string;
-  organization: string;
-  period: string;
-  type: string;
-  badge?: string;
-  description: string;
-  skills?: string[];
-}
-
-export interface SqliteImageItem {
-  src: string;
-  alt: string;
-}
-
-export interface CertificateItem {
+export interface Certificate {
+  title: string;
+  issuer: string;
+  date: string;
+  kind: string;
   image: string;
   alt: string;
-  title: string;
-  description: string;
-  category: string;
-  tags: string[];
+  note?: string;
+  verifyUrl?: string;
 }
 
-export interface ServiceItem {
+export interface SkillGroup {
   title: string;
-  description: string;
-  features: string[];
-  accent: string;
+  items: string[];
 }

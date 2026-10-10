@@ -1,91 +1,86 @@
-"use client";
-import { motion } from "framer-motion";
-import AnimatedSectionHeading from "@/components/ui/AnimatedSectionHeading";
-import GeoTelemetryCard from "@/components/ui/GeoTelemetryCard";
+import { AcademicCapIcon } from "@heroicons/react/24/outline";
+import { education, experiences, focusAreas } from "@/data";
+import SectionHeading from "@/components/ui/SectionHeading";
 
 export default function AboutSection() {
   return (
-    <motion.section
-      id="about"
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.1 }}
-      transition={{ duration: 0.8 }}
-      className="py-24 sm:py-32 border-t border-slate-200/80"
-    >
-      {/* Big animated heading */}
-      <AnimatedSectionHeading title="About Me." label="Get to know me" />
+    <section id="about" aria-labelledby="about-title" className="section">
+      <div className="shell">
+        <SectionHeading id="about-title" eyebrow="About" title="Developer and educator" />
 
-      {/* Content */}
-      <div className="w-full flex flex-col gap-10 text-slate-600 text-lg sm:text-xl leading-relaxed">
-        <p>
-          I&apos;m a Bachelor of Science in Information Technology graduate{" "}
-          <span className="text-slate-950 font-bold underline decoration-blue-600 underline-offset-4">
-            Cum Laude
-          </span>{" "}
-          and currently a{" "}
-          <span className="text-blue-700 font-bold">
-            BSIT College Instructor
-          </span>{" "}
-          at Cebu Technological University — Naga Extension Campus, combining
-          academic mentorship in computing with practical, production-ready
-          software development.
-        </p>
-        <p>
-          My core stack spans PHP, MySQL, C#, and ASP.NET MVC alongside modern
-          TypeScript & Next.js. With the power of clean architecture and agile
-          workflows, I develop production systems — from educational platforms
-          and digital library ecosystems to industrial supply chain solutions.
-        </p>
+        <div className="grid gap-12 lg:grid-cols-[3fr_2fr]">
+          <div className="space-y-4 text-lg leading-relaxed text-muted">
+            <p>
+              I&apos;m a BSIT graduate (Cum Laude) and a college instructor at Cebu Technological
+              University – Naga Extension Campus, where I teach software development, web and
+              database technologies.
+            </p>
+            <p>
+              Outside the classroom I build full-stack systems with PHP, MySQL, C# and ASP.NET MVC
+              alongside TypeScript and Next.js, from campus tools like a faculty grade sheet app and a library
+              system to Supplify, a supply management system deployed for a local hardware store.
+            </p>
+          </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-8 border-t border-slate-200/80">
-          {[
-            {
-              value: "BSIT",
-              label: "Instructor & Cum Laude",
-              subtext: "CTU Naga Campus",
-            },
-            {
-              value: "5+",
-              label: "Project Systems",
-              subtext: "Web, Desktop, Cloud",
-            },
-            {
-              value: "Cebu",
-              label: "Location / Timezone",
-              subtext: "Philippines (GMT+8)",
-            },
-          ].map((stat, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{
-                duration: 0.5,
-                delay: i * 0.1,
-                ease: [0.16, 1, 0.3, 1],
-              }}
-              className="p-6 rounded-2xl bg-white border border-slate-200 hover:border-blue-300 hover:shadow-[0_10px_30px_rgba(37,99,235,0.08)] transition-all duration-300 flex flex-col justify-between shadow-[0_2px_10px_rgba(0,0,0,0.02)]"
-            >
-              <div className="text-3xl sm:text-4xl font-extrabold text-slate-950 font-mono tracking-tight mb-3">
-                {stat.value}
-              </div>
-              <div>
-                <div className="text-xs text-blue-700 uppercase tracking-wider font-bold font-mono">
-                  {stat.label}
+          <div>
+            <h3 className="text-2xl font-black tracking-tight text-ink">What I work on</h3>
+            <dl className="mt-4 grid gap-4">
+              {focusAreas.map((area) => (
+                <div key={area.title} className="border-l-4 border-mint pl-4">
+                  <dt className="font-semibold text-ink">{area.title}</dt>
+                  <dd className="mt-1 text-sm leading-relaxed text-muted">{area.text}</dd>
                 </div>
-                <div className="text-xs text-slate-500 font-mono mt-1">
-                  {stat.subtext}
-                </div>
-              </div>
-            </motion.div>
-          ))}
+              ))}
+            </dl>
+          </div>
         </div>
 
-        {/* High-Craft Geo-Telemetry & Live Timezone Station */}
-        <GeoTelemetryCard />
+        <div className="mt-16 grid gap-10 lg:grid-cols-[3fr_2fr]">
+          <div>
+            <h3 className="text-2xl font-black tracking-tight">Experience</h3>
+            <ol className="mt-6 grid gap-6 border-l-2 border-ink pl-6">
+              {experiences.map((exp) => (
+                <li key={exp.role} className="reveal relative">
+                  <span className="absolute top-1 -left-[2.05rem] h-4 w-4 border-2 border-ink bg-mint" aria-hidden="true" />
+                  <p className="font-mono text-sm font-bold text-emerald">{exp.period}</p>
+                  <h4 className="mt-1 text-lg font-semibold">{exp.role}</h4>
+                  <p className="text-sm text-muted">{exp.organization}</p>
+                  <p className="mt-2 text-sm leading-relaxed text-muted">{exp.description}</p>
+                  <ul className="mt-3 flex flex-wrap gap-1.5" aria-label="Skills">
+                    {exp.skills.map((s) => (
+                      <li key={s} className="badge">
+                        {s}
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+              ))}
+            </ol>
+          </div>
+
+          <div>
+            <h3 className="text-2xl font-black tracking-tight">Education</h3>
+            {education.map((edu) => (
+              <div key={edu.degree} className="card reveal mt-6 p-6">
+                <div className="flex items-center gap-3">
+                  <span className="flex h-10 w-10 items-center justify-center rounded-md border-2 border-ink bg-mint text-ink">
+                    <AcademicCapIcon className="h-5 w-5" aria-hidden="true" />
+                  </span>
+                  <p className="font-mono text-sm font-bold text-emerald">{edu.period}</p>
+                </div>
+                <h4 className="mt-4 text-lg font-semibold">{edu.degree}</h4>
+                <p className="text-sm text-muted">{edu.institution}</p>
+                {edu.honor && (
+                  <p className="mt-3 inline-flex rounded-sm border-2 border-ink bg-mint px-2 py-0.5 font-mono text-xs font-bold text-ink">
+                    {edu.honor}
+                  </p>
+                )}
+                <p className="mt-3 text-sm leading-relaxed text-muted">{edu.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
-    </motion.section>
+    </section>
   );
 }
