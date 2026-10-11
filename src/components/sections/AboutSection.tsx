@@ -4,12 +4,24 @@ import SectionHeading from "@/components/ui/SectionHeading";
 
 export default function AboutSection() {
   return (
-    <section id="about" aria-labelledby="about-title" className="section">
-      <div className="shell">
+    <section id="about" aria-labelledby="about-title" className="section relative w-full max-w-full overflow-clip">
+      {/* Background depth only; all text below stays still. */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+        <div
+          className="parallax absolute -top-24 -right-32 h-[26rem] w-[26rem] rounded-full border-[3px] border-emerald/25"
+          style={{ "--drift": "150px" } as React.CSSProperties}
+        />
+        <div
+          className="dot-grid parallax absolute bottom-24 -left-10 hidden h-56 w-56 opacity-20 lg:block"
+          style={{ "--drift": "90px" } as React.CSSProperties}
+        />
+      </div>
+
+      <div className="shell relative">
         <SectionHeading id="about-title" eyebrow="About" title="Developer and educator" />
 
         <div className="grid gap-12 lg:grid-cols-[3fr_2fr]">
-          <div className="space-y-4 text-lg leading-relaxed text-muted">
+          <div className="max-w-prose space-y-4 text-lg leading-relaxed text-muted">
             <p>
               I&apos;m a BSIT graduate (Cum Laude) and a college instructor at Cebu Technological
               University – Naga Extension Campus, where I teach software development, web and
@@ -36,7 +48,7 @@ export default function AboutSection() {
         </div>
 
         <div className="mt-16 grid gap-10 lg:grid-cols-[3fr_2fr]">
-          <div>
+          <div className="max-w-3xl">
             <h3 className="text-2xl font-black tracking-tight">Experience</h3>
             <ol className="mt-6 grid gap-6 border-l-2 border-ink pl-6">
               {experiences.map((exp) => (

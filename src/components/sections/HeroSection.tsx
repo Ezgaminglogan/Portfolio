@@ -4,14 +4,41 @@ import { PROFILE_PHOTO, RESUME_PATH } from "@/constants/seo";
 
 const STACK = ["Next.js", "React", "C# / .NET", "PHP", "MySQL", "Prisma", "TailwindCSS"];
 
-// Staggers the .anim-stamp entrance (see globals.css).
-const delay = (d: string) => ({ "--delay": d }) as React.CSSProperties;
+// Inline CSS custom properties: --delay staggers .anim-stamp, --drift sets .parallax depth.
+const vars = (v: Record<string, string>) => v as React.CSSProperties;
 
 export default function HeroSection() {
   return (
-    <section id="top" aria-labelledby="hero-title" className="on-forest relative overflow-hidden border-b-2 border-ink bg-forest text-white">
-      <div className="tech-grid pointer-events-none absolute inset-0" aria-hidden="true" />
-      <div className="shell relative grid items-center gap-10 pt-28 pb-16 sm:pt-32 md:grid-cols-[1fr_auto] md:gap-12 lg:pb-24">
+    <section
+      id="top"
+      aria-labelledby="hero-title"
+      className="on-forest relative w-full max-w-full overflow-clip border-b-2 border-ink bg-forest text-white"
+    >
+      {/* Layer A: decoration only. Positive --drift lags behind the page (far
+          away); negative --drift moves ahead of it (close). The opposing speeds
+          are what read as depth. Extended past the edges so no gap shows. */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+        <div className="tech-grid parallax absolute -inset-y-12 inset-x-0" style={vars({ "--drift": "140px" })} />
+        <div
+          className="parallax absolute top-16 -right-32 h-[32rem] w-[32rem] rounded-full border-[3px] border-mint/40"
+          style={vars({ "--drift": "200px" })}
+        />
+        <div
+          className="parallax absolute right-[30%] bottom-16 hidden h-24 w-24 rounded-full border-2 border-white/40 md:block"
+          style={vars({ "--drift": "160px" })}
+        />
+        <div
+          className="parallax absolute bottom-20 left-[5%] hidden h-12 w-12 rotate-12 border-2 border-ink bg-mint shadow-[4px_4px_0_0_var(--color-white)] md:block"
+          style={vars({ "--drift": "-90px" })}
+        />
+        <div
+          className="parallax absolute top-28 right-[44%] hidden h-6 w-6 border-2 border-ink bg-white lg:block"
+          style={vars({ "--drift": "-140px" })}
+        />
+      </div>
+
+      {/* Layer C: content. Text and buttons never move with scroll. */}
+      <div className="shell relative grid items-center gap-10 pt-28 pb-16 sm:pt-32 md:grid-cols-[1fr_auto] md:gap-12 lg:pb-24 xl:gap-20">
         <div>
           <p className="anim-stamp inline-flex items-center gap-2 rounded-sm border-2 border-white bg-mint px-2.5 py-1 font-mono text-xs font-bold tracking-wider text-ink uppercase">
             <span className="h-2 w-2 bg-ink" aria-hidden="true" />
@@ -29,7 +56,7 @@ export default function HeroSection() {
             students at Cebu Technological University – Naga Extension Campus.
           </p>
 
-          <div className="anim-stamp mt-8 flex flex-wrap gap-3" style={delay("0.1s")}>
+          <div className="anim-stamp mt-8 flex flex-wrap gap-3" style={vars({ "--delay": "0.1s" })}>
             <a href="#projects" className="btn btn-mint">
               View projects
             </a>
@@ -51,18 +78,27 @@ export default function HeroSection() {
           </ul>
         </div>
 
-        <div className="relative mx-auto w-56 sm:w-64 md:w-72 lg:w-80">
+        {/* Layer B: the photo stays put; only the dashed frame behind it drifts. */}
+        <div className="relative mx-auto w-56 sm:w-64 md:w-72 lg:w-80 xl:w-96">
+          <div
+            aria-hidden="true"
+            className="parallax absolute top-6 -right-6 bottom-2 left-6 rounded-lg border-2 border-dashed border-mint/70"
+            style={vars({ "--drift": "60px" })}
+          />
           <Image
             src={PROFILE_PHOTO}
             alt="Portrait of Logan M. Panucat in graduation attire"
             width={900}
             height={1350}
             priority
-            sizes="(min-width: 1024px) 20rem, (min-width: 768px) 18rem, (min-width: 640px) 16rem, 14rem"
+            sizes="(min-width: 1280px) 24rem, (min-width: 1024px) 20rem, (min-width: 768px) 18rem, (min-width: 640px) 16rem, 14rem"
             className="anim-stamp relative aspect-[4/5] w-full rounded-lg border-[3px] border-white object-cover object-top shadow-hard-mint"
-            style={delay("0.15s")}
+            style={vars({ "--delay": "0.15s" })}
           />
-          <dl style={delay("0.3s")} className="anim-stamp relative -mt-8 mr-6 -ml-3 grid grid-cols-2 divide-x-2 divide-ink overflow-hidden rounded-md border-2 border-ink bg-white text-xs text-ink shadow-[4px_4px_0_0_var(--color-mint)]">
+          <dl
+            style={vars({ "--delay": "0.3s" })}
+            className="anim-stamp relative -mt-8 mr-6 -ml-3 grid grid-cols-2 divide-x-2 divide-ink overflow-hidden rounded-md border-2 border-ink bg-white text-xs text-ink shadow-[4px_4px_0_0_var(--color-mint)]"
+          >
             <div className="px-3 py-2">
               <dt className="font-mono text-muted">Education</dt>
               <dd className="font-bold">BSIT, Cum Laude</dd>

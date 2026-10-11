@@ -120,7 +120,7 @@ body {
     @keyframes rise {
       from {
         opacity: 0;
-        translate: 0 2rem;
+        translate: 0 1.25rem;
       }
     }
     .reveal {
@@ -128,18 +128,40 @@ body {
       animation-timeline: view();
       animation-range: entry 0% entry 35%;
     }
+
+    /* Parallax for decorative layers only (never text or controls), from md up.
+       Scroll-linked and compositor-driven: no JS, no scroll listeners.
+       Over the element's time on screen it travels from -drift to +drift, so a
+       positive --drift makes it lag behind the page, which reads as depth. */
+    @keyframes drift {
+      from {
+        translate: 0 calc(var(--drift, 40px) * -1);
+      }
+      to {
+        translate: 0 var(--drift, 40px);
+      }
+    }
+    @media (min-width: 48rem) {
+      .parallax {
+        animation: drift linear both;
+        animation-timeline: view();
+        animation-range: cover;
+      }
+    }
   }
 
-  /* Interactive cards lift off their shadow on hover. Uses transform, not
-     translate, so it doesn't fight the .reveal animation on the same card. */
+  /* Interactive cards lift off their shadow on hover, on devices that hover.
+     Uses transform, not translate, so it doesn't fight .reveal on the same card. */
   .card-lift {
     transition:
       transform 0.2s ease,
       box-shadow 0.2s ease;
   }
-  .card-lift:hover {
-    transform: translate(-3px, -3px);
-    box-shadow: 8px 8px 0 0 var(--color-ink);
+  @media (hover: hover) {
+    .card-lift:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 8px 8px 0 0 var(--color-ink);
+    }
   }
 
   /* Dialogs pop out of their shadow offset on open; the backdrop fades in.
@@ -174,9 +196,16 @@ body {
   mask-image: radial-gradient(ellipse 80% 75% at 70% 40%, #000 30%, transparent 85%);
 }
 
+/* Ink dot pattern for decorative accents on light sections. */
+.dot-grid {
+  background-image: radial-gradient(var(--color-ink) 1.5px, transparent 1.5px);
+  background-size: 16px 16px;
+}
+
 @layer components {
+  /* Sections are full-bleed; their content sits in this centered container. */
   .shell {
-    @apply mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8;
+    @apply mx-auto w-full max-w-[1440px] px-5 sm:px-8 lg:px-12;
   }
   .section {
     @apply py-20 sm:py-24;

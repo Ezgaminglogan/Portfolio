@@ -99,15 +99,20 @@ function ProjectDetails({ project }: { project: Project }) {
 export default function ProjectCard({ project, compact = false }: { project: Project; compact?: boolean }) {
   const cover = project.images[0];
   const shown = compact ? 3 : 5;
+  // overflow-clip, not overflow-hidden: "hidden" makes a scroll container, which
+  // would scope the cover's view() timeline to the frame and freeze the parallax.
   return (
-    <article className="card card-lift reveal flex flex-col overflow-hidden">
-      <div className="relative aspect-video border-b-2 border-ink bg-porcelain">
+    <article className="card card-lift reveal flex flex-col overflow-clip">
+      <div className="relative aspect-video overflow-clip border-b-2 border-ink bg-porcelain">
+        {/* Featured covers drift inside their frame (scaled 115% so no edge
+            shows); the card and its buttons stay still. */}
         <Image
           src={cover.src}
           alt={cover.alt}
           fill
-          sizes={compact ? "(min-width: 1024px) 18rem, (min-width: 640px) 50vw, 100vw" : "(min-width: 768px) 36rem, 100vw"}
-          className="object-cover object-top"
+          sizes={compact ? "(min-width: 1024px) 20rem, (min-width: 640px) 50vw, 100vw" : "(min-width: 1440px) 44rem, (min-width: 768px) 50vw, 100vw"}
+          className={compact ? "object-cover object-top" : "parallax scale-115 object-cover object-top"}
+          style={compact ? undefined : ({ "--drift": "26px" } as React.CSSProperties)}
         />
       </div>
       <div className={`flex flex-1 flex-col ${compact ? "gap-3 p-5" : "gap-4 p-6"}`}>
