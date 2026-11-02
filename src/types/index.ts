@@ -1,12 +1,23 @@
 export interface Screenshot {
   src: string;
   alt: string;
+  /** Intrinsic size, so tall phone shots don't shift the layout. Default 1600×900. */
+  width?: number;
+  height?: number;
+  caption?: string;
 }
 
 export interface Project {
   title: string;
   summary: string;
+  /** Longer copy for the details dialog; falls back to `summary`. */
+  description?: string[];
   features: string[];
+  /** Flagship card: shown full-width above the featured grid. */
+  flagship?: boolean;
+  label?: string;
+  stats?: { value: string; label: string }[];
+  downloadUrl?: string;
   tech: string[];
   images: Screenshot[];
   kind: "Web application" | "Desktop application" | "Cross-platform application";

@@ -10,7 +10,7 @@ export default function ProjectsSection() {
           id="projects-title"
           eyebrow="Featured projects"
           title="Systems I've built"
-          description="Web and desktop systems built for CTU Naga Extension Campus and a hardware store client. Open a project for its features, technologies and screenshots."
+          description="An open-source offline IDE, plus web and desktop systems built for CTU Naga Extension Campus and a hardware store client. Open a project for its features, technologies and screenshots."
         />
         <div className="grid gap-6 md:grid-cols-2">
           {projects

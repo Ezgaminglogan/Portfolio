@@ -13,7 +13,68 @@ import type {
  * guessing (see docs/PORTFOLIO_IMPLEMENTATION_REPORT.md for what still needs input).
  */
 
+const nexus = (file: string, alt: string, caption: string, width: number, height: number): Screenshot => ({
+  src: `/image/nexus-ide/${file}`,
+  alt,
+  caption,
+  width,
+  height,
+});
+
 export const projects: Project[] = [
+  {
+    // Source: docs/nexus-ide-portfolio-kit.md and the public repo (9 releases verified on GitHub).
+    title: "NEXUS IDE",
+    featured: true,
+    flagship: true,
+    label: "Open source · MIT",
+    summary:
+      "An offline coding classroom for phones and lab PCs: write, run and learn C, Python, Java, C#, Web, PHP, SQL, Arduino and Raspberry Pi on Android or Windows, with no internet needed.",
+    description: [
+      "Many students at CTU Naga Extension Campus learn to program on shared lab PCs or their own phones, often without a reliable internet connection. NEXUS IDE puts a complete coding classroom into one free app that works offline on Android and Windows.",
+      "Students pick a workspace, write code in a syntax-highlighted editor and press Run. The compilers are bundled inside the app, so C, Python, Java, C#, PHP with MariaDB, and Arduino (uploaded to a real board over USB OTG) all run on the device.",
+      "Learn & Practice turns the IDE into a classroom: 75 lessons across nine tracks, 90 quiz questions and 27 exercises that NEXUS checks by actually running the student's code against test cases.",
+    ],
+    features: [
+      "9 workspaces: C, Python, Java, C#, Web, PHP + MySQL, Database (SQLite or MySQL), Arduino and Raspberry Pi",
+      "Fully offline: compilers and runtimes bundled for Android and Windows",
+      "Code editor with syntax highlighting, auto-indent, autocomplete, Format and a coding key bar for phones",
+      "Full-screen terminal on phones with an input bar for interactive programs",
+      "XAMPP-style htdocs projects at localhost/<project>/ with offline tech-stack templates",
+      "Arduino compile and upload over USB OTG with a Serial Monitor",
+      "Raspberry Pi GPIO simulator on an interactive 3D Raspberry Pi 3",
+      "Learn & Practice: 75 lessons, 90 quiz questions, 27 auto-checked exercises",
+      "Self-updating from GitHub Releases with SHA-256 checksum verification",
+    ],
+    tech: ["Flutter", "Dart", "Android", "Windows", "Python", "PHP", "SQLite"],
+    stats: [
+      { value: "9", label: "workspaces" },
+      { value: "75", label: "lessons" },
+      { value: "27", label: "auto-checked exercises" },
+      { value: "9", label: "releases" },
+    ],
+    images: [
+      nexus("00-cover.png", "NEXUS IDE running on a Windows PC and an Android phone", "NEXUS IDE on Windows and Android: one offline coding classroom.", 1920, 1080),
+      nexus("01-home-desktop.png", "NEXUS IDE home screen on a PC with nine workspace tiles", "Home on a lab PC: nine workspaces, each with what you can build and where it runs.", 1440, 1240),
+      nexus("02-editor-and-terminal-desktop.png", "Python program in the editor with a docked terminal on Windows", "Python running on Windows: the editor with a file explorer and a docked terminal showing the program's output and exit status.", 1600, 900),
+      nexus("03-home-phone.png", "NEXUS IDE home screen on an Android phone", "The same home screen on an Android phone.", 1072, 2379),
+      nexus("04-full-screen-terminal-phone.png", "Full-screen terminal with an input bar on a phone", "On phones, Run opens a full-screen terminal. Interactive programs read input from the bar above the keyboard.", 1072, 2379),
+      nexus("05-learn-lesson.png", "Learn & Practice lesson with highlighted syntax", "Learn & Practice: a lesson with search, topics, highlighted syntax and runnable examples.", 1600, 1000),
+      nexus("06-learn-databases-track.png", "Databases learning track with a SQLite or MySQL choice", "The Databases track: pick SQLite or MySQL and every lesson adapts. The runtime badge shows what runs your code.", 1400, 1000),
+      nexus("07-htdocs-projects.png", "List of PHP and Web projects in htdocs", "PHP and Web projects the XAMPP way: folders in htdocs, opened at localhost/project/.", 1400, 900),
+      nexus("08-tech-stacks.png", "New project dialog with tech stack templates", "Start a project from a tech stack: Bootstrap, PHP + MySQL, PHP + SQLite, or a full CRUD app.", 1400, 1000),
+      nexus("09-sql-on-sqlite-phone.png", "SQL query results shown as a table on a phone", "SQL on a phone: SQLite runs offline and prints results as tables.", 1072, 2379),
+      nexus("10-raspberry-pi-3d.png", "Raspberry Pi simulator on a 3D Raspberry Pi 3 model", "The Raspberry Pi simulator on a 3D Raspberry Pi 3 you can turn, with live GPIO pins. 3D model: “Raspberry Pi 3” by JoSaCo (Sketchfab), CC BY 4.0.", 900, 420),
+      nexus("11-new-file-starter-code.png", "New file dialog with starter code preview", "New files start with the right starter code for their type and role, with a preview.", 1400, 900),
+      nexus("12-checked-exercise.png", "Exercise result checked against test cases", "Exercises are checked by running the student's code against real test cases.", 1600, 1000),
+    ],
+    kind: "Cross-platform application",
+    context: "CTU Naga Extension Campus",
+    status: "v1.1.7 released",
+    role: "Sole developer: product idea, UI/UX, the Flutter app, packaging offline toolchains for Android and Windows, the Learn & Practice curriculum and its automatic checking, testing, and nine public releases (v1.0.0 to v1.1.7).",
+    githubUrl: "https://github.com/Ezgaminglogan/nexus-ide",
+    downloadUrl: "https://github.com/Ezgaminglogan/nexus-ide/releases/latest",
+  },
   {
     title: "CTU Faculty Grade Sheet",
     summary:
@@ -240,8 +301,8 @@ export const focusAreas = [
     text: "JWT sessions, Google Sign-In, OTP email verification, reCAPTCHA and real-time messaging with SignalR.",
   },
   {
-    title: "Desktop tools",
-    text: "Desktop apps such as a faculty grade sheet (Laravel and Electron), SQLite Portable and a school management system.",
+    title: "Desktop and mobile apps",
+    text: "NEXUS IDE, an offline coding IDE for Android and Windows (Flutter), plus a faculty grade sheet (Laravel and Electron), SQLite Portable and a school management system.",
   },
 ];
 
@@ -297,8 +358,8 @@ export const skillGroups: SkillGroup[] = [
     items: ["MySQL", "SQL Server", "SQLite", "Prisma", "EF Core"],
   },
   {
-    title: "Desktop",
-    items: ["Electron", "Visual Basic WFA", ".NET"],
+    title: "Desktop & mobile",
+    items: ["Flutter", "Dart", "Electron", "Visual Basic WFA", ".NET"],
   },
   {
     title: "Developer tools",

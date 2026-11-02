@@ -33,7 +33,7 @@ const graph = {
       address: { "@type": "PostalAddress", addressRegion: "Cebu", addressCountry: "PH" },
       sameAs: [AUTHOR_GITHUB, AUTHOR_LINKEDIN],
       description: SITE_DESCRIPTION,
-      knowsAbout: ["Next.js", "React", "TypeScript", "C#", "ASP.NET MVC", "Blazor", "PHP", "Laravel", "Electron", "MySQL", "SQL Server", "Prisma"],
+      knowsAbout: ["Next.js", "React", "TypeScript", "C#", "ASP.NET MVC", "Blazor", "PHP", "Laravel", "Electron", "Flutter", "Dart", "MySQL", "SQL Server", "Prisma"],
       hasCredential: certificates
         .filter((c) => c.kind.startsWith("Course"))
         .map((c) => ({
