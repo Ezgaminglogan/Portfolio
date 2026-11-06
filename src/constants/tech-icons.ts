@@ -8,6 +8,7 @@ const ICONS: Record<string, string> = {
   "ASP.NET Web MVC": "dotnetcore",
   "Better Auth": "auth0",
   "Blazor Framework": "dot-net",
+  "Blazor Server": "dot-net",
   "C#": "csharp",
   "EF Core": "dotnetcore",
   "Entity Framework": "dotnetcore",

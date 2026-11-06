@@ -112,7 +112,16 @@ function ProjectDetails({ project }: { project: Project }) {
   );
 }
 
-export default function ProjectCard({ project, compact = false }: { project: Project; compact?: boolean }) {
+export default function ProjectCard({
+  project,
+  compact = false,
+  flip = false,
+}: {
+  project: Project;
+  compact?: boolean;
+  /** Flagship only: put the image on the right (alternating rows read less monotonous). */
+  flip?: boolean;
+}) {
   const cover = project.images[0];
   const flagship = project.flagship;
   const shown = compact ? 3 : flagship ? project.tech.length : 5;
@@ -122,20 +131,20 @@ export default function ProjectCard({ project, compact = false }: { project: Pro
   return (
     <article
       className={`card card-lift reveal flex flex-col overflow-clip ${
-        flagship ? "md:col-span-2 lg:grid lg:grid-cols-[3fr_2fr]" : ""
+        flagship ? `md:col-span-2 lg:grid ${flip ? "lg:grid-cols-[2fr_3fr]" : "lg:grid-cols-[3fr_2fr]"}` : ""
       }`}
     >
       <div
-        className={`relative aspect-video overflow-clip border-b-2 border-ink ${
+        // A designed cover sits whole on a matte sampled from its own edges.
+        style={project.matte ? { background: project.matte } : undefined}
+        className={`relative aspect-video overflow-clip border-b-2 border-ink ${project.matte ? "" : "bg-porcelain"} ${
           flagship
-            ? // Matte sampled from the cover's own gradient, so the uncropped
-              // (object-contain) image blends into its letterbox.
-              "bg-[linear-gradient(#0f1424,#192137)] lg:aspect-auto lg:min-h-96 lg:border-r-2 lg:border-b-0"
-            : "bg-porcelain"
+            ? `lg:aspect-auto lg:min-h-96 lg:border-b-0 ${flip ? "lg:order-last lg:border-l-2" : "lg:border-r-2"}`
+            : ""
         }`}
       >
-        {/* Featured covers drift inside their frame (scaled 115% so no edge
-            shows); the card and its buttons stay still. */}
+        {/* Featured covers drift inside their frame: whole on their matte, or
+            scaled 115% so no edge shows. The card and its buttons stay still. */}
         <Image
           src={cover.src}
           alt={cover.alt}
@@ -151,8 +160,8 @@ export default function ProjectCard({ project, compact = false }: { project: Pro
           className={
             compact
               ? "object-cover object-top"
-              : flagship
-                ? "parallax object-contain" // full cover visible; drifts within its matte
+              : project.matte
+                ? "parallax object-contain"
                 : "parallax scale-115 object-cover object-top"
           }
           style={compact ? undefined : ({ "--drift": "26px" } as React.CSSProperties)}

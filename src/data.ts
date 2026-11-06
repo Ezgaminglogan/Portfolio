@@ -13,13 +13,19 @@ import type {
  * guessing (see docs/PORTFOLIO_IMPLEMENTATION_REPORT.md for what still needs input).
  */
 
-const nexus = (file: string, alt: string, caption: string, width: number, height: number): Screenshot => ({
-  src: `/image/nexus-ide/${file}`,
-  alt,
-  caption,
-  width,
-  height,
-});
+const shots =
+  (dir: string) =>
+  (file: string, alt: string, caption: string, width: number, height: number): Screenshot => ({
+    src: `/image/${dir}/${file}`,
+    alt,
+    caption,
+    width,
+    height,
+  });
+const nexus = shots("nexus-ide");
+const lending = shots("4r-lending");
+const gradeSheet = shots("ctu-grade-sheet");
+const docTracking = shots("ctu-document-tracking");
 
 export const projects: Project[] = [
   {
@@ -74,27 +80,125 @@ export const projects: Project[] = [
     role: "Sole developer: product idea, UI/UX, the Flutter app, packaging offline toolchains for Android and Windows, the Learn & Practice curriculum and its automatic checking, testing, and nine public releases (v1.0.0 to v1.1.7).",
     githubUrl: "https://github.com/Ezgaminglogan/nexus-ide",
     downloadUrl: "https://github.com/Ezgaminglogan/nexus-ide/releases/latest",
+    matte: "linear-gradient(#0f1424, #192137)",
   },
   {
-    title: "CTU Faculty Grade Sheet",
+    // Source: docs/4r-lending-portfolio-kit.md. Client project: private source, no repo link;
+    // client names, IDs and photos in the screenshots are blurred on purpose.
+    title: "4R Lending",
+    featured: true,
+    flagship: true,
+    label: "Client project · Private",
     summary:
-      "A desktop app for CTU Naga Extension Campus faculty that keeps official ROForm 15-B grading, attendance and class records on their own computer.",
+      "A microfinance loan and collection system for field centers in Cebu: client registration with National ID scanning, weekly collection sheets, loan releases with printed vouchers, PAR aging and daily cut-off reports. Runs offline on the office PC and is reached from other computers and phones on the same network.",
     features: [
-      "ROForm 15-B grading records",
-      "Attendance and class records",
-      "Data stored locally on the faculty member's computer",
-      "Password-protected faculty sign-in with “keep me signed in”",
+      "Weekly collection sheets: post a whole center's payments at once; paid weeks lock, and two computers can't post the same sheet twice",
+      "Client registration with offline ID scanning: reads the Philippine National ID QR code and other ID barcodes, and offline OCR fills the address",
+      "Loan releases with backdating approval, official voucher numbers and a printable 4-page release packet",
+      "Bulk printing of cash vouchers and an ID Photo Book by center, with print preview",
+      "Reports: PAR aging (CGAP buckets), 17-column collection ledger, 24-hour cut-off and end-of-day remittance",
+      "Maker–checker approvals for corrections, adjustments and refunds, with an audit trail",
+      "Live updates when another computer posts or approves",
+      "One-file Windows launcher: self-updating from GitHub Releases, tray icon, backup and database tools",
     ],
-    tech: ["Laravel", "Electron"],
+    tech: ["C#", ".NET", "Blazor Server", "MySQL", "EF Core", "TailwindCSS", "QuestPDF", "PaddleOCR", "GitHub Actions"],
     images: [
-      {
-        src: "/image/Faculty Grade Sheet.jpg",
-        alt: "CTU Faculty Grade Sheet desktop app sign-in screen for CTU Naga Extension Campus faculty",
-      },
+      lending("00-portfolio-cover.png", "4R Lending cover: logo, title, features and the app on a laptop and phone", "4R Lending: microfinance loan & collection system.", 1920, 1080),
+      lending("01-sign-in-page-desktop.png", "4R Lending sign-in page on desktop", "Branded sign-in page.", 2880, 1800),
+      lending("01-sign-in-page-phone.png", "4R Lending sign-in page on a phone", "Sign-in on a phone.", 1170, 2532),
+      lending("02-admin-executive-dashboard.png", "Admin dashboard with portfolio totals and the 24-hour cut-off sheet", "Executive dashboard with daily cut-off.", 2880, 1800),
+      lending("03-admin-par-aging-risk-report.png", "PAR aging report with charts", "Portfolio-at-risk aging (CGAP buckets).", 2880, 1800),
+      lending("04-admin-collection-ledger.png", "Weekly collection ledger table", "17-column collection ledger.", 2880, 1800),
+      lending("05-admin-approvals-and-end-of-day.png", "Approvals hub with request counts", "Maker–checker approvals and end-of-day review.", 2880, 1800),
+      lending("06-admin-centers-and-routes.png", "List of collection centers by route day", "Centers and collection routes.", 2880, 1800),
+      lending("07-admin-id-photo-book.png", "Clients' ID photos grouped by center (names blurred)", "ID Photo Book by center.", 2880, 1800),
+      lending("08-admin-print-vouchers.png", "Print Vouchers page with filters", "Bulk voucher printing.", 2880, 1800),
+      lending("09-encoder-dashboard.png", "Encoder dashboard with daily routine and totals", "Encoder command center.", 2860, 2544),
+      lending("10-encoder-client-and-loan-desk.png", "Client registration and loan desk", "Client & loan desk.", 2880, 1800),
+      lending("11-encoder-weekly-collection-sheet.png", "Batch payment entry for a center", "Weekly collection sheet.", 2880, 1800),
+      lending("12-encoder-reports-and-cut-off.png", "Encoder reports and end-of-day page", "Reports and daily cut-off.", 2880, 1800),
+      lending("13-encoder-dashboard-phone.png", "Encoder dashboard on a phone", "Works on phones.", 1170, 2532),
+    ],
+    kind: "Web application",
+    context: "4R Lending Company Inc. (Cebu, Region VII)",
+    matte: "#0f0a0a",
+  },
+  {
+    // Source: docs/ctu-grade-sheet-portfolio-kit.md. Private source: no repo or download link;
+    // student and staff names are blurred on purpose.
+    title: "CTU Grade Sheet",
+    featured: true,
+    flagship: true,
+    summary:
+      "An offline faculty portal for Cebu Technological University: class records with lecture and laboratory GWA, official ROForm 15-B grade sheets, and course syllabi dated on the university calendar, all in one Windows app.",
+    features: [
+      "Grade sheet matrix: lecture, laboratory and consolidated final grades, plus separate Lecture and Laboratory GWA, computed live with the CTU transmutation table",
+      "Official exports that fill the university's own templates: ROForm 15-B and GradeSheet Summary (Excel), class record (DOCX/PDF) and the INSForm 1a/1b course syllabus (DOCX)",
+      "Syllabus generator that places topics on real class meetings using the course schedule and university calendar; faculty can also upload and view their own Word syllabus",
+      "Offline and safe: local SQLite database, automatic daily snapshots, safety backups before risky actions and one-click restore",
+      "Also: class analytics, official signatories per course, a locked global grading policy, roster import from Excel and semester rollover",
+    ],
+    tech: ["Laravel", "PHP", "Vue 3", "TypeScript", "Inertia", "TailwindCSS", "SQLite", "Electron"],
+    images: [
+      gradeSheet("00-cover.png", "CTU Grade Sheet cover: maroon and gold poster with the CTU seal, four features, the tech stack, and the app shown on a laptop and a phone", "CTU Grade Sheet on a laptop and a phone.", 1920, 1080),
+      gradeSheet("01-sign-in-desktop.png", "CTU Grade Sheet sign-in page on desktop", "Sign in with the faculty password.", 2880, 1800),
+      gradeSheet("02-my-courses-desktop.png", "My Courses page listing subjects grouped by year level and day or evening sections, with totals for subjects, sections, students and activities", "All classes for the semester, grouped by year and section.", 2880, 1800),
+      gradeSheet("03-grade-sheet-desktop.png", "Grade sheet for a laboratory component with grading categories, activity columns and blurred student names", "Laboratory grade sheet with its rubric.", 2880, 1800),
+      gradeSheet("04-consolidated-final-desktop.png", "Consolidated final view with midterm and final grades for lecture and laboratory and a separate lecture GWA, student names blurred", "Consolidated final: lecture and laboratory grades side by side.", 2880, 1800),
+      gradeSheet("05-analytics-desktop.png", "Analytics dashboard with passing rate, class average, enrollment, grade distribution chart and class standing", "Class analytics at a glance.", 2880, 1800),
+      gradeSheet("06-syllabus-generator-desktop.png", "Course syllabus page with topics, hours, computed weeks and dates, and warnings when hours do not fit", "Topics placed on real class dates.", 2880, 1800),
+      gradeSheet("07-syllabus-viewer-desktop.png", "An uploaded Word course syllabus displayed inside the app", "The faculty's own Word syllabus, viewed in the app.", 2880, 1800),
+      gradeSheet("08-signatories-desktop.png", "Signature block settings with designations and a live print preview, names blurred", "Signatories printed on every official form.", 2880, 1800),
+      gradeSheet("09-grading-policy-desktop.png", "Global grading policy page with lecture and laboratory category weights", "One locked grading policy for every course.", 2880, 1800),
+      gradeSheet("10-academic-calendar-desktop.png", "Academic calendar settings with class period, no-class days and exam weeks", "University calendar: holidays and exam weeks.", 2880, 1800),
+      gradeSheet("11-backups-desktop.png", "Backups and restore dialog listing daily and safety snapshots with download and restore buttons", "Automatic snapshots and one-click restore.", 2880, 1800),
+      gradeSheet("12-sign-in-phone.png", "CTU Grade Sheet sign-in page on a phone", "Sign-in on a phone.", 780, 1688),
+      gradeSheet("13-my-courses-phone.png", "My Courses page on a phone with semester totals", "Courses on a phone.", 780, 1688),
+      gradeSheet("14-grade-sheet-phone.png", "Grade sheet controls and component tabs on a phone", "Grade sheet on a phone.", 780, 1688),
+      gradeSheet("15-analytics-phone.png", "Class analytics dashboard on a phone", "Analytics on a phone.", 780, 1688),
+      gradeSheet("16-syllabus-phone.png", "Course syllabus page on a phone", "Syllabus on a phone.", 780, 1688),
     ],
     kind: "Desktop application",
     context: "CTU Naga Extension Campus",
+    status: "v1.0.17 released",
+    matte: "linear-gradient(#3b0f0f, #220202)",
+  },
+  {
+    // Source: docs/ctu-document-tracking-portfolio-kit.md. No repo link; screenshot
+    // records are sample data and bearer/recipient names are blurred on purpose.
+    title: "CTU Document Tracking System",
     featured: true,
+    summary:
+      "A desktop logbook for CTU Naga Extension Campus offices to record incoming and outgoing communications, search them instantly, and print official PDF reports and routing slips.",
+    features: [
+      "Incoming and outgoing communications log with type, date and time, bearer, target office, subject and classification",
+      "Dashboard with live counters; each card is a one-click filter",
+      "Instant search plus Incoming/Outgoing tabs and scope filters (Within CTU Naga, Across Campuses, External)",
+      "Official PDF exports on the CTU letterhead: a communications log report and a Document Transmittal & Routing Slip",
+      "Office profiles with their own letterhead title and default staff",
+      "Offline, crash-safe storage: atomic JSON writes with a rolling backup used automatically if the main file is corrupted",
+      "Desktop polish: branded splash screen, keyboard shortcuts, single-instance lock and a Windows setup.exe installer",
+    ],
+    tech: ["Electron", "TypeScript", "Vite", "TailwindCSS", "jsPDF", "Lucide"],
+    images: [
+      docTracking("00-portfolio-cover.png", "Cover showing the CTU seal, project title, four key features and tech chips beside the app's dashboard in a laptop frame and a printed routing slip", "CTU Document Tracking System: a Windows desktop logbook for CTU Naga Extension Campus.", 1920, 1080),
+      docTracking("01-splash-screen-desktop.png", "CTU splash screen with the university seal, campus name and a loading bar at 100%", "Branded splash screen shown while the app starts.", 1280, 800),
+      docTracking("02-dashboard-all-communications-desktop.png", "Dashboard with total, incoming, outgoing and internal counters above a table of logged communications; people's names are blurred", "Dashboard with live counters and the full communications log.", 2880, 1800),
+      docTracking("03-incoming-communications-log-desktop.png", "Communications table filtered to incoming records; people's names are blurred", "Incoming tab: documents received by the office.", 2880, 1800),
+      docTracking("04-outgoing-communications-log-desktop.png", "Communications table filtered to outgoing records; people's names are blurred", "Outgoing tab: documents released by the office.", 2880, 1800),
+      docTracking("05-search-and-scope-filter-desktop.png", "Search box containing \"request\" with the External scope selected, showing one matching record", "Search combined with the External scope filter.", 2880, 1800),
+      docTracking("06-new-communication-entry-form-desktop.png", "Communication entry form with type, date, time, bearer, receiving office, subject and classification fields; the bearer's name is blurred", "Logging a new incoming communication.", 2880, 1800),
+      docTracking("07-edit-outgoing-record-desktop.png", "Edit form for an outgoing record with \"Released To / Claimed By\" and \"Originating Office\" fields; the name is blurred", "Editing a record; labels switch for outgoing documents.", 2880, 1800),
+      docTracking("08-delete-confirmation-desktop.png", "Confirmation dialog showing the record's tracking ID, type, subject and date before deletion; the bearer's name is blurred", "Delete confirmation with a record preview.", 2880, 1800),
+      docTracking("09-office-profile-settings-desktop.png", "Office settings form with preset office, name, acronym, default staff, PDF letterhead title and campus", "Office profile: letterhead and default staff per office.", 2880, 1800),
+      docTracking("10-pdf-export-communications-log-report.png", "Landscape PDF report with CTU and Bagong Pilipinas logos, office letterhead and a table of 12 communications; names are blurred", "Exported PDF log report on the official CTU letterhead.", 2188, 1547),
+      docTracking("11-pdf-export-transmittal-routing-slip.png", "Portrait routing slip with record details, action directive checkboxes, remarks box and signature lines; names are blurred", "Exported Document Transmittal & Routing Slip.", 1547, 2188),
+      docTracking("12-developer-information-desktop.png", "Developer card with Logan M. Panucat's photo, system details, keyboard shortcuts and links", "About the developer.", 2880, 1800),
+    ],
+    kind: "Desktop application",
+    context: "CTU Naga Extension Campus",
+    status: "Windows installer (setup.exe)",
+    matte: "linear-gradient(#f2c343, #4c0b0e)",
   },
   {
     title: "LibraSys",
@@ -290,7 +394,7 @@ export const sqlitePortable = {
 export const focusAreas = [
   {
     title: "Full-stack web applications",
-    text: "Dashboards, portals and online stores with Next.js, React, TanStack, ASP.NET MVC, Blazor and PHP.",
+    text: "Dashboards, portals, a microfinance loan system and online stores with Next.js, React, TanStack, ASP.NET MVC, Blazor and PHP.",
   },
   {
     title: "Database design",
@@ -302,7 +406,7 @@ export const focusAreas = [
   },
   {
     title: "Desktop and mobile apps",
-    text: "NEXUS IDE, an offline coding IDE for Android and Windows (Flutter), plus a faculty grade sheet (Laravel and Electron), SQLite Portable and a school management system.",
+    text: "NEXUS IDE, an offline coding IDE for Android and Windows (Flutter), plus a faculty grade sheet and a document tracking system (Electron), SQLite Portable and a school management system.",
   },
 ];
 
@@ -347,7 +451,7 @@ export const education: EducationItem[] = [
 export const skillGroups: SkillGroup[] = [
   {
     title: "Frontend",
-    items: ["React", "Next.js", "TypeScript", "TailwindCSS", "TanStack", "ShadCN UI"],
+    items: ["React", "Next.js", "Vue 3", "TypeScript", "TailwindCSS", "TanStack", "ShadCN UI"],
   },
   {
     title: "Backend",
@@ -363,7 +467,7 @@ export const skillGroups: SkillGroup[] = [
   },
   {
     title: "Developer tools",
-    items: ["Git", "GitHub", "Vercel"],
+    items: ["Git", "GitHub", "GitHub Actions", "Vite", "Vercel"],
   },
 ];
 

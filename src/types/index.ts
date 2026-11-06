@@ -15,6 +15,12 @@ export interface Project {
   features: string[];
   /** Flagship card: shown full-width above the featured grid. */
   flagship?: boolean;
+  /**
+   * CSS background sampled from a designed cover's own edges. When set, the cover
+   * is shown whole (object-contain) on this matte instead of cropped, keeping the
+   * project's brand colors.
+   */
+  matte?: string;
   label?: string;
   stats?: { value: string; label: string }[];
   downloadUrl?: string;
