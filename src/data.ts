@@ -27,6 +27,7 @@ const lending = shots("4r-lending");
 const gradeSheet = shots("ctu-grade-sheet");
 const docTracking = shots("ctu-document-tracking");
 const ims = shots("ims-ctu");
+const librasys = shots("librasys");
 
 export const projects: Project[] = [
   {
@@ -202,27 +203,62 @@ export const projects: Project[] = [
     matte: "linear-gradient(#f2c343, #4c0b0e)",
   },
   {
+    // Source: docs/librasys-portfolio-kit.md. Public repo (verified). Student names, IDs
+    // and thesis authors are blurred on purpose; loan counts in screenshots are demo data.
     title: "LibraSys",
+    label: "CTU Naga · Web App",
     summary:
-      "A library management system for CTU Naga Extension Campus covering the book catalog, students, borrowing and reports.",
-    features: [
-      "Dashboard with borrowing trends and activity insights",
-      "Book catalog management with ISBN support",
-      "Student management with Excel import",
-      "Borrowing and return tracking",
-      "Reports module for administrators",
+      "A library management system for CTU Naga Extension Campus: catalog books and research manuscripts, keep student records, check books out and in with due dates, and see circulation in charts and Excel reports.",
+    description: [
+      "LibraSys is the library system for the CTU Naga Extension Campus library. A librarian signs in to an admin portal that holds the campus collection, mostly bound research manuscripts and theses sorted by department, program and shelf, together with the student roster.",
+      "From there they check one or several books out to a student with a borrow date and due date, mark them returned, and see overdue items flagged automatically. The dashboard charts the last week of borrowing and returns, and the reports page breaks students down by department, ranks the most borrowed titles and exports students, books and borrow records to Excel.",
+      "Books and students can be bulk-imported from the library's existing Excel records. It works on desktop and phone, in light or dark mode.",
     ],
-    tech: ["React", "TanStack", "TypeScript", "Prisma", "MySQL", "TailwindCSS", "ShadCN UI"],
+    features: [
+      "Book and manuscript catalog: multiple authors, ISBN/accession number, department, program, category, year, copies and shelf location, with search, filters and live availability",
+      "Excel import of books, research and students from the library's existing records",
+      "Student records with course, year level, research-title and bookbinding requirements, and a detail view",
+      "Borrowing and returns: check out several books at once with borrow and due date/time, one-click returns and overdue tracking",
+      "Dashboard with totals, a 7-day borrowing/return chart, books by category and a recent activity feed",
+      "Reports: students by department and program, top 10 borrowed titles, and Excel exports",
+      "Secure admin sign-in with bcrypt-hashed passwords and JWT sessions with \"remember me\"",
+      "Responsive with dark mode: collapsible sidebar on phones and a saved light/dark theme",
+    ],
+    tech: ["TanStack", "React", "TypeScript", "Prisma", "MySQL", "TailwindCSS", "Recharts"],
     images: [
-      {
-        src: "/image/LibraSys.png",
-        alt: "LibraSys landing page with administrator login and counts of books, students, borrowed and returned items",
-      },
+      librasys("00-portfolio-cover.png", "LibraSys cover: CTU seal, title, four features and the admin dashboard in a laptop and phone frame", "LibraSys for CTU Naga Extension Campus.", 1920, 1080),
+      librasys("01-landing-page-desktop.png", "LibraSys landing page with the CTU seal, administrator login button and counts of books, students, borrowed and returned", "Landing page with live library counts.", 2880, 1800),
+      librasys("02-administrator-sign-in-desktop.png", "Administrator login dialog with email, password and remember-me fields", "Administrator sign-in.", 2880, 1800),
+      librasys("03-admin-dashboard-overview-desktop.png", "Admin dashboard with totals for students, books, borrowed and overdue items, a 7-day borrowing chart and books by category", "Dashboard overview.", 2880, 1800),
+      librasys("04-admin-dashboard-recent-activity-desktop.png", "Recent activity table of borrowed and returned books, with student names blurred", "Recent borrow and return activity.", 2880, 1800),
+      librasys("05-admin-book-catalog-desktop.png", "Book management table with title, ISBN, department, category, year, availability and status; author names blurred", "Book and manuscript catalog.", 2880, 1800),
+      librasys("06-admin-add-new-book-desktop.png", "Add New Book form with title, department, author slots, ISBN, category, program, year, copies and shelf", "Adding a book or manuscript.", 2880, 1800),
+      librasys("07-admin-import-books-from-excel-desktop.png", "Import Books/Research from Excel dialog listing the expected columns and an upload area", "Importing books from Excel.", 2880, 1800),
+      librasys("08-admin-student-records-desktop.png", "Student management table with course, year, requirements and status; names and student IDs blurred", "Student records.", 2880, 1800),
+      librasys("09-admin-student-details-desktop.png", "Student detail dialog with age, status, program and year level; name and ID blurred", "Student details.", 2880, 1800),
+      librasys("10-admin-add-new-student-desktop.png", "Register New Student form with personal information and program choices grouped by department", "Registering a student.", 2880, 1800),
+      librasys("11-admin-import-students-from-excel-desktop.png", "Import Students from Excel dialog listing the expected columns and an upload area", "Importing students from Excel.", 2880, 1800),
+      librasys("12-admin-borrowing-and-returns-desktop.png", "Borrowing management with active, overdue and returned-today counts and a loan table with return buttons; borrower names blurred", "Borrowing and returns.", 2880, 1800),
+      librasys("13-admin-check-out-a-book-desktop.png", "Check Out Books dialog with student search, multi-book selection and borrow/due date and time", "Checking out books.", 2880, 1800),
+      librasys("14-admin-reports-and-analytics-desktop.png", "Reports page with totals, Excel export buttons and charts of students by department and books by category", "Reports and analytics.", 2880, 1800),
+      librasys("15-admin-top-borrowed-books-report-desktop.png", "Top borrowed books list and student counts per program in each department; author names blurred", "Top borrowed titles and department breakdown.", 2880, 1800),
+      librasys("16-admin-dashboard-in-dark-mode-desktop.png", "Admin dashboard in dark mode", "Dark mode.", 2880, 1800),
+      librasys("17-landing-page-phone.png", "LibraSys landing page on a phone", "Landing page on a phone.", 780, 1688),
+      librasys("18-administrator-sign-in-phone.png", "Administrator login dialog on a phone", "Sign-in on a phone.", 780, 1688),
+      librasys("19-admin-dashboard-overview-phone.png", "Admin dashboard summary cards stacked on a phone", "Dashboard on a phone.", 780, 1688),
+      librasys("20-admin-navigation-menu-phone.png", "Slide-out admin menu with Dashboard, Books, Students, Borrowing and Reports", "Navigation menu on a phone.", 780, 1688),
+      librasys("21-admin-dashboard-recent-activity-phone.png", "Recent activity list on a phone, with student names blurred", "Recent activity on a phone.", 780, 1688),
+      librasys("22-admin-book-catalog-phone.png", "Book management totals and search on a phone", "Book catalog on a phone.", 780, 1688),
+      librasys("23-admin-student-records-phone.png", "Student management totals and search on a phone", "Student records on a phone.", 780, 1688),
+      librasys("24-admin-borrowing-and-returns-phone.png", "Borrowing management with check-out button and loan counts on a phone", "Borrowing on a phone.", 780, 1688),
+      librasys("25-admin-reports-and-analytics-phone.png", "Reports and analytics totals on a phone", "Reports on a phone.", 780, 1688),
+      librasys("26-admin-top-borrowed-books-report-phone.png", "Student counts per program for the Education and Technology departments on a phone", "Department breakdown on a phone.", 780, 1688),
     ],
     kind: "Web application",
     context: "CTU Naga Extension Campus",
     featured: true,
     githubUrl: "https://github.com/Ezgaminglogan/LibraSys-CTU",
+    matte: "#5c0606",
   },
   {
     // Source: docs/ims-ctu-portfolio-kit.md. Private repo: no GitHub link. Names, ID
