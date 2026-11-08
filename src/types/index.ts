@@ -26,7 +26,7 @@ export interface Project {
   downloadUrl?: string;
   tech: string[];
   images: Screenshot[];
-  kind: "Web application" | "Desktop application" | "Cross-platform application";
+  kind: "Web application" | "Desktop application" | "Web & desktop application" | "Cross-platform application";
   context: string;
   featured?: boolean;
   /** Only set when verified (e.g. by a certificate or the repo). */

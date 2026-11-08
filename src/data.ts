@@ -26,6 +26,7 @@ const nexus = shots("nexus-ide");
 const lending = shots("4r-lending");
 const gradeSheet = shots("ctu-grade-sheet");
 const docTracking = shots("ctu-document-tracking");
+const ims = shots("ims-ctu");
 
 export const projects: Project[] = [
   {
@@ -224,25 +225,59 @@ export const projects: Project[] = [
     githubUrl: "https://github.com/Ezgaminglogan/LibraSys-CTU",
   },
   {
+    // Source: docs/ims-ctu-portfolio-kit.md. Private repo: no GitHub link. Names, ID
+    // numbers and borrower photos in the screenshots are blurred on purpose.
     title: "Inventory Management System (IMS-CTU)",
+    label: "CTU Naga · Web + Desktop",
     summary:
-      "An administrative platform for tracking institutional resources at CTU Naga Extension Campus.",
+      "An inventory system for the CTU Naga Property & Supply Office: register assets with barcodes and custodians, lend items to students and faculty, print official PAR receipts and reports, and track condemned assets.",
     features: [
-      "Institutional resource and inventory tracking",
-      "JWT-based authentication",
-      "Server data fetching and synchronization with TanStack",
-      "Prisma ORM data layer",
+      "Asset registry: SKU, barcode, serial number, unit price, location, custodian and condition status for every item, with printable barcode property labels",
+      "Dashboard with total items, categories, inventory value, low-stock and overdue alerts, a category chart and inventory trend",
+      "Borrowing and returns for students and faculty, with due dates, purpose, return condition and an official borrow receipt",
+      "Distribution and transfers to offices or people, with a full history",
+      "Official CTU documents: Property Transfer Acknowledgement Receipt (PAR) with live letterhead preview, plus reports as PDF, Word, Excel and CSV",
+      "Stock transactions: stock-in, stock-out and adjustments with before/after quantities",
+      "Condemned assets: SRN-tracked records, batch acknowledgement and printable forms",
+      "Audit trail and system logs of every change, with who did it and when",
+      "Backup and maintenance: one-click SQL/JSON backups, import, weekly scheduled backups and live system metrics",
+      "Downloadable templates: maintenance cards, maintenance request forms and a master inventory template",
+      "Windows desktop build with Electron and an automated GitHub Actions release pipeline",
     ],
-    tech: ["TanStack", "Prisma", "JWT", "TailwindCSS"],
+    tech: ["TanStack", "React", "TypeScript", "Prisma", "MySQL", "TailwindCSS", "Electron"],
     images: [
-      {
-        src: "/image/IMS-CTU.png",
-        alt: "IMS-CTU welcome screen with the CTU seal and a Get Started button",
-      },
+      ims("00-portfolio-cover.png", "Cover for the CTU Inventory Management System showing the app on a laptop and a phone, its four key features and its tech stack", "IMS-CTU: inventory management for CTU Naga Extension Campus.", 1920, 1080),
+      ims("01-landing-page-desktop.png", "IMS landing page with the CTU seal, \"Inventory Management\" title and a button to enter the administrative console", "Landing page for the Property & Supply Office system.", 2880, 1800),
+      ims("02-sign-in-page-desktop.png", "Administrative login form with institutional email and password fields", "Administrator sign-in.", 2880, 1800),
+      ims("03-admin-dashboard-overview-desktop.png", "Admin dashboard showing total items, categories, total value, low stock, overdue items and a category distribution chart", "Dashboard with inventory totals, value and alerts.", 2880, 1800),
+      ims("04-admin-inventory-items-desktop.png", "Inventory table with SKUs, categories, quantities, prices and condition status tabs; custodian names are blurred", "Master inventory with condition tabs and filters.", 2880, 1800),
+      ims("05-admin-item-specifications-desktop.png", "Asset specification modal showing the item photo, description, barcode, price, location and serial number", "Item details with a printable barcode label.", 2880, 1800),
+      ims("06-admin-add-inventory-item-desktop.png", "Three-step \"Add New Inventory Asset\" form with item name, category, unit, condition and description", "Step-by-step item registration.", 2880, 1800),
+      ims("07-admin-issue-and-distribute-items-desktop.png", "Distribute form with product, quantity, recipient, department, destination and purpose", "Issuing items to an office or person.", 2880, 1800),
+      ims("08-admin-property-acknowledgement-receipt-par-desktop.png", "Property Transfer Acknowledgement Receipt form next to a live preview of the CTU letterhead document; names are blurred", "Official PAR form with live letterhead preview.", 2880, 1800),
+      ims("09-admin-export-inventory-reports-desktop.png", "Export dialog with report title, signatories and PDF, DOCX, XLSX and CSV options", "Export to PDF, Word, Excel or CSV.", 2880, 1800),
+      ims("10-admin-categories-desktop.png", "Category list with icons, descriptions and item counts", "Inventory categories.", 2880, 1800),
+      ims("11-admin-borrowers-desktop.png", "Borrower table with role and department; names, ID numbers and photos are blurred", "Borrower directory for students and faculty.", 2880, 1800),
+      ims("12-admin-borrow-records-desktop.png", "Borrow records table with items, check-out and return times and status; borrower names are blurred", "Borrow records with due and return dates.", 2880, 1800),
+      ims("13-admin-check-out-item-desktop.png", "Check-out form with borrower search, item checkout list, return date and purpose", "Checking items out to a borrower.", 2880, 1800),
+      ims("14-admin-borrow-transaction-details-desktop.png", "Transaction details showing the product, borrowed/due/returned timeline, return condition and a print receipt button", "Borrow transaction with timeline and receipt.", 2880, 1800),
+      ims("15-admin-stock-transactions-desktop.png", "Stock transactions table with reference, quantity change and before/after stock", "Stock-in, stock-out and adjustments.", 2880, 1800),
+      ims("16-admin-condemned-assets-desktop.png", "Condemned assets list with category, quantity, original SRN, date and acknowledgement status", "Condemned assets with SRN tracking.", 2880, 1800),
+      ims("17-admin-audit-logs-and-history-desktop.png", "Audit history timeline of created and updated items with timestamps", "Audit log of every inventory change.", 2880, 1800),
+      ims("18-admin-backup-and-maintenance-desktop.png", "Maintenance page with backup status, live CPU/memory chart, storage distribution and weekly activity", "Backups and live system metrics.", 2880, 1800),
+      ims("19-admin-download-templates-desktop.png", "Download cards for the maintenance card, maintenance request form and master inventory template", "Official form templates.", 2880, 1800),
+      ims("20-admin-system-logs-desktop.png", "System log table with timestamp, action, item, admin and details", "System logs.", 2880, 1800),
+      ims("21-sign-in-page-phone.png", "Mobile administrative login form", "Sign-in on a phone.", 780, 1688),
+      ims("22-admin-dashboard-phone.png", "Mobile dashboard with stacked stat cards for items, categories, value, low stock and overdue", "Dashboard on a phone.", 780, 1688),
+      ims("23-admin-navigation-menu-phone.png", "Mobile sidebar menu grouped into Overview, Inventory, Borrowing, Asset Status and System", "Mobile navigation menu.", 780, 1688),
+      ims("24-admin-inventory-items-phone.png", "Mobile inventory page with stat cards, filters and action buttons", "Inventory on a phone.", 780, 1688),
+      ims("25-admin-borrow-records-phone.png", "Mobile borrow records page with status cards and a New Borrowing button", "Borrow records on a phone.", 780, 1688),
+      ims("26-admin-condemned-assets-phone.png", "Mobile condemned assets page with totals and filters", "Condemned assets on a phone.", 780, 1688),
     ],
-    kind: "Web application",
+    kind: "Web & desktop application",
     context: "CTU Naga Extension Campus",
     featured: true,
+    matte: "#0b192c",
   },
   {
     title: "Supplify",
